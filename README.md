@@ -1,5 +1,5 @@
-Amir moeini
+Amir Moeini
 
-Ali javani
+Ali Javani
 
 Seyyed AliReza Hashemi
