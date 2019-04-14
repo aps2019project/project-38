@@ -3,18 +3,15 @@ package model.triggers;
 import model.effects.Effect;
 import model.GameState;
 import model.Player;
-import model.targets.Target;
 import model.conditions.Condition;
 
 import java.util.ArrayList;
 
-public class Trigger {
+public abstract class Trigger {
     Player owner;
 
     ArrayList<Effect> effects = new ArrayList<>();
     ArrayList<Trigger> triggers = new ArrayList<>();
-
-    ArrayList<Target> targets = new ArrayList<>();
 
     private ArrayList<Condition> conditions = new ArrayList<>();
 
@@ -28,7 +25,5 @@ public class Trigger {
         apply();
     }
 
-    private void apply(){
-        
-    }
+    abstract void apply();
 }
