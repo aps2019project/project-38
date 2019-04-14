@@ -1,6 +1,6 @@
-package cards.warriors;
+package model.cards.warriors;
 
-import cards.Card;
+import model.cards.Card;
 
 public abstract class Warrior extends Card {
     int HP;

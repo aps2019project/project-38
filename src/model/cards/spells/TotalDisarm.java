@@ -1,4 +1,4 @@
-package cards.spells;
+package model.cards.spells;
 
 import model.effects.Disarm;
 

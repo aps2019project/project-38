@@ -1,4 +1,4 @@
-package cards;
+package model.cards;
 
 import model.effects.Effect;
 import model.triggers.Trigger;
