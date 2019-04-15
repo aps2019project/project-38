@@ -2,7 +2,6 @@ package model;
 
 import model.cards.Card;
 import model.cards.heros.Hero;
-import model.cards.warriors.Warrior;
 
 import java.util.ArrayList;
 
@@ -10,7 +9,7 @@ public class Deck {
     private ArrayList<Integer> cards = new ArrayList<>();
     private Hero hero;
     private Card item;
-    public static ArrayList<Deck> deafultDecks = new ArrayList<>();
+    public static ArrayList<Deck> defaultDecks = new ArrayList<>();
 
     //***
     public void deepCopy(Deck deck) {
@@ -34,7 +33,7 @@ public class Deck {
         return item;
     }
 
-    public static ArrayList<Deck> getDeafultDecks() {
-        return deafultDecks;
+    public static ArrayList<Deck> getDefaultDecks() {
+        return defaultDecks;
     }
 }
