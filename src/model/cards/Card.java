@@ -1,5 +1,6 @@
 package model.cards;
 
+import model.Cell;
 import model.effects.Effect;
 import model.triggers.Trigger;
 
@@ -14,4 +15,6 @@ public abstract class Card {
 
     public ArrayList<Trigger> triggers = new ArrayList<>();
     public ArrayList<Effect> effects = new ArrayList<>();
+
+    public abstract void apply(Cell cell);
 }

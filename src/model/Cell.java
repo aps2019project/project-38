@@ -8,4 +8,12 @@ import java.util.ArrayList;
 public class Cell {
     private Warrior warrior;
     ArrayList<Trigger> triggers = new ArrayList<>();
+
+    public Warrior getWarrior() {
+        return warrior;
+    }
+
+    public void setWarrior(Warrior warrior) {
+        this.warrior = warrior;
+    }
 }
