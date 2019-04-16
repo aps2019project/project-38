@@ -10,11 +10,17 @@ public class Message {
     public static void buyWasSuccessful(){
         System.out.println("You bought the cart successfully");
     }
-    public static void haveMoreThan3Items(){
+    public static void have3Items(){
         System.out.println("You have 3 items. You couldn't buy any other item");
     }
-    public static void havaMoreThan20Cards(){
+    public static void hava20Cards(){
         System.out.println("You have 20 cards. You couldn't buy any other card");
+    }
+    public static void haveNotThisCard(){
+        System.out.println("You haven't this card. You can't sell it");
+    }
+    public static void sellWasSuccessful(){
+        System.out.println("You sell the card successfully");
     }
 }
 
