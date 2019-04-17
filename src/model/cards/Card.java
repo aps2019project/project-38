@@ -17,4 +17,8 @@ public abstract class Card {
     public ArrayList<Effect> effects = new ArrayList<>();
 
     public abstract void apply(Cell cell);
+
+    public ArrayList<Trigger> getTriggers() {
+        return triggers;
+    }
 }

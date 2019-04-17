@@ -14,4 +14,8 @@ public abstract class Player {
     private Deck mainDeck;
     private ArrayList<Integer> graveYard = new ArrayList<>();
     private ArrayList<Warrior> warriors = new ArrayList<>();
+
+    public ArrayList<Warrior> getWarriors() {
+        return warriors;
+    }
 }

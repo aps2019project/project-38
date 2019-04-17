@@ -1,9 +1,9 @@
 package model.triggers;
 
 import model.effects.Effect;
-import model.GameState;
-import model.Player;
 import model.conditions.Condition;
+import model.gamestate.GameState;
+import model.player.Player;
 
 import java.util.ArrayList;
 
