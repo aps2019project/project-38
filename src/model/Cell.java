@@ -6,6 +6,7 @@ import model.triggers.Trigger;
 import java.util.ArrayList;
 
 public class Cell {
+    Game game;
     private Warrior warrior;
     private ArrayList<Trigger> triggers = new ArrayList<>();
     private int row;
@@ -14,6 +15,10 @@ public class Cell {
     public Cell (int row, int column) {
         this.row = row;
         this.column = column;
+    }
+
+    public Cell(Game game) {
+        this.game = game;
     }
 
     public Warrior getWarrior() {
