@@ -4,31 +4,31 @@ import model.cards.Card;
 import view.Message;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Shop {
-    private static Shop shop = new Shop();
-    private HashMap<String, Card> cardNameToCardObject = new HashMap<>();
+    private static Shop shop = null;
+    private ArrayList<Integer> cardIDs = new ArrayList<>();
 
     //***
     public int searchInShopCards(String cardName) {
-        if (shop.getCardNameToCardObject().containsKey(cardName)) {
-            Card card = getCardNameToCardObject().get(cardName);
-            return card.ID;
-        } else {
-            Message.thereIsNoCardWithThisName();
-            return -1;
+        for (int ID : shop.getCardIDs()) {
+            Card card = Card.getAllCards().get(ID);
+            if (card.name.equals(cardName)) {
+                return ID;
+            }
         }
+        Message.thereIsNoCardWithThisName();
+        return -1;
     }
 
     public ArrayList<Integer> searchInCollectionCards(String cardName) {
         Account account = Account.getActiveAccount();
-        Collection collection = account.collection;
+        Collection collection = account.getCollection();
         ArrayList<Integer> foundIDs = new ArrayList<>();
-        for (int i : collection.getCards()) {
-            Card card = Card.getAllCard().get(i);
+        for (int ID : collection.getCardIDs()) {
+            Card card = Card.getAllCards().get(ID);
             if (card.name.equals(cardName)) {
-                foundIDs.add(i);
+                foundIDs.add(ID);
             }
         }
         if (foundIDs.size() == 0) {
@@ -38,21 +38,26 @@ public class Shop {
     }
 
     public void buy(String cardName) {
-        Card card = getCardNameToCardObject().get(cardName);
+        Card card = null;
+        for (int ID : shop.getCardIDs()) {
+            if (Card.getAllCards().get(ID).name.equals(cardName)) {
+                card = Card.getAllCards().get(ID);
+            }
+        }
         Account account = Account.getActiveAccount();
-        if (!getCardNameToCardObject().containsKey(cardName)) {
+        if (card == null) {
             Message.thereIsNoCardWithThisName();
             return;
         }
-        if (account.collection.getCards().size() >= 20) {
-            Message.hava20Cards();
+        if (account.getCollection().getCardIDs().size() >= 20) {
+            Message.have20Cards();
             return;
         }
         if (account.getMoney() >= card.price) {
             if (card.isItem) {
                 int numberOfItems = 0;
-                for (int i : account.collection.getCards()) {
-                    Card card1 = Card.getAllCard().get(i);
+                for (int ID : account.getCollection().getCardIDs()) {
+                    Card card1 = Card.getAllCards().get(ID);
                     if (card1.isItem) numberOfItems++;
                 }
                 if (numberOfItems >= 3) {
@@ -61,6 +66,9 @@ public class Shop {
                 }
             }
             account.setMoney(account.getMoney() - card.price);
+            shop.getCardIDs().remove(card.ID);
+            account.getCollection().getCardIDs().add(card.ID);
+            account.getCollection().getAllCards().put(card.ID, deepCopy(card));
             Message.buyWasSuccessful();
         } else {
             Message.haveNotEnoughMoney();
@@ -69,22 +77,26 @@ public class Shop {
 
     public void sell(int cardID) {
         Account account = Account.getActiveAccount();
-        Card card = Card.getAllCard().get(cardID);
-        if (!account.collection.getCards().contains(cardID)) {
+        Card card = Card.getAllCards().get(cardID);
+        if (!account.getCollection().getCardIDs().contains(cardID)) {
             Message.haveNotThisCard();
             return;
         }
-        Message.sellWasSuccessful();
         account.setMoney(account.getMoney() + card.price);
+        shop.getCardIDs().add(card.ID);
+        account.getCollection().getCardIDs().remove(card.ID);
+        account.getCollection().getAllCards().remove(card.ID);
+        Message.sellWasSuccessful();
     }
 
-//    public Card deepCopy(Card card){
-//
-//    }
+    private Card deepCopy(Card card) {
+        //todo
+        return null;
+    }
     //***
 
-    public HashMap<String, Card> getCardNameToCardObject() {
-        return cardNameToCardObject;
+    public ArrayList<Integer> getCardIDs() {
+        return cardIDs;
     }
 
     public static Shop getShop() {

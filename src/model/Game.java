@@ -8,7 +8,6 @@ import model.player.Player;
 import model.triggers.Trigger;
 
 import java.util.ArrayList;
-import java.util.function.Predicate;
 
 
 public class Game {
