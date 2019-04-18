@@ -1,24 +1,24 @@
 package model.triggers;
 
+import model.cards.warriors.Warrior;
 import model.effects.Effect;
-import model.GameState;
-import model.Player;
+import model.gamestate.GameState;
 import model.conditions.Condition;
 
 import java.util.ArrayList;
 
-public abstract class Trigger {
-    Player owner;
+public abstract class Trigger{
+    Warrior warrior;
 
-    ArrayList<Effect> effects = new ArrayList<>();
-    ArrayList<Trigger> triggers = new ArrayList<>();
+    public ArrayList<Effect> effects = new ArrayList<>();
+    public ArrayList<Trigger> triggers = new ArrayList<>();
 
-    private ArrayList<Condition> conditions = new ArrayList<>();
+    public ArrayList<Condition> conditions = new ArrayList<>();
 
 
     public void check(GameState gameState){
         for (Condition condition : conditions) {
-            if(!condition.check()){
+            if(!condition.check(gameState,this)){
                 return;
             }
         }

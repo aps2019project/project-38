@@ -2,10 +2,10 @@ package model.effects;
 
 public abstract class Effect {
     int endTurn;
-    boolean dispellable;
+    Dispelablity dispelablity;
 
-    public Effect(int endTurn, boolean dispellable) {
+    public Effect(int endTurn,Dispelablity dispelablity) {
         this.endTurn = endTurn;
-        this.dispellable = dispellable;
+        this.dispelablity=dispelablity;
     }
 }
