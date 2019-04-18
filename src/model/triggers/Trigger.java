@@ -4,6 +4,8 @@ import model.cards.warriors.Warrior;
 import model.effects.Effect;
 import model.gamestate.GameState;
 import model.conditions.Condition;
+import model.gamestate.GameState;
+import model.player.Player;
 
 import java.util.ArrayList;
 

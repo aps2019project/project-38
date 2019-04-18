@@ -10,9 +10,9 @@ public class Account {
     //***
     private int money;
     private ArrayList<MatchHistory> history = new ArrayList<>();
+    Collection collection;
     String username;
     String password;
-    Collection collection;
 
     //***
     public static void createAccount(Account account, String userName, String password) {
@@ -28,6 +28,11 @@ public class Account {
     }
 
     //************************
+
+    public void setMoney(int money) {
+        this.money = money;
+    }
+
     public static Account getActiveAccount() {
         return activeAccount;
     }
@@ -38,5 +43,9 @@ public class Account {
 
     public static HashMap<String, Account> getAccountNameToAccountObject() {
         return accountNameToAccountObject;
+    }
+
+    public int getMoney() {
+        return money;
     }
 }

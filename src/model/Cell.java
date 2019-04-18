@@ -8,7 +8,14 @@ import java.util.ArrayList;
 public class Cell {
     Game game;
     private Warrior warrior;
-    ArrayList<Trigger> triggers = new ArrayList<>();
+    private ArrayList<Trigger> triggers = new ArrayList<>();
+    private int row;
+    private int column;
+
+    public Cell (int row, int column) {
+        this.row = row;
+        this.column = column;
+    }
 
     public Cell(Game game) {
         this.game = game;
@@ -20,5 +27,17 @@ public class Cell {
 
     public void setWarrior(Warrior warrior) {
         this.warrior = warrior;
+    }
+
+    public ArrayList<Trigger> getTriggers() {
+        return triggers;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public int getColumn() {
+        return column;
     }
 }
