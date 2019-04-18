@@ -1,17 +1,22 @@
 package model.triggers;
 
+import model.Cell;
 import model.cards.warriors.Warrior;
 import model.effects.Effect;
 import model.gamestate.GameState;
 import model.conditions.Condition;
-import model.gamestate.GameState;
-import model.player.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.stream.Collectors;
 
 public abstract class Trigger {
+    static void addTriggers(Warrior owner, ArrayList<Trigger> triggers){
+        owner.triggers.addAll(triggers.stream().peek(trigger -> trigger.warrior=owner).collect(Collectors.toList()));
+    }
+
     private Warrior warrior;
+    private Cell cell;
     public ArrayList<Effect> effects = new ArrayList<>();
     public ArrayList<Trigger> triggers = new ArrayList<>();
     public HashMap<Condition, Boolean> conditions = new HashMap<>();
@@ -20,8 +25,16 @@ public abstract class Trigger {
         this.warrior = warrior;
     }
 
+    public Trigger(Cell cell) {
+        this.cell = cell;
+    }
+
     public Warrior getWarrior() {
         return warrior;
+    }
+
+    public Cell getCell() {
+        return cell;
     }
 
     public void check(GameState gameState) {

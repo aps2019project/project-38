@@ -33,4 +33,6 @@ public abstract class Warrior extends Card {
     public void setAP(int AP) {
         this.AP = AP;
     }
+
+
 }

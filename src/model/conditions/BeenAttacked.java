@@ -11,8 +11,9 @@ public class BeenAttacked extends Condition {
         if(!(gameState instanceof Attack)){
             return false;
         }
+        Attack attack=(Attack)gameState;
 
-        if(((Attack) gameState).getAttecked()==trigger.getWarrior()){
+        if(attack.getAttecked()==trigger.getWarrior()){
             return true;
         }
         return false;

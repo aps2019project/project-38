@@ -5,10 +5,10 @@ import model.effects.Disarm;
 import model.effects.Dispelablity;
 
 public class TotalDisarm extends Spell {
-    public TotalDisarm() {
-        ID=11;
-        name="Total Disarm";
-        requiredMana=0;
+    {
+        ID = 11;
+        name = "Total Disarm";
+        requiredMana = 0;
 
         effects.add(new Disarm(-1, Dispelablity.BAD));
     }
