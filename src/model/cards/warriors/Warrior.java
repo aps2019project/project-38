@@ -9,4 +9,28 @@ public abstract class Warrior extends Card {
 
     int HP;
     int AP;
+
+    public Cell getCell() {
+        return cell;
+    }
+
+    public void setCell(Cell cell) {
+        this.cell = cell;
+    }
+
+    public int getHP() {
+        return HP;
+    }
+
+    public void setHP(int HP) {
+        this.HP = HP;
+    }
+
+    public int getAP() {
+        return AP;
+    }
+
+    public void setAP(int AP) {
+        this.AP = AP;
+    }
 }

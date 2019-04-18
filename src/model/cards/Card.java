@@ -23,4 +23,8 @@ public abstract class Card {
     public static HashMap<Integer, Card> getAllCard() {
         return allCard;
     }
+
+    public ArrayList<Trigger> getTriggers() {
+        return triggers;
+    }
 }

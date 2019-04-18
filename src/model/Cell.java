@@ -40,4 +40,8 @@ public class Cell {
     public int getColumn() {
         return column;
     }
+
+    public Game getGame() {
+        return game;
+    }
 }
