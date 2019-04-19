@@ -18,6 +18,13 @@ public class CanCounterAttack extends Condition {
                 return false;
             }
         }
+
+        if(((Attack) gameState).getAttacker().effects.stream().anyMatch(effect -> effect instanceof Melee)){
+            if(((Attack) gameState).getAttecked().effects.stream().anyMatch(effect -> effect instanceof Ranged)){
+                return false;
+            }
+        }
+
         return true;
     }
 }

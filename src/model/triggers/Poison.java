@@ -8,7 +8,7 @@ import model.gamestate.Move;
 public class Poison extends Trigger {
     {
         conditions.put(new OnCell(),true);
-        triggers.add(new Poisened(null));
+        triggers.add(new Poisoned(null));
     }
 
     public Poison(Cell cell) {

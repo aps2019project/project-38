@@ -11,4 +11,11 @@ public interface Constant {
         long turnTime = 20000;
         Date gameDateObject = new Date();
     }
+
+    interface EffectsTriggersConstants{
+        interface PoisonBuff{
+            int poisonBuffDuration = 3;
+            int poisonBuffDamage = 1;
+        }
+    }
 }

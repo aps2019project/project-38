@@ -3,9 +3,12 @@ package model.triggers;
 import model.cards.warriors.Warrior;
 import model.gamestate.GameState;
 
-public class Poisened extends Trigger{
+public class Poisoned extends Trigger{
+    {
 
-    public Poisened(Warrior warrior) {
+    }
+
+    public Poisoned(Warrior warrior) {
         super(warrior);
     }
 
