@@ -4,6 +4,8 @@ package model;
 import model.cards.Card;
 import model.cards.warriors.Warrior;
 import model.gamestate.GameState;
+import model.gamestate.ReplaceCard;
+import model.gamestate.TurnEnd;
 import model.player.Player;
 import model.triggers.Trigger;
 
@@ -21,10 +23,6 @@ public class Game {
         fillBoard(Constant.GameConstants.boardRow, Constant.GameConstants.boardColumn);
     }
 
-    public Game() {
-        //todo
-    }
-
     private void fillBoard(int row, int column) {
         for (int i = 0; i < row; i++) {
             ArrayList<Cell> newRow = new ArrayList<>();
@@ -35,12 +33,16 @@ public class Game {
         }
     }
 
-    public int getManhatanDistanceBFS(Cell cellOne, Cell cellTwo) {
+    public Game() {
+        //todo
+    }
+
+    public int getManhatanDistance(Cell originCell, Cell destinationCell) {
         ArrayList<Cell> checkedCells = new ArrayList<>();
         ArrayList<Cell> layerCells = new ArrayList<>();
-        layerCells.add(cellOne);
+        layerCells.add(originCell);
         for (int i = 0; true; i++) {
-            if (layerCells.contains(cellTwo)) {
+            if (layerCells.contains(destinationCell)) {
                 return i;
             }
             else if (layerCells.size() == 0) {
@@ -49,13 +51,13 @@ public class Game {
             ArrayList nextLayerCells = new ArrayList();
             for (Cell cell : layerCells) {
                 checkedCells.add(cell);
-                updateListOneByListTwo(nextLayerCells, getAvailableNexLayerCellsFromCell(cell, checkedCells));
+                updateListOneByListTwo(nextLayerCells, getAvailableNextLayerCellsFromCell(cell, checkedCells));
             }
             layerCells = nextLayerCells;
         }
     }
 
-    private ArrayList<Cell> getAvailableNexLayerCellsFromCell (Cell cell, ArrayList<Cell> checkedCells) {
+    private ArrayList<Cell> getAvailableNextLayerCellsFromCell(Cell cell, ArrayList<Cell> checkedCells) {
         ArrayList<Cell> availableNexLayerCellsFromCell = new ArrayList<>();
         for (Cell nextCell : getNextCells(cell)) {
             if (availableCell(nextCell) && !checkedCells.contains(nextCell)) {
@@ -114,7 +116,7 @@ public class Game {
 
     private void iteratePlayerTriggers (Player player, GameState gameState) {
         for (Warrior warrior : player.getWarriors()) {
-            for (Trigger trigger : warrior.getTriggers()) {
+            for (Trigger trigger : warrior.triggers) {
                 trigger.check(gameState);
             }
         }
@@ -133,7 +135,7 @@ public class Game {
     public void move (Cell sourceCell, Cell targetCell) {
         if (getActivePlayer().getWarriors().contains(sourceCell.getWarrior()) &&
                 targetCell.getWarrior() == null) {
-
+            
         }
     }
 
@@ -142,14 +144,17 @@ public class Game {
     }
 
     public void replaceCard (Card card) {
-        //todo
+        ReplaceCard replaceCard = new ReplaceCard();
+
     }
 
-    public void useCaed (Card card) {
+    public void useCard (Card card) {
         //todo
     }
 
     public void endTurn () {
-        //todo
+        TurnEnd turnEnd = new TurnEnd();
+        iterateAllTriggers(turnEnd);
+        turn ++;
     }
 }

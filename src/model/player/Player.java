@@ -18,4 +18,8 @@ public abstract class Player {
     public ArrayList<Warrior> getWarriors() {
         return warriors;
     }
+
+    public ArrayList<Card> getHand() {
+        return hand;
+    }
 }
