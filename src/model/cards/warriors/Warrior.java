@@ -10,6 +10,12 @@ public abstract class Warrior extends Card {
     int HP;
     int AP;
 
+    private int moveCount;
+
+    public int getMoveCount(){
+        return 0;
+    }
+
     public Cell getCell() {
         return cell;
     }
