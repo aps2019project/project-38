@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public abstract class Card {
-    private static HashMap<Integer, Card> allCard = new HashMap<>();
+    private static HashMap<Integer, Card> allCards = new HashMap<>();
     public int ID;
     public String name;
     public int requiredMana;
@@ -19,9 +19,9 @@ public abstract class Card {
     public ArrayList<Effect> effects = new ArrayList<>();
 
     public abstract void apply(Cell cell);
-    //****
-    public static HashMap<Integer, Card> getAllCard() {
-        return allCard;
+    //***
+    public static HashMap<Integer, Card> getAllCards() {
+        return allCards;
     }
 
     public ArrayList<Trigger> getTriggers() {
