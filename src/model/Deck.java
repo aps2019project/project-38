@@ -4,25 +4,44 @@ import model.cards.Card;
 import model.cards.heros.Hero;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Deck {
-    private ArrayList<Integer> cards = new ArrayList<>();
+    private static ArrayList<Deck> defaultDeck = new ArrayList<>();
+    private static HashMap<String, Deck> allDecks = new HashMap<>();
+    private String name;
+    private ArrayList<Integer> cardIDs = new ArrayList<>();
     private Hero hero;
     private Card item;
-    public static ArrayList<Deck> defaultDecks = new ArrayList<>();
-
     //***
-    public void deepCopy(Deck deck) {
-
-    }
-
-    public void isValid() {
-
-    }
     //***
 
-    public ArrayList<Integer> getCards() {
-        return cards;
+    public void setItem(Card item) {
+        this.item = item;
+    }
+
+    public void setHero(Hero hero) {
+        this.hero = hero;
+    }
+
+    public static HashMap<String, Deck> getAllDecks() {
+        return allDecks;
+    }
+
+    public static ArrayList<Deck> getDefaultDeck() {
+        return defaultDeck;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public ArrayList<Integer> getCardIDs() {
+        return cardIDs;
     }
 
     public Hero getHero() {
@@ -31,9 +50,5 @@ public class Deck {
 
     public Card getItem() {
         return item;
-    }
-
-    public static ArrayList<Deck> getDefaultDecks() {
-        return defaultDecks;
     }
 }

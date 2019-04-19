@@ -1,47 +1,144 @@
 package model;
 
 import model.cards.Card;
+import model.cards.heros.Hero;
+import model.cards.warriors.Warrior;
+import view.Message;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Collection {
     private ArrayList<Integer> cardIDs = new ArrayList<>();
-    private HashMap<Integer,Card> allCards = new HashMap<>();
+    private HashMap<Integer, Card> allCards = new HashMap<>();
     private ArrayList<Deck> decks = new ArrayList<>();
     private Deck mainDeck;
 
     //***
-    public static void deleteCardFromDeck(int cardID, String deckName) {
-
+    public static Collection getCollection() {
+        return Account.getActiveAccount().getCollection();
     }
 
-    //***
-    public ArrayList<Card> getHeroes() {
-        return null;
+    public ArrayList<Integer> searchInCollectionCards(String cardName) {
+        ArrayList<Integer> foundIDs = new ArrayList<>();
+        for (int ID : getCardIDs()) {
+            Card card = getAllCards().get(ID);
+            if (card.name.equals(cardName)) {
+                foundIDs.add(ID);
+            }
+        }
+        if (foundIDs.size() == 0) {
+            Message.thereIsNoCardWithThisNameInCollection();
+        }
+        return foundIDs;
     }
 
-    public void createDeck(String name) {
-
+    public void save() {
+        //todo
     }
 
-    public void deleteDeck(String name) {
+    public void createDeck(String deckName) {
+        for (Deck deck : getDecks()) {
+            if (deck.getName().equals(deckName)) {
+                Message.thereIsADeckWhitThisName();
+                return;
+            }
+        }
+        Deck deck = new Deck();
+        deck.setName(deckName);
+        getDecks().add(deck);
+    }
 
+    public void deleteDeck(String deckName) {
+        Deck mustBeDeleted = null;
+        for (Deck deck : getDecks()) {
+            if (deck.getName().equals(deckName)) {
+                mustBeDeleted = deck;
+            }
+        }
+        if (mustBeDeleted == null) {
+            Message.thereIsNoDeckWithThisName();
+            return;
+        }
+        getDecks().remove(mustBeDeleted);
     }
 
     public void addCardToDeck(int cardID, String deckName) {
+        if (!Deck.getAllDecks().containsKey(deckName)) {
+            Message.thereIsNoDeckWithThisName();
+            return;
+        }
+        if (!getCardIDs().contains(cardID)) {
+            Message.thereIsNoCardWithThisIDInCollection();
+            return;
+        }
+        Deck deck = Deck.getAllDecks().get(deckName);
+        Card card = Card.getAllCards().get(cardID);
+        if (deck.getCardIDs().contains(cardID)) {
+            Message.thereIsACardWithThisIDInThisDeck();
+            return;
+        }
+        if (deck.getCardIDs().size() == 20) {
+            Message.have20CardsInThisDeck();
+            return;
+        }
+        if (card instanceof Warrior) {
+            Warrior warrior = (Warrior) card;
+            if (warrior instanceof Hero) {
+                if (deck.getHero() != null) {
+                    Message.thereIsAHeroInThisDeck();
+                    return;
+                } else {
+                    deck.setHero((Hero) card);
+                }
+            }
+        }
+        if (card.isItem) {
+            deck.setItem(card);
+        }
+        deck.getCardIDs().add(cardID);
+    }
 
+    public void removeCardFromDeck(int cardID, String deckName) {
+        if (!Deck.getAllDecks().containsKey(deckName)) {
+            Message.thereIsNoDeckWithThisName();
+            return;
+        }
+        Deck deck = Deck.getAllDecks().get(deckName);
+        if (!deck.getCardIDs().contains(cardID)) {
+            Message.thereIsNoCardWithThisIDInThisDeck();
+            return;
+        }
+        deck.getCardIDs().remove(cardID);
+    }
+
+    public boolean validateDeck(String deckName) {
+        if (!Deck.getAllDecks().containsKey(deckName)) {
+            Message.thereIsNoDeckWithThisName();
+            return false;
+        }
+        Deck deck = Deck.getAllDecks().get(deckName);
+        if (deck.getCardIDs().size() != 20 || deck.getHero() == null) {
+            Message.deckIsNotValid();
+            return false;
+        }
+        return true;
     }
 
     public void selectMainDeck(String deckName) {
-
+        if (!Deck.getAllDecks().containsKey(deckName)) {
+            Message.thereIsNoDeckWithThisName();
+            return;
+        }
+        if (validateDeck(deckName)) {
+            setMainDeck(Deck.getAllDecks().get(deckName));
+        }
     }
-
-    public void search(String name) {
-
-    }
-
     //***
+
+    public void setMainDeck(Deck mainDeck) {
+        this.mainDeck = mainDeck;
+    }
 
     public HashMap<Integer, Card> getAllCards() {
         return allCards;
