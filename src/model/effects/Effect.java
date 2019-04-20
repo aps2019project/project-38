@@ -1,11 +1,11 @@
 package model.effects;
 
 public abstract class Effect {
-    int endTurn;
+    int duration;
     Dispelablity dispelablity;
 
-    public Effect(int endTurn,Dispelablity dispelablity) {
-        this.endTurn = endTurn;
+    public Effect(int duration,Dispelablity dispelablity) {
+        this.duration = duration;
         this.dispelablity=dispelablity;
     }
 }

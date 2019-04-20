@@ -32,8 +32,9 @@ public class Attack extends GameState {
         return attecked;
     }
 
-    public Attack(Warrior attacker, Warrior attecked) {
+    public Attack(Warrior attacker, Warrior attacked, int ap) {
+        this.ap = ap;
         this.attacker = attacker;
-        this.attecked = attecked;
+        this.attecked = attacked;
     }
 }

@@ -157,4 +157,12 @@ public class Game {
         iterateAllTriggers(turnEnd);
         turn ++;
     }
+
+    public ArrayList<Cell> getEightAdjacents(Cell cell){
+        return null; //todo
+    }
+
+    public ArrayList<Cell> getCellWithinDistance(Cell cell,int distance){
+        return null; //todo
+    }
 }

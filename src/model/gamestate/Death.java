@@ -2,14 +2,14 @@ package model.gamestate;
 
 import model.cards.warriors.Warrior;
 
-public class PutMinion extends GameState {
+public class Death extends GameState {
     private Warrior warrior;
-
-    public PutMinion(Warrior warrior) {
-        this.warrior = warrior;
-    }
 
     public Warrior getWarrior() {
         return warrior;
+    }
+
+    public Death(Warrior warrior) {
+        this.warrior = warrior;
     }
 }
