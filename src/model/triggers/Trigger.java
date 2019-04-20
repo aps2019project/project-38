@@ -20,7 +20,7 @@ public abstract class Trigger {
     private Cell cell;
     public ArrayList<Effect> effects = new ArrayList<>();
     public ArrayList<Trigger> triggers = new ArrayList<>();
-    public HashMap<Condition, Boolean> conditions = new HashMap<>();
+    public ArrayList<Condition> conditions = new ArrayList<>();
     int duration;
     Dispelablity dispelablity;
 
@@ -44,8 +44,8 @@ public abstract class Trigger {
     }
 
     public void check(GameState gameState) {
-        for (Condition condition : conditions.keySet()) {
-            if (condition.check(gameState, this) == conditions.get(condition)) {
+        for (Condition condition : conditions) {
+            if (condition.check(gameState, this)) {
                 return;
             }
         }

@@ -11,7 +11,7 @@ import model.gamestate.Move;
 
 public class FiredCell extends Trigger {
     {
-        conditions.put(new OnCell(),true);
+        conditions.add(new OnCell());
         effects.add(new HP(-1, Dispelablity.UNDISPELLABLE,
                 Constant.EffectsTriggersConstants.FiredCell.firedCellDamage));
     }

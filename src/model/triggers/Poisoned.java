@@ -11,7 +11,7 @@ import javax.management.loading.MLet;
 
 public class Poisoned extends Trigger{
     {
-        conditions.put(new TurnEnded(),true);
+        conditions.add(new TurnEnded());
         effects.add(new HP(-1, Dispelablity.UNDISPELLABLE,-1));
     }
 

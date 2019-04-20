@@ -14,14 +14,14 @@ public class AttackAdvantage extends Trigger {
     private Warrior warriorAgainst;
 
     {
-        conditions.put(new Attacking(),true);
+        conditions.add(new Attacking());
         //this condition check if this minion is attacking the warrior against.
         // isPending is not checked because it is checked in attacking.
-        conditions.put(((gameState, trigger) -> {
+        conditions.add(((gameState, trigger) -> {
             if(!(gameState instanceof Attack))
                 return false;
             return ((Attack) gameState).getAttecked() == warriorAgainst;
-        }),true);
+        }));
     }
 
     public AttackAdvantage(Warrior warrior, int duration, Dispelablity dispelablity, int additionalDamage, Warrior warriorAgainst) {

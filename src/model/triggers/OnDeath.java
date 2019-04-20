@@ -7,7 +7,7 @@ import model.gamestate.GameState;
 
 public class OnDeath extends Trigger {
     {
-        conditions.put(new Died(),true);
+        conditions.add(new Died());
     }
     public OnDeath(Warrior warrior, int duration, Dispelablity dispelablity) {
         super(warrior, duration, dispelablity);

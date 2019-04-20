@@ -7,7 +7,7 @@ import model.gamestate.GameState;
 
 public class OnSpawn extends Trigger {
     {
-        conditions.put(new Spawned(),true);
+        conditions.add(new Spawned());
     }
     public OnSpawn(Warrior warrior, int duration, Dispelablity dispelablity) {
         super(warrior, duration, dispelablity);

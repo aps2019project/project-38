@@ -10,7 +10,7 @@ this trigger adds all triggers and effects in it to the warrior that this warrio
  */
 public class AfterAttackModifiers extends Trigger {
     {
-        conditions.put(new Attacked(),true);
+        conditions.add(new Attacked());
     }
 
     public AfterAttackModifiers(Warrior warrior, int duration, Dispelablity dispelablity) {

@@ -13,8 +13,8 @@ public class HolyBuff extends Trigger {
     private int reducedDamage;
 
     {
-        conditions.put(new BeingAttacked(),true);
-        conditions.put(new HeHasAntiHolyBuff(),false);
+        conditions.add(new BeingAttacked());
+        conditions.add(new HeHasAntiHolyBuff().not());
     }
 
     public HolyBuff(Warrior warrior, int duration, Dispelablity dispelablity,int reducedDamage) {

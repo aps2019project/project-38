@@ -8,8 +8,8 @@ import model.gamestate.TurnEnd;
 
 public class TimedEffectBomb extends Trigger {
     {
-        conditions.put(new TurnEnded(),true);
-        conditions.put(((gameState, trigger) -> duration == 1),true);
+        conditions.add(new TurnEnded());
+        conditions.add(((gameState, trigger) -> duration == 1));
     }
     public TimedEffectBomb(Warrior warrior, int duration, Dispelablity dispelablity) {
         super(warrior, duration, dispelablity);

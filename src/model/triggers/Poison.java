@@ -9,7 +9,7 @@ import model.gamestate.Move;
 
 public class Poison extends Trigger {
     {
-        conditions.put(new OnCell(),true);
+        conditions.add(new OnCell());
         triggers.add(new Poisoned(null, Constant.EffectsTriggersConstants.CellPoison.poisonBuffDuration,
                 Dispelablity.BAD));
     }

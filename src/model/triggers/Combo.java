@@ -9,7 +9,7 @@ import model.gamestate.GameState;
 
 public class Combo extends Trigger{
     {
-        conditions.put(new Attacking(),true);
+        conditions.add(new Attacking());
     }
     public Combo(Warrior warrior, int duration, Dispelablity dispelablity) {
         super(warrior, duration, dispelablity);

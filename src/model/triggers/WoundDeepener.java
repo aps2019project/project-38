@@ -9,7 +9,7 @@ import model.gamestate.GameState;
 
 public class WoundDeepener extends Trigger {
     {
-        conditions.put(new Attacked(),true);
+        conditions.add(new Attacked());
     }
 
     public WoundDeepener(Warrior warrior, int duration, Dispelablity dispelablity) {
