@@ -59,11 +59,8 @@ public class Game {
 
     private ArrayList<Cell> getAvailableNextLayerCellsFromCell(Cell cell, ArrayList<Cell> checkedCells) {
         ArrayList<Cell> availableNexLayerCellsFromCell = new ArrayList<>();
-        for (Cell nextCell : getNextCells(cell)) {
-            if (availableCell(nextCell) && !checkedCells.contains(nextCell)) {
-                availableNexLayerCellsFromCell.add(cell);
-            }
-        }
+        getNextCells(cell).stream().filter(this::availableCell).filter(theCell -> !checkedCells.
+                contains(theCell)).forEach(availableNexLayerCellsFromCell::add);
         return availableNexLayerCellsFromCell;
     }
 
@@ -110,6 +107,7 @@ public class Game {
                 }
             }
         }
+
         iteratePlayerTriggers(players[0], gameState);
         iteratePlayerTriggers(players[1], gameState);
     }
