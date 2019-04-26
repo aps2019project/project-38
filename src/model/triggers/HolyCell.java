@@ -7,20 +7,20 @@ import model.effects.Dispelablity;
 import model.gamestate.GameState;
 import model.gamestate.Move;
 
-public class Poison extends Trigger {
+public class HolyCell extends Trigger {
     {
         conditions.add(new OnCell());
-        triggers.add(new Poisoned(null, Constant.EffectsTriggersConstants.CellPoison.poisonBuffDuration,
-                Dispelablity.BAD));
+        triggers.add(new HolyBuff(null, 1, Dispelablity.GOOD,
+                Constant.EffectsTriggersConstants.HolyBuff.holyBuffReducedDamage));
     }
 
-    public Poison(Cell cell, int duration, Dispelablity dispelablity) {
+    public HolyCell(Cell cell, int duration, Dispelablity dispelablity) {
         super(cell, duration, dispelablity);
     }
 
     @Override
     void apply(GameState gameState) {
-        Move move=(Move)gameState;
-        addTriggers(move.getWarrior(),triggers);
+        Move move = (Move) gameState;
+        addTriggers(move.getWarrior(), triggers);
     }
 }

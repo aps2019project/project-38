@@ -1,36 +1,59 @@
 package view;
 
-public class Message {
+public interface Message {
     // in shop
-    public static void thereIsNoCardWithThisName() {
+    static void thereIsNoCardWithThisNameInShop() {
         System.out.println("There is no card with this name in shop cards");
     }
-    public static void haveNotEnoughMoney() {
+    static void haveNotEnoughMoney() {
         System.out.println("You haven't enough money");
     }
-    public static void buyWasSuccessful(){
+    static void buyWasSuccessful(){
         System.out.println("You bought the cart successfully");
     }
-    public static void have3Items(){
+    static void thereIsNoCardWithThisNameInCollection() {
+        System.out.println("There is no card with this name in collection cards");
+    }
+    static void have3Items(){
         System.out.println("You have 3 items. You couldn't buy any other item");
     }
-    public static void have20Cards(){
-        System.out.println("You have 20 cards. You couldn't buy any other card");
+    static void haveNotThisCardInYourCollection(){
+        System.out.println("You haven't this card in your collection. You can't sell it");
     }
-    public static void haveNotThisCard(){
-        System.out.println("You haven't this card. You can't sell it");
-    }
-    public static void sellWasSuccessful(){
+    static void sellWasSuccessful(){
         System.out.println("You sell the card successfully");
     }
     // in account
-    public static void thereIsAnAccountWithThisName(){
-        System.out.println("There is an account with this name");
+    static void thereIsAnAccountWithThisName(){
+        System.out.println("There is already an account with this name");
     }
-    public static void invalidPassword(){
+    static void invalidPassword(){
         System.out.println("Your password is incorrect");
     }
     // in collection
-
+    static void thereIsNoCardWithThisIDInCollection() {
+        System.out.println("There is no card with this ID in collection cards");
+    }
+    static void thereIsADeckWhitThisName(){
+        System.out.println("There is already a deck with this name");
+    }
+    static void thereIsNoDeckWithThisName(){
+        System.out.println("There is no deck with this name");
+    }
+    static void thereIsACardWithThisIDInThisDeck(){
+        System.out.println("There is already a card whit this ID in this deck");
+    }
+    static void have20CardsInThisDeck(){
+        System.out.println("You have 20 cards in your deck. You couldn't put any other card");
+    }
+    static void thereIsAHeroInThisDeck(){
+        System.out.println("there is already a hero in this deck. You can't add any other");
+    }
+    static void thereIsNoCardWithThisIDInThisDeck(){
+        System.out.println("There is no card with this ID in this deck");
+    }
+    static void deckIsNotValid(){
+        System.out.println("This deck is not valid");
+    }
 }
 

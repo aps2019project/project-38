@@ -3,6 +3,7 @@ package model;
 import view.Message;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 public class Account {
@@ -42,8 +43,18 @@ public class Account {
         //todo
     }
 
-    public static void save() {
-        //todo?
+    //***
+    public void save() {
+        //todo
+    }
+
+    public void putGameInHistory(String opponentName, boolean didWin) {
+        MatchHistory matchHistory = new MatchHistory();
+        matchHistory.setDidWin(didWin);
+        matchHistory.setOpponentName(opponentName);
+        Date date = new Date();
+        //todo
+        matchHistory.setDate(date);
     }
 
     //***

@@ -4,14 +4,14 @@ import model.gamestate.GameState;
 import model.gamestate.Move;
 import model.triggers.Trigger;
 
-public class OnCell implements Condition {
+public class Moved implements Condition {
     @Override
     public boolean check(GameState gameState, Trigger trigger) {
         if(!(gameState instanceof Move)){
             return false;
         }
-        Move move=(Move)gameState;
+        Move move = (Move)gameState;
 
-        return move.getDestinationCell() == trigger.getCell();
+        return move.getWarrior()==trigger.getWarrior();
     }
 }

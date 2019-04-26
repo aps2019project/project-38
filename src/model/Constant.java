@@ -12,9 +12,24 @@ public interface Constant {
     }
 
     interface EffectsTriggersConstants{
-        interface PoisonBuff{
+        interface CellPoison{
             int poisonBuffDuration = 3;
+        }
+
+        interface PoisonBuff{
             int poisonBuffDamage = 1;
+        }
+
+        interface HolyBuff{
+            int holyBuffReducedDamage = 1;
+        }
+
+        interface FiredCell{
+            int firedCellDamage = 2;
+        }
+
+        interface WoundDeepener{
+            int additionalDamage = 5;
         }
     }
 }

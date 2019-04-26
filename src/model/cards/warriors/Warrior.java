@@ -13,7 +13,7 @@ public abstract class Warrior extends Card {
     private int moveCount;
 
     public int getMoveCount(){
-        return 0;
+       return 0; // todo
     }
 
     public Cell getCell() {
@@ -25,7 +25,7 @@ public abstract class Warrior extends Card {
     }
 
     public int getHP() {
-        return HP;
+        return HP;//todo should check all effects for the overal HP.
     }
 
     public void setHP(int HP) {
@@ -33,7 +33,7 @@ public abstract class Warrior extends Card {
     }
 
     public int getAP() {
-        return AP;
+        return AP;//todo should check all effects for the overall AP.
     }
 
     public void setAP(int AP) {

@@ -6,7 +6,7 @@ import model.gamestate.Attack;
 import model.gamestate.GameState;
 import model.triggers.Trigger;
 
-public class CanCounterAttack extends Condition {
+public class CanCounterAttack implements Condition {
     @Override
     public boolean check(GameState gameState, Trigger trigger) {
         if(!(gameState instanceof Attack)){
@@ -14,17 +14,17 @@ public class CanCounterAttack extends Condition {
         }
 
         if(((Attack) gameState).getAttacker().effects.stream().anyMatch(effect -> effect instanceof Ranged)){
-            if(((Attack) gameState).getAttecked().effects.stream().anyMatch(effect -> effect instanceof Melee)){
-                return false;
+            if(((Attack) gameState).getAttecked().effects.stream().anyMatch(effect -> effect instanceof Ranged)){
+                return true;
             }
         }
 
         if(((Attack) gameState).getAttacker().effects.stream().anyMatch(effect -> effect instanceof Melee)){
-            if(((Attack) gameState).getAttecked().effects.stream().anyMatch(effect -> effect instanceof Ranged)){
-                return false;
+            if(((Attack) gameState).getAttecked().effects.stream().anyMatch(effect -> effect instanceof Melee)){
+                return true;
             }
         }
 
-        return true;
+        return false;
     }
 }

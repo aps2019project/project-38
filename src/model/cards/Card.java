@@ -19,6 +19,10 @@ public abstract class Card {
     public ArrayList<Effect> effects = new ArrayList<>();
 
     public abstract void apply(Cell cell);
+
+    public static Card deepCopy(Card card){
+        //todo
+    }
     //***
     public static HashMap<Integer, Card> getAllCards() {
         return allCards;

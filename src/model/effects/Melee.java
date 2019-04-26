@@ -1,7 +1,7 @@
 package model.effects;
 
 public class Melee extends Effect {
-    public Melee(int endTurn, Dispelablity dispelablity) {
-        super(endTurn, dispelablity);
+    public Melee(int duration, Dispelablity dispelablity) {
+        super(duration, dispelablity);
     }
 }

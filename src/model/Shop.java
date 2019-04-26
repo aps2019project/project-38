@@ -17,7 +17,7 @@ public class Shop {
                 return ID;
             }
         }
-        Message.thereIsNoCardWithThisName();
+        Message.thereIsNoCardWithThisNameInShop();
         return -1;
     }
 
@@ -32,7 +32,7 @@ public class Shop {
             }
         }
         if (foundIDs.size() == 0) {
-            Message.thereIsNoCardWithThisName();
+            Message.thereIsNoCardWithThisNameInCollection();
         }
         return foundIDs;
     }
@@ -46,11 +46,7 @@ public class Shop {
         }
         Account account = Account.getActiveAccount();
         if (card == null) {
-            Message.thereIsNoCardWithThisName();
-            return;
-        }
-        if (account.getCollection().getCardIDs().size() >= 20) {
-            Message.have20Cards();
+            Message.thereIsNoCardWithThisNameInShop();
             return;
         }
         if (account.getMoney() >= card.price) {
@@ -68,7 +64,7 @@ public class Shop {
             account.setMoney(account.getMoney() - card.price);
             shop.getCardIDs().remove(card.ID);
             account.getCollection().getCardIDs().add(card.ID);
-            account.getCollection().getAllCards().put(card.ID, deepCopy(card));
+            account.getCollection().getAllCards().put(card.ID, Card.deepCopy(card));
             Message.buyWasSuccessful();
         } else {
             Message.haveNotEnoughMoney();
@@ -79,7 +75,7 @@ public class Shop {
         Account account = Account.getActiveAccount();
         Card card = Card.getAllCards().get(cardID);
         if (!account.getCollection().getCardIDs().contains(cardID)) {
-            Message.haveNotThisCard();
+            Message.haveNotThisCardInYourCollection();
             return;
         }
         account.setMoney(account.getMoney() + card.price);
@@ -89,10 +85,6 @@ public class Shop {
         Message.sellWasSuccessful();
     }
 
-    private Card deepCopy(Card card) {
-        //todo
-        return null;
-    }
     //***
 
     public ArrayList<Integer> getCardIDs() {
