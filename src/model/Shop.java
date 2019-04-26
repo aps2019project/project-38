@@ -64,7 +64,7 @@ public class Shop {
             account.setMoney(account.getMoney() - card.price);
             shop.getCardIDs().remove(card.ID);
             account.getCollection().getCardIDs().add(card.ID);
-            account.getCollection().getAllCards().put(card.ID, deepCopy(card));
+            account.getCollection().getAllCards().put(card.ID, Card.deepCopy(card));
             Message.buyWasSuccessful();
         } else {
             Message.haveNotEnoughMoney();
@@ -85,10 +85,6 @@ public class Shop {
         Message.sellWasSuccessful();
     }
 
-    private Card deepCopy(Card card) {
-        //todo
-        return null;
-    }
     //***
 
     public ArrayList<Integer> getCardIDs() {
