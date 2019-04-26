@@ -25,6 +25,9 @@ public class HolyBuff extends Trigger {
     @Override
     void apply(GameState gameState) {
         Attack attack = (Attack) gameState;
-        attack.setAp(attack.getAp()- reducedDamage);
+
+        if(attack.getAp()-reducedDamage>=0) {
+            attack.setAp(attack.getAp() - reducedDamage);
+        }
     }
 }
