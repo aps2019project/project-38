@@ -13,11 +13,11 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 //add triggers and effects with "1" duration to this trigger.
-public class NearbyWarriorsPassive extends Trigger {
+public class NearbyFriendsPassive extends Trigger {
     {
         conditions.add(new Spawned().or(new Died()).or(new Moved()).or(new TurnStarted()));
     }
-    public NearbyWarriorsPassive(Warrior warrior, int duration, Dispelablity dispelablity) {
+    public NearbyFriendsPassive(Warrior warrior, int duration, Dispelablity dispelablity) {
         super(warrior, duration, dispelablity);
     }
 
@@ -45,7 +45,8 @@ public class NearbyWarriorsPassive extends Trigger {
     }
 
     private void addEffectsAndTriggers(ArrayList<Warrior> warriors){
-        warriors.forEach(warrior -> {
+        warriors.stream().filter(warrior -> warrior.getCell().getGame().getWarriorsPlayer(warrior).getWarriors().
+                contains(warrior)).forEach(warrior -> {
             warrior.effects.addAll(effects);
             addTriggers(warrior,triggers);
         });
@@ -53,7 +54,8 @@ public class NearbyWarriorsPassive extends Trigger {
 
     //checkIt because im not sure when i change the owner of the trigger the object is still the same and gets removed with the second line.
     private void removeEffectsAndTriggers(ArrayList<Warrior> warriors){
-        warriors.forEach(warrior -> {
+        warriors.stream().filter(warrior -> warrior.getCell().getGame().getWarriorsPlayer(warrior).getWarriors().
+                contains(warrior)).forEach(warrior -> {
             warrior.effects.removeAll(effects);
             warrior.triggers.removeAll(triggers);
         });

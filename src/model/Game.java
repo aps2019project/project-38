@@ -163,4 +163,8 @@ public class Game {
     public ArrayList<Cell> getCellWithinDistance(Cell cell,int distance){
         return null; //todo
     }
+
+    public Player getWarriorsPlayer(Warrior warrior){
+        return null; //todo
+    }
 }

@@ -25,7 +25,7 @@ public abstract class Warrior extends Card {
     }
 
     public int getHP() {
-        return HP;//todo should check all effects for the overal HP.
+        return HP;//todo should check all effects for the overall HP.
     }
 
     public void setHP(int HP) {
