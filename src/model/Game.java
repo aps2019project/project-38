@@ -9,18 +9,20 @@ import model.gamestate.TurnEnd;
 import model.player.Player;
 import model.triggers.Trigger;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 
 public class Game {
     private int turn;
-    private long turnEndTime;
     private Player[] players = new  Player[2];
     private ArrayList<ArrayList<Cell>> board = new ArrayList<>();
+    private Timer timer = new Timer(Constant.GameConstants.turnTime, ignoredVariable -> endTurn());
 
     {
         turn = 0;
         fillBoard(Constant.GameConstants.boardRow, Constant.GameConstants.boardColumn);
+        timer.start();
     }
 
     private void fillBoard(int row, int column) {
@@ -37,12 +39,12 @@ public class Game {
         //todo
     }
 
-    public int getManhatanDistance(Cell originCell, Cell destinationCell) {
+    public int getManhatanDistance(Cell originCell, Cell targetCell) {
         ArrayList<Cell> checkedCells = new ArrayList<>();
         ArrayList<Cell> layerCells = new ArrayList<>();
         layerCells.add(originCell);
         for (int i = 0; true; i++) {
-            if (layerCells.contains(destinationCell)) {
+            if (layerCells.contains(targetCell)) {
                 return i;
             }
             else if (layerCells.size() == 0) {
@@ -68,9 +70,7 @@ public class Game {
     }
 
     private void updateListOneByListTwo (ArrayList<Cell> listOne, ArrayList<Cell> listTwo) {
-        for (Cell cell : listTwo) {
-            listOne.add(cell);
-        }
+        listTwo.addAll(listOne);
     }
 
     private ArrayList<Cell> getNextCells (Cell cell) {
@@ -102,6 +102,10 @@ public class Game {
         return players[turn % 2];
     }
 
+    public void resetTimer() {
+        timer.restart();
+    }
+
     public void iterateAllTriggers (GameState gameState) {
         for (ArrayList<Cell> row : board) {
             for (Cell cell : row) {
@@ -122,20 +126,10 @@ public class Game {
         }
     }
 
-    public void setTurnEndTime() {
-        turnEndTime = Constant.GameConstants.gameDateObject.getTime() + Constant.GameConstants.turnTime;
-    }
-
-    public void checkTurnTime() {
-        if (Constant.GameConstants.gameDateObject.getTime() > turnEndTime) {
-            endTurn();
-        }
-    }
-
-    public void move (Cell sourceCell, Cell targetCell) {
-        if (getActivePlayer().getWarriors().contains(sourceCell.getWarrior()) &&
+    public void move (Cell originCell, Cell targetCell) {
+        if (getActivePlayer().getWarriors().contains(originCell.getWarrior()) &&
                 targetCell.getWarrior() == null) {
-            
+
         }
     }
 
