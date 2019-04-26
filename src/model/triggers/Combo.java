@@ -6,7 +6,7 @@ import model.conditions.Attacking;
 import model.effects.Dispelablity;
 import model.gamestate.Attack;
 import model.gamestate.GameState;
-
+//this class is a failure.
 public class Combo extends Trigger{
     {
         conditions.add(new Attacking());

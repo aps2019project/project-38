@@ -9,7 +9,7 @@ public class BeenDisarmed implements Condition {
 
     @Override
     public boolean check(GameState gameState, Trigger trigger) {
-        for (Effect effect : trigger.effects) {
+        for (Effect effect : trigger.getEffects()) {
             if(effect instanceof Disarm){
                 return true;
             }
