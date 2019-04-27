@@ -1,6 +1,5 @@
 package model.triggers;
 
-import model.Constant;
 import model.cards.warriors.Warrior;
 import model.conditions.Attacking;
 import model.effects.Dispelablity;
@@ -21,7 +20,7 @@ public class Combo extends Trigger{
     }
 
     private long calculateComboDamage(Attack attack){
-        return attack.getAttecked().getCell().getGame().getEightAdjacents(getWarrior().getCell()).
+        return attack.getAttecked().getCell().getGame().getEightAdjacent(getWarrior().getCell()).
                 stream().filter(cell -> cell.getWarrior()!=null).
                 filter(cell -> cell.getWarrior().getClass()==getWarrior().getClass()).count();
     }

@@ -5,8 +5,8 @@ import model.cards.Card;
 import model.player.Player;
 
 public abstract class Warrior extends Card {
+    Player player;
     Cell cell;
-
     int HP;
     int AP;
 
