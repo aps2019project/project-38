@@ -21,18 +21,7 @@ public class Game {
 
     {
         turn = 0;
-        fillBoard(Constant.GameConstants.boardRow, Constant.GameConstants.boardColumn);
         timer.start();
-    }
-
-    private void fillBoard(int row, int column) {
-        for (int i = 0; i < row; i++) {
-            ArrayList<Cell> newRow = new ArrayList<>();
-            for (int j = 0; j < column; j++) {
-                newRow.add(new Cell(i, j));
-            }
-            board.add(newRow);
-        }
     }
 
     public Game() {
@@ -99,10 +88,6 @@ public class Game {
         return players[turn % 2];
     }
 
-    public void resetTimer() {
-        timer.restart();
-    }
-
     public void iterateAllTriggers (GameState gameState) {
         for (ArrayList<Cell> row : board) {
             for (Cell cell : row) {
@@ -148,9 +133,10 @@ public class Game {
         TurnEnd turnEnd = new TurnEnd();
         iterateAllTriggers(turnEnd);
         turn ++;
+        timer.restart();
     }
 
-    public ArrayList<Cell> getEightAdjacents(Cell cell){
+    public ArrayList<Cell> getEightAdjacent(Cell cell){
         return null; //todo
     }
 
