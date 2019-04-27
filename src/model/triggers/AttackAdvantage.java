@@ -2,7 +2,6 @@ package model.triggers;
 
 import model.cards.warriors.Warrior;
 import model.conditions.Attacking;
-import model.conditions.BeingAttacked;
 import model.effects.Dispelablity;
 import model.gamestate.Attack;
 import model.gamestate.GameState;
@@ -20,7 +19,7 @@ public class AttackAdvantage extends Trigger {
         conditions.add(((gameState, trigger) -> {
             if(!(gameState instanceof Attack))
                 return false;
-            return ((Attack) gameState).getAttecked() == warriorAgainst;
+            return ((Attack) gameState).getAttacked() == warriorAgainst;
         }));
     }
 

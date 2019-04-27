@@ -48,7 +48,7 @@ public class NearbyFriendsPassive extends Trigger {
         warriors.stream().filter(warrior -> warrior.getCell().getGame().getWarriorsPlayer(warrior).getWarriors().
                 contains(warrior)).forEach(warrior -> {
             warrior.effects.addAll(effects);
-            addTriggers(warrior,triggers);
+            addTriggersToWarriorFromTrigger(warrior,triggers);
         });
     }
 

@@ -4,7 +4,7 @@ import model.Cell;
 import model.cards.Card;
 import model.player.Player;
 
-public abstract class Warrior extends Card {
+public class Warrior extends Card {
     Cell cell;
 
     int HP;
@@ -41,4 +41,8 @@ public abstract class Warrior extends Card {
     }
 
 
+    @Override
+    public void apply(Cell cell) {
+
+    }
 }

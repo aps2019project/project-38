@@ -12,6 +12,6 @@ public class BeingAttacked implements Condition {
         }
         Attack attack=(Attack)gameState;
 
-        return attack.getAttecked() == trigger.getWarrior() && attack.isPending();
+        return attack.getAttacked() == trigger.getWarrior() && attack.isPending();
     }
 }

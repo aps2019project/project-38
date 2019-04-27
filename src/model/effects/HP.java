@@ -1,7 +1,11 @@
 package model.effects;
 
 public class HP extends Effect {
-    int hp;
+    private int hp;
+
+    public int getHp() {
+        return hp;
+    }
 
     public HP(int duration, Dispelablity dispelablity, int hp) {
         super(duration, dispelablity);

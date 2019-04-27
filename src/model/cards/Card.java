@@ -21,6 +21,7 @@ public abstract class Card {
     public abstract void apply(Cell cell);
 
     public static Card deepCopy(Card card){
+        return null;//please write returns so the build attempts don't fail.
         //todo
     }
     //***

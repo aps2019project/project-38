@@ -21,6 +21,6 @@ public class Poison extends Trigger {
     @Override
     void apply(GameState gameState) {
         Move move=(Move)gameState;
-        addTriggers(move.getWarrior(),triggers);
+        addTriggersToWarriorFromTrigger(move.getWarrior(),triggers);
     }
 }

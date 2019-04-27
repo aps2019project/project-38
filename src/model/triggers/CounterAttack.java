@@ -2,7 +2,6 @@ package model.triggers;
 
 import model.cards.warriors.Warrior;
 import model.conditions.BeenAttacked;
-import model.conditions.BeenDisarmed;
 import model.conditions.CanCounterAttack;
 import model.effects.Dispelablity;
 import model.gamestate.Attack;
@@ -24,7 +23,7 @@ public class CounterAttack extends Trigger {
     @Override
     void apply(GameState gameState) {
         Attack attack=(Attack)gameState;
-        getWarrior().getCell().getGame().attack(attack.getAttecked().getCell(),
+        getWarrior().getCell().getGame().attack(attack.getAttacked().getCell(),
                 attack.getAttacker().getCell());
     }
 }

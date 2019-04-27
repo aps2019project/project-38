@@ -22,7 +22,7 @@ public class AfterAttackModifiers extends Trigger {
     void apply(GameState gameState) {
         Attack attack = (Attack) gameState;
 
-        attack.getAttecked().effects.addAll(effects);
-        addTriggers(attack.getAttecked(),triggers);
+        attack.getAttacked().effects.addAll(effects);
+        addTriggersToWarriorFromTrigger(attack.getAttacked(),triggers);
     }
 }

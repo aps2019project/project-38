@@ -8,13 +8,11 @@ import model.gamestate.GameState;
 import model.conditions.Condition;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Observer;
 import java.util.stream.Collectors;
 
 public abstract class Trigger {
     //used for adding triggers stored in a trigger to another warrior because their owners should be set again.
-    static void addTriggers(Warrior owner, ArrayList<Trigger> triggers) {
+    static void addTriggersToWarriorFromTrigger(Warrior owner, ArrayList<Trigger> triggers) {
         owner.triggers.addAll(triggers.stream().peek(trigger -> trigger.warrior = owner).collect(Collectors.toList()));
     }
 
