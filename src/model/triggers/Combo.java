@@ -20,7 +20,7 @@ public class Combo extends Trigger{
     }
 
     private long calculateComboDamage(Attack attack){
-        return attack.getAttacked().getCell().getGame().getEightAdjacents(getWarrior().getCell()).
+        return attack.getAttacked().getCell().getGame().getBoard().getEightAdjacent(getWarrior().getCell()).
                 stream().filter(cell -> cell.getWarrior()!=null).
                 filter(cell -> cell.getWarrior().getClass()==getWarrior().getClass()).count();
     }

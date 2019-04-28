@@ -13,6 +13,6 @@ public class HeHasAntiHolyBuff implements Condition {
         }
         Attack attack = (Attack) gameState;
 
-        return attack.getAttacker().effects.stream().anyMatch(effect -> effect instanceof AntiHolyBuff);
+        return attack.getAttacker().getEffects().stream().anyMatch(effect -> effect instanceof AntiHolyBuff);
     }
 }

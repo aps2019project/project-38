@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public abstract class Trigger {
     //used for adding triggers stored in a trigger to another warrior because their owners should be set again.
     static void addTriggersToWarriorFromTrigger(Warrior owner, ArrayList<Trigger> triggers) {
-        owner.triggers.addAll(triggers.stream().peek(trigger -> trigger.warrior = owner).collect(Collectors.toList()));
+        owner.getTriggers().addAll(triggers.stream().peek(trigger -> trigger.warrior = owner).collect(Collectors.toList()));
     }
 
     private Warrior warrior;

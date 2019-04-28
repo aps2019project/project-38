@@ -23,7 +23,7 @@ public class Collection {
         ArrayList<Integer> foundIDs = new ArrayList<>();
         for (int ID : getCardIDs()) {
             Card card = getAllCards().get(ID);
-            if (card.name.equals(cardName)) {
+            if (card.getName().equals(cardName)) {
                 foundIDs.add(ID);
             }
         }
@@ -93,7 +93,7 @@ public class Collection {
                 }
             }
         }
-        if (card.isItem) {
+        if (card.isItem()) {
             deck.setItem(card);
         }
         deck.getCardIDs().add(cardID);

@@ -13,14 +13,14 @@ public class CanCounterAttack implements Condition {
             return false;
         }
 
-        if(((Attack) gameState).getAttacker().effects.stream().anyMatch(effect -> effect instanceof Ranged)){
-            if(((Attack) gameState).getAttacked().effects.stream().anyMatch(effect -> effect instanceof Ranged)){
+        if(((Attack) gameState).getAttacker().getEffects().stream().anyMatch(effect -> effect instanceof Ranged)){
+            if(((Attack) gameState).getAttacked().getEffects().stream().anyMatch(effect -> effect instanceof Ranged)){
                 return true;
             }
         }
 
-        if(((Attack) gameState).getAttacker().effects.stream().anyMatch(effect -> effect instanceof Melee)){
-            if(((Attack) gameState).getAttacked().effects.stream().anyMatch(effect -> effect instanceof Melee)){
+        if(((Attack) gameState).getAttacker().getEffects().stream().anyMatch(effect -> effect instanceof Melee)){
+            if(((Attack) gameState).getAttacked().getEffects().stream().anyMatch(effect -> effect instanceof Melee)){
                 return true;
             }
         }

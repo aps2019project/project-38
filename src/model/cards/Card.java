@@ -59,4 +59,8 @@ public abstract class Card {
     public int getPrice() {
         return price;
     }
+
+    public boolean isItem() {
+        return isItem;
+    }
 }

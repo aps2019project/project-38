@@ -13,7 +13,7 @@ public class Shop {
     public int searchInShopCards(String cardName) {
         for (int ID : shop.getCardIDs()) {
             Card card = Card.getAllCards().get(ID);
-            if (card.name.equals(cardName)) {
+            if (card.getName().equals(cardName)) {
                 return ID;
             }
         }
@@ -27,7 +27,7 @@ public class Shop {
         ArrayList<Integer> foundIDs = new ArrayList<>();
         for (int ID : collection.getCardIDs()) {
             Card card = Card.getAllCards().get(ID);
-            if (card.name.equals(cardName)) {
+            if (card.getName().equals(cardName)) {
                 foundIDs.add(ID);
             }
         }
@@ -40,7 +40,7 @@ public class Shop {
     public void buy(String cardName) {
         Card card = null;
         for (int ID : shop.getCardIDs()) {
-            if (Card.getAllCards().get(ID).name.equals(cardName)) {
+            if (Card.getAllCards().get(ID).getName().equals(cardName)) {
                 card = Card.getAllCards().get(ID);
             }
         }
@@ -49,22 +49,22 @@ public class Shop {
             Message.thereIsNoCardWithThisNameInShop();
             return;
         }
-        if (account.getMoney() >= card.price) {
-            if (card.isItem) {
+        if (account.getMoney() >= card.getPrice()) {
+            if (card.isItem()) {
                 int numberOfItems = 0;
                 for (int ID : account.getCollection().getCardIDs()) {
                     Card card1 = Card.getAllCards().get(ID);
-                    if (card1.isItem) numberOfItems++;
+                    if (card1.isItem()) numberOfItems++;
                 }
                 if (numberOfItems >= 3) {
                     Message.have3Items();
                     return;
                 }
             }
-            account.setMoney(account.getMoney() - card.price);
-            shop.getCardIDs().remove(card.ID);
-            account.getCollection().getCardIDs().add(card.ID);
-            account.getCollection().getAllCards().put(card.ID, Card.deepCopy(card));
+            account.setMoney(account.getMoney() - card.getPrice());
+            shop.getCardIDs().remove(card.getID());
+            account.getCollection().getCardIDs().add(card.getID());
+            account.getCollection().getAllCards().put(card.getID(), Card.deepCopy(card));
             Message.buyWasSuccessful();
         } else {
             Message.haveNotEnoughMoney();
@@ -78,10 +78,10 @@ public class Shop {
             Message.haveNotThisCardInYourCollection();
             return;
         }
-        account.setMoney(account.getMoney() + card.price);
-        shop.getCardIDs().add(card.ID);
-        account.getCollection().getCardIDs().remove(card.ID);
-        account.getCollection().getAllCards().remove(card.ID);
+        account.setMoney(account.getMoney() + card.getPrice());
+        shop.getCardIDs().add(card.getID());
+        account.getCollection().getCardIDs().remove(card.getID());
+        account.getCollection().getAllCards().remove(card.getID());
         Message.sellWasSuccessful();
     }
 
