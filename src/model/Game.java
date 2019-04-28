@@ -70,6 +70,7 @@ public class Game {
                 originCell.setWarrior(null);
                 targetCell.setWarrior(warrior);
                 warrior.setCell(targetCell);
+                warrior.getEffects().add(new Moved());
                 Move move = new Move(warrior, originCell, targetCell);
                 iterateAllTriggers(move);
             }
@@ -91,13 +92,21 @@ public class Game {
     }
 
     public void attack (Cell attackerCell, Cell defenderCell) {
-        //todo
+        Warrior attacker = attackerCell.getWarrior();
+        Warrior defender = defenderCell.getWarrior();
+        if (getActivePlayer().getWarriors().contains(attacker) &&
+                !getActivePlayer().getWarriors().contains(defender)) {
+            //todo
+        }
     }
 
     public void replaceCard (Card card) {
         if (getActivePlayer().getHand().contains(card)) {
+            getActivePlayer().getHand().remove(card);
+            getActivePlayer().getMainDeck().ge
+            ReplaceCard replaceCard = new ReplaceCard();
         }
-        ReplaceCard replaceCard = new ReplaceCard();
+
     }
 
     public void useCard (Card card) {

@@ -4,6 +4,8 @@ package model;
 public interface Constant {
     interface GameConstants {
         int turnTime = 20000;
+        int handSize = 5;
+        int primaryMana = 10000000;
     }
 
     interface BoardConstants {
