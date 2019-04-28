@@ -1,22 +1,23 @@
 package model.triggers;
 
 import model.cards.warriors.Warrior;
-import model.conditions.TurnEnded;
+import model.conditions.HasTurnEnded;
 import model.effects.Dispelablity;
 import model.gamestate.GameState;
 
 public class TimedEffectBomb extends Trigger {
     {
-        conditions.add(new TurnEnded());
+        conditions.add(new HasTurnEnded());
         conditions.add(((gameState, trigger) -> duration == 1));
     }
-    public TimedEffectBomb(Warrior warrior, int duration, Dispelablity dispelablity) {
-        super(warrior, duration, dispelablity);
+
+    public TimedEffectBomb(int duration, Dispelablity dispelablity) {
+        super(duration, dispelablity);
     }
 
     @Override
     void apply(GameState gameState) {
         getWarrior().effects.addAll(effects);
-        addTriggersToWarriorFromTrigger(getWarrior(),triggers);
+        getWarrior().triggers.addAll(triggers);
     }
 }

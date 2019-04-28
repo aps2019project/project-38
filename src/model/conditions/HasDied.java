@@ -4,7 +4,7 @@ import model.gamestate.Death;
 import model.gamestate.GameState;
 import model.triggers.Trigger;
 
-public class Died implements Condition {
+public class HasDied implements Condition {
     @Override
     public boolean check(GameState gameState, Trigger trigger) {
         if(!(gameState instanceof Death)){

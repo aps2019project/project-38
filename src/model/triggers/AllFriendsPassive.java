@@ -1,9 +1,9 @@
 package model.triggers;
 
 import model.cards.warriors.Warrior;
-import model.conditions.Died;
-import model.conditions.Spawned;
-import model.conditions.TurnStarted;
+import model.conditions.HasDied;
+import model.conditions.HasSpawned;
+import model.conditions.HasTurnStarted;
 import model.effects.Dispelablity;
 import model.gamestate.Death;
 import model.gamestate.GameState;
@@ -13,10 +13,11 @@ import model.gamestate.TurnStart;
 // add effects and triggers with "1" duration to this trigger.
 public class AllFriendsPassive extends Trigger {
     {
-        conditions.add(new Spawned().or(new TurnStarted()).or(new Died()));
+        conditions.add(new HasSpawned().or(new HasTurnStarted()).or(new HasDied()));
     }
-    public AllFriendsPassive(Warrior warrior, int duration, Dispelablity dispelablity) {
-        super(warrior, duration, dispelablity);
+
+    public AllFriendsPassive(int duration, Dispelablity dispelablity) {
+        super(duration, dispelablity);
     }
 
     @Override
@@ -33,7 +34,7 @@ public class AllFriendsPassive extends Trigger {
     void addEffectsAndTriggers(){
         getWarrior().getCell().getGame().getWarriorsPlayer(getWarrior()).getWarriors().forEach(warrior ->{
             warrior.effects.addAll(effects);
-            addTriggersToWarriorFromTrigger(warrior,triggers);
+            warrior.triggers.addAll(triggers);
         });
     }
 

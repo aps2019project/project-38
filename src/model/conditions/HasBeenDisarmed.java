@@ -5,7 +5,7 @@ import model.effects.Effect;
 import model.gamestate.GameState;
 import model.triggers.Trigger;
 
-public class BeenDisarmed implements Condition {
+public class HasBeenDisarmed implements Condition {
 
     @Override
     public boolean check(GameState gameState, Trigger trigger) {

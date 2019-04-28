@@ -1,7 +1,7 @@
 package model.triggers;
 
 import model.cards.warriors.Warrior;
-import model.conditions.Attacking;
+import model.conditions.IsAttacking;
 import model.effects.Dispelablity;
 import model.gamestate.Attack;
 import model.gamestate.GameState;
@@ -13,7 +13,7 @@ public class AttackAdvantage extends Trigger {
     private Warrior warriorAgainst;
 
     {
-        conditions.add(new Attacking());
+        conditions.add(new IsAttacking());
         //this condition check if this minion is attacking the warrior against.
         // isPending is not checked because it is checked in attacking.
         conditions.add(((gameState, trigger) -> {
@@ -23,8 +23,8 @@ public class AttackAdvantage extends Trigger {
         }));
     }
 
-    public AttackAdvantage(Warrior warrior, int duration, Dispelablity dispelablity, int additionalDamage, Warrior warriorAgainst) {
-        super(warrior, duration,dispelablity);
+    public AttackAdvantage(int duration, Dispelablity dispelablity, int additionalDamage, Warrior warriorAgainst) {
+        super(duration,dispelablity);
         this.additionalDamage=additionalDamage;
         this.warriorAgainst =warriorAgainst;
     }

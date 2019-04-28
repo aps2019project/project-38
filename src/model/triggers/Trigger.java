@@ -12,10 +12,6 @@ import java.util.stream.Collectors;
 
 public abstract class Trigger {
     //used for adding triggers stored in a trigger to another warrior because their owners should be set again.
-    static void addTriggersToWarriorFromTrigger(Warrior owner, ArrayList<Trigger> triggers) {
-        owner.triggers.addAll(triggers.stream().peek(trigger -> trigger.warrior = owner).collect(Collectors.toList()));
-    }
-
     private Warrior warrior;
     private Cell cell;
     ArrayList<Effect> effects = new ArrayList<>();
@@ -24,16 +20,10 @@ public abstract class Trigger {
     int duration;
     Dispelablity dispelablity;
 
-    public Trigger(Warrior warrior, int duration, Dispelablity dispelablity) {
-        this.warrior = warrior;
+    public Trigger(int duration, Dispelablity dispelablity) {
+        this.dispelablity = dispelablity;
         this.duration = duration;
     }
-
-    public Trigger(Cell cell, int duration, Dispelablity dispelablity) {
-        this.cell = cell;
-        this.duration = duration;
-    }
-
 
     public Warrior getWarrior() {
         return warrior;
@@ -55,19 +45,20 @@ public abstract class Trigger {
         return conditions;
     }
 
-    public void addToEffects(Effect effect){
+    public void addToEffects(Effect effect) {
         effects.add(effect);
     }
 
-    public void addToConditions(Condition condition){
+    public void addToConditions(Condition condition) {
         conditions.add(condition);
     }
 
-    public void addToTriggers(Trigger trigger){
+    public void addToTriggers(Trigger trigger) {
         triggers.add(trigger);
     }
 
-    public void check(GameState gameState) {
+    public void check(GameState gameState, Object owner) {
+        setOwner(owner);
         for (Condition condition : conditions) {
             if (condition.check(gameState, this)) {
                 return;
@@ -76,5 +67,16 @@ public abstract class Trigger {
         apply(gameState);
     }
 
-    abstract void apply(GameState gameState);
+    private void setOwner(Object owner) {
+        cell = null;
+        warrior = null;
+
+        if (owner instanceof Cell) {
+            cell = (Cell) owner;
+        } else if (owner instanceof Warrior) {
+            warrior = (Warrior) owner;
+        }
+    }
+
+    protected abstract void apply(GameState gameState);
 }

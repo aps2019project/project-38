@@ -4,7 +4,7 @@ import model.gamestate.GameState;
 import model.gamestate.Move;
 import model.triggers.Trigger;
 
-public class Moved implements Condition {
+public class HasMoved implements Condition {
     @Override
     public boolean check(GameState gameState, Trigger trigger) {
         if(!(gameState instanceof Move)){

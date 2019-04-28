@@ -4,7 +4,7 @@ import model.gamestate.Attack;
 import model.gamestate.GameState;
 import model.triggers.Trigger;
 
-public class Attacking implements Condition {
+public class IsBeingAttacked implements Condition {
     @Override
     public boolean check(GameState gameState, Trigger trigger) {
         if(!(gameState instanceof Attack)){
@@ -12,6 +12,6 @@ public class Attacking implements Condition {
         }
         Attack attack=(Attack)gameState;
 
-        return attack.getAttacker() == trigger.getWarrior() && attack.isPending();
+        return attack.getAttacked() == trigger.getWarrior() && attack.isPending();
     }
 }
