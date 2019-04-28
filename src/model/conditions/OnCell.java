@@ -12,6 +12,6 @@ public class OnCell implements Condition {
         }
         Move move=(Move)gameState;
 
-        return move.getDestinationCell() == trigger.getCell();
+        return move.getTargetCell() == trigger.getCell();
     }
 }

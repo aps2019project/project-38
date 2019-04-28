@@ -6,12 +6,12 @@ import model.cards.warriors.Warrior;
 public class Move extends GameState {
     private Warrior warrior;
     private Cell originCell;
-    private Cell destinationCell;
+    private Cell targetCell;
 
-    public Move(Warrior warrior, Cell originCell, Cell destinationCell) {
+    public Move(Warrior warrior, Cell originCell, Cell targetCell) {
         this.warrior = warrior;
         this.originCell = originCell;
-        this.destinationCell = destinationCell;
+        this.targetCell = targetCell;
     }
 
     public Warrior getWarrior() {
@@ -22,7 +22,7 @@ public class Move extends GameState {
         return originCell;
     }
 
-    public Cell getDestinationCell() {
-        return destinationCell;
+    public Cell getTargetCell() {
+        return targetCell;
     }
 }

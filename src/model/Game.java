@@ -3,7 +3,11 @@ package model;
 
 import model.cards.Card;
 import model.cards.warriors.Warrior;
+import model.effects.Attacked;
+import model.effects.Flying;
+import model.effects.Moved;
 import model.gamestate.GameState;
+import model.gamestate.Move;
 import model.gamestate.ReplaceCard;
 import model.gamestate.TurnEnd;
 import model.player.Player;
@@ -16,7 +20,7 @@ import java.util.ArrayList;
 public class Game {
     private int turn;
     private Player[] players = new  Player[2];
-    private ArrayList<ArrayList<Cell>> board = new ArrayList<>();
+    private Board board = new Board(this);
     private Timer timer = new Timer(Constant.GameConstants.turnTime, ignoredVariable -> endTurn());
 
     {
@@ -28,92 +32,62 @@ public class Game {
         //todo
     }
 
-    public int getManhatanDistance(Cell originCell, Cell targetCell) {
-        ArrayList<Cell> checkedCells = new ArrayList<>();
-        ArrayList<Cell> layerCells = new ArrayList<>();
-        layerCells.add(originCell);
-        for (int i = 0; true; i++) {
-            if (layerCells.contains(targetCell)) {
-                return i;
-            }
-            else if (layerCells.size() == 0) {
-                return -1;
-            }
-            ArrayList nextLayerCells = new ArrayList();
-            for (Cell cell : layerCells) {
-                checkedCells.add(cell);
-                updateListOneByListTwo(nextLayerCells, getAvailableNextLayerCellsFromCell(cell, checkedCells));
-            }
-            layerCells = nextLayerCells;
-        }
-    }
-
-    private ArrayList<Cell> getAvailableNextLayerCellsFromCell(Cell cell, ArrayList<Cell> checkedCells) {
-        ArrayList<Cell> availableNexLayerCellsFromCell = new ArrayList<>();
-        getNextCells(cell).stream().filter(this::availableCell).filter(theCell -> !checkedCells.
-                contains(theCell)).forEach(availableNexLayerCellsFromCell::add);
-        return availableNexLayerCellsFromCell;
-    }
-
-    private void updateListOneByListTwo (ArrayList<Cell> listOne, ArrayList<Cell> listTwo) {
-        listTwo.addAll(listOne);
-    }
-
-    private ArrayList<Cell> getNextCells (Cell cell) {
-        ArrayList<Cell> nextCells = new ArrayList<>();
-        if (cell.getRow() + 1 < Constant.GameConstants.boardRow) {
-            nextCells.add(board.get(cell.getRow() + 1).get(cell.getColumn()));
-        }
-        if (cell.getColumn() + 1 < Constant.GameConstants.boardColumn) {
-            nextCells.add(board.get(cell.getRow()).get(cell.getColumn() + 1));
-        }
-        if (cell.getRow() - 1 >= 0) {
-            nextCells.add(board.get(cell.getRow() - 1).get(cell.getColumn()));
-        }
-        if (cell.getColumn() - 1 >= 0) {
-            nextCells.add(board.get(cell.getRow()).get(cell.getColumn() - 1));
-        }
-        return nextCells;
-    }
-
-    private boolean availableCell (Cell cell) {
-        if (cell.getWarrior() == null ||
-                getActivePlayer().getWarriors().contains(cell.getWarrior())) {
-            return true;
-        }
-        return false;
-    }
-
     public Player getActivePlayer() {
         return players[turn % 2];
     }
 
-    public void iterateAllTriggers (GameState gameState) {
-        for (ArrayList<Cell> row : board) {
-            for (Cell cell : row) {
-                for (Trigger trigger : cell.getTriggers()) {
-                    trigger.check(gameState);
-                }
-            }
+    public Player getWarriorsPlayer(Warrior warrior){
+        if (players[0].getWarriors().contains(warrior)) {
+            return players[0];
         }
+        return players[1];
+    }
 
+    public Board getBoard() {
+        return board;
+    }
+
+    public void iterateAllTriggers (GameState gameState) {
+        board.iterateBoardTriggers(gameState);
         iteratePlayerTriggers(players[0], gameState);
         iteratePlayerTriggers(players[1], gameState);
     }
 
     private void iteratePlayerTriggers (Player player, GameState gameState) {
         for (Warrior warrior : player.getWarriors()) {
-            for (Trigger trigger : warrior.triggers) {
+            for (Trigger trigger : warrior.getTriggers()) {
                 trigger.check(gameState);
             }
         }
     }
 
-    public void move (Cell originCell, Cell targetCell) {
+    public void move(Cell originCell, Cell targetCell) {
         if (getActivePlayer().getWarriors().contains(originCell.getWarrior()) &&
                 targetCell.getWarrior() == null) {
-
+            Warrior warrior = originCell.getWarrior();
+            int manhatanDistance = board.getManhatanDistance(originCell, targetCell);
+            if (checkWarriorEffectsForMove(warrior, manhatanDistance)) {
+                originCell.setWarrior(null);
+                targetCell.setWarrior(warrior);
+                warrior.setCell(targetCell);
+                Move move = new Move(warrior, originCell, targetCell);
+                iterateAllTriggers(move);
+            }
         }
+    }
+
+    private boolean checkWarriorEffectsForMove (Warrior warrior, int manhatanDistance) {
+        boolean result = warrior.getEffects().stream().noneMatch
+                (effect -> effect instanceof Attacked || effect instanceof Moved);
+        if (result) {
+            if (manhatanDistance <= Constant.WarriorConstants.maxMove) {
+                return true;
+            }
+            else {
+                return warrior.getEffects().stream().anyMatch(a -> a instanceof Flying);
+            }
+        }
+        return false;
     }
 
     public void attack (Cell attackerCell, Cell defenderCell) {
@@ -121,8 +95,9 @@ public class Game {
     }
 
     public void replaceCard (Card card) {
+        if (getActivePlayer().getHand().contains(card)) {
+        }
         ReplaceCard replaceCard = new ReplaceCard();
-
     }
 
     public void useCard (Card card) {
@@ -134,17 +109,5 @@ public class Game {
         iterateAllTriggers(turnEnd);
         turn ++;
         timer.restart();
-    }
-
-    public ArrayList<Cell> getEightAdjacent(Cell cell){
-        return null; //todo
-    }
-
-    public ArrayList<Cell> getCellWithinDistance(Cell cell,int distance){
-        return null; //todo
-    }
-
-    public Player getWarriorsPlayer(Warrior warrior){
-        return null; //todo
     }
 }

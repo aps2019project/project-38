@@ -6,7 +6,7 @@ import model.triggers.Trigger;
 import java.util.ArrayList;
 
 public class Cell {
-    Game game;
+    private Game game;
     private Warrior warrior;
     private ArrayList<Trigger> triggers = new ArrayList<>();
     private int row;

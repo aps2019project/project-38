@@ -5,15 +5,15 @@ import model.cards.Card;
 import model.player.Player;
 
 public class Warrior extends Card {
-    Player player;
-    Cell cell;
-    int HP;
-    int AP;
+    private Player player;
+    private Cell cell;
+    private int HP;
+    private int AP;
 
-    private int moveCount;
-
-    public int getMoveCount(){
-       return 0; // todo
+    public Warrior(int ID, String name, int requiredMana, int price, boolean isItem, int HP, int AP) {
+        super(ID, name, requiredMana, price, isItem);
+        this.HP = HP;
+        this.AP = AP;
     }
 
     public Cell getCell() {
@@ -39,7 +39,6 @@ public class Warrior extends Card {
     public void setAP(int AP) {
         this.AP = AP;
     }
-
 
     @Override
     public void apply(Cell cell) {

@@ -6,15 +6,15 @@ import model.effects.Dispelablity;
 
 public class TotalDisarm extends Spell {
     {
-        ID = 11;
-        name = "Total Disarm";
-        requiredMana = 0;
+        getEffects().add(new Disarm(-1, Dispelablity.BAD));
+    }
 
-        effects.add(new Disarm(-1, Dispelablity.BAD));
+    public TotalDisarm() {
+        super(11, "Total Disarm", 0, 0, false);
     }
 
     @Override
     public void apply(Cell cell) {
-        cell.getWarrior().effects.addAll(this.effects);
+        cell.getWarrior().getEffects().addAll(this.getEffects());
     }
 }

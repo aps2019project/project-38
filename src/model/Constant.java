@@ -11,6 +11,10 @@ public interface Constant {
         int column = 9;
     }
 
+    interface WarriorConstants {
+        int maxMove = 2;
+    }
+
     interface EffectsTriggersConstants{
         interface CellPoison{
             int poisonBuffDuration = 3;
