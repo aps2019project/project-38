@@ -1,15 +1,23 @@
 package model.triggers;
 
 import model.QualityHaver;
+import model.actions.TriggerAction;
 import model.effects.Dispelablity;
 import model.gamestate.GameState;
 import model.conditions.Condition;
+import model.targets.TriggerTarget;
 
+import javax.swing.*;
 import java.io.Serializable;
+import java.lang.annotation.Target;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-public abstract class Trigger extends QualityHaver implements Serializable {
+public class Trigger extends QualityHaver implements Serializable {
     ArrayList<Condition> conditions = new ArrayList<>();
+    HashMap<TriggerAction, TriggerTarget> actions = new HashMap<>();
+
     int duration;
     Dispelablity dispelablity;
 
@@ -26,14 +34,26 @@ public abstract class Trigger extends QualityHaver implements Serializable {
         conditions.add(condition);
     }
 
+    public HashMap<TriggerAction, TriggerTarget> getActions() {
+        return actions;
+    }
+
+    public void putInActions(TriggerAction triggerAction,TriggerTarget triggerTarget){
+        actions.put(triggerAction,triggerTarget);
+    }
+
     public void check(GameState gameState, QualityHaver owner) {
         for (Condition condition : conditions) {
             if (condition.check(gameState, this,owner)) {
                 return;
             }
         }
-        apply(gameState,owner);
+        executeActions(gameState,owner);
     }
 
-    protected abstract void apply(GameState gameState, QualityHaver owner);
+    protected void executeActions(GameState gameState, QualityHaver owner){
+        for (Map.Entry<TriggerAction, TriggerTarget> entry : actions.entrySet()) {
+            entry.getKey().execute(this,entry.getValue().getTarget(owner,gameState));
+        }
+    }
 }

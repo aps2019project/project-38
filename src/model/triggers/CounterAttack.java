@@ -21,7 +21,7 @@ public class CounterAttack extends Trigger {
     }
 
     @Override
-    protected void apply(GameState gameState, QualityHaver owner) {
+    protected void executeActions(GameState gameState, QualityHaver owner) {
         Attack attack=(Attack)gameState;
         ((Warrior)owner).getCell().getGame().attack(attack.getAttacked().getCell(),
                 attack.getAttacker().getCell());

@@ -19,7 +19,7 @@ public class Poison extends Trigger {
     }
 
     @Override
-    protected void apply(GameState gameState, QualityHaver owner) {
+    protected void executeActions(GameState gameState, QualityHaver owner) {
         ((Cell)owner).getWarrior().getTriggers().addAll(triggers);
     }
 }

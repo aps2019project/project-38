@@ -24,7 +24,7 @@ public class NearbyFriendsPassive extends Trigger {
     }
 
     @Override
-    protected void apply(GameState gameState, QualityHaver owner) {
+    protected void executeActions(GameState gameState, QualityHaver owner) {
         Warrior warrior = (Warrior) owner;
 
         if(gameState instanceof Death){

@@ -17,7 +17,7 @@ public class Poisoned extends Trigger{
     }
 
     @Override
-    protected void apply(GameState gameState, QualityHaver owner) {
+    protected void executeActions(GameState gameState, QualityHaver owner) {
         owner.getEffects().addAll(effects);
     }
 }

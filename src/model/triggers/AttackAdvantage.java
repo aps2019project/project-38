@@ -30,7 +30,7 @@ public class AttackAdvantage extends Trigger {
     }
 
     @Override
-    protected void apply(GameState gameState, QualityHaver owner) {
+    protected void executeActions(GameState gameState, QualityHaver owner) {
         Attack attack=(Attack) gameState;
 
         attack.setAp(attack.getAp()+additionalDamage);

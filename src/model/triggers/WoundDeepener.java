@@ -17,7 +17,7 @@ public class WoundDeepener extends Trigger {
     }
 
     @Override
-    protected void apply(GameState gameState, QualityHaver owner) {
+    protected void executeActions(GameState gameState, QualityHaver owner) {
         Attack attack = (Attack) gameState;
         owner.getTriggers().add(new AttackAdvantage(-1,Dispelablity.GOOD,
                 Constant.EffectsTriggersConstants.WoundDeepener.additionalDamage,attack.getAttacked()));
