@@ -1,6 +1,5 @@
 package model.triggers;
 
-import model.cards.warriors.Warrior;
 import model.conditions.IsBeingAttacked;
 import model.conditions.HasAntiHolyBuff;
 import model.effects.Dispelablity;
@@ -21,7 +20,7 @@ public class HolyBuff extends Trigger {
     }
 
     @Override
-    void apply(GameState gameState) {
+    protected void apply(GameState gameState) {
         Attack attack = (Attack) gameState;
 
         if(attack.getAp()-reducedDamage>=0) {

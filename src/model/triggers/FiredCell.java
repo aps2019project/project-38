@@ -1,6 +1,5 @@
 package model.triggers;
 
-import model.Cell;
 import model.Constant;
 import model.conditions.HasWarriorOnIt;
 import model.effects.Dispelablity;
@@ -20,8 +19,7 @@ public class FiredCell extends Trigger {
     }
 
     @Override
-    void apply(GameState gameState) {
-        Move move = (Move)gameState;
-        move.getWarrior().effects.addAll(effects);
+    protected void apply(GameState gameState) {
+        getCell().getWarrior().effects.addAll(effects);
     }
 }

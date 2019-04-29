@@ -1,4 +1,4 @@
-//package model.triggers;
+package model.triggers;
 //
 //import model.cards.warriors.Warrior;
 //import model.conditions.IsAttacking;

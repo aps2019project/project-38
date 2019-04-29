@@ -8,7 +8,6 @@ import model.gamestate.GameState;
 import model.conditions.Condition;
 
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 public abstract class Trigger {
     //used for adding triggers stored in a trigger to another warrior because their owners should be set again.

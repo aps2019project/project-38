@@ -1,6 +1,5 @@
 package model.triggers;
 
-import model.cards.warriors.Warrior;
 import model.conditions.HasTurnEnded;
 import model.effects.Dispelablity;
 import model.gamestate.GameState;
@@ -16,7 +15,7 @@ public class TimedEffectBomb extends Trigger {
     }
 
     @Override
-    void apply(GameState gameState) {
+    protected void apply(GameState gameState) {
         getWarrior().effects.addAll(effects);
         getWarrior().triggers.addAll(triggers);
     }

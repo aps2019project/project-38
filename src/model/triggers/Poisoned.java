@@ -1,11 +1,9 @@
 package model.triggers;
 
-import model.cards.warriors.Warrior;
 import model.conditions.HasTurnEnded;
 import model.effects.Dispelablity;
 import model.effects.HP;
 import model.gamestate.GameState;
-import model.gamestate.Move;
 
 public class Poisoned extends Trigger{
     {
@@ -18,7 +16,7 @@ public class Poisoned extends Trigger{
     }
 
     @Override
-    void apply(GameState gameState) {
+    protected void apply(GameState gameState) {
         getWarrior().effects.addAll(effects);
     }
 }

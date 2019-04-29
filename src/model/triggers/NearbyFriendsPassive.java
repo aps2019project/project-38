@@ -11,7 +11,7 @@ import model.gamestate.*;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
-
+/*special because of complexity*/
 //add triggers and effects with "1" duration to this trigger.
 public class NearbyFriendsPassive extends Trigger {
     {
@@ -23,7 +23,7 @@ public class NearbyFriendsPassive extends Trigger {
     }
 
     @Override
-    void apply(GameState gameState) {
+    protected void apply(GameState gameState) {
         if(gameState instanceof Death){
             removeEffectsAndTriggers(getWarrior().getCell().getGame().getEightAdjacents(getWarrior().getCell()).
                     stream().map(Cell::getWarrior).collect(Collectors.toCollection(ArrayList::new)));

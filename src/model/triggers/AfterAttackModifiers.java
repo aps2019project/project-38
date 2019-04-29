@@ -1,6 +1,5 @@
 package model.triggers;
 
-import model.cards.warriors.Warrior;
 import model.conditions.HasAttacked;
 import model.effects.Dispelablity;
 import model.gamestate.Attack;
@@ -18,7 +17,7 @@ public class AfterAttackModifiers extends Trigger {
     }
 
     @Override
-    void apply(GameState gameState) {
+    protected void apply(GameState gameState) {
         Attack attack = (Attack) gameState;
 
         attack.getAttacked().effects.addAll(effects);

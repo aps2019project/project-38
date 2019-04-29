@@ -4,7 +4,6 @@ import model.Constant;
 import model.conditions.HasWarriorOnIt;
 import model.effects.Dispelablity;
 import model.gamestate.GameState;
-import model.gamestate.Move;
 
 public class Poison extends Trigger {
     {
@@ -18,8 +17,7 @@ public class Poison extends Trigger {
     }
 
     @Override
-    void apply(GameState gameState) {
-        Move move=(Move)gameState;
-        move.getWarrior().triggers.addAll(triggers);
+    protected void apply(GameState gameState) {
+        getCell().getWarrior().triggers.addAll(triggers);
     }
 }

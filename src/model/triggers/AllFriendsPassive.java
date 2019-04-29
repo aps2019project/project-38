@@ -1,6 +1,5 @@
 package model.triggers;
 
-import model.cards.warriors.Warrior;
 import model.conditions.HasDied;
 import model.conditions.HasSpawned;
 import model.conditions.HasTurnStarted;
@@ -21,7 +20,7 @@ public class AllFriendsPassive extends Trigger {
     }
 
     @Override
-    void apply(GameState gameState) {
+    protected void apply(GameState gameState) {
         if(gameState instanceof PutMinion || gameState instanceof TurnStart){
             addEffectsAndTriggers();
         }
