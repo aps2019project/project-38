@@ -63,7 +63,7 @@ public class Board {
         return cells;
     }
 
-    public int getManhatanDistance(Cell originCell, Cell targetCell) {
+    public int getManhattanDistance(Cell originCell, Cell targetCell) {
         ArrayList<Cell> checkedCells = new ArrayList<>();
         ArrayList<Cell> layerCells = new ArrayList<>();
         layerCells.add(originCell);

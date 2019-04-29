@@ -14,7 +14,6 @@ import model.player.Player;
 import model.triggers.Trigger;
 
 import javax.swing.*;
-import java.util.ArrayList;
 
 
 public class Game {
@@ -65,7 +64,7 @@ public class Game {
         if (getActivePlayer().getWarriors().contains(originCell.getWarrior()) &&
                 targetCell.getWarrior() == null) {
             Warrior warrior = originCell.getWarrior();
-            int manhatanDistance = board.getManhatanDistance(originCell, targetCell);
+            int manhatanDistance = board.getManhattanDistance(originCell, targetCell);
             if (checkWarriorEffectsForMove(warrior, manhatanDistance)) {
                 originCell.setWarrior(null);
                 targetCell.setWarrior(warrior);
