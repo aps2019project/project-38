@@ -1,6 +1,7 @@
 package model.triggers;
 
 import model.Cell;
+import model.QualityHaver;
 import model.cards.warriors.Warrior;
 import model.conditions.HasDied;
 import model.conditions.HasMoved;
@@ -23,24 +24,26 @@ public class NearbyFriendsPassive extends Trigger {
     }
 
     @Override
-    protected void apply(GameState gameState) {
+    protected void apply(GameState gameState, QualityHaver owner) {
+        Warrior warrior = (Warrior) owner;
+
         if(gameState instanceof Death){
-            removeEffectsAndTriggers(getWarrior().getCell().getGame().getBoard().getEightAdjacent(getWarrior().getCell()).
+            removeEffectsAndTriggers(warrior.getCell().getGame().getBoard().getEightAdjacent(warrior.getCell()).
                     stream().map(Cell::getWarrior).collect(Collectors.toCollection(ArrayList::new)));
         }
 
         if(gameState instanceof Move){
             Move move = (Move) gameState;
 
-            addEffectsAndTriggers(getWarrior().getCell().getGame().getBoard().getEightAdjacent(move.getTargetCell()).
+            addEffectsAndTriggers(warrior.getCell().getGame().getBoard().getEightAdjacent(move.getTargetCell()).
                     stream().map(Cell::getWarrior).collect(Collectors.toCollection(ArrayList::new)));
 
-            removeEffectsAndTriggers(getWarrior().getCell().getGame().getBoard().getEightAdjacent(move.getOriginCell()).
+            removeEffectsAndTriggers(warrior.getCell().getGame().getBoard().getEightAdjacent(move.getOriginCell()).
                     stream().map(Cell::getWarrior).collect(Collectors.toCollection(ArrayList::new)));
         }
 
         if(gameState instanceof PutMinion || gameState instanceof TurnStart){
-            addEffectsAndTriggers(getWarrior().getCell().getGame().getBoard().getEightAdjacent(getWarrior().getCell()).
+            addEffectsAndTriggers(warrior.getCell().getGame().getBoard().getEightAdjacent(warrior.getCell()).
                     stream().map(Cell::getWarrior).collect(Collectors.toCollection(ArrayList::new)));
         }
     }

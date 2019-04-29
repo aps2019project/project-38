@@ -1,6 +1,7 @@
 package model.triggers;
 
 import model.Constant;
+import model.QualityHaver;
 import model.conditions.HasAttacked;
 import model.effects.Dispelablity;
 import model.gamestate.Attack;
@@ -16,9 +17,9 @@ public class WoundDeepener extends Trigger {
     }
 
     @Override
-    protected void apply(GameState gameState) {
+    protected void apply(GameState gameState, QualityHaver owner) {
         Attack attack = (Attack) gameState;
-        getWarrior().getTriggers().add(new AttackAdvantage(-1,Dispelablity.GOOD,
+        owner.getTriggers().add(new AttackAdvantage(-1,Dispelablity.GOOD,
                 Constant.EffectsTriggersConstants.WoundDeepener.additionalDamage,attack.getAttacked()));
     }
 }

@@ -1,5 +1,6 @@
 package model.triggers;
 
+import model.QualityHaver;
 import model.conditions.HasTurnEnded;
 import model.effects.Dispelablity;
 import model.gamestate.GameState;
@@ -7,7 +8,7 @@ import model.gamestate.GameState;
 public class TimedEffectBomb extends Trigger {
     {
         conditions.add(new HasTurnEnded());
-        conditions.add(((gameState, trigger) -> duration == 1));
+        conditions.add(((gameState, trigger,triggerOwner) -> duration == 1));
     }
 
     public TimedEffectBomb(int duration, Dispelablity dispelablity) {
@@ -15,8 +16,8 @@ public class TimedEffectBomb extends Trigger {
     }
 
     @Override
-    protected void apply(GameState gameState) {
-        getWarrior().getEffects().addAll(effects);
-        getWarrior().getTriggers().addAll(triggers);
+    protected void apply(GameState gameState, QualityHaver owner) {
+        owner.getEffects().addAll(effects);
+        owner.getTriggers().addAll(triggers);
     }
 }

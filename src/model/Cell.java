@@ -5,10 +5,9 @@ import model.triggers.Trigger;
 
 import java.util.ArrayList;
 
-public class Cell {
+public class Cell extends QualityHaver {
     private Game game;
     private Warrior warrior;
-    private ArrayList<Trigger> triggers = new ArrayList<>();
     private int row;
     private int column;
 

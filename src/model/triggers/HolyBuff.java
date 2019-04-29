@@ -1,5 +1,6 @@
 package model.triggers;
 
+import model.QualityHaver;
 import model.conditions.IsBeingAttacked;
 import model.conditions.HasAntiHolyBuff;
 import model.effects.Dispelablity;
@@ -20,7 +21,7 @@ public class HolyBuff extends Trigger {
     }
 
     @Override
-    protected void apply(GameState gameState) {
+    protected void apply(GameState gameState, QualityHaver owner) {
         Attack attack = (Attack) gameState;
 
         if(attack.getAp()-reducedDamage>=0) {

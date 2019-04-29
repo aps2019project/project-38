@@ -1,5 +1,6 @@
 package model.triggers;
 
+import model.QualityHaver;
 import model.conditions.HasTurnEnded;
 import model.effects.Dispelablity;
 import model.effects.HP;
@@ -16,7 +17,7 @@ public class Poisoned extends Trigger{
     }
 
     @Override
-    protected void apply(GameState gameState) {
-        getWarrior().getEffects().addAll(effects);
+    protected void apply(GameState gameState, QualityHaver owner) {
+        owner.getEffects().addAll(effects);
     }
 }

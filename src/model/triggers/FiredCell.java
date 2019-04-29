@@ -1,6 +1,8 @@
 package model.triggers;
 
+import model.Cell;
 import model.Constant;
+import model.QualityHaver;
 import model.conditions.HasWarriorOnIt;
 import model.effects.Dispelablity;
 import model.effects.HP;
@@ -19,7 +21,7 @@ public class FiredCell extends Trigger {
     }
 
     @Override
-    protected void apply(GameState gameState) {
-        getCell().getWarrior().getEffects().addAll(effects);
+    protected void apply(GameState gameState, QualityHaver owner) {
+        ((Cell)owner).getWarrior().getEffects().addAll(effects);
     }
 }

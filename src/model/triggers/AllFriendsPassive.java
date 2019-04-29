@@ -1,5 +1,7 @@
 package model.triggers;
 
+import model.QualityHaver;
+import model.cards.warriors.Warrior;
 import model.conditions.HasDied;
 import model.conditions.HasSpawned;
 import model.conditions.HasTurnStarted;
@@ -20,25 +22,26 @@ public class AllFriendsPassive extends Trigger {
     }
 
     @Override
-    protected void apply(GameState gameState) {
+    protected void apply(GameState gameState, QualityHaver owner) {
+        Warrior ownerWarrior = (Warrior)owner;
         if(gameState instanceof PutMinion || gameState instanceof TurnStart){
-            addEffectsAndTriggers();
+            addEffectsAndTriggers(ownerWarrior);
         }
 
         if(gameState instanceof Death){
-            removeEffectsAndTriggers();
+            removeEffectsAndTriggers(ownerWarrior);
         }
     }
 
-    void addEffectsAndTriggers(){
-        getWarrior().getCell().getGame().getWarriorsPlayer(getWarrior()).getWarriors().forEach(warrior ->{
+    private void addEffectsAndTriggers(Warrior ownerWarrior){
+        ownerWarrior.getCell().getGame().getWarriorsPlayer(ownerWarrior).getWarriors().forEach(warrior ->{
             warrior.getEffects().addAll(effects);
             warrior.getTriggers().addAll(triggers);
         });
     }
 
-    void removeEffectsAndTriggers(){
-        getWarrior().getCell().getGame().getWarriorsPlayer(getWarrior()).getWarriors().forEach(warrior -> {
+    private void removeEffectsAndTriggers(Warrior ownerWarrior){
+        ownerWarrior.getCell().getGame().getWarriorsPlayer(ownerWarrior).getWarriors().forEach(warrior -> {
             warrior.getEffects().removeAll(effects);
             warrior.getTriggers().removeAll(triggers);
         });

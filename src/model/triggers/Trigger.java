@@ -1,20 +1,17 @@
 package model.triggers;
 
-import model.Cell;
-import model.cards.warriors.Warrior;
+import model.QualityHaver;
 import model.effects.Dispelablity;
-import model.effects.Effect;
 import model.gamestate.GameState;
 import model.conditions.Condition;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class Trigger {
+public abstract class Trigger extends QualityHaver implements Serializable {
     //used for adding triggers stored in a trigger to another warrior because their owners should be set again.
-    private Warrior warrior;
-    private Cell cell;
-    ArrayList<Effect> effects = new ArrayList<>();
-    ArrayList<Trigger> triggers = new ArrayList<>();
+//    private Warrior warrior;
+//    private Cell cell;
     ArrayList<Condition> conditions = new ArrayList<>();
     int duration;
     Dispelablity dispelablity;
@@ -24,58 +21,42 @@ public abstract class Trigger {
         this.duration = duration;
     }
 
-    public Warrior getWarrior() {
-        return warrior;
-    }
-
-    public Cell getCell() {
-        return cell;
-    }
-
-    public ArrayList<Effect> getEffects() {
-        return effects;
-    }
-
-    public ArrayList<Trigger> getTriggers() {
-        return triggers;
-    }
+//    public Warrior getWarrior() {
+//        return warrior;
+//    }
+//
+//    public Cell getCell() {
+//        return cell;
+//    }
 
     public ArrayList<Condition> getConditions() {
         return conditions;
-    }
-
-    public void addToEffects(Effect effect) {
-        effects.add(effect);
     }
 
     public void addToConditions(Condition condition) {
         conditions.add(condition);
     }
 
-    public void addToTriggers(Trigger trigger) {
-        triggers.add(trigger);
-    }
-
-    public void check(GameState gameState, Object owner) {
-        setOwner(owner);
+    public void check(GameState gameState, QualityHaver owner) {
+//        setOwner(owner);
         for (Condition condition : conditions) {
-            if (condition.check(gameState, this)) {
+            if (condition.check(gameState, this,owner)) {
                 return;
             }
         }
-        apply(gameState);
+        apply(gameState,owner);
     }
 
-    private void setOwner(Object owner) {
-        cell = null;
-        warrior = null;
+//    private void setOwner(Object owner) {
+//        cell = null;
+//        warrior = null;
+//
+//        if (owner instanceof Cell) {
+//            cell = (Cell) owner;
+//        } else if (owner instanceof Warrior) {
+//            warrior = (Warrior) owner;
+//        }
+//    }
 
-        if (owner instanceof Cell) {
-            cell = (Cell) owner;
-        } else if (owner instanceof Warrior) {
-            warrior = (Warrior) owner;
-        }
-    }
-
-    protected abstract void apply(GameState gameState);
+    protected abstract void apply(GameState gameState, QualityHaver owner);
 }

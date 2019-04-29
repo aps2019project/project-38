@@ -1,5 +1,6 @@
 package model.triggers;
 
+import model.QualityHaver;
 import model.cards.warriors.Warrior;
 import model.conditions.IsAttacking;
 import model.effects.Dispelablity;
@@ -15,7 +16,7 @@ public class AttackAdvantage extends Trigger {
         conditions.add(new IsAttacking());
         //this condition check if this minion is attacking the warrior against.
         // isPending is not checked because it is checked in attacking.
-        conditions.add(((gameState, trigger) -> {
+        conditions.add(((gameState, trigger,triggerOwner) -> {
             if(!(gameState instanceof Attack))
                 return false;
             return ((Attack) gameState).getAttacked() == warriorAgainst;
@@ -29,7 +30,7 @@ public class AttackAdvantage extends Trigger {
     }
 
     @Override
-    protected void apply(GameState gameState) {
+    protected void apply(GameState gameState, QualityHaver owner) {
         Attack attack=(Attack) gameState;
 
         attack.setAp(attack.getAp()+additionalDamage);
