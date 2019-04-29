@@ -16,7 +16,7 @@ public class TimedEffectBomb extends Trigger {
 
     @Override
     protected void apply(GameState gameState) {
-        getWarrior().effects.addAll(effects);
-        getWarrior().triggers.addAll(triggers);
+        getWarrior().getEffects().addAll(effects);
+        getWarrior().getTriggers().addAll(triggers);
     }
 }

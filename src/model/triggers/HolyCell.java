@@ -18,6 +18,6 @@ public class HolyCell extends Trigger {
 
     @Override
     protected void apply(GameState gameState) {
-        getCell().getWarrior().triggers.addAll(triggers);
+        getCell().getWarrior().getTriggers().addAll(triggers);
     }
 }

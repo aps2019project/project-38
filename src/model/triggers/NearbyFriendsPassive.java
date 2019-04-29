@@ -48,16 +48,16 @@ public class NearbyFriendsPassive extends Trigger {
     private void addEffectsAndTriggers(ArrayList<Warrior> warriors){
         warriors.stream().filter(warrior -> warrior.getCell().getGame().getWarriorsPlayer(warrior).getWarriors().
                 contains(warrior)).forEach(warrior -> {
-            warrior.effects.addAll(effects);
-            warrior.triggers.addAll(triggers);
+            warrior.getEffects().addAll(effects);
+            warrior.getTriggers().addAll(triggers);
         });
     }
 
     private void removeEffectsAndTriggers(ArrayList<Warrior> warriors){
         warriors.stream().filter(warrior -> warrior.getCell().getGame().getWarriorsPlayer(warrior).getWarriors().
                 contains(warrior)).forEach(warrior -> {
-            warrior.effects.removeAll(effects);
-            warrior.triggers.removeAll(triggers);
+            warrior.getEffects().removeAll(effects);
+            warrior.getTriggers().removeAll(triggers);
         });
     }
 }

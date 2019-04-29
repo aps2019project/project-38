@@ -28,7 +28,7 @@ public class Board {
         for (ArrayList<Cell> row : board) {
             for (Cell cell : row) {
                 for (Trigger trigger : cell.getTriggers()) {
-                    trigger.check(gameState);
+                    trigger.check(gameState,cell);
                 }
             }
         }

@@ -32,15 +32,15 @@ public class AllFriendsPassive extends Trigger {
 
     void addEffectsAndTriggers(){
         getWarrior().getCell().getGame().getWarriorsPlayer(getWarrior()).getWarriors().forEach(warrior ->{
-            warrior.effects.addAll(effects);
-            warrior.triggers.addAll(triggers);
+            warrior.getEffects().addAll(effects);
+            warrior.getTriggers().addAll(triggers);
         });
     }
 
     void removeEffectsAndTriggers(){
         getWarrior().getCell().getGame().getWarriorsPlayer(getWarrior()).getWarriors().forEach(warrior -> {
-            warrior.effects.removeAll(effects);
-            warrior.triggers.removeAll(triggers);
+            warrior.getEffects().removeAll(effects);
+            warrior.getTriggers().removeAll(triggers);
         });
     }
 }

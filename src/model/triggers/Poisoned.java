@@ -17,6 +17,6 @@ public class Poisoned extends Trigger{
 
     @Override
     protected void apply(GameState gameState) {
-        getWarrior().effects.addAll(effects);
+        getWarrior().getEffects().addAll(effects);
     }
 }

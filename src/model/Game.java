@@ -56,7 +56,7 @@ public class Game {
     private void iteratePlayerTriggers (Player player, GameState gameState) {
         for (Warrior warrior : player.getWarriors()) {
             for (Trigger trigger : warrior.getTriggers()) {
-                trigger.check(gameState);
+                trigger.check(gameState,player);
             }
         }
     }

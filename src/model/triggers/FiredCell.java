@@ -20,6 +20,6 @@ public class FiredCell extends Trigger {
 
     @Override
     protected void apply(GameState gameState) {
-        getCell().getWarrior().effects.addAll(effects);
+        getCell().getWarrior().getEffects().addAll(effects);
     }
 }
