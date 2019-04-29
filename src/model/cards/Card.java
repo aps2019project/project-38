@@ -9,14 +9,21 @@ import java.util.HashMap;
 
 public abstract class Card {
     private static HashMap<Integer, Card> allCards = new HashMap<>();
-    public int ID;
-    public String name;
-    public int requiredMana;
-    public int price;
-    public boolean isItem;
+    private int ID;
+    private String name;
+    private int requiredMana;
+    private int price;
+    private boolean isItem;
+    private ArrayList<Trigger> triggers = new ArrayList<>();
+    private ArrayList<Effect> effects = new ArrayList<>();
 
-    public ArrayList<Trigger> triggers = new ArrayList<>();
-    public ArrayList<Effect> effects = new ArrayList<>();
+    public Card(int ID, String name, int requiredMana, int price, boolean isItem) {
+        this.ID = ID;
+        this.name = name;
+        this.requiredMana = requiredMana;
+        this.price = price;
+        this.isItem = isItem;
+    }
 
     public abstract void apply(Cell cell);
 
@@ -31,5 +38,29 @@ public abstract class Card {
 
     public ArrayList<Trigger> getTriggers() {
         return triggers;
+    }
+
+    public ArrayList<Effect> getEffects() {
+        return effects;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getRequiredMana() {
+        return requiredMana;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public boolean isItem() {
+        return isItem;
     }
 }

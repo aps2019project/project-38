@@ -25,22 +25,22 @@ public class NearbyFriendsPassive extends Trigger {
     @Override
     protected void apply(GameState gameState) {
         if(gameState instanceof Death){
-            removeEffectsAndTriggers(getWarrior().getCell().getGame().getEightAdjacents(getWarrior().getCell()).
+            removeEffectsAndTriggers(getWarrior().getCell().getGame().getBoard().getEightAdjacent(getWarrior().getCell()).
                     stream().map(Cell::getWarrior).collect(Collectors.toCollection(ArrayList::new)));
         }
 
         if(gameState instanceof Move){
             Move move = (Move) gameState;
 
-            addEffectsAndTriggers(getWarrior().getCell().getGame().getEightAdjacents(move.getDestinationCell()).
+            addEffectsAndTriggers(getWarrior().getCell().getGame().getBoard().getEightAdjacent(move.getTargetCell()).
                     stream().map(Cell::getWarrior).collect(Collectors.toCollection(ArrayList::new)));
 
-            removeEffectsAndTriggers(getWarrior().getCell().getGame().getEightAdjacents(move.getOriginCell()).
+            removeEffectsAndTriggers(getWarrior().getCell().getGame().getBoard().getEightAdjacent(move.getOriginCell()).
                     stream().map(Cell::getWarrior).collect(Collectors.toCollection(ArrayList::new)));
         }
 
         if(gameState instanceof PutMinion || gameState instanceof TurnStart){
-            addEffectsAndTriggers(getWarrior().getCell().getGame().getEightAdjacents(getWarrior().getCell()).
+            addEffectsAndTriggers(getWarrior().getCell().getGame().getBoard().getEightAdjacent(getWarrior().getCell()).
                     stream().map(Cell::getWarrior).collect(Collectors.toCollection(ArrayList::new)));
         }
     }
