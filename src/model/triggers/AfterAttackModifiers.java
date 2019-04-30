@@ -1,6 +1,6 @@
 package model.triggers;
 
-import model.actions.Applier;
+import model.actions.triggeraction.Applier;
 import model.conditions.HasAttacked;
 import model.effects.Dispelablity;
 import model.targets.AttackedGetter;

@@ -1,15 +1,13 @@
 package model.triggers;
 
 import model.QualityHaver;
-import model.actions.TriggerAction;
+import model.actions.triggeraction.TriggerAction;
 import model.effects.Dispelablity;
 import model.gamestate.GameState;
 import model.conditions.Condition;
 import model.targets.TriggerTarget;
 
-import javax.swing.*;
 import java.io.Serializable;
-import java.lang.annotation.Target;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +16,7 @@ public class Trigger extends QualityHaver implements Serializable {
     ArrayList<Condition> conditions = new ArrayList<>();
     HashMap<TriggerAction, TriggerTarget> actions = new HashMap<>();
 
-    int duration;
+    public int duration;
     Dispelablity dispelablity;
 
     public Trigger(int duration, Dispelablity dispelablity) {

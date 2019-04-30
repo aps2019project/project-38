@@ -1,8 +1,6 @@
-package model.actions;
+package model.actions.triggeraction;
 
 import model.QualityHaver;
-import model.cards.warriors.Warrior;
-import model.triggers.Trigger;
 
 public class Applier implements TriggerAction {
     @Override
