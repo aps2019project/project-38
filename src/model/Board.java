@@ -12,9 +12,9 @@ public class Board {
 
     public Board(Game game) {
         this.game = game;
-        for (int i = 0; i < Constant.BoardConstants.row; i++) {
+        for (int i = 0; i < Constant.GameConstants.boardRow; i++) {
             board.add(new ArrayList<>());
-            for (int j = 0; j < Constant.BoardConstants.column; j++) {
+            for (int j = 0; j < Constant.GameConstants.boardColumn; j++) {
                 board.get(i).add(new Cell(i, j));
             }
         }
@@ -96,10 +96,10 @@ public class Board {
 
     private ArrayList<Cell> getNextCells (Cell cell) {
         ArrayList<Cell> nextCells = new ArrayList<>();
-        if (cell.getRow() + 1 < Constant.BoardConstants.row) {
+        if (cell.getRow() + 1 < Constant.GameConstants.boardRow) {
             nextCells.add(board.get(cell.getRow() + 1).get(cell.getColumn()));
         }
-        if (cell.getColumn() + 1 < Constant.BoardConstants.column) {
+        if (cell.getColumn() + 1 < Constant.GameConstants.boardColumn) {
             nextCells.add(board.get(cell.getRow()).get(cell.getColumn() + 1));
         }
         if (cell.getRow() - 1 >= 0) {

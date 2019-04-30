@@ -4,11 +4,14 @@ package model;
 public interface Constant {
     interface GameConstants {
         int turnTime = 20000;
-    }
+        int handSize = 5;
+        int boardRow = 5;
+        int boardColumn = 9;
 
-    interface BoardConstants {
-        int row = 5;
-        int column = 9;
+        static int getTurnMana(int turn) {
+            int mana = (turn + 5) / 2;
+            return mana > 9 ? 9 : mana;
+        }
     }
 
     interface WarriorConstants {

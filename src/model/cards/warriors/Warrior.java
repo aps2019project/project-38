@@ -1,6 +1,7 @@
 package model.cards.warriors;
 
 import model.Cell;
+import model.Game;
 import model.cards.Card;
 import model.player.Player;
 
@@ -28,20 +29,18 @@ public class Warrior extends Card {
         return HP;//todo should check all effects for the overall HP.
     }
 
-    public void setHP(int HP) {
-        this.HP = HP;
-    }
-
     public int getAP() {
         return AP;//todo should check all effects for the overall AP.
-    }
-
-    public void setAP(int AP) {
-        this.AP = AP;
     }
 
     @Override
     public void apply(Cell cell) {
 
+    }
+
+    @Override
+    public boolean checkTarget(Cell cell, Game game) {
+        return false;
+        //todo
     }
 }

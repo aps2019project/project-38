@@ -18,4 +18,8 @@ public abstract class Effect implements Serializable {
         this.duration = duration;
         this.dispelablity=dispelablity;
     }
+
+    public Dispelablity getDispelablity() {
+        return dispelablity;
+    }
 }
