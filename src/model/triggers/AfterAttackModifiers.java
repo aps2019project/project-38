@@ -1,7 +1,7 @@
 package model.triggers;
 
-import model.cards.warriors.Warrior;
-import model.conditions.Attacked;
+import model.QualityHaver;
+import model.conditions.HasAttacked;
 import model.effects.Dispelablity;
 import model.gamestate.Attack;
 import model.gamestate.GameState;
@@ -10,19 +10,18 @@ this trigger adds all triggers and effects in it to the warrior that this warrio
  */
 public class AfterAttackModifiers extends Trigger {
     {
-        conditions.add(new Attacked());
+        conditions.add(new HasAttacked());
     }
 
-    public AfterAttackModifiers(Warrior warrior, int duration, Dispelablity dispelablity) {
-        super(warrior, duration, dispelablity);
+    public AfterAttackModifiers(int duration, Dispelablity dispelablity) {
+        super(duration, dispelablity);
     }
-
 
     @Override
-    void apply(GameState gameState) {
+    protected void executeActions(GameState gameState, QualityHaver owner) {
         Attack attack = (Attack) gameState;
 
         attack.getAttacked().getEffects().addAll(effects);
-        addTriggersToWarriorFromTrigger(attack.getAttacked(),triggers);
+        attack.getAttacked().getTriggers().addAll(triggers);
     }
 }

@@ -1,80 +1,59 @@
 package model.triggers;
 
-import model.Cell;
-import model.cards.warriors.Warrior;
+import model.QualityHaver;
+import model.actions.TriggerAction;
 import model.effects.Dispelablity;
-import model.effects.Effect;
 import model.gamestate.GameState;
 import model.conditions.Condition;
+import model.targets.TriggerTarget;
 
+import javax.swing.*;
+import java.io.Serializable;
+import java.lang.annotation.Target;
 import java.util.ArrayList;
-import java.util.stream.Collectors;
+import java.util.HashMap;
+import java.util.Map;
 
-public abstract class Trigger {
-    //used for adding triggers stored in a trigger to another warrior because their owners should be set again.
-    static void addTriggersToWarriorFromTrigger(Warrior owner, ArrayList<Trigger> triggers) {
-        owner.getTriggers().addAll(triggers.stream().peek(trigger -> trigger.warrior = owner).collect(Collectors.toList()));
-    }
-
-    private Warrior warrior;
-    private Cell cell;
-    ArrayList<Effect> effects = new ArrayList<>();
-    ArrayList<Trigger> triggers = new ArrayList<>();
+public class Trigger extends QualityHaver implements Serializable {
     ArrayList<Condition> conditions = new ArrayList<>();
+    HashMap<TriggerAction, TriggerTarget> actions = new HashMap<>();
+
     int duration;
     Dispelablity dispelablity;
 
-    public Trigger(Warrior warrior, int duration, Dispelablity dispelablity) {
-        this.warrior = warrior;
+    public Trigger(int duration, Dispelablity dispelablity) {
+        this.dispelablity = dispelablity;
         this.duration = duration;
-    }
-
-    public Trigger(Cell cell, int duration, Dispelablity dispelablity) {
-        this.cell = cell;
-        this.duration = duration;
-    }
-
-
-    public Warrior getWarrior() {
-        return warrior;
-    }
-
-    public Cell getCell() {
-        return cell;
-    }
-
-    public ArrayList<Effect> getEffects() {
-        return effects;
-    }
-
-    public ArrayList<Trigger> getTriggers() {
-        return triggers;
     }
 
     public ArrayList<Condition> getConditions() {
         return conditions;
     }
 
-    public void addToEffects(Effect effect){
-        effects.add(effect);
-    }
-
-    public void addToConditions(Condition condition){
+    public void addToConditions(Condition condition) {
         conditions.add(condition);
     }
 
-    public void addToTriggers(Trigger trigger){
-        triggers.add(trigger);
+    public HashMap<TriggerAction, TriggerTarget> getActions() {
+        return actions;
     }
 
-    public void check(GameState gameState) {
+    public void putInActions(TriggerAction triggerAction,TriggerTarget triggerTarget){
+        actions.put(triggerAction,triggerTarget);
+    }
+
+    public void check(GameState gameState, QualityHaver owner) {
         for (Condition condition : conditions) {
-            if (condition.check(gameState, this)) {
+            if (condition.check(gameState, this,owner)) {
                 return;
             }
         }
-        apply(gameState);
+        executeActions(gameState,owner);
     }
 
-    abstract void apply(GameState gameState);
+    protected void executeActions(GameState gameState, QualityHaver owner){
+        for (Map.Entry<TriggerAction, TriggerTarget> entry : actions.entrySet()) {
+            entry.getKey().execute(this,entry.getValue().getTarget(owner,gameState));
+        }
+    }
 }

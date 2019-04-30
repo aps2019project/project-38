@@ -1,22 +1,22 @@
 package model.cards;
 
 import model.Cell;
+import model.QualityHaver;
 import model.Game;
 import model.effects.Effect;
 import model.triggers.Trigger;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public abstract class Card {
-    private static HashMap<Integer, Card> allCards = new HashMap<>();
-    private int ID;
-    private String name;
-    private int requiredMana;
-    private int price;
-    private boolean isItem;
-    private ArrayList<Trigger> triggers = new ArrayList<>();
-    private ArrayList<Effect> effects = new ArrayList<>();
+public abstract class Card extends QualityHaver implements Serializable {
+    protected static HashMap<Integer, Card> allCards = new HashMap<>();
+    protected int ID;
+    protected String name;
+    protected int requiredMana;
+    protected int price;
+    protected boolean isItem;
 
     public Card(int ID, String name, int requiredMana, int price, boolean isItem) {
         this.ID = ID;

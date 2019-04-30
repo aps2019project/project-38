@@ -1,25 +1,25 @@
 package model.triggers;
 
 import model.Constant;
-import model.cards.warriors.Warrior;
-import model.conditions.Attacked;
+import model.QualityHaver;
+import model.conditions.HasAttacked;
 import model.effects.Dispelablity;
 import model.gamestate.Attack;
 import model.gamestate.GameState;
-
+//special because the trigger in it needs gameState to be built.
 public class WoundDeepener extends Trigger {
     {
-        conditions.add(new Attacked());
+        conditions.add(new HasAttacked());
     }
 
-    public WoundDeepener(Warrior warrior, int duration, Dispelablity dispelablity) {
-        super(warrior, duration, dispelablity);
+    public WoundDeepener(int duration, Dispelablity dispelablity) {
+        super(duration, dispelablity);
     }
 
     @Override
-    void apply(GameState gameState) {
+    protected void executeActions(GameState gameState, QualityHaver owner) {
         Attack attack = (Attack) gameState;
-        getWarrior().getTriggers().add(new AttackAdvantage(getWarrior(),-1,Dispelablity.GOOD,
+        owner.getTriggers().add(new AttackAdvantage(-1,Dispelablity.GOOD,
                 Constant.EffectsTriggersConstants.WoundDeepener.additionalDamage,attack.getAttacked()));
     }
 }

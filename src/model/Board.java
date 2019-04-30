@@ -28,7 +28,7 @@ public class Board {
         for (ArrayList<Cell> row : board) {
             for (Cell cell : row) {
                 for (Trigger trigger : cell.getTriggers()) {
-                    trigger.check(gameState);
+                    trigger.check(gameState,cell);
                 }
             }
         }
@@ -63,7 +63,7 @@ public class Board {
         return cells;
     }
 
-    public int getManhatanDistance(Cell originCell, Cell targetCell) {
+    public int getManhattanDistance(Cell originCell, Cell targetCell) {
         ArrayList<Cell> checkedCells = new ArrayList<>();
         ArrayList<Cell> layerCells = new ArrayList<>();
         layerCells.add(originCell);

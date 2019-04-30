@@ -68,7 +68,7 @@ public class Game {
     private void iteratePlayerTriggers (Player player, GameState gameState) {
         for (Warrior warrior : player.getWarriors()) {
             for (Trigger trigger : warrior.getTriggers()) {
-                trigger.check(gameState);
+                trigger.check(gameState,warrior);
             }
         }
     }
@@ -99,7 +99,7 @@ public class Game {
         if (getActivePlayer().getWarriors().contains(originCell.getWarrior()) &&
                 targetCell.getWarrior() == null) {
             Warrior warrior = originCell.getWarrior();
-            int manhatanDistance = board.getManhatanDistance(originCell, targetCell);
+            int manhatanDistance = board.getManhattanDistance(originCell, targetCell);
             if (checkWarriorEffectsForMove(warrior, manhatanDistance)) {
                 originCell.setWarrior(null);
                 targetCell.setWarrior(warrior);

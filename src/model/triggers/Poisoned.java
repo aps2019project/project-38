@@ -1,27 +1,23 @@
 package model.triggers;
 
-import model.cards.warriors.Warrior;
-import model.conditions.TurnEnded;
+import model.QualityHaver;
+import model.conditions.HasTurnEnded;
 import model.effects.Dispelablity;
 import model.effects.HP;
 import model.gamestate.GameState;
-import model.gamestate.Move;
-
-import javax.management.loading.MLet;
 
 public class Poisoned extends Trigger{
     {
-        conditions.add(new TurnEnded());
+        conditions.add(new HasTurnEnded());
         effects.add(new HP(-1, Dispelablity.UNDISPELLABLE,-1));
     }
 
-    public Poisoned(Warrior warrior, int duration, Dispelablity dispelablity) {
-        super(warrior, duration, dispelablity);
+    public Poisoned(int duration, Dispelablity dispelablity) {
+        super(duration, dispelablity);
     }
 
     @Override
-    void apply(GameState gameState) {
-        Move move=(Move)gameState;
-        move.getWarrior().getEffects().addAll(effects);
+    protected void executeActions(GameState gameState, QualityHaver owner) {
+        owner.getEffects().addAll(effects);
     }
 }

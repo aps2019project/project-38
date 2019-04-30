@@ -1,10 +1,20 @@
 package model.effects;
 
-public abstract class Effect {
-    public int duration;
-    private Dispelablity dispelablity;
+import java.io.Serializable;
 
-    public Effect(int duration,Dispelablity dispelablity) {
+public abstract class Effect implements Serializable {
+    protected int duration;
+    Dispelablity dispelablity;
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public Effect(int duration, Dispelablity dispelablity) {
         this.duration = duration;
         this.dispelablity=dispelablity;
     }
