@@ -1,6 +1,7 @@
 package model.cards.spells;
 
 import model.Cell;
+import model.Game;
 import model.effects.Disarm;
 import model.effects.Dispelablity;
 
@@ -16,5 +17,11 @@ public class TotalDisarm extends Spell {
     @Override
     public void apply(Cell cell) {
         cell.getWarrior().getEffects().addAll(this.getEffects());
+    }
+
+    @Override
+    public boolean checkTarget(Cell cell, Game game) {
+        return false;
+        //todo
     }
 }

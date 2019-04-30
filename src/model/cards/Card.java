@@ -1,6 +1,7 @@
 package model.cards;
 
 import model.Cell;
+import model.Game;
 import model.effects.Effect;
 import model.triggers.Trigger;
 
@@ -31,6 +32,8 @@ public abstract class Card {
         return null;//please write returns so the build attempts don't fail.
         //todo
     }
+
+    public abstract boolean checkTarget(Cell cell, Game game); //todo
     //***
     public static HashMap<Integer, Card> getAllCards() {
         return allCards;

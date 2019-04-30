@@ -2,34 +2,46 @@ package model;
 
 
 import model.cards.Card;
+import model.cards.spells.Spell;
 import model.cards.warriors.Warrior;
 import model.effects.Attacked;
+import model.effects.Effect;
 import model.effects.Flying;
 import model.effects.Moved;
-import model.gamestate.GameState;
-import model.gamestate.Move;
-import model.gamestate.ReplaceCard;
-import model.gamestate.TurnEnd;
+import model.gamestate.*;
+import model.player.AIPlayer;
+import model.player.HumanPlayer;
 import model.player.Player;
 import model.triggers.Trigger;
 
 import javax.swing.*;
-import java.util.ArrayList;
+import java.util.Random;
+
 
 
 public class Game {
     private int turn;
     private Player[] players = new  Player[2];
     private Board board = new Board(this);
-    private Timer timer = new Timer(Constant.GameConstants.turnTime, ignoredVariable -> endTurn());
+    private Timer timer = new Timer(Constant.GameConstants.turnTime, ignored -> endTurn());
 
     {
         turn = 0;
+        getActivePlayer().mana = Constant.GameConstants.getTurnMana(turn);
+        getActivePlayer().ableToReplaceCard = true;
         timer.start();
     }
 
-    public Game() {
-        //todo
+    public Game(Account accountOne, Deck deckOne, Account accountTwo, Deck deckTwo) {
+        int randomIndex = (new Random(2)).nextInt();
+        this.players[randomIndex] = new HumanPlayer(accountOne, deckOne);
+        this.players[(randomIndex + 1) % 2] = new HumanPlayer(accountTwo, deckTwo);
+    }
+
+    public Game(Account account, Deck humanDeck, Deck aIDeck) {
+        int randomIndex = (new Random(2)).nextInt();
+        players[randomIndex] = new HumanPlayer(account, humanDeck);
+        players[(randomIndex + 1) % 2] = new AIPlayer(aIDeck);
     }
 
     public Player getActivePlayer() {
@@ -47,7 +59,7 @@ public class Game {
         return board;
     }
 
-    public void iterateAllTriggers (GameState gameState) {
+    private void iterateAllTriggers (GameState gameState) {
         board.iterateBoardTriggers(gameState);
         iteratePlayerTriggers(players[0], gameState);
         iteratePlayerTriggers(players[1], gameState);
@@ -59,6 +71,28 @@ public class Game {
                 trigger.check(gameState);
             }
         }
+    }
+
+    private void iterateAllEffects() {
+        iteratePlayerEffects(players[0]);
+        iteratePlayerEffects(players[1]);
+    }
+
+    private void iteratePlayerEffects(Player player) {
+        for (Warrior warrior : player.getWarriors()) {
+            for (Effect effect : warrior.getEffects()) {
+                if (effect.duration > 0) {
+                    effect.duration --;
+                    if (effect.duration == 0) {
+                        warrior.getEffects().remove(effect);
+                    }
+                }
+            }
+        }
+    }
+
+    private void killPlayerDiedWariors(Player player) {
+        player.getWarriors().removeIf(warrior -> warrior.getHP() <= 0);
     }
 
     public void move(Cell originCell, Cell targetCell) {
@@ -100,23 +134,60 @@ public class Game {
         }
     }
 
-    public void replaceCard (Card card) {
-        if (getActivePlayer().getHand().contains(card)) {
-            getActivePlayer().getHand().remove(card);
-            getActivePlayer().getMainDeck().ge
+    public void replaceCard (int handMapKey) {
+        try {
+            if (getActivePlayer().ableToReplaceCard) {
+                Card card = getActivePlayer().getHand().get(handMapKey);
+                Random random = new Random();
+                Card newCard;
+                while (true) {
+                    int randomIndex = random.nextInt(getActivePlayer().getMainDeck().getCardIDs().size());
+                    int cardID = getActivePlayer().getMainDeck().getCardIDs().get(randomIndex);
+                    if (cardID != card.getID()) {
+                        newCard = Card.getAllCards().get(cardID);
+                        break;
+                    }
+                }
+                getActivePlayer().getHand().put(handMapKey, newCard);
+                getActivePlayer().ableToReplaceCard = false;
             ReplaceCard replaceCard = new ReplaceCard();
+            iterateAllTriggers(replaceCard);
+            }
         }
-
+        catch (Exception ignored) {}
     }
 
-    public void useCard (Card card) {
-        //todo
+    public void useCard (int handMapKey, Cell cell) {
+        try {
+            Card card = getActivePlayer().getHand().get(handMapKey);
+            if (getActivePlayer().mana >= card.getRequiredMana() &&
+                    card.checkTarget(cell, this)) {
+                getActivePlayer().mana -= card.getRequiredMana();
+                getActivePlayer().getHand().put(handMapKey, null);
+                card.apply(cell);
+                GameState gameState;
+                if (card instanceof Spell) {
+                    gameState = new UseSpell();
+                }else {
+                    gameState = new PutMinion((Warrior) card);
+                }
+                iterateAllTriggers(gameState);
+            }
+        }
+        catch (ClassCastException ignored) {
+            System.err.println("((useCard method in Game, has a problem))");
+            //todo
+        }
+        catch (Exception ignored) {}
     }
 
     public void endTurn () {
         TurnEnd turnEnd = new TurnEnd();
+        iterateAllEffects();
         iterateAllTriggers(turnEnd);
         turn ++;
+        getActivePlayer().mana = Constant.GameConstants.getTurnMana(turn);
+        getActivePlayer().ableToReplaceCard = true;
         timer.restart();
     }
 }
