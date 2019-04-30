@@ -2,11 +2,12 @@ package model.gamestate;
 
 import model.cards.warriors.Warrior;
 
-public class Attack extends GameState {
+public class AttackState extends GameState {
     private boolean pending;
-    private int ap;
+    public int ap;
     private Warrior attacker;
     private Warrior attacked;
+    public boolean canceled=false;
 
     public boolean isPending() {
         return pending;
@@ -14,14 +15,6 @@ public class Attack extends GameState {
 
     public void setPending(boolean pending) {
         this.pending = pending;
-    }
-
-    public int getAp() {
-        return ap;
-    }
-
-    public void setAp(int ap) {
-        this.ap = ap;
     }
 
     public Warrior getAttacker() {
@@ -32,7 +25,7 @@ public class Attack extends GameState {
         return attacked;
     }
 
-    public Attack(Warrior attacker, Warrior attacked, int ap) {
+    public AttackState(Warrior attacker, Warrior attacked, int ap) {
         this.ap = ap;
         this.attacker = attacker;
         this.attacked = attacked;

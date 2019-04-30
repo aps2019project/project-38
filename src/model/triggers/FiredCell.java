@@ -7,7 +7,6 @@ import model.conditions.HasWarriorOnIt;
 import model.effects.Dispelablity;
 import model.effects.HP;
 import model.gamestate.GameState;
-import model.gamestate.Move;
 
 public class FiredCell extends Trigger {
     {

@@ -4,8 +4,9 @@ import model.QualityHaver;
 import model.cards.warriors.Warrior;
 import model.conditions.IsAttacking;
 import model.effects.Dispelablity;
-import model.gamestate.Attack;
+import model.gamestate.AttackState;
 import model.gamestate.GameState;
+
 /*special because another special trigger needs it(WoundDeepener)*/
 //this trigger causes a special warrior to do more damage against a special warrior.
 public class AttackAdvantage extends Trigger {
@@ -17,9 +18,9 @@ public class AttackAdvantage extends Trigger {
         //this condition check if this minion is attacking the warrior against.
         // isPending is not checked because it is checked in attacking.
         conditions.add(((gameState, trigger,triggerOwner) -> {
-            if(!(gameState instanceof Attack))
+            if(!(gameState instanceof AttackState))
                 return false;
-            return ((Attack) gameState).getAttacked() == warriorAgainst;
+            return ((AttackState) gameState).getAttacked() == warriorAgainst;
         }));
     }
 
@@ -31,8 +32,8 @@ public class AttackAdvantage extends Trigger {
 
     @Override
     protected void executeActions(GameState gameState, QualityHaver owner) {
-        Attack attack=(Attack) gameState;
+        AttackState attackState =(AttackState) gameState;
 
-        attack.setAp(attack.getAp()+additionalDamage);
+        attackState.ap+=additionalDamage;
     }
 }

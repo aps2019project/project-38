@@ -105,8 +105,8 @@ public class Game {
                 targetCell.setWarrior(warrior);
                 warrior.setCell(targetCell);
                 warrior.getEffects().add(new Moved());
-                Move move = new Move(warrior, originCell, targetCell);
-                iterateAllTriggers(move);
+                MoveState moveState = new MoveState(warrior, originCell, targetCell);
+                iterateAllTriggers(moveState);
             }
         }
     }
@@ -150,8 +150,8 @@ public class Game {
                 }
                 getActivePlayer().getHand().put(handMapKey, newCard);
                 getActivePlayer().ableToReplaceCard = false;
-            ReplaceCard replaceCard = new ReplaceCard();
-            iterateAllTriggers(replaceCard);
+            ReplaceCardState replaceCardState = new ReplaceCardState();
+            iterateAllTriggers(replaceCardState);
             }
         }
         catch (Exception ignored) {}
@@ -167,9 +167,9 @@ public class Game {
                 card.apply(cell);
                 GameState gameState;
                 if (card instanceof Spell) {
-                    gameState = new UseSpell();
+                    gameState = new UseSpellState();
                 }else {
-                    gameState = new PutMinion((Warrior) card);
+                    gameState = new PutMinionState((Warrior) card);
                 }
                 iterateAllTriggers(gameState);
             }
@@ -182,9 +182,9 @@ public class Game {
     }
 
     public void endTurn () {
-        TurnEnd turnEnd = new TurnEnd();
+        TurnEndState turnEndState = new TurnEndState();
         iterateAllEffects();
-        iterateAllTriggers(turnEnd);
+        iterateAllTriggers(turnEndState);
         turn ++;
         getActivePlayer().mana = Constant.GameConstants.getTurnMana(turn);
         getActivePlayer().ableToReplaceCard = true;

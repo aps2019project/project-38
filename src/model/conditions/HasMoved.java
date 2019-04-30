@@ -2,17 +2,17 @@ package model.conditions;
 
 import model.QualityHaver;
 import model.gamestate.GameState;
-import model.gamestate.Move;
+import model.gamestate.MoveState;
 import model.triggers.Trigger;
 
 public class HasMoved implements Condition {
     @Override
     public boolean check(GameState gameState, Trigger trigger, QualityHaver triggerOwner) {
-        if(!(gameState instanceof Move)){
+        if(!(gameState instanceof MoveState)){
             return false;
         }
-        Move move = (Move)gameState;
+        MoveState moveState = (MoveState)gameState;
 
-        return move.getWarrior().equals(triggerOwner);
+        return moveState.getWarrior().equals(triggerOwner);
     }
 }

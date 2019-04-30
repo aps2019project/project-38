@@ -1,11 +1,8 @@
 package model.triggers;
 
-import model.QualityHaver;
 import model.actions.Applier;
 import model.conditions.HasAttacked;
 import model.effects.Dispelablity;
-import model.gamestate.Attack;
-import model.gamestate.GameState;
 import model.targets.AttackedGetter;
 
 /*

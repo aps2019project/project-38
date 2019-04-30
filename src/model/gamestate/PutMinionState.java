@@ -2,10 +2,10 @@ package model.gamestate;
 
 import model.cards.warriors.Warrior;
 
-public class PutMinion extends GameState {
+public class PutMinionState extends GameState {
     private Warrior warrior;
 
-    public PutMinion(Warrior warrior) {
+    public PutMinionState(Warrior warrior) {
         this.warrior = warrior;
     }
 
