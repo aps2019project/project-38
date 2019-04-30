@@ -2,11 +2,12 @@ package model;
 
 import view.Message;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
+import java.util.*;
+import java.util.Collections;
 
-public class Account {
+
+public class Account implements Comparable<Account> {
+
     private static Account activeAccount;
     private static ArrayList<String> accountNames = new ArrayList<>();
     private static HashMap<String, Account> accountNameToAccountObject = new HashMap<>();
@@ -39,8 +40,26 @@ public class Account {
         Account.activeAccount = account;
     }
 
-    private static void sortAccounts() {
-        //todo
+    @Override
+    public int compareTo(Account o) {
+        int numberOfMyWins = 0;
+        for (MatchHistory matchHistory : this.getHistory()) {
+            if (matchHistory.getDidWin()) numberOfMyWins++;
+        }
+        int numberOFOWins = 0;
+        for (MatchHistory matchHistory : o.getHistory()) {
+            if (matchHistory.getDidWin()) numberOFOWins++;
+        }
+        return Integer.compare(numberOfMyWins, numberOFOWins);
+    }
+
+    public static ArrayList<Account> sortAccounts() {
+        ArrayList<Account> allAccounts = new ArrayList<>();
+        for (String accountName : getAccountNames()) {
+            allAccounts.add(getAccountNameToAccountObject().get(accountName));
+        }
+        Collections.sort(allAccounts);
+        return allAccounts;
     }
 
     //***
@@ -53,7 +72,6 @@ public class Account {
         matchHistory.setDidWin(didWin);
         matchHistory.setOpponentName(opponentName);
         Date date = new Date();
-        //todo
         matchHistory.setDate(date);
     }
 

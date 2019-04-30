@@ -26,6 +26,14 @@ public abstract class Card extends QualityHaver implements Serializable {
         this.isItem = isItem;
     }
 
+    public static void getNewCardFromUser(){
+        //todo for phase2
+    }
+
+    public static void getCardsInfoFromFile(){
+        //todo for phase2
+    }
+
     public abstract void apply(Cell cell);
 
     public static Card deepCopy(Card card){

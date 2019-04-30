@@ -6,10 +6,14 @@ import view.Message;
 import java.util.ArrayList;
 
 public class Shop {
-    private static Shop shop = null;
+    private static Shop shop = new Shop();
     private ArrayList<Integer> cardIDs = new ArrayList<>();
 
     //***
+    public void putCardsFromCardsSourceInShopSource(){
+        //todo
+    }
+
     public int searchInShopCards(String cardName) {
         for (int ID : shop.getCardIDs()) {
             Card card = Card.getAllCards().get(ID);
