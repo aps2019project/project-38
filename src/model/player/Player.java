@@ -20,7 +20,7 @@ public abstract class Player {
 
     public Player(Deck deck) {
         this.mainDeck = deck;
-        warriors.add(deck.getHero());
+        warriors.add(deck.getHero().deepCopy(this));
         Random random = new Random();
         for (int i = 0; i < Constant.GameConstants.handSize; i++) {
             int randomIndex = random.nextInt(this.mainDeck.getCardIDs().size());

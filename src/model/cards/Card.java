@@ -4,6 +4,7 @@ import model.Cell;
 import model.QualityHaver;
 import model.Game;
 import model.effects.Effect;
+import model.player.Player;
 import model.triggers.Trigger;
 
 import java.io.Serializable;

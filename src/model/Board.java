@@ -1,27 +1,30 @@
 package model;
 
+import model.cards.warriors.Warrior;
+import model.effects.Effect;
 import model.gamestate.GameState;
 import model.triggers.Trigger;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 
 public class Board {
-    private ArrayList<ArrayList<Cell>> board;
+    private ArrayList<ArrayList<Cell>> table;
     private Game game;
 
     public Board(Game game) {
         this.game = game;
         for (int i = 0; i < Constant.GameConstants.boardRow; i++) {
-            board.add(new ArrayList<>());
+            table.add(new ArrayList<>());
             for (int j = 0; j < Constant.GameConstants.boardColumn; j++) {
-                board.get(i).add(new Cell(i, j));
+                table.get(i).add(new Cell(i, j));
             }
         }
     }
 
     public Cell getCell(int row, int column) {
-        return board.get(row).get(column);
+        return table.get(row).get(column);
     }
 
     public Game getGame() {
@@ -29,10 +32,42 @@ public class Board {
     }
 
     public void iterateBoardTriggers(GameState gameState) {
-        for (ArrayList<Cell> row : board) {
+        for (ArrayList<Cell> row : table) {
             for (Cell cell : row) {
                 for (Trigger trigger : cell.getTriggers()) {
                     trigger.check(gameState,cell);
+                }
+            }
+        }
+    }
+
+    public void iterateAndExpireBoardTriggers() {
+        for (ArrayList<Cell> row : table) {
+            for (Cell cell : row) {
+                for (Iterator<Trigger> iterator = cell.triggers.iterator(); iterator.hasNext();) {
+                    Trigger trigger = iterator.next();
+                    if (trigger.duration > 0) {
+                        trigger.duration --;
+                        if (trigger.duration == 0) {
+                            iterator.remove();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public  void iterateAndExpireBoardEffects() {
+        for (ArrayList<Cell> row : table) {
+            for (Cell cell : row) {
+                for (Iterator<Effect> iterator = cell.effects.iterator(); iterator.hasNext();) {
+                    Effect effect = iterator.next();
+                    if (effect.duration > 0) {
+                        effect.duration --;
+                        if (effect.duration == 0) {
+                            iterator.remove();
+                        }
+                    }
                 }
             }
         }
@@ -67,8 +102,13 @@ public class Board {
         return cells;
     }
 
+    public int getJumperManhattanDistance(Cell originCell, Cell targetCell) {
+        return Math.abs(originCell.getRow() - targetCell.getRow()) +
+                Math.abs(originCell.getColumn() - targetCell.getColumn());
+    }
+
     public int getManhattanDistance(Cell originCell, Cell targetCell) {
-        ArrayList<Cell> checkedCells = new ArrayList<>();
+            ArrayList<Cell> checkedCells = new ArrayList<>();
         ArrayList<Cell> layerCells = new ArrayList<>();
         layerCells.add(originCell);
         for (int i = 0; true; i++) {
@@ -101,16 +141,16 @@ public class Board {
     private ArrayList<Cell> getNextCells (Cell cell) {
         ArrayList<Cell> nextCells = new ArrayList<>();
         if (cell.getRow() + 1 < Constant.GameConstants.boardRow) {
-            nextCells.add(board.get(cell.getRow() + 1).get(cell.getColumn()));
+            nextCells.add(table.get(cell.getRow() + 1).get(cell.getColumn()));
         }
         if (cell.getColumn() + 1 < Constant.GameConstants.boardColumn) {
-            nextCells.add(board.get(cell.getRow()).get(cell.getColumn() + 1));
+            nextCells.add(table.get(cell.getRow()).get(cell.getColumn() + 1));
         }
         if (cell.getRow() - 1 >= 0) {
-            nextCells.add(board.get(cell.getRow() - 1).get(cell.getColumn()));
+            nextCells.add(table.get(cell.getRow() - 1).get(cell.getColumn()));
         }
         if (cell.getColumn() - 1 >= 0) {
-            nextCells.add(board.get(cell.getRow()).get(cell.getColumn() - 1));
+            nextCells.add(table.get(cell.getRow()).get(cell.getColumn() - 1));
         }
         return nextCells;
     }

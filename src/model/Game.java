@@ -1,6 +1,8 @@
 package model;
 
 
+import model.actions.gameaction.EndTurn;
+import model.actions.triggeraction.Killer;
 import model.cards.Card;
 import model.cards.spells.Spell;
 import model.cards.warriors.Warrior;
@@ -14,16 +16,18 @@ import model.player.HumanPlayer;
 import model.player.Player;
 import model.triggers.Trigger;
 
-import javax.swing.*;
+import javax.swing.Timer;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
 
 
 public class Game {
-    private int turn;
+    public int turn;
     private Player[] players = new  Player[2];
     private Board board = new Board(this);
-    private Timer timer = new Timer(Constant.GameConstants.turnTime, ignored -> endTurn());
+    public Timer timer = new Timer(Constant.GameConstants.turnTime, ignored -> endTurn());
 
     {
         turn = 0;
@@ -59,7 +63,7 @@ public class Game {
         return board;
     }
 
-    private void iterateAllTriggers (GameState gameState) {
+    public void iterateAllTriggers (GameState gameState) {
         board.iterateBoardTriggers(gameState);
         iteratePlayerTriggers(players[0], gameState);
         iteratePlayerTriggers(players[1], gameState);
@@ -73,18 +77,40 @@ public class Game {
         }
     }
 
-    private void iterateAllEffects() {
-        iteratePlayerEffects(players[0]);
-        iteratePlayerEffects(players[1]);
+    public void iterateAndExpireAllTriggers() {
+        iterateAndExpirePlayerTriggers(players[0]);
+        iterateAndExpirePlayerTriggers(players[1]);
+        board.iterateAndExpireBoardTriggers();
     }
 
-    private void iteratePlayerEffects(Player player) {
+    private void iterateAndExpirePlayerTriggers(Player player) {
         for (Warrior warrior : player.getWarriors()) {
-            for (Effect effect : warrior.getEffects()) {
+            for (Iterator<Trigger> iterator = warrior.getTriggers().iterator(); iterator.hasNext();) {
+                Trigger trigger = iterator.next();
+                if (trigger.duration > 0) {
+                    trigger.duration --;
+                    if (trigger.duration == 0) {
+                        iterator.remove();
+                    }
+                }
+            }
+        }
+    }
+
+    public void iterateAndExpireAllEffects() {
+        iterateAndExpirePlayerEffects(players[0]);
+        iterateAndExpirePlayerEffects(players[1]);
+        board.iterateAndExpireBoardEffects();
+    }
+
+    private void iterateAndExpirePlayerEffects(Player player) {
+        for (Warrior warrior : player.getWarriors()) {
+            for (Iterator<Effect> iterator = warrior.getEffects().iterator(); iterator.hasNext();) {
+                Effect effect = iterator.next();
                 if (effect.duration > 0) {
                     effect.duration --;
                     if (effect.duration == 0) {
-                        warrior.getEffects().remove(effect);
+                        iterator.remove();
                     }
                 }
             }
@@ -92,15 +118,19 @@ public class Game {
     }
 
     private void killPlayerDiedWariors(Player player) {
-        player.getWarriors().removeIf(warrior -> warrior.getHP() <= 0);
+        for (int i = 0; i < player.getWarriors().size(); i++) {
+            if (player.getWarriors().get(i).getHp() <= 0) {
+                Killer.kill(player.getWarriors().get(i));
+            }
+        }
     }
 
     public void move(Cell originCell, Cell targetCell) {
         if (getActivePlayer().getWarriors().contains(originCell.getWarrior()) &&
                 targetCell.getWarrior() == null) {
             Warrior warrior = originCell.getWarrior();
-            int manhatanDistance = board.getManhattanDistance(originCell, targetCell);
-            if (checkWarriorEffectsForMove(warrior, manhatanDistance)) {
+            int manhattanDistance = board.getManhattanDistance(originCell, targetCell);
+            if (checkWarriorEffectsForMove(warrior, manhattanDistance)) {
                 originCell.setWarrior(null);
                 targetCell.setWarrior(warrior);
                 warrior.setCell(targetCell);
@@ -111,11 +141,11 @@ public class Game {
         }
     }
 
-    private boolean checkWarriorEffectsForMove (Warrior warrior, int manhatanDistance) {
+    private boolean checkWarriorEffectsForMove (Warrior warrior, int manhattanDistance) {
         boolean result = warrior.getEffects().stream().noneMatch
                 (effect -> effect instanceof Attacked || effect instanceof Moved);
         if (result) {
-            if (manhatanDistance <= Constant.WarriorConstants.maxMove) {
+            if (manhattanDistance <= Constant.WarriorConstants.maxMove) {
                 return true;
             }
             else {
@@ -126,12 +156,7 @@ public class Game {
     }
 
     public void attack (Cell attackerCell, Cell defenderCell) {
-        Warrior attacker = attackerCell.getWarrior();
-        Warrior defender = defenderCell.getWarrior();
-        if (getActivePlayer().getWarriors().contains(attacker) &&
-                !getActivePlayer().getWarriors().contains(defender)) {
-            //todo
-        }
+
     }
 
     public void replaceCard (int handMapKey) {
@@ -167,7 +192,7 @@ public class Game {
                 card.apply(cell);
                 GameState gameState;
                 if (card instanceof Spell) {
-                    gameState = new UseSpellState();
+                    gameState = new UseSpellState(cell, (Spell)card);//todo implement spell target and change this line
                 }else {
                     gameState = new PutMinionState((Warrior) card);
                 }
@@ -182,12 +207,6 @@ public class Game {
     }
 
     public void endTurn () {
-        TurnEndState turnEndState = new TurnEndState();
-        iterateAllEffects();
-        iterateAllTriggers(turnEndState);
-        turn ++;
-        getActivePlayer().mana = Constant.GameConstants.getTurnMana(turn);
-        getActivePlayer().ableToReplaceCard = true;
-        timer.restart();
+        EndTurn.doIt(this);
     }
 }
