@@ -1,7 +1,10 @@
 package model.effects;
 
 public class Ranged extends Effect {
-    public Ranged(int duration, Dispelablity dispelablity) {
+    int range;
+
+    public Ranged(int duration, Dispelablity dispelablity, int range) {
         super(duration, dispelablity);
+        this.range = range;
     }
 }
