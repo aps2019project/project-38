@@ -3,7 +3,6 @@ package model.triggers;
 import model.QualityHaver;
 import model.cards.warriors.Warrior;
 import model.conditions.HasBeenAttacked;
-import model.conditions.CanCounterAttack;
 import model.effects.Dispelablity;
 import model.gamestate.AttackState;
 import model.gamestate.GameState;
@@ -12,8 +11,6 @@ import model.gamestate.GameState;
 public class CounterAttack extends Trigger {
     {
         conditions.add(new HasBeenAttacked());
-//        conditions.put(new HasBeenDisarmed(), false);    //should be checked in attack. as well as stun!
-        conditions.add(new CanCounterAttack());
     }
 
     public CounterAttack(int duration, Dispelablity dispelablity) {

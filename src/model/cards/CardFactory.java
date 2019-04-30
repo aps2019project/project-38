@@ -5,6 +5,8 @@ import model.cards.warriors.Warrior;
 import model.conditions.HasAttacked;
 import model.effects.*;
 import model.targets.AttackedGetter;
+import model.triggers.Disarm;
+import model.triggers.Stun;
 import model.triggers.Trigger;
 
 import java.util.ArrayList;
@@ -24,7 +26,7 @@ public class CardFactory {
             Trigger trigger = new Trigger(-1, Dispelablity.UNDISPELLABLE);
             trigger.getConditions().add(new HasAttacked());
             trigger.getActions().put(new Applier(), new AttackedGetter());
-            trigger.getEffects().add(new Stun(1, Dispelablity.BAD));
+            trigger.getTriggers().add(new Stun(1, Dispelablity.BAD));
             warrior.getTriggers().add(trigger);
             allBuildedWarrioirs.add(warrior);
         }
@@ -74,7 +76,7 @@ public class CardFactory {
             Trigger trigger = new Trigger(-1, Dispelablity.UNDISPELLABLE);
             trigger.getConditions().add(new HasAttacked());
             trigger.getActions().put(new Applier(), new AttackedGetter());
-            trigger.getEffects().add(new Disarm(1, Dispelablity.BAD));
+            trigger.getTriggers().add(new Disarm(1, Dispelablity.BAD));
             //todo
             allBuildedWarrioirs.add(warrior);
         }
