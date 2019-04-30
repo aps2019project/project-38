@@ -24,6 +24,10 @@ public class Board {
         return board.get(row).get(column);
     }
 
+    public Game getGame() {
+        return game;
+    }
+
     public void iterateBoardTriggers(GameState gameState) {
         for (ArrayList<Cell> row : board) {
             for (Cell cell : row) {

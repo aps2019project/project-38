@@ -6,7 +6,7 @@ import model.triggers.Trigger;
 import java.util.ArrayList;
 
 public class Cell extends QualityHaver {
-    private Game game;
+    private Board board;
     private Warrior warrior;
     private int row;
     private int column;
@@ -16,8 +16,8 @@ public class Cell extends QualityHaver {
         this.column = column;
     }
 
-    public Cell(Game game) {
-        this.game = game;
+    public Cell(Board board) {
+        this.board = board;
     }
 
     public Warrior getWarrior() {
@@ -40,7 +40,7 @@ public class Cell extends QualityHaver {
         return column;
     }
 
-    public Game getGame() {
-        return game;
+    public Board getBoard() {
+        return board;
     }
 }
