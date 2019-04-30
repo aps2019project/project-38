@@ -17,12 +17,4 @@ public abstract class QualityHaver {
     public ArrayList<Trigger> getTriggers() {
         return triggers;
     }
-
-    public void addToEffects(Effect effect) {
-        effects.add(effect);
-    }
-
-    public void addToTriggers(Trigger trigger) {
-        triggers.add(trigger);
-    }
 }

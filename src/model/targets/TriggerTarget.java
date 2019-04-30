@@ -4,6 +4,8 @@ import model.QualityHaver;
 import model.cards.warriors.Warrior;
 import model.gamestate.GameState;
 
+import java.util.ArrayList;
+
 public interface TriggerTarget {
-    QualityHaver getTarget(QualityHaver triggerOwner, GameState gameState);
+    ArrayList<? extends QualityHaver> getTarget(QualityHaver triggerOwner, GameState gameState);
 }

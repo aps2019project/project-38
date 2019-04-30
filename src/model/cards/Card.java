@@ -44,14 +44,6 @@ public abstract class Card extends QualityHaver implements Serializable {
         return effects;
     }
 
-    public void addToTriggers(Trigger trigger){
-        triggers.add(trigger);
-    }
-
-    public void addToEffects(Effect effect){
-        effects.add(effect);
-    }
-
     public int getID() {
         return ID;
     }

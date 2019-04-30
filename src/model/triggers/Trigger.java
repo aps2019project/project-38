@@ -30,10 +30,6 @@ public class Trigger extends QualityHaver implements Serializable {
         return conditions;
     }
 
-    public void addToConditions(Condition condition) {
-        conditions.add(condition);
-    }
-
     public HashMap<TriggerAction, TriggerTarget> getActions() {
         return actions;
     }
@@ -53,7 +49,9 @@ public class Trigger extends QualityHaver implements Serializable {
 
     protected void executeActions(GameState gameState, QualityHaver owner){
         for (Map.Entry<TriggerAction, TriggerTarget> entry : actions.entrySet()) {
-            entry.getKey().execute(this,entry.getValue().getTarget(owner,gameState));
+            for (QualityHaver qualityHaver : entry.getValue().getTarget(owner, gameState)) {
+                entry.getKey().execute(this,qualityHaver);
+            }
         }
     }
 }
