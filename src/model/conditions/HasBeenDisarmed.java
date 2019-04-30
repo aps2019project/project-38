@@ -1,7 +1,7 @@
 package model.conditions;
 
 import model.QualityHaver;
-import model.effects.Disarm;
+import model.triggers.Disarm;
 import model.effects.Effect;
 import model.gamestate.GameState;
 import model.triggers.Trigger;

@@ -7,7 +7,7 @@ import model.triggers.Trigger;
 public class Killer implements TriggerAction{
 
     @Override
-    public void execute(QualityHaver source, QualityHaver target) {
+    public void execute(Trigger ownerTrigger, QualityHaver target) {
         if(!(target instanceof Warrior))
             return;
 
@@ -15,6 +15,5 @@ public class Killer implements TriggerAction{
     }
 
     public static void kill(Warrior warrior){
-        warrior.getCell().getBoard().getGame();
     }
 }

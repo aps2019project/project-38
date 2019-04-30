@@ -30,6 +30,10 @@ public class Trigger extends QualityHaver implements Serializable {
         return conditions;
     }
 
+    public Dispelablity getDispelablity() {
+        return dispelablity;
+    }
+
     public HashMap<TriggerAction, TriggerTarget> getActions() {
         return actions;
     }
