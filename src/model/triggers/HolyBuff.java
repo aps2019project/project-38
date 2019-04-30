@@ -2,7 +2,7 @@ package model.triggers;
 
 import model.QualityHaver;
 import model.conditions.IsBeingAttacked;
-import model.conditions.HasAntiHolyBuff;
+import model.conditions.HasAttackerAntiHolyBuff;
 import model.effects.Dispelablity;
 import model.gamestate.Attack;
 import model.gamestate.GameState;
@@ -12,7 +12,7 @@ public class HolyBuff extends Trigger {
 
     {
         conditions.add(new IsBeingAttacked());
-        conditions.add(new HasAntiHolyBuff().not());
+        conditions.add(new HasAttackerAntiHolyBuff().not());
     }
 
     public HolyBuff(int duration, Dispelablity dispelablity,int reducedDamage) {

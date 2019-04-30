@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 public class Collection {
     private ArrayList<Integer> cardIDs = new ArrayList<>();
-    private HashMap<Integer, Card> allCards = new HashMap<>();
+    private HashMap<Integer, Card> allCards = new HashMap<>();//What is this?
     private ArrayList<Deck> decks = new ArrayList<>();
     private Deck mainDeck;
 
