@@ -1,6 +1,7 @@
 package model;
 
 
+import model.actions.gameaction.Attack;
 import model.actions.gameaction.EndTurn;
 import model.actions.triggeraction.Killer;
 import model.cards.Card;
@@ -17,7 +18,6 @@ import model.player.Player;
 import model.triggers.Trigger;
 
 import javax.swing.Timer;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
@@ -117,7 +117,12 @@ public class Game {
         }
     }
 
-    private void killPlayerDiedWariors(Player player) {
+    private void killAllDiedWarriors() {
+        killPlayerDiedWarriors(players[0]);
+        killPlayerDiedWarriors(players[1]);
+    }
+
+    private void killPlayerDiedWarriors(Player player) {
         for (int i = 0; i < player.getWarriors().size(); i++) {
             if (player.getWarriors().get(i).getHp() <= 0) {
                 Killer.kill(player.getWarriors().get(i));
@@ -156,7 +161,8 @@ public class Game {
     }
 
     public void attack (Cell attackerCell, Cell defenderCell) {
-
+        Attack.doIt(this, attackerCell, defenderCell);
+        killAllDiedWarriors();
     }
 
     public void replaceCard (int handMapKey) {
@@ -208,5 +214,6 @@ public class Game {
 
     public void endTurn () {
         EndTurn.doIt(this);
+        killAllDiedWarriors();
     }
 }

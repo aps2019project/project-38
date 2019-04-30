@@ -3,9 +3,8 @@ package model.actions.gameaction;
 import model.Cell;
 import model.Game;
 import model.cards.warriors.Warrior;
-import model.effects.Effect;
-import model.effects.Melee;
-import model.effects.Ranged;
+import model.effects.*;
+import model.gamestate.AttackState;
 
 import java.util.ArrayList;
 import java.util.stream.Stream;
@@ -19,6 +18,13 @@ public abstract class Attack {
             int jumperManhattanDistance = game.getBoard().getJumperManhattanDistance(attackerCell, defenderCell);
             if (warriors.contains(attacker) && !warriors.contains(defender) &&
                     checkWarriorsEffectsForAttack(game, attackerCell, defenderCell, jumperManhattanDistance)) {
+                AttackState attackState = new AttackState(attacker, defender, attacker.getAp(), true);
+                game.iterateAllTriggers(attackState);
+                if (!attackState.canceled) {
+                    defender.getEffects().add(new HP(-1, Dispelablity.UNDISPELLABLE, -1 * attackState.ap));
+                    AttackState theAttackState = new AttackState(attacker, defender, attackState.ap, false);
+                    game.iterateAllTriggers(theAttackState);
+                }
             }
         }
         catch (Exception ignored) {}

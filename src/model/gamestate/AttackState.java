@@ -7,7 +7,7 @@ public class AttackState extends GameState {
     public int ap;
     private Warrior attacker;
     private Warrior attacked;
-    public boolean canceled=false;
+    public boolean canceled = false;
 
     public boolean isPending() {
         return pending;
@@ -25,9 +25,10 @@ public class AttackState extends GameState {
         return attacked;
     }
 
-    public AttackState(Warrior attacker, Warrior attacked, int ap) {
+    public AttackState(Warrior attacker, Warrior attacked, int ap, boolean pending) {
         this.ap = ap;
         this.attacker = attacker;
         this.attacked = attacked;
+        this.pending = pending;
     }
 }
