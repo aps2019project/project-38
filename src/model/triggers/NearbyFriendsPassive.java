@@ -6,17 +6,16 @@ import model.cards.warriors.Warrior;
 import model.conditions.HasDied;
 import model.conditions.HasMoved;
 import model.conditions.HasSpawned;
-import model.conditions.HasTurnStarted;
 import model.effects.Dispelablity;
 import model.gamestate.*;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 /*special because of complexity*/
-//add triggers and effects with "1" duration to this trigger.
+//add triggers and effects with "-1" duration to this trigger.
 public class NearbyFriendsPassive extends Trigger {
     {
-        conditions.add(new HasSpawned().or(new HasDied()).or(new HasMoved()).or(new HasTurnStarted()));
+        conditions.add(new HasSpawned().or(new HasDied()).or(new HasMoved()));
     }
 
     public NearbyFriendsPassive(int duration, Dispelablity dispelablity) {
@@ -42,7 +41,7 @@ public class NearbyFriendsPassive extends Trigger {
                     stream().map(Cell::getWarrior).collect(Collectors.toCollection(ArrayList::new)));
         }
 
-        if(gameState instanceof PutMinion || gameState instanceof TurnStart){
+        if(gameState instanceof PutMinion){
             addEffectsAndTriggers(warrior.getCell().getBoard().getGame().getBoard().getEightAdjacent(warrior.getCell()).
                     stream().map(Cell::getWarrior).collect(Collectors.toCollection(ArrayList::new)));
         }

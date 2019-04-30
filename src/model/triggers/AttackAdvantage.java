@@ -6,6 +6,7 @@ import model.conditions.IsAttacking;
 import model.effects.Dispelablity;
 import model.gamestate.Attack;
 import model.gamestate.GameState;
+
 /*special because another special trigger needs it(WoundDeepener)*/
 //this trigger causes a special warrior to do more damage against a special warrior.
 public class AttackAdvantage extends Trigger {
@@ -33,6 +34,6 @@ public class AttackAdvantage extends Trigger {
     protected void executeActions(GameState gameState, QualityHaver owner) {
         Attack attack=(Attack) gameState;
 
-        attack.setAp(attack.getAp()+additionalDamage);
+        attack.ap+=additionalDamage;
     }
 }
