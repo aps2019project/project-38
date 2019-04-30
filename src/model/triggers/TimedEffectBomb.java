@@ -1,23 +1,19 @@
 package model.triggers;
 
-import model.QualityHaver;
+import model.actions.triggeraction.Applier;
 import model.conditions.HasTurnEnded;
 import model.effects.Dispelablity;
-import model.gamestate.GameState;
+import model.targets.TriggerOwnerGetter;
 
+//special because of special condition.
 public class TimedEffectBomb extends Trigger {
     {
         conditions.add(new HasTurnEnded());
         conditions.add(((gameState, trigger,triggerOwner) -> duration == 1));
+        actions.put(new Applier(),new TriggerOwnerGetter());
     }
 
     public TimedEffectBomb(int duration, Dispelablity dispelablity) {
         super(duration, dispelablity);
-    }
-
-    @Override
-    protected void executeActions(GameState gameState, QualityHaver owner) {
-        owner.getEffects().addAll(effects);
-        owner.getTriggers().addAll(triggers);
     }
 }

@@ -5,6 +5,7 @@ import model.cards.spells.Spell;
 import model.cards.warriors.Warrior;
 
 public class UseSpellState extends GameState {
+    public boolean pending;
     public QualityHaver target;
     public Spell spell;
     public boolean canceled = false;

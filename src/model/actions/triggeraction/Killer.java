@@ -5,11 +5,12 @@ import model.QualityHaver;
 import model.cards.warriors.Warrior;
 import model.gamestate.DeathState;
 import model.player.Player;
+import model.triggers.Trigger;
 
 public class Killer implements TriggerAction{
 
     @Override
-    public void execute(QualityHaver source, QualityHaver target) {
+    public void execute(Trigger ownerTrigger, QualityHaver target) {
         if(!(target instanceof Warrior))
             return;
 

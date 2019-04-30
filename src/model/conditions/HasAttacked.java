@@ -13,6 +13,6 @@ public class HasAttacked implements Condition {
         }
         AttackState attackState =(AttackState) gameState;
 
-        return !attackState.isPending() && attackState.getAttacker().equals(triggerOwner);
+        return !attackState.pending && attackState.getAttacker().equals(triggerOwner);
     }
 }

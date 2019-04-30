@@ -8,6 +8,7 @@ import model.gamestate.AttackState;
 import model.gamestate.GameState;
 
 public class HolyBuff extends Trigger {
+    //special because of special action.
     private int reducedDamage;
 
     {

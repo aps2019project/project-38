@@ -13,6 +13,6 @@ public class IsAttacking implements Condition {
         }
         AttackState attackState =(AttackState)gameState;
 
-        return attackState.getAttacker().equals(triggerOwner) && attackState.isPending();
+        return attackState.getAttacker().equals(triggerOwner) && attackState.pending;
     }
 }
