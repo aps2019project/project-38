@@ -1,6 +1,5 @@
 package model;
 
-import model.conditions.Condition;
 import model.effects.Effect;
 import model.triggers.Trigger;
 

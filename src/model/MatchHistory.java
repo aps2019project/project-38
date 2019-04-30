@@ -6,7 +6,12 @@ public class MatchHistory {
     private String opponentName;
     private boolean didWin;
     private Date date;
+
     //***
+    public boolean getDidWin() {
+        return didWin;
+    }
+
     public void setDidWin(boolean didWin) {
         this.didWin = didWin;
     }

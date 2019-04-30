@@ -2,46 +2,63 @@ package view;
 
 import model.Account;
 import model.Collection;
-import model.Deck;
+import model.MatchHistory;
 import model.Shop;
 
 import java.util.ArrayList;
 
 public class UI {
-    private static UI ui = new UI();
+    public static UI ui = new UI();
 
     //account methods:
-    public void showAccountMenu() {
+    public void accountMenu() {
+        showAccountHelp();
         while (true) {
             String input = getNextRequest();
-            String[] inputParts = input.split("\\w+");
-            if (inputParts[0].equals("create") && inputParts[1].equals("account")) {
-                Account.createAccount(inputParts[2], inputParts[3]);
+            if (!input.matches("\\d+")) {
+                Message.invalidInput();
+                continue;
             }
-            if (inputParts[0].equals("login")) {
-                Account.login(inputParts[1], inputParts[2]);
-            }
-            if (inputParts[0].equals("show") && inputParts[1].equals("leaderboard")) {
-                showLeaderBoard();
-            }
-            if (input.equals("save")) {
-                Account.getActiveAccount().save();
-            }
-            if (input.equals("logout")) {
-                break;
-            }
-            if (input.equals("help")) {
-                showAccountHelp();
+            int indexOfSelectedSubMenu = Integer.parseInt(input);
+            switch (indexOfSelectedSubMenu) {
+                case 1:
+                    String accountName = getNextRequest();
+                    String password = getNextRequest();
+                    Account.createAccount(accountName, password);
+                    continue;
+                case 2:
+                    accountName = getNextRequest();
+                    password = getNextRequest();
+                    Account.login(accountName, password);
+                    continue;
+                case 3:
+                    showLeaderBoard();
+                    continue;
+                case 0:
+                    Account.getActiveAccount().save();
             }
         }
     }
 
     private void showAccountHelp() {
-        //todo
+        System.out.println("Account Menu:");
+        System.out.println("1- Create Account");
+        System.out.println("2- Login");
+        System.out.println("3- Show LeaderBoard");
+        System.out.println("0- Exit");
     }
 
     private void showLeaderBoard() {
-        //todo
+        ArrayList<Account> allAccounts = Account.sortAccounts();
+        int i=0;
+        for(Account account:allAccounts){
+            int numberOfWins = 0;
+            for (MatchHistory matchHistory:account.getHistory()){
+                if(matchHistory.getDidWin())numberOfWins++;
+            }
+            System.out.printf("%d- UserName : %s - Wins : %d\n",i,account.getUsername(),numberOfWins);
+            i++;
+        }
     }
 
     //shop methods
