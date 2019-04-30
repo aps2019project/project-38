@@ -16,8 +16,8 @@ public class NearbyEnemiesGetter implements TriggerTarget {
         assert triggerOwner instanceof Warrior;
 
         Warrior warrior=(Warrior)triggerOwner;
-        return (warrior.getCell().getGame().getBoard().getEightAdjacent(warrior.getCell()).
-                stream().map(Cell::getWarrior).filter(warrior1 -> !warrior.getCell().getGame().getWarriorsPlayer(warrior).
+        return (warrior.getCell().getBoard().getGame().getBoard().getEightAdjacent(warrior.getCell()).
+                stream().map(Cell::getWarrior).filter(warrior1 -> !warrior.getCell().getBoard().getGame().getWarriorsPlayer(warrior).
                 getWarriors().contains(warrior1)).collect(Collectors.toCollection(ArrayList::new)));
     }
 }

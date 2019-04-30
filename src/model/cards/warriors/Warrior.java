@@ -37,10 +37,4 @@ public class Warrior extends Card {
     public void apply(Cell cell) {
 
     }
-
-    @Override
-    public boolean checkTarget(Cell cell, Game game) {
-        return false;
-        //todo
-    }
 }

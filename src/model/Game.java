@@ -160,8 +160,8 @@ public class Game {
     public void useCard (int handMapKey, Cell cell) {
         try {
             Card card = getActivePlayer().getHand().get(handMapKey);
-            if (getActivePlayer().mana >= card.getRequiredMana() &&
-                    card.checkTarget(cell, this)) {
+            if (getActivePlayer().mana >= card.getRequiredMana() /*&&
+                    card.checkTarget(cell, this)*/) {
                 getActivePlayer().mana -= card.getRequiredMana();
                 getActivePlayer().getHand().put(handMapKey, null);
                 card.apply(cell);

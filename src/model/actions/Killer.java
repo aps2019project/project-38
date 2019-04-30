@@ -14,7 +14,7 @@ public class Killer implements TriggerAction{
         kill((Warrior)target);
     }
 
-    public void kill(Warrior warrior){
-
+    public static void kill(Warrior warrior){
+        warrior.getCell().getBoard().getGame();
     }
 }

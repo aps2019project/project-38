@@ -34,14 +34,14 @@ public class AllFriendsPassive extends Trigger {
     }
 
     private void addEffectsAndTriggers(Warrior ownerWarrior){
-        ownerWarrior.getCell().getGame().getWarriorsPlayer(ownerWarrior).getWarriors().forEach(warrior ->{
+        ownerWarrior.getCell().getBoard().getGame().getWarriorsPlayer(ownerWarrior).getWarriors().forEach(warrior ->{
             warrior.getEffects().addAll(effects);
             warrior.getTriggers().addAll(triggers);
         });
     }
 
     private void removeEffectsAndTriggers(Warrior ownerWarrior){
-        ownerWarrior.getCell().getGame().getWarriorsPlayer(ownerWarrior).getWarriors().forEach(warrior -> {
+        ownerWarrior.getCell().getBoard().getGame().getWarriorsPlayer(ownerWarrior).getWarriors().forEach(warrior -> {
             warrior.getEffects().removeAll(effects);
             warrior.getTriggers().removeAll(triggers);
         });

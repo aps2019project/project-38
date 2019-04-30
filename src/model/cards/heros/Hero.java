@@ -1,7 +1,5 @@
 package model.cards.heros;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import model.Cell;
 import model.cards.Card;
 import model.cards.spells.Spell;

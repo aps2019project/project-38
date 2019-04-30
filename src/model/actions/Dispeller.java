@@ -10,7 +10,7 @@ public class Dispeller implements TriggerAction{
         dispel(target);
     }
 
-    public void dispel(QualityHaver qualityHaver){
+    public static void dispel(QualityHaver qualityHaver){
 
     }
 }

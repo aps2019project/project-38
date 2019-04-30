@@ -12,6 +12,6 @@ public class AllFriendsGetter implements TriggerTarget {
     public ArrayList<? extends QualityHaver> getTarget(QualityHaver triggerOwner, GameState gameState) {
         assert triggerOwner instanceof Warrior;
 
-        return ((Warrior)triggerOwner).getCell().getGame().getWarriorsPlayer((Warrior)triggerOwner).getWarriors();
+        return ((Warrior)triggerOwner).getCell().getBoard().getGame().getWarriorsPlayer((Warrior)triggerOwner).getWarriors();
     }
 }
