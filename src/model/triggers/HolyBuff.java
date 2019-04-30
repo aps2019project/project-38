@@ -4,7 +4,7 @@ import model.QualityHaver;
 import model.conditions.IsBeingAttacked;
 import model.conditions.HasAttackerAntiHolyBuff;
 import model.effects.Dispelablity;
-import model.gamestate.Attack;
+import model.gamestate.AttackState;
 import model.gamestate.GameState;
 
 public class HolyBuff extends Trigger {
@@ -22,10 +22,10 @@ public class HolyBuff extends Trigger {
 
     @Override
     protected void executeActions(GameState gameState, QualityHaver owner) {
-        Attack attack = (Attack) gameState;
+        AttackState attackState = (AttackState) gameState;
 
-        if(attack.ap-reducedDamage>=0) {
-            attack.ap-=reducedDamage;
+        if(attackState.ap-reducedDamage>=0) {
+            attackState.ap-=reducedDamage;
         }
     }
 }

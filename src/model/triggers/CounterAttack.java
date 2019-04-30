@@ -5,7 +5,7 @@ import model.cards.warriors.Warrior;
 import model.conditions.HasBeenAttacked;
 import model.conditions.CanCounterAttack;
 import model.effects.Dispelablity;
-import model.gamestate.Attack;
+import model.gamestate.AttackState;
 import model.gamestate.GameState;
 //special because it's so common. also the action attack doesn't implement TriggerAction.
 //this triggers should be added to all minions, with -1 duration.
@@ -22,8 +22,8 @@ public class CounterAttack extends Trigger {
 
     @Override
     protected void executeActions(GameState gameState, QualityHaver owner) {
-        Attack attack=(Attack)gameState;
-        ((Warrior)owner).getCell().getBoard().getGame().attack(attack.getAttacked().getCell(),
-                attack.getAttacker().getCell());
+        AttackState attackState =(AttackState)gameState;
+        ((Warrior)owner).getCell().getBoard().getGame().attack(attackState.getAttacked().getCell(),
+                attackState.getAttacker().getCell());
     }
 }

@@ -4,7 +4,7 @@ import model.Constant;
 import model.QualityHaver;
 import model.conditions.HasAttacked;
 import model.effects.Dispelablity;
-import model.gamestate.Attack;
+import model.gamestate.AttackState;
 import model.gamestate.GameState;
 //special because the trigger in it needs gameState to be built.
 public class WoundDeepener extends Trigger {
@@ -18,8 +18,8 @@ public class WoundDeepener extends Trigger {
 
     @Override
     protected void executeActions(GameState gameState, QualityHaver owner) {
-        Attack attack = (Attack) gameState;
+        AttackState attackState = (AttackState) gameState;
         owner.getTriggers().add(new AttackAdvantage(-1,Dispelablity.GOOD,
-                Constant.EffectsTriggersConstants.WoundDeepener.additionalDamage,attack.getAttacked()));
+                Constant.EffectsTriggersConstants.WoundDeepener.additionalDamage, attackState.getAttacked()));
     }
 }

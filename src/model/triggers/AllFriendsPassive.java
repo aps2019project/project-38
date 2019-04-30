@@ -5,10 +5,9 @@ import model.cards.warriors.Warrior;
 import model.conditions.HasDied;
 import model.conditions.HasSpawned;
 import model.effects.Dispelablity;
-import model.gamestate.Death;
+import model.gamestate.DeathState;
 import model.gamestate.GameState;
-import model.gamestate.PutMinion;
-import model.gamestate.TurnStart;
+import model.gamestate.PutMinionState;
 
 // add effects and triggers with "-1" duration to this trigger.
 public class AllFriendsPassive extends Trigger {
@@ -23,11 +22,11 @@ public class AllFriendsPassive extends Trigger {
     @Override
     protected void executeActions(GameState gameState, QualityHaver owner) {
         Warrior ownerWarrior = (Warrior)owner;
-        if(gameState instanceof PutMinion){
+        if(gameState instanceof PutMinionState){
             addEffectsAndTriggers(ownerWarrior);
         }
 
-        if(gameState instanceof Death){
+        if(gameState instanceof DeathState){
             removeEffectsAndTriggers(ownerWarrior);
         }
     }

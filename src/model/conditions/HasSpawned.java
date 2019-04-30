@@ -2,17 +2,17 @@ package model.conditions;
 
 import model.QualityHaver;
 import model.gamestate.GameState;
-import model.gamestate.PutMinion;
+import model.gamestate.PutMinionState;
 import model.triggers.Trigger;
 
 public class HasSpawned implements Condition {
     @Override
     public boolean check(GameState gameState, Trigger trigger, QualityHaver triggerOwner) {
-        if(!(gameState instanceof PutMinion)){
+        if(!(gameState instanceof PutMinionState)){
             return false;
         }
-        PutMinion putMinion = (PutMinion)gameState;
+        PutMinionState putMinionState = (PutMinionState)gameState;
 
-        return putMinion.getWarrior().equals(triggerOwner);
+        return putMinionState.getWarrior().equals(triggerOwner);
     }
 }

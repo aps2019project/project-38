@@ -2,7 +2,7 @@ package model.gamestate;
 
 import model.cards.warriors.Warrior;
 
-public class Attack extends GameState {
+public class AttackState extends GameState {
     private boolean pending;
     public int ap;
     private Warrior attacker;
@@ -25,7 +25,7 @@ public class Attack extends GameState {
         return attacked;
     }
 
-    public Attack(Warrior attacker, Warrior attacked, int ap) {
+    public AttackState(Warrior attacker, Warrior attacked, int ap) {
         this.ap = ap;
         this.attacker = attacker;
         this.attacked = attacked;

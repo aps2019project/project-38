@@ -3,7 +3,6 @@ package model.conditions;
 import model.Cell;
 import model.QualityHaver;
 import model.gamestate.GameState;
-import model.gamestate.Move;
 import model.triggers.Trigger;
 
 public class HasWarriorOnIt implements Condition {
