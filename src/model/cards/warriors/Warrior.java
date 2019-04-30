@@ -11,7 +11,7 @@ public class Warrior extends Card {
     private int HP;
     private int AP;
 
-    public Warrior(int ID, String name, int requiredMana, int price, boolean isItem, int HP, int AP) {
+    public Warrior(int ID, String name, int price, int requiredMana, int HP, int AP, boolean isItem) {
         super(ID, name, requiredMana, price, isItem);
         this.HP = HP;
         this.AP = AP;

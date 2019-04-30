@@ -14,7 +14,6 @@ public class Deck {
     private Hero hero;
     private Card item;
     //***
-    //***
 
     public void setItem(Card item) {
         this.item = item;

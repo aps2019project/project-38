@@ -10,9 +10,6 @@ public class Shop {
     private ArrayList<Integer> cardIDs = new ArrayList<>();
 
     //***
-    public void putCardsFromCardsSourceInShopSource(){
-        //todo
-    }
 
     public int searchInShopCards(String cardName) {
         for (int ID : shop.getCardIDs()) {
