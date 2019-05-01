@@ -1,6 +1,6 @@
 package model.cards;
 
-import model.actions.triggeraction.Applier;
+import model.actions.triggeractions.Applier;
 import model.cards.warriors.Warrior;
 import model.conditions.HasAttacked;
 import model.effects.*;

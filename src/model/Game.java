@@ -1,11 +1,11 @@
 package model;
 
 
-import model.actions.gameaction.Attack;
-import model.actions.gameaction.EndTurn;
-import model.actions.gameaction.Move;
-import model.actions.gameaction.ReplaceCard;
-import model.actions.triggeraction.Killer;
+import model.actions.gameactions.Attack;
+import model.actions.gameactions.EndTurn;
+import model.actions.gameactions.Move;
+import model.actions.gameactions.ReplaceCard;
+import model.actions.triggeractions.Killer;
 import model.cards.warriors.Warrior;
 import model.effects.Effect;
 import model.gamestate.*;

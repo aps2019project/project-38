@@ -1,6 +1,6 @@
 package model.triggers;
 
-import model.actions.triggeraction.Applier;
+import model.actions.triggeractions.Applier;
 import model.conditions.HasTurnEnded;
 import model.effects.Dispelablity;
 import model.targets.TriggerOwnerGetter;

@@ -1,7 +1,7 @@
 package model.triggers;
 
 import model.QualityHaver;
-import model.actions.triggeraction.TriggerAction;
+import model.actions.triggeractions.TriggerAction;
 import model.effects.Dispelablity;
 import model.gamestate.GameState;
 import model.conditions.Condition;
