@@ -1,4 +1,4 @@
-package model.actions.gameaction;
+package model.actions.gameactions;
 
 import model.Constant;
 import model.Game;

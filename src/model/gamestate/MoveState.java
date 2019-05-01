@@ -4,7 +4,7 @@ import model.Cell;
 import model.cards.warriors.Warrior;
 
 public class MoveState extends GameState {
-    public boolean pending;
+    public boolean pending = true;
     private Warrior warrior;
     private Cell originCell;
     private Cell targetCell;

@@ -7,7 +7,7 @@ import model.effects.Dispelablity;
 import model.gamestate.AttackState;
 import model.gamestate.GameState;
 import model.gamestate.MoveState;
-
+//special because of unique action.
 public class Stun extends Trigger {
     {
         conditions.add(new IsMoving().or(new IsAttacking()));

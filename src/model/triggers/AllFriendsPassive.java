@@ -10,7 +10,7 @@ import model.gamestate.DeathState;
 import model.gamestate.GameState;
 import model.gamestate.PutMinionState;
 import model.gamestate.TurnStartState;
-import model.targets.AllFriendsGetter;
+import model.targets.triggertargets.AllFriendsGetter;
 //special because of special action.
 // add effects and triggers with "1" duration to this trigger.
 public class AllFriendsPassive extends Trigger {

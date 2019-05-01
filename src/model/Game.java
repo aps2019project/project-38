@@ -1,16 +1,13 @@
 package model;
 
 
-import model.actions.gameaction.Attack;
-import model.actions.gameaction.EndTurn;
-import model.actions.triggeraction.Killer;
-import model.cards.Card;
-import model.cards.spells.Spell;
+import model.actions.gameactions.Attack;
+import model.actions.gameactions.EndTurn;
+import model.actions.gameactions.Move;
+import model.actions.gameactions.ReplaceCard;
+import model.actions.triggeractions.Killer;
 import model.cards.warriors.Warrior;
-import model.effects.Attacked;
 import model.effects.Effect;
-import model.effects.Flying;
-import model.effects.Moved;
 import model.gamestate.*;
 import model.player.AIPlayer;
 import model.player.HumanPlayer;
@@ -18,6 +15,7 @@ import model.player.Player;
 import model.triggers.Trigger;
 
 import javax.swing.Timer;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
@@ -133,83 +131,32 @@ public class Game {
     public void move(Cell originCell, Cell targetCell) {
         if (getActivePlayer().getWarriors().contains(originCell.getWarrior()) &&
                 targetCell.getWarrior() == null) {
-            Warrior warrior = originCell.getWarrior();
-            int manhattanDistance = board.getManhattanDistance(originCell, targetCell);
-            if (checkWarriorEffectsForMove(warrior, manhattanDistance)) {
-                originCell.setWarrior(null);
-                targetCell.setWarrior(warrior);
-                warrior.setCell(targetCell);
-                warrior.getEffects().add(new Moved());
-                MoveState moveState = new MoveState(warrior, originCell, targetCell);
-                iterateAllTriggers(moveState);
-            }
+            Move.doIt(originCell, targetCell);
+            killAllDiedWarriors();
         }
-    }
-
-    private boolean checkWarriorEffectsForMove (Warrior warrior, int manhattanDistance) {
-        boolean result = warrior.getEffects().stream().noneMatch
-                (effect -> effect instanceof Attacked || effect instanceof Moved);
-        if (result) {
-            if (manhattanDistance <= Constant.WarriorConstants.maxMove) {
-                return true;
-            }
-            else {
-                return warrior.getEffects().stream().anyMatch(a -> a instanceof Flying);
-            }
-        }
-        return false;
     }
 
     public void attack (Cell attackerCell, Cell defenderCell) {
-        Attack.doIt(this, attackerCell, defenderCell);
-        killAllDiedWarriors();
+        ArrayList<Warrior> activePlayerWarriors = getActivePlayer().getWarriors();
+        if (activePlayerWarriors.contains(attackerCell.getWarrior()) &&
+                !activePlayerWarriors.contains(defenderCell.getWarrior())) {
+            Attack.doIt(attackerCell, defenderCell);
+            killAllDiedWarriors();
+        }
     }
 
     public void replaceCard (int handMapKey) {
-        try {
-            if (getActivePlayer().ableToReplaceCard) {
-                Card card = getActivePlayer().getHand().get(handMapKey);
-                Random random = new Random();
-                Card newCard;
-                while (true) {
-                    int randomIndex = random.nextInt(getActivePlayer().getMainDeck().getCardIDs().size());
-                    int cardID = getActivePlayer().getMainDeck().getCardIDs().get(randomIndex);
-                    if (cardID != card.getID()) {
-                        newCard = Card.getAllCards().get(cardID);
-                        break;
-                    }
-                }
-                getActivePlayer().getHand().put(handMapKey, newCard);
-                getActivePlayer().ableToReplaceCard = false;
-            ReplaceCardState replaceCardState = new ReplaceCardState();
-            iterateAllTriggers(replaceCardState);
-            }
+        if (getActivePlayer().getHand().get(handMapKey) != null) {
+            ReplaceCard.doIt(this, handMapKey);
+            killAllDiedWarriors();
         }
-        catch (Exception ignored) {}
     }
 
     public void useCard (int handMapKey, Cell cell) {
-        try {
-            Card card = getActivePlayer().getHand().get(handMapKey);
-            if (getActivePlayer().mana >= card.getRequiredMana() /*&&
-                    card.checkTarget(cell, this)*/) {
-                getActivePlayer().mana -= card.getRequiredMana();
-                getActivePlayer().getHand().put(handMapKey, null);
-                card.apply(cell);
-                GameState gameState;
-                if (card instanceof Spell) {
-                    gameState = new UseSpellState(cell, (Spell)card);//todo implement spell target and change this line
-                }else {
-                    gameState = new PutMinionState((Warrior) card);
-                }
-                iterateAllTriggers(gameState);
-            }
+        if (getActivePlayer().getHand().get(handMapKey) != null) {
+            useCard(handMapKey, cell);
+            killAllDiedWarriors();
         }
-        catch (ClassCastException ignored) {
-            System.err.println("((useCard method in Game, has a problem))");
-            //todo
-        }
-        catch (Exception ignored) {}
     }
 
     public void endTurn () {

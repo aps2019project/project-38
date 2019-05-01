@@ -1,12 +1,11 @@
 package model.triggers;
 
-import model.Cell;
 import model.QualityHaver;
 import model.cards.warriors.Warrior;
 import model.conditions.*;
 import model.effects.Dispelablity;
 import model.gamestate.*;
-import model.targets.TriggerTarget;
+import model.targets.triggertargets.TriggerTarget;
 
 /*special because of complexity*/
 //add triggers and effects with "1" duration to this trigger.

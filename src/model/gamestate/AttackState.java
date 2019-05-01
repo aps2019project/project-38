@@ -3,15 +3,11 @@ package model.gamestate;
 import model.cards.warriors.Warrior;
 
 public class AttackState extends GameState {
-    public boolean pending;
+    public boolean pending = true;
     public int ap;
     private Warrior attacker;
     private Warrior attacked;
     public boolean canceled = false;
-
-    public void setPending(boolean pending) {
-        this.pending = pending;
-    }
 
     public Warrior getAttacker() {
         return attacker;
@@ -21,10 +17,9 @@ public class AttackState extends GameState {
         return attacked;
     }
 
-    public AttackState(Warrior attacker, Warrior attacked, int ap, boolean pending) {
+    public AttackState(Warrior attacker, Warrior attacked, int ap) {
         this.ap = ap;
         this.attacker = attacker;
         this.attacked = attacked;
-        this.pending = pending;
     }
 }

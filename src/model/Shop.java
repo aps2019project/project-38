@@ -67,7 +67,7 @@ public class Shop {
             account.setMoney(account.getMoney() - card.getPrice());
             shop.getCardIDs().remove(card.getID());
             account.getCollection().getCardIDs().add(card.getID());
-            account.getCollection().getAllCards().put(card.getID(), Card.deepCopy(card));
+            account.getCollection().getAllCards().put(card.getID(), card.deepCopy());
             Message.buyWasSuccessful();
         } else {
             Message.haveNotEnoughMoney();

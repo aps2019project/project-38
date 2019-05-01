@@ -1,4 +1,4 @@
-package model.targets;
+package model.targets.triggertargets;
 
 import model.QualityHaver;
 import model.gamestate.GameState;
