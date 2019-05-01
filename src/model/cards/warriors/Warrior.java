@@ -5,7 +5,6 @@ import model.cards.Card;
 import model.player.Player;
 
 public class Warrior extends Card {
-    private Player player;
     private Cell cell;
     private int hp;
     private int ap;
@@ -16,7 +15,7 @@ public class Warrior extends Card {
         this.ap = ap;
     }
 
-    public Warrior deepCopy(Player player) {
+    public Warrior deepCopy() {
         return null;
         //todo
     }

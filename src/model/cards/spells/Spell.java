@@ -12,4 +12,10 @@ public class Spell extends Card {
     public void apply(Cell cell) {
 
     }
+
+    @Override
+    public Card deepCopy() {
+        //todo
+        return null;
+    }
 }
