@@ -4,7 +4,7 @@ import model.actions.triggeraction.Applier;
 import model.cards.warriors.Warrior;
 import model.conditions.HasAttacked;
 import model.effects.*;
-import model.targets.AttackedGetter;
+import model.targets.triggertargets.AttackedGetter;
 import model.triggers.Disarm;
 import model.triggers.Stun;
 import model.triggers.Trigger;

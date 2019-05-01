@@ -3,7 +3,7 @@
 //import model.actions.triggeraction.Applier;
 //import model.conditions.HasAttacked;
 //import model.effects.Dispelablity;
-//import model.targets.AttackedGetter;
+//import model.targets.triggertargets.AttackedGetter;
 //
 //
 ////this trigger adds all triggers and effects in it to the warrior that this warrior attacks.
