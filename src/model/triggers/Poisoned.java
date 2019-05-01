@@ -5,7 +5,7 @@ import model.conditions.HasTurnEnded;
 import model.effects.Dispelablity;
 import model.effects.HP;
 import model.gamestate.GameState;
-
+//special because so common.
 public class Poisoned extends Trigger{
     {
         conditions.add(new HasTurnEnded());

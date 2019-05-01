@@ -5,7 +5,7 @@ import model.conditions.IsAttacking;
 import model.effects.Dispelablity;
 import model.gamestate.AttackState;
 import model.gamestate.GameState;
-
+//special because of unique action.
 public class Disarm extends Trigger {
     {
         conditions.add(new IsAttacking());
