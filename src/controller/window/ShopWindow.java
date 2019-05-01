@@ -1,9 +1,14 @@
 package controller.window;
 
+import com.sun.xml.internal.ws.policy.jaxws.SafePolicyReader;
 import model.Shop;
+import model.cards.Card;
+import model.cards.heros.Hero;
+import model.cards.spells.Spell;
 import view.Message;
 
 import java.util.ArrayList;
+
 import static view.Request.getNextRequest;
 
 public class ShopWindow extends Window {
@@ -19,10 +24,10 @@ public class ShopWindow extends Window {
             int indexOfSelectedSubMenu = Integer.parseInt(input);
             switch (indexOfSelectedSubMenu) {
                 case 1:
-                    Message.showInfoOfAllCardsOfShop();
+                    handleShowInfoOfCardsOfShop();
                     continue;
                 case 2:
-                    Message.showInfoOfAllCardsOfCollection();
+                    handleShowInfoOfCardsOfCollection();
                     continue;
                 case 3:
                     Message.InterCardName();
@@ -54,5 +59,31 @@ public class ShopWindow extends Window {
                     Shop.getShop().sell(Integer.parseInt(cardName));
             }
         }
+    }
+
+    private void handleShowInfoOfCardsOfShop() {
+        Shop shop = Shop.getShop();
+        int numberOfHeroes = 0;
+        int numberOfItems = 0;
+        int numberOfCards = 0;
+        for (int cardID : shop.getCardIDs()) {
+            Card card = Card.getAllCards().get(cardID);
+            if (card instanceof Hero) {
+                numberOfHeroes++;
+                Message.showInfoOfHeroInShop((Hero) card, numberOfHeroes);
+            } else if (Spell.checkIsItem(card)) {
+                numberOfItems++;
+                Message.showInfoOfItemInShop((Spell) card, numberOfItems);
+            } else {
+                numberOfCards++;
+                String type;
+                if (card instanceof Spell) type = "Spell";
+                else type = "Minion";
+                Message.showInfoOfCardInShop(card, numberOfCards, type);
+            }
+        }
+    }
+    private void handleShowInfoOfCardsOfCollection(){
+
     }
 }

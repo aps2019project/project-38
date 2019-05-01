@@ -10,15 +10,10 @@ public class Warrior extends Card {
     private int hp;
     private int ap;
 
-    public Warrior(int ID, String name, int requiredMana, int price, int hp, int ap, boolean isItem) {
-        super(ID, name, requiredMana, price, isItem);
+    public Warrior(int ID, String name, int price, int requiredMana, int hp, int ap, String descriptionOfSpecialPower) {
+        super(ID, name, price, requiredMana, descriptionOfSpecialPower);
         this.hp = hp;
         this.ap = ap;
-    }
-
-    public Warrior deepCopy(Player player) {
-        return null;
-        //todo
     }
 
     public Cell getCell() {

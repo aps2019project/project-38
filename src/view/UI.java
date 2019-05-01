@@ -86,8 +86,4 @@ public class UI {
         //todo
         return null;
     }
-
-    public static UI getUi() {
-        return ui;
-    }
 }

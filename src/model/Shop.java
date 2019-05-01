@@ -1,8 +1,10 @@
 package model;
 
 import model.cards.Card;
+import model.cards.spells.Spell;
 import view.Message;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class Shop {
@@ -51,11 +53,11 @@ public class Shop {
             return;
         }
         if (account.getMoney() >= card.getPrice()) {
-            if (card.isItem()) {
+            if (Spell.checkIsItem(card)) {
                 int numberOfItems = 0;
                 for (int ID : account.getCollection().getCardIDs()) {
                     Card card1 = Card.getAllCards().get(ID);
-                    if (card1.isItem()) numberOfItems++;
+                    if (Spell.checkIsItem(card1)) numberOfItems++;
                 }
                 if (numberOfItems >= 3) {
                     Message.have3Items();
@@ -71,6 +73,8 @@ public class Shop {
             Message.haveNotEnoughMoney();
         }
     }
+
+
 
     public void sell(int cardID) {
         Account account = Account.getActiveAccount();

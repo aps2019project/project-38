@@ -1,5 +1,9 @@
 package view;
 
+import model.cards.Card;
+import model.cards.heros.Hero;
+import model.cards.spells.Spell;
+
 public interface Message {
     // in menu
     static void invalidInput() {
@@ -18,20 +22,30 @@ public interface Message {
         System.out.println("0- Exit");
     }
 
-    static void showInfoOfAllCardsOfShop() {
-        //todo
+    static void showInfoOfHeroInShop(Hero hero, int numberOfHeroes) {
+        System.out.printf("%d ) Name : %s - AP : %d - HP : %d - SpecialPower : %s - BuyCost : %d",
+                numberOfHeroes, hero.getName(), hero.getAp(), hero.getHp(), hero.getDescribtionOfSpecialPower(), hero.getPrice());
+    }
+
+    static void showInfoOfItemInShop(Spell spell, int numberOfItems) {
+        System.out.printf("%d ) Name : %s - Description : %s - BuyCost : %d", numberOfItems, spell.getName(), spell.getDescribtionOfSpecialPower(), spell.getPrice());
+    }
+
+    static void showInfoOfCardInShop(Card card, int numberOfCards, String type) {
+        System.out.printf("%d ) Type : %s - Name : %s - MP : %d - Description : %s - SellCost : %d",
+                numberOfCards, type, card.getName(), card.getRequiredMana(), card.getDescribtionOfSpecialPower(), card.getPrice());
     }
 
     static void showInfoOfAllCardsOfCollection() {
         //todo
     }
 
-    static void InterCardName(){
+    static void InterCardName() {
         System.out.println("Please Inter CardName");
     }
 
     static void printCardID(int cardID) {
-        System.out.printf("%d\n",cardID);
+        System.out.printf("%d\n", cardID);
     }
 
     static void thereIsNoCardWithThisNameInShop() {
