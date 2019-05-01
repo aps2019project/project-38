@@ -6,28 +6,23 @@ import model.cards.warriors.Warrior;
 import model.effects.*;
 import model.gamestate.AttackState;
 
-import java.util.ArrayList;
 import java.util.stream.Stream;
 
 public abstract class Attack {
-    public static void doIt(Game game, Cell attackerCell, Cell defenderCell) {
-        try { //for catching null pointer Exception
-            Warrior attacker = attackerCell.getWarrior();
-            Warrior defender = defenderCell.getWarrior();
-            ArrayList<Warrior> warriors = game.getActivePlayer().getWarriors();
-            int jumperManhattanDistance = game.getBoard().getJumperManhattanDistance(attackerCell, defenderCell);
-            if (warriors.contains(attacker) && !warriors.contains(defender) &&
-                    checkWarriorsEffectsForAttack(game, attackerCell, defenderCell, jumperManhattanDistance)) {
-                AttackState attackState = new AttackState(attacker, defender, attacker.getAp(), true);
+    public static void doIt(Cell attackerCell, Cell defenderCell) {
+        Game game = attackerCell.getBoard().getGame();
+        Warrior attacker = attackerCell.getWarrior();
+        Warrior defender = defenderCell.getWarrior();
+        int jumperManhattanDistance = game.getBoard().getJumperManhattanDistance(attackerCell, defenderCell);
+        if (checkWarriorsEffectsForAttack(game, attackerCell, defenderCell, jumperManhattanDistance)) {
+            AttackState attackState = new AttackState(attacker, defender, attacker.getAp());
+            game.iterateAllTriggers(attackState);
+            if (!attackState.canceled) {
+                defender.getEffects().add(new HP(-1, Dispelablity.UNDISPELLABLE, -1 * attackState.ap));
+                attackState.pending = false;
                 game.iterateAllTriggers(attackState);
-                if (!attackState.canceled) {
-                    defender.getEffects().add(new HP(-1, Dispelablity.UNDISPELLABLE, -1 * attackState.ap));
-                    AttackState theAttackState = new AttackState(attacker, defender, attackState.ap, false);
-                    game.iterateAllTriggers(theAttackState);
-                }
             }
         }
-        catch (Exception ignored) {}
     }
 
     private static boolean checkWarriorsEffectsForAttack

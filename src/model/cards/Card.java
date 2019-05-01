@@ -37,10 +37,6 @@ public abstract class Card extends QualityHaver implements Serializable {
 
     public abstract void apply(Cell cell);
 
-    public static Card deepCopy(Card card){
-        return null;
-        //todo
-    }
     //***
     public static HashMap<Integer, Card> getAllCards() {
         return allCards;
@@ -73,4 +69,6 @@ public abstract class Card extends QualityHaver implements Serializable {
     public boolean isItem() {
         return isItem;
     }
+
+    public abstract Card deepCopy();
 }
