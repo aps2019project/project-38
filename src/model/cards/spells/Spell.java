@@ -4,10 +4,10 @@ import model.Cell;
 import model.cards.Card;
 
 public class Spell extends Card {
-    public boolean isItem = false;
+    private boolean isItem;
 
-    public Spell(int ID, String name, int requiredMana, int price, boolean isItem, String descriptionOfSpecialPower) {
-        super(ID, name, price, requiredMana, descriptionOfSpecialPower);
+    public Spell(int ID, String name, int requiredMana, int price, boolean isItem) {
+        super(ID, name, price, requiredMana);
         this.isItem = isItem;
     }
 
@@ -19,13 +19,17 @@ public class Spell extends Card {
         return false;
     }
 
+    public boolean isItem() {
+        return isItem;
+    }
+
     @Override
     public void apply(Cell cell) {
 
     }
 
     @Override
-    public Card deepCopy() {
+    public Spell deepCopy() {
         //todo
         return null;
     }

@@ -17,8 +17,7 @@ public abstract class Card extends QualityHaver implements Serializable {
     protected int requiredMana;
     protected int price;
 
-    public Card(int ID, String name, int price, int requiredMana, String descriptionOfSpecialPower) {
-        this.describtionOfSpecialPower = descriptionOfSpecialPower;
+    public Card(int ID, String name, int price, int requiredMana) {
         this.ID = ID;
         this.name = name;
         this.requiredMana = requiredMana;
@@ -35,10 +34,7 @@ public abstract class Card extends QualityHaver implements Serializable {
 
     public abstract void apply(Cell cell);
 
-    public static Card deepCopy(Card card) {
-        return null;
-        //todo
-    }
+    public abstract Card deepCopy();
 
     //***
 

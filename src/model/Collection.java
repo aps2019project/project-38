@@ -2,6 +2,7 @@ package model;
 
 import model.cards.Card;
 import model.cards.heros.Hero;
+import model.cards.spells.Spell;
 import model.cards.warriors.Warrior;
 import view.Message;
 
@@ -93,7 +94,7 @@ public class Collection {
                 }
             }
         }
-        if (card.isItem()) {
+        if (Spell.checkIsItem(card)) {
             deck.setItem(card);
         }
         deck.getCardIDs().add(cardID);

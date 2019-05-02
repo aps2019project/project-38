@@ -10,8 +10,8 @@ public class Warrior extends Card {
     private int hp;
     private int ap;
 
-    public Warrior(int ID, String name, int price, int requiredMana, int hp, int ap, String descriptionOfSpecialPower) {
-        super(ID, name, price, requiredMana, descriptionOfSpecialPower);
+    public Warrior(int ID, String name, int price, int requiredMana, int hp, int ap) {
+        super(ID, name, price, requiredMana);
         this.hp = hp;
         this.ap = ap;
     }
@@ -35,5 +35,10 @@ public class Warrior extends Card {
     @Override
     public void apply(Cell cell) {
 
+    }
+
+    @Override
+    public Warrior deepCopy() {
+        return null;
     }
 }

@@ -1,6 +1,5 @@
 package controller.window;
 
-import com.sun.xml.internal.ws.policy.jaxws.SafePolicyReader;
 import model.Shop;
 import model.cards.Card;
 import model.cards.heros.Hero;
