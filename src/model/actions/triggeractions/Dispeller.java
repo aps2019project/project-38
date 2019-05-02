@@ -6,7 +6,7 @@ import model.triggers.Trigger;
 public class Dispeller implements TriggerAction{
 
     @Override
-    public void execute(Trigger ownerTrigger, QualityHaver target) {
+    public void execute(QualityHaver source, QualityHaver target) {
         dispel(target);
     }
 

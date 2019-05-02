@@ -1,11 +1,12 @@
 package model.triggers;
 
 import model.QualityHaver;
+import model.actions.triggeractions.Applier;
 import model.conditions.HasTurnEnded;
 import model.effects.Dispelablity;
 import model.effects.HP;
 import model.gamestate.GameState;
-//special because so common.
+//special because so common. and it has anti.
 public class Poisoned extends Trigger{
     {
         conditions.add(new HasTurnEnded());
@@ -18,6 +19,6 @@ public class Poisoned extends Trigger{
 
     @Override
     protected void executeActions(GameState gameState, QualityHaver owner) {
-        owner.getEffects().addAll(effects);
+        new Applier().execute(this,owner);
     }
 }

@@ -10,7 +10,7 @@ import model.triggers.Trigger;
 public class Killer implements TriggerAction{
 
     @Override
-    public void execute(Trigger ownerTrigger, QualityHaver target) {
+    public void execute(QualityHaver source, QualityHaver target) {
         if(!(target instanceof Warrior))
             return;
 
