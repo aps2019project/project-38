@@ -5,13 +5,9 @@ import model.cards.warriors.Warrior;
 public class AttackState extends GameState {
     public boolean pending = true;
     public int ap;
-    private Warrior attacker;
+    public Warrior attacker;
     private Warrior attacked;
     public boolean canceled = false;
-
-    public Warrior getAttacker() {
-        return attacker;
-    }
 
     public Warrior getAttacked() {
         return attacked;

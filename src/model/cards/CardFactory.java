@@ -8,6 +8,7 @@ import model.targets.triggertargets.AttackedGetter;
 import model.triggers.Disarm;
 import model.triggers.Stun;
 import model.triggers.Trigger;
+import model.triggers.WoundDeepener;
 
 import java.util.ArrayList;
 
@@ -44,7 +45,7 @@ public class CardFactory {
         {
             Warrior warrior = new Warrior(25, "Pahlevan-E-Fars", 600, 9, 24, 6, false);
             warrior.getEffects().add(new Melee(-1, Dispelablity.UNDISPELLABLE));
-            //todo
+            warrior.getTriggers().add(new WoundDeepener(-1,Dispelablity.BAD));
             allBuildedWarrioirs.add(warrior);
         }
         {
