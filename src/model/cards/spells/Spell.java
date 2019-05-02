@@ -4,8 +4,19 @@ import model.Cell;
 import model.cards.Card;
 
 public class Spell extends Card {
-    public Spell(int ID, String name, int requiredMana, int price, boolean isItem) {
-        super(ID, name, requiredMana, price, isItem);
+    public boolean isItem = false;
+
+    public Spell(int ID, String name, int requiredMana, int price, boolean isItem, String descriptionOfSpecialPower) {
+        super(ID, name, price, requiredMana, descriptionOfSpecialPower);
+        this.isItem = isItem;
+    }
+
+    public static boolean checkIsItem(Card card) {
+        if (card instanceof Spell) {
+            Spell spell = (Spell) card;
+            return spell.isItem;
+        }
+        return false;
     }
 
     @Override

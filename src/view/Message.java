@@ -1,11 +1,53 @@
 package view;
 
+import model.cards.Card;
+import model.cards.heros.Hero;
+import model.cards.spells.Spell;
+
 public interface Message {
     // in menu
-    static void invalidInput(){
+    static void invalidInput() {
         System.out.println("Invalid input");
     }
+
     // in shop
+    static void showShopHelp() {
+        System.out.println("Shop Menu:");
+        System.out.println("1- Show Cards In Shop");
+        System.out.println("2- Show Cards In Collection");
+        System.out.println("3- Search In Shop");
+        System.out.println("4- Search In Collection");
+        System.out.println("5- Buy");
+        System.out.println("6- Sell");
+        System.out.println("0- Exit");
+    }
+
+    static void showInfoOfHeroInShop(Hero hero, int numberOfHeroes) {
+        System.out.printf("%d ) Name : %s - AP : %d - HP : %d - SpecialPower : %s - BuyCost : %d",
+                numberOfHeroes, hero.getName(), hero.getAp(), hero.getHp(), hero.getDescribtionOfSpecialPower(), hero.getPrice());
+    }
+
+    static void showInfoOfItemInShop(Spell spell, int numberOfItems) {
+        System.out.printf("%d ) Name : %s - Description : %s - BuyCost : %d", numberOfItems, spell.getName(), spell.getDescribtionOfSpecialPower(), spell.getPrice());
+    }
+
+    static void showInfoOfCardInShop(Card card, int numberOfCards, String type) {
+        System.out.printf("%d ) Type : %s - Name : %s - MP : %d - Description : %s - SellCost : %d",
+                numberOfCards, type, card.getName(), card.getRequiredMana(), card.getDescribtionOfSpecialPower(), card.getPrice());
+    }
+
+    static void showInfoOfAllCardsOfCollection() {
+        //todo
+    }
+
+    static void InterCardName() {
+        System.out.println("Please Inter CardName");
+    }
+
+    static void printCardID(int cardID) {
+        System.out.printf("%d\n", cardID);
+    }
+
     static void thereIsNoCardWithThisNameInShop() {
         System.out.println("There is no card with this name in shop cards");
     }
@@ -34,7 +76,27 @@ public interface Message {
         System.out.println("You sell the card successfully");
     }
 
-    // in account
+    // in account:
+    static void showAccountHelp() {
+        System.out.println("Account Menu:");
+        System.out.println("1- Create Account");
+        System.out.println("2- Login");
+        System.out.println("3- Show LeaderBoard");
+        System.out.println("0- Exit");
+    }
+
+    static void showLeaderBoard(int i, String username, int numberOfWins) {
+        System.out.printf("%d- UserName : %s - Wins : %d\n", i, username, numberOfWins);
+    }
+
+    static void interUsername() {
+        System.out.println("Please inter Username");
+    }
+
+    static void interPassword() {
+        System.out.println("Please inter Password");
+    }
+
     static void thereIsAnAccountWithThisName() {
         System.out.println("There is already an account with this name");
     }
@@ -76,4 +138,3 @@ public interface Message {
         System.out.println("This deck is not valid");
     }
 }
-
