@@ -24,36 +24,36 @@ public interface Message {
 
     static void showInfoOfHeroPlusPrice(Hero hero, int numberOfHeroes, String kindOfAttackArea, String buyOrSell) {
         System.out.printf("%d ) Name : %s - AP : %d - HP : %d - class : %s - SpecialPower : %s - %sCost : %d\n",
-                numberOfHeroes, hero.getName(), hero.getAp(), hero.getHp(), kindOfAttackArea, hero.getDescribtionOfSpecialPower(), buyOrSell, hero.getPrice());
+                numberOfHeroes, hero.getName(), hero.getAp(), hero.getHp(), kindOfAttackArea, hero.getDescriptionOfSpecialPower(), buyOrSell, hero.getPrice());
     }
 
     static void showInfoOfHeroMinesPrice(Hero hero, int numberOfHeroes, String kindOfAttackArea) {
         System.out.printf("%d ) Name : %s - AP : %d - HP : %d - class : %s - SpecialPower : %s\n",
-                numberOfHeroes, hero.getName(), hero.getAp(), hero.getHp(), kindOfAttackArea, hero.getDescribtionOfSpecialPower());
+                numberOfHeroes, hero.getName(), hero.getAp(), hero.getHp(), kindOfAttackArea, hero.getDescriptionOfSpecialPower());
     }
 
     static void showInfoOfItemPlusPrice(Spell spell, int numberOfItems, String buyOrSell) {
         System.out.printf("%d ) Name : %s - Description : %s - %sCost : %d\n",
-                numberOfItems, spell.getName(), spell.getDescribtionOfSpecialPower(), buyOrSell, spell.getPrice());
+                numberOfItems, spell.getName(), spell.getDescriptionOfSpecialPower(), buyOrSell, spell.getPrice());
     }
 
     static void showInfoOfItemMinesPrice(Spell spell, int numberOfItems) {
         System.out.printf("%d ) Name : %s - Description : %s\n",
-                numberOfItems, spell.getName(), spell.getDescribtionOfSpecialPower());
+                numberOfItems, spell.getName(), spell.getDescriptionOfSpecialPower());
     }
 
     static void showInfoOfCardPlusPrice(Card card, int numberOfCards, String typeOfCard, String buyOrSell) {
         System.out.printf("%d ) Type : %s - Name : %s - MP : %d - Description : %s - %sCost : %d\n",
-                numberOfCards, typeOfCard, card.getName(), card.getRequiredMana(), card.getDescribtionOfSpecialPower(), buyOrSell, card.getPrice());
+                numberOfCards, typeOfCard, card.getName(), card.getRequiredMana(), card.getDescriptionOfSpecialPower(), buyOrSell, card.getPrice());
     }
 
     static void showInfoOfCardMinesPrice(Card card, int numberOfCards, String typeOfCard) {
         System.out.printf("%d ) Type : %s - Name : %s - MP : %d - Description : %s\n",
-                numberOfCards, typeOfCard, card.getName(), card.getRequiredMana(), card.getDescribtionOfSpecialPower());
+                numberOfCards, typeOfCard, card.getName(), card.getRequiredMana(), card.getDescriptionOfSpecialPower());
     }
 
     static void showAWordAsTitle(String aWord) {
-        System.out.println("        "+aWord+" :");
+        System.out.println("        " + aWord + " :");
     }
 
     static void InterCardName() {
