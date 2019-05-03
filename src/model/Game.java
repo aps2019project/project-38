@@ -1,11 +1,13 @@
 package model;
 
 
+import model.*;
 import model.actions.gameactions.Attack;
 import model.actions.gameactions.EndTurn;
 import model.actions.gameactions.Move;
 import model.actions.gameactions.ReplaceCard;
 import model.actions.triggeractions.Killer;
+import model.cards.Card;
 import model.cards.warriors.Warrior;
 import model.effects.Effect;
 import model.gamestate.*;
@@ -17,15 +19,16 @@ import model.triggers.Trigger;
 import javax.swing.Timer;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Random;
 
 
-
-public class Game {
+public abstract class Game {
     public int turn;
-    private Player[] players = new  Player[2];
+    Player[] players = new  Player[2];
     private Board board = new Board(this);
     public Timer timer = new Timer(Constant.GameConstants.turnTime, ignored -> endTurn());
+
 
     {
         turn = 0;
@@ -55,6 +58,10 @@ public class Game {
             return players[0];
         }
         return players[1];
+    }
+
+    public Player getWarriorsEnemyPlayer(Warrior warrior) {
+        return getWarriorsPlayer(warrior) == players[0] ? players[0] : players[1];
     }
 
     public Board getBoard() {
@@ -111,6 +118,16 @@ public class Game {
                         iterator.remove();
                     }
                 }
+            }
+        }
+    }
+
+    public void addNewCardToPlayerHand(Player player) {
+        for (Map.Entry<Integer, Card> entry: player.getHand().entrySet()) {
+            if (entry.getValue() == null) {
+                int randomIndex = (new Random(player.getMainDeck().getCardIDs().size())).nextInt();
+                entry.setValue(Card.getAllCards().get(player.getMainDeck().getCardIDs().get(randomIndex)).deepCopy());
+                break;
             }
         }
     }
