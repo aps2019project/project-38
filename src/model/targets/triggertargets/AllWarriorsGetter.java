@@ -6,12 +6,17 @@ import model.gamestate.GameState;
 
 import java.util.ArrayList;
 
-public class AllFriendsGetter implements TriggerTarget {
+public class AllWarriorsGetter implements TriggerTarget {
+    boolean friendMod;
+
+    public AllWarriorsGetter(boolean friendMod) {
+        this.friendMod = friendMod;
+    }
 
     @Override
     public ArrayList<? extends QualityHaver> getTarget(QualityHaver triggerOwner, GameState gameState) {
         assert triggerOwner instanceof Warrior;
-
+        //todo
         return ((Warrior)triggerOwner).getCell().getBoard().getGame().getWarriorsPlayer((Warrior)triggerOwner).getWarriors();
     }
 }

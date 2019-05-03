@@ -24,8 +24,6 @@ public class Aura extends Trigger {
 
     @Override
     protected void executeActions(GameState gameState, QualityHaver owner) {
-        Warrior warrior = (Warrior) owner;
-
         if(gameState instanceof DeathState){
             removeEffectsAndTriggers(owner,gameState);
         }

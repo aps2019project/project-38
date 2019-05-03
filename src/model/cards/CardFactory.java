@@ -3,12 +3,11 @@ package model.cards;
 import model.actions.triggeractions.Applier;
 import model.cards.warriors.Warrior;
 import model.conditions.HasAttacked;
+import model.conditions.HasDied;
 import model.effects.*;
 import model.targets.triggertargets.AttackedGetter;
-import model.triggers.Disarm;
-import model.triggers.Stun;
-import model.triggers.Trigger;
-import model.triggers.WoundDeepener;
+import model.targets.triggertargets.NearbyGetter;
+import model.triggers.*;
 
 import java.util.ArrayList;
 
@@ -45,7 +44,7 @@ public class CardFactory {
         {
             Warrior warrior = new Warrior(25, "Pahlevan-E-Fars", 600, 9, 24, 6);
             warrior.getEffects().add(new Melee(-1, Dispelablity.UNDISPELLABLE));
-            //todo
+            warrior.getTriggers().add(new WoundDeepener(-1,Dispelablity.BAD));
             allBuiltWarriors.add(warrior);
         }
         {
@@ -77,7 +76,7 @@ public class CardFactory {
             trigger.getConditions().add(new HasAttacked());
             trigger.getActions().put(new Applier(), new AttackedGetter());
             trigger.getTriggers().add(new Disarm(1, Dispelablity.BAD));
-            //todo
+            trigger.getTriggers().add(new Poisoned(4,Dispelablity.BAD));
             allBuiltWarriors.add(warrior);
         }
         {
@@ -105,7 +104,7 @@ public class CardFactory {
         {
             Warrior warrior = new Warrior(215, "Oghab", 200, 2, 0, 2);
             warrior.getEffects().add(new Ranged(-1, Dispelablity.UNDISPELLABLE, 3));
-            //todo
+            warrior.getEffects().add(new HP(-1,Dispelablity.GOOD,10));
             allBuiltWarriors.add(warrior);
         }
         {
@@ -117,13 +116,19 @@ public class CardFactory {
             Warrior warrior = new Warrior(217, "Ghool-E-Takcheshm", 500, 7, 12, 11);
             warrior.getEffects().add(new Melee(-1, Dispelablity.UNDISPELLABLE));
             warrior.getEffects().add(new Ranged(-1, Dispelablity.UNDISPELLABLE, 3));
-            //todo
+            Trigger trigger = new Trigger(-1,Dispelablity.UNDISPELLABLE);
+            trigger.getConditions().add(new HasDied());
+            trigger.getEffects().add(new HP(-1,Dispelablity.UNDISPELLABLE,-2));
+            trigger.getActions().put(new Applier(),new NearbyGetter(false));
             allBuiltWarriors.add(warrior);
         }
         {
             Warrior warrior = new Warrior(218, "Mar-E-Sammi", 300, 4, 5, 6);
             warrior.getEffects().add(new Ranged(-1, Dispelablity.UNDISPELLABLE, 4));
-            //todo
+            Trigger trigger = new Trigger(-1,Dispelablity.UNDISPELLABLE);
+            trigger.getTriggers().add(new Poisoned(4,Dispelablity.BAD));
+            trigger.getConditions().add(new HasAttacked());
+            trigger.getActions().put(new Applier(),new AttackedGetter());
             allBuiltWarriors.add(warrior);
         }
         {
@@ -134,7 +139,7 @@ public class CardFactory {
         {
             Warrior warrior = new Warrior(220, "Shir-E-Darrande", 600, 2, 1, 8);
             warrior.getEffects().add(new Melee(-1, Dispelablity.UNDISPELLABLE));
-            //todo
+            warrior.getEffects().add(new AntiHolyBuff(-1,Dispelablity.UNDISPELLABLE));
             allBuiltWarriors.add(warrior);
         }
         {

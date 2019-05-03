@@ -7,7 +7,12 @@ import model.gamestate.GameState;
 
 import java.util.ArrayList;
 
-public class FriendGeneralGetter implements TriggerTarget{
+public class GeneralGetter implements TriggerTarget{
+    boolean friendMod;
+
+    public GeneralGetter(boolean friendMod) {
+        this.friendMod = friendMod;
+    }
 
     @Override
     public ArrayList<? extends QualityHaver> getTarget(QualityHaver triggerOwner, GameState gameState) {
@@ -16,8 +21,6 @@ public class FriendGeneralGetter implements TriggerTarget{
         Warrior warrior = (Warrior)triggerOwner;
 
         ArrayList<Hero> targets = new ArrayList<>();
-        //targets.add(warrior.getCell().getBoard().getGame().getWarriorsPlayer(warrior).getMainDeck().getHero());
-        //todo
-        return null;
+        return null;//todo
     }
 }

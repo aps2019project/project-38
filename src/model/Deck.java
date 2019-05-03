@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Deck {
-    private static ArrayList<Deck> defaultDeck = new ArrayList<>();
     private static HashMap<String, Deck> allDecks = new HashMap<>();
     private String name;
     private ArrayList<Integer> cardIDs = new ArrayList<>();
@@ -27,10 +26,6 @@ public class Deck {
         return allDecks;
     }
 
-    public static ArrayList<Deck> getDefaultDeck() {
-        return defaultDeck;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -45,9 +40,5 @@ public class Deck {
 
     public Hero getHero() {
         return hero;
-    }
-
-    public Card getItem() {
-        return item;
     }
 }
