@@ -3,6 +3,7 @@ package model.player;
 import model.Constant;
 import model.Deck;
 import model.cards.Card;
+import model.cards.heros.Hero;
 import model.cards.warriors.Warrior;
 
 import java.util.ArrayList;
@@ -30,6 +31,10 @@ public abstract class Player {
 
     public ArrayList<Warrior> getWarriors() {
         return warriors;
+    }
+
+    public Hero getPlayerHero(){
+        return (Hero)warriors.stream().filter(warrior -> warrior instanceof Hero).findFirst().get();
     }
 
     public HashMap<Integer, Card> getHand() {

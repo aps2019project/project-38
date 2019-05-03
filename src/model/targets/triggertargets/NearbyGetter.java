@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 public class NearbyGetter implements TriggerTarget {
-    boolean friendMod;
+    private boolean friendMod;
 
     public NearbyGetter(boolean friendMod) {
         this.friendMod = friendMod;
