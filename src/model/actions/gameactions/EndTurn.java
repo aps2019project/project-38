@@ -10,6 +10,7 @@ public abstract class EndTurn {
         game.iterateAndExpireAllEffects();
         game.iterateAllTriggers(turnEnd);
         game.turn ++;
+        game.addNewCardToPlayerHand(game.getActivePlayer());
         game.getActivePlayer().mana = Constant.GameConstants.getTurnMana(game.turn);
         game.getActivePlayer().ableToReplaceCard = true;
         game.timer.restart();

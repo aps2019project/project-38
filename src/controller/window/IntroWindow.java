@@ -9,7 +9,7 @@ import static view.Request.getNextRequest;
 
 public class IntroWindow extends Window{
 
-    public void accountMenu() {
+    public void main() {
         while (true) {
             Message.showAccountHelp();
             String input = getNextRequest();

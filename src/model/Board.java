@@ -1,6 +1,5 @@
 package model;
 
-import model.cards.warriors.Warrior;
 import model.effects.Effect;
 import model.gamestate.GameState;
 import model.triggers.Trigger;
