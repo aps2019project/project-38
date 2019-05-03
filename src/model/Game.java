@@ -7,6 +7,7 @@ import model.cards.Card;
 import model.cards.warriors.Warrior;
 import model.effects.Effect;
 import model.gamestate.*;
+import model.gametypes.GameType;
 import model.player.AIPlayer;
 import model.player.HumanPlayer;
 import model.player.Player;
@@ -20,6 +21,7 @@ import java.util.Random;
 
 
 public abstract class Game {
+    GameType gameType;
     public int turn;
     Player[] players = new  Player[2];
     private Board board = new Board(this);
@@ -30,16 +32,22 @@ public abstract class Game {
         turn = 0;
         getActivePlayer().mana = Constant.GameConstants.getTurnMana(turn);
         getActivePlayer().ableToReplaceCard = true;
+        board.getCell(Constant.GameConstants.boardRow / 2 + 1, 0)
+                .setWarrior(players[0].getWarriors().get(0));
+        board.getCell(Constant.GameConstants.boardRow / 2 + 1, Constant.GameConstants.boardColumn - 1)
+                .setWarrior(players[1].getWarriors().get(0));
         timer.start();
     }
 
-    public Game(Account accountOne, Deck deckOne, Account accountTwo, Deck deckTwo) {
+    public Game(GameType gameType, Account accountOne, Deck deckOne, Account accountTwo, Deck deckTwo) {
+        this.gameType = gameType;
         int randomIndex = (new Random(2)).nextInt();
         this.players[randomIndex] = new HumanPlayer(accountOne, deckOne);
         this.players[(randomIndex + 1) % 2] = new HumanPlayer(accountTwo, deckTwo);
     }
 
-    public Game(Account account, Deck humanDeck, Deck aIDeck) {
+    public Game(GameType gameType, Account account, Deck humanDeck, Deck aIDeck) {
+        this.gameType = gameType;
         int randomIndex = (new Random(2)).nextInt();
         players[randomIndex] = new HumanPlayer(account, humanDeck);
         players[(randomIndex + 1) % 2] = new AIPlayer(aIDeck);
