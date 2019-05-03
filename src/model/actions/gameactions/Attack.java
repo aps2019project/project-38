@@ -18,6 +18,7 @@ public abstract class Attack {
             AttackState attackState = new AttackState(attacker, defender, attacker.getAp());
             game.iterateAllTriggers(attackState);
             if (!attackState.canceled) {
+                attacker.getEffects().add(new Attacked());
                 defender.getEffects().add(new HP(-1, Dispelablity.UNDISPELLABLE, -1 * attackState.ap));
                 attackState.pending = false;
                 game.iterateAllTriggers(attackState);
@@ -25,7 +26,7 @@ public abstract class Attack {
         }
     }
 
-    private static boolean checkWarriorsEffectsForAttack
+    static boolean checkWarriorsEffectsForAttack
             (Game game, Cell attackerCell, Cell defenderCell, int JumperManhattanDistance) {
         Warrior attacker = attackerCell.getWarrior();
         Stream<Effect> stream = attacker.getEffects().stream();

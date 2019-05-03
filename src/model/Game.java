@@ -1,11 +1,7 @@
 package model;
 
 
-import model.*;
-import model.actions.gameactions.Attack;
-import model.actions.gameactions.EndTurn;
-import model.actions.gameactions.Move;
-import model.actions.gameactions.ReplaceCard;
+import model.actions.gameactions.*;
 import model.actions.triggeractions.Killer;
 import model.cards.Card;
 import model.cards.warriors.Warrior;
@@ -151,6 +147,27 @@ public abstract class Game {
             Move.doIt(originCell, targetCell);
             killAllDiedWarriors();
         }
+    }
+
+    public void comboAttack(Cell[] attackersCell, Cell defenderCell) {
+        if (defenderCell.getWarrior() == null) return;
+        for (Cell cell : attackersCell) {
+            if (cell.getWarrior() == null) {
+                return;
+            }
+        }
+        for (int i = 0; i < attackersCell.length - 1; i++) {
+            if (getWarriorsPlayer(attackersCell[i].getWarrior()) !=
+                    getWarriorsPlayer(attackersCell[i + 1].getWarrior())) {
+                return;
+            }
+        }
+        if (defenderCell.getWarrior() == attackersCell[0].getWarrior()) {
+            return;
+        }
+        ComboAttack.doIt(attackersCell, defenderCell);
+        killAllDiedWarriors();
+
     }
 
     public void attack (Cell attackerCell, Cell defenderCell) {
