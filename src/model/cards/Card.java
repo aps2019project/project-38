@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 public abstract class Card extends QualityHaver implements Serializable {
     protected static HashMap<Integer, Card> allCards = new HashMap<>();
-    protected String descriptionOfSpecialPower;
+    public String descriptionOfSpecialPower;
     protected int ID;
     protected String name;
     protected int requiredMana;

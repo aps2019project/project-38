@@ -5,7 +5,7 @@ import model.cards.heros.Hero;
 import model.cards.spells.Spell;
 
 public interface Message {
-    // in menu
+    // general messages
     static void invalidInput() {
         System.out.println("Invalid input");
     }
@@ -22,22 +22,38 @@ public interface Message {
         System.out.println("0- Exit");
     }
 
-    static void showInfoOfHeroInShop(Hero hero, int numberOfHeroes) {
-        System.out.printf("%d ) Name : %s - AP : %d - HP : %d - SpecialPower : %s - BuyCost : %d",
-                numberOfHeroes, hero.getName(), hero.getAp(), hero.getHp(), hero.getDescriptionOfSpecialPower(), hero.getPrice());
+    static void showInfoOfHeroPlusPrice(Hero hero, int numberOfHeroes, String kindOfAttackArea, String buyOrSell) {
+        System.out.printf("%d ) Name : %s - AP : %d - HP : %d - class : %s - SpecialPower : %s - %sCost : %d\n",
+                numberOfHeroes, hero.getName(), hero.getAp(), hero.getHp(), kindOfAttackArea, hero.getDescriptionOfSpecialPower(), buyOrSell, hero.getPrice());
     }
 
-    static void showInfoOfItemInShop(Spell spell, int numberOfItems) {
-        System.out.printf("%d ) Name : %s - Description : %s - BuyCost : %d", numberOfItems, spell.getName(), spell.getDescriptionOfSpecialPower(), spell.getPrice());
+    static void showInfoOfHeroMinesPrice(Hero hero, int numberOfHeroes, String kindOfAttackArea) {
+        System.out.printf("%d ) Name : %s - AP : %d - HP : %d - class : %s - SpecialPower : %s\n",
+                numberOfHeroes, hero.getName(), hero.getAp(), hero.getHp(), kindOfAttackArea, hero.getDescriptionOfSpecialPower());
     }
 
-    static void showInfoOfCardInShop(Card card, int numberOfCards, String type) {
-        System.out.printf("%d ) Type : %s - Name : %s - MP : %d - Description : %s - SellCost : %d",
-                numberOfCards, type, card.getName(), card.getRequiredMana(), card.getDescriptionOfSpecialPower(), card.getPrice());
+    static void showInfoOfItemPlusPrice(Spell spell, int numberOfItems, String buyOrSell) {
+        System.out.printf("%d ) Name : %s - Description : %s - %sCost : %d\n",
+                numberOfItems, spell.getName(), spell.getDescriptionOfSpecialPower(), buyOrSell, spell.getPrice());
     }
 
-    static void showInfoOfAllCardsOfCollection() {
-        //todo
+    static void showInfoOfItemMinesPrice(Spell spell, int numberOfItems) {
+        System.out.printf("%d ) Name : %s - Description : %s\n",
+                numberOfItems, spell.getName(), spell.getDescriptionOfSpecialPower());
+    }
+
+    static void showInfoOfCardPlusPrice(Card card, int numberOfCards, String typeOfCard, String buyOrSell) {
+        System.out.printf("%d ) Type : %s - Name : %s - MP : %d - Description : %s - %sCost : %d\n",
+                numberOfCards, typeOfCard, card.getName(), card.getRequiredMana(), card.getDescriptionOfSpecialPower(), buyOrSell, card.getPrice());
+    }
+
+    static void showInfoOfCardMinesPrice(Card card, int numberOfCards, String typeOfCard) {
+        System.out.printf("%d ) Type : %s - Name : %s - MP : %d - Description : %s\n",
+                numberOfCards, typeOfCard, card.getName(), card.getRequiredMana(), card.getDescriptionOfSpecialPower());
+    }
+
+    static void showAWordAsTitle(String aWord) {
+        System.out.println("        " + aWord + " :");
     }
 
     static void InterCardName() {
@@ -106,6 +122,22 @@ public interface Message {
     }
 
     // in collection
+    static void showCollectionHelp() {
+        System.out.println("Collection Menu:");
+        System.out.println("1- Show Info Of Cards Of Collection:");
+        System.out.println("2- Search In Collection");
+        System.out.println("3- Create Deck");
+        System.out.println("4- Delete Deck");
+        System.out.println("5- Add Card To Deck");
+        System.out.println("6- Remove Card From Deck");
+        System.out.println("7- Check Validation Of A Deck");
+        System.out.println("8- Select A Deck As Main");
+        System.out.println("9- Show Info Of A Specific Deck");
+        System.out.println("10- Show Info Of All Decks");
+        System.out.println("11- Save :||");
+        System.out.println("0- Exit");
+    }
+
     static void thereIsNoCardWithThisIDInCollection() {
         System.out.println("There is no card with this ID in collection cards");
     }
