@@ -16,7 +16,7 @@ import static view.Request.getNextRequest;
 
 public class ShopWindow extends Window {
 
-    public void shopMenu() {
+    public void main() {
         while (true) {
             Message.showShopHelp();
             String input = getNextRequest();

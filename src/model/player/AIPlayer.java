@@ -7,4 +7,8 @@ public class AIPlayer extends Player {
     public AIPlayer(Deck deck) {
         super(deck);
     }
+
+    public void doSomthing() {
+
+    }
 }

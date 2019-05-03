@@ -6,11 +6,18 @@ import model.gamestate.GameState;
 
 import java.util.ArrayList;
 
-public class EnemyGeneralGetter implements TriggerTarget {
+public class WithinDistanceGetter implements TriggerTarget {
+    boolean friendMod;
+
+    public WithinDistanceGetter(boolean friendMod) {
+        this.friendMod = friendMod;
+    }
+
     @Override
     public ArrayList<? extends QualityHaver> getTarget(QualityHaver triggerOwner, GameState gameState) {
         assert triggerOwner instanceof Warrior;
-        //todo
+
+        Warrior warrior = (Warrior)triggerOwner;
         return null;
     }
 }
