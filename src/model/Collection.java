@@ -7,11 +7,9 @@ import model.cards.warriors.Warrior;
 import view.Message;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Collection {
     private ArrayList<Integer> cardIDs = new ArrayList<>();
-    private HashMap<Integer, Card> allCards = new HashMap<>();//What is this?
     private ArrayList<Deck> decks = new ArrayList<>();
     private Deck mainDeck;
 
@@ -23,7 +21,7 @@ public class Collection {
     public ArrayList<Integer> searchInCollectionCards(String cardName) {
         ArrayList<Integer> foundIDs = new ArrayList<>();
         for (int ID : getCardIDs()) {
-            Card card = getAllCards().get(ID);
+            Card card = Card.getAllCards().get(ID);
             if (card.getName().equals(cardName)) {
                 foundIDs.add(ID);
             }
@@ -32,10 +30,6 @@ public class Collection {
             Message.thereIsNoCardWithThisNameInCollection();
         }
         return foundIDs;
-    }
-
-    public void save() {
-        //todo
     }
 
     public void createDeck(String deckName) {
@@ -135,14 +129,14 @@ public class Collection {
             setMainDeck(Deck.getAllDecks().get(deckName));
         }
     }
+
+    public void save() {
+        //todo
+    }
     //***
 
     public void setMainDeck(Deck mainDeck) {
         this.mainDeck = mainDeck;
-    }
-
-    public HashMap<Integer, Card> getAllCards() {
-        return allCards;
     }
 
     public ArrayList<Integer> getCardIDs() {
