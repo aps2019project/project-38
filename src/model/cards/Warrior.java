@@ -4,7 +4,6 @@ import model.Cell;
 import model.player.Player;
 
 public class Warrior extends Card {
-    private Player player;
     private Cell cell;
     private int hp;
     private int ap;
