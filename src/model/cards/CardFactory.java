@@ -13,6 +13,128 @@ import java.util.ArrayList;
 
 public class CardFactory {
     ArrayList<Warrior> allBuiltWarriors = new ArrayList<>();
+    ArrayList<Spell> allBuiltSpells = new ArrayList<>();
+
+    public void makeAllSpells() {
+        {
+            Spell spell = new Spell(11, "TotalDisarm", 1000, 0, "one enemy", false);
+
+            spell.descriptionOfSpecialPower = "Disarm to the end of game";
+            allBuiltSpells.add(spell);
+        }
+        {
+            Spell spell = new Spell(12, "AreaDispel", 1500, 2, "square 2*2", false);
+
+            spell.descriptionOfSpecialPower = "it delet enemys possetive buffs and our negative buffs";
+            allBuiltSpells.add(spell);
+        }
+        {
+            Spell spell = new Spell(13, "Empower", 250, 1, "one friend", false);
+
+            spell.descriptionOfSpecialPower = "increase hit power of one person 2 units";
+            allBuiltSpells.add(spell);
+        }
+        {
+            Spell spell = new Spell(14, "Fireball", 400, 1, "one enemy", false);
+
+            spell.descriptionOfSpecialPower = "hit 4 unit to one enemy";
+            allBuiltSpells.add(spell);
+        }
+        {
+            Spell spell = new Spell(15, "GodStrength", 450, 2, "hero friend", false);
+
+            spell.descriptionOfSpecialPower = "increase hit power of one hero 4 units";
+            allBuiltSpells.add(spell);
+        }
+        {
+            Spell spell = new Spell(16, "HellFire", 600, 3, "square 2*2", false);
+
+            spell.descriptionOfSpecialPower = "make fiery effect in 2 cells for 2 turns";
+            allBuiltSpells.add(spell);
+        }
+        {
+            Spell spell = new Spell(17, "LightingBolt", 1250, 2, "hero enemy", false);
+            allBuiltSpells.add(spell);
+        }
+        {
+            Spell spell = new Spell(18, "PoisonLake", 900, 5, "square 3*3", false);
+
+            spell.descriptionOfSpecialPower = "make poisond 8 cells for one turn";
+            allBuiltSpells.add(spell);
+        }
+        {
+            Spell spell = new Spell(19, "Madness", 650, 0, "one friend", false);
+
+            spell.descriptionOfSpecialPower = "increase hit power of one person 4 units for 3 turns but it disarm";
+            allBuiltSpells.add(spell);
+        }
+        {
+            Spell spell = new Spell(110, "AllDisarm", 2000, 9, "all enemies", false);
+
+            spell.descriptionOfSpecialPower = "disarm for one turn";
+            allBuiltSpells.add(spell);
+        }
+        {
+            Spell spell = new Spell(111, "AllPoison", 1500, 8, "all enemies", false);
+
+            spell.descriptionOfSpecialPower = "all heros poisonds for 4 turns";
+            allBuiltSpells.add(spell);
+        }
+        {
+            Spell spell = new Spell(112, "Dispel", 2100, 0, "one friend or enemy", false);
+
+            spell.descriptionOfSpecialPower = "it delet enemys possetive buffs and our negative buffs";
+            allBuiltSpells.add(spell);
+        }
+        {
+            Spell spell = new Spell(113, "HealthWithProfit", 2250, 0, "one friend", false);
+
+            spell.descriptionOfSpecialPower = "Gives a weakness buff -6 HP but also gives 2 holy buffes for 3 turns";
+            allBuiltSpells.add(spell);
+        }
+        {
+            Spell spell = new Spell(114, "GhazaBokhorJoonBegiri", 2500, 2, "one friend", false);
+
+            spell.descriptionOfSpecialPower = "Gives power buff +6 AP";
+            allBuiltSpells.add(spell);
+        }
+        {
+            Spell spell = new Spell(115, "AllPower", 2000, 4, "all friends", false);
+
+            spell.descriptionOfSpecialPower = "Gives power buff +6 AP";
+            allBuiltSpells.add(spell);
+        }
+        {
+            Spell spell = new Spell(116, "AllAttack", 1500, 4, "all enemies in one column", false);
+
+            spell.descriptionOfSpecialPower = "hit all enemies 6 units";
+            allBuiltSpells.add(spell);
+        }
+        {
+            Spell spell = new Spell(117, "Weakening", 1000, 1, "one minion enemy", false);
+
+            spell.descriptionOfSpecialPower = "Gives weakness buff -4 AP";
+            allBuiltSpells.add(spell);
+        }
+        {
+            Spell spell = new Spell(118, "Sacrifice", 1600, 3, "one minion friend", false);
+
+            spell.descriptionOfSpecialPower = "Gives weakness buff -6 HP and power buff +8 AP";
+            allBuiltSpells.add(spell);
+        }
+        {
+            Spell spell = new Spell(119, "KingsGaurd", 1750, 3, "random enemy minion around hero", false);
+
+            spell.descriptionOfSpecialPower = "killes enemy";
+            allBuiltSpells.add(spell);
+        }
+        {
+            Spell spell = new Spell(120, "Shock", 1200, 1, "one enemy", false);
+
+            spell.descriptionOfSpecialPower = "stun for 2 turns";
+            allBuiltSpells.add(spell);
+        }
+    }
 
     public void makeAllMinions() {
         {
@@ -416,9 +538,5 @@ public class CardFactory {
             warrior.descriptionOfSpecialPower = "Gives a Weakness buff with -1 AP to enemy and for every demon (except itself and white demon) adds -3 to Weakness buff";
             allBuiltWarriors.add(warrior);
         }
-    }
-
-    public void makeAllSpells() {
-
     }
 }

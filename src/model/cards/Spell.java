@@ -4,9 +4,11 @@ import model.Cell;
 
 public class Spell extends Card {
     private boolean isItem;
+    public String target;
 
-    public Spell(int ID, String name, int requiredMana, int price, boolean isItem) {
+    public Spell(int ID, String name, int price, int requiredMana, String target , boolean isItem) {
         super(ID, name, price, requiredMana);
+        this.target = target;
         this.isItem = isItem;
     }
 
