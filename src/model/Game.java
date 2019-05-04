@@ -7,7 +7,7 @@ import model.cards.Card;
 import model.cards.warriors.Warrior;
 import model.effects.Effect;
 import model.gamestate.*;
-import model.gametypes.GameType;
+import model.gamemoods.GameMood;
 import model.player.AIPlayer;
 import model.player.HumanPlayer;
 import model.player.Player;
@@ -21,7 +21,7 @@ import java.util.Random;
 
 
 public abstract class Game {
-    GameType gameType;
+    GameMood gameMood;
     public int turn;
     Player[] players = new  Player[2];
     private Board board = new Board(this);
@@ -39,15 +39,15 @@ public abstract class Game {
         timer.start();
     }
 
-    public Game(GameType gameType, Account accountOne, Deck deckOne, Account accountTwo, Deck deckTwo) {
-        this.gameType = gameType;
+    public Game(GameMood gameMood, Account accountOne, Deck deckOne, Account accountTwo, Deck deckTwo) {
+        this.gameMood = gameMood;
         int randomIndex = (new Random(2)).nextInt();
         this.players[randomIndex] = new HumanPlayer(accountOne, deckOne);
         this.players[(randomIndex + 1) % 2] = new HumanPlayer(accountTwo, deckTwo);
     }
 
-    public Game(GameType gameType, Account account, Deck humanDeck, Deck aIDeck) {
-        this.gameType = gameType;
+    public Game(GameMood gameMood, Account account, Deck humanDeck, Deck aIDeck) {
+        this.gameMood = gameMood;
         int randomIndex = (new Random(2)).nextInt();
         players[randomIndex] = new HumanPlayer(account, humanDeck);
         players[(randomIndex + 1) % 2] = new AIPlayer(aIDeck);
@@ -70,6 +70,10 @@ public abstract class Game {
 
     public Board getBoard() {
         return board;
+    }
+
+    public Player[] getPlayers() {
+        return players;
     }
 
     public void iterateAllTriggers (GameState gameState) {
@@ -196,7 +200,7 @@ public abstract class Game {
 
     public void useCard (int handMapKey, Cell cell) {
         if (getActivePlayer().getHand().get(handMapKey) != null) {
-            useCard(handMapKey, cell);
+            UseCard.doIt(handMapKey, cell);
             killAllDiedWarriors();
         }
     }
