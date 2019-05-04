@@ -18,7 +18,7 @@ public class CardFactory {
         {
             Warrior warrior = new Warrior(21, "Kamandar-E-Fars", 300, 2, 6, 4);
             warrior.getEffects().add(new Ranged(-1, Dispelablity.UNDISPELLABLE, 7));
-
+            warrior.descriptionOfSpecialPower = "None";
             allBuiltWarriors.add(warrior);
         }
         {
@@ -31,6 +31,7 @@ public class CardFactory {
             trigger.getTriggers().add(new Stun(1, Dispelablity.BAD));
             warrior.getTriggers().add(trigger);
 
+            warrior.descriptionOfSpecialPower = "Stun Enemy for next round";
             allBuiltWarriors.add(warrior);
         }
         {
@@ -38,12 +39,14 @@ public class CardFactory {
             warrior.getEffects().add(new Melee(-1, Dispelablity.UNDISPELLABLE));
             warrior.getEffects().add(new Ranged(-1, Dispelablity.UNDISPELLABLE, 3));
 
+            warrior.descriptionOfSpecialPower = "None";
             allBuiltWarriors.add(warrior);
         }
         {
             Warrior warrior = new Warrior(24, "Asbsavar-E-Fars", 200, 4, 10, 6);
             warrior.getEffects().add(new Melee(-1, Dispelablity.UNDISPELLABLE));
 
+            warrior.descriptionOfSpecialPower = "None";
             allBuiltWarriors.add(warrior);
         }
         {
@@ -52,6 +55,7 @@ public class CardFactory {
 
             warrior.getTriggers().add(new WoundDeepener(-1, Dispelablity.BAD));
 
+            warrior.descriptionOfSpecialPower = "Deal 5 more damage for every turn that has attacked one enemy";
             allBuiltWarriors.add(warrior);
         }
         {
@@ -60,18 +64,21 @@ public class CardFactory {
 
             warrior.getEffects().add(new Combo(-1, Dispelablity.UNDISPELLABLE));
 
+            warrior.descriptionOfSpecialPower = "Deal 4 more damage for every Persian soldier that participate in attack (except itself)";
             allBuiltWarriors.add(warrior);
         }
         {
             Warrior warrior = new Warrior(27, "Kamandar-E-Toorani", 500, 1, 3, 4);
             warrior.getEffects().add(new Ranged(-1, Dispelablity.UNDISPELLABLE, 5));
 
+            warrior.descriptionOfSpecialPower = "None";
             allBuiltWarriors.add(warrior);
         }
         {
             Warrior warrior = new Warrior(28, "Ghollabsangdar-E-Toorani", 600, 1, 4, 2);
             warrior.getEffects().add(new Ranged(-1, Dispelablity.UNDISPELLABLE, 7));
 
+            warrior.descriptionOfSpecialPower = "None";
             allBuiltWarriors.add(warrior);
         }
         {
@@ -79,6 +86,7 @@ public class CardFactory {
             warrior.getEffects().add(new Melee(-1, Dispelablity.UNDISPELLABLE));
             warrior.getEffects().add(new Ranged(-1, Dispelablity.UNDISPELLABLE, 3));
 
+            warrior.descriptionOfSpecialPower = "None";
             allBuiltWarriors.add(warrior);
         }
         {
@@ -91,12 +99,14 @@ public class CardFactory {
             trigger.getTriggers().add(new Disarm(1, Dispelablity.BAD));
             trigger.getTriggers().add(new Poisoned(4, Dispelablity.BAD));
 
+            warrior.descriptionOfSpecialPower = "disarm enemy for one turn and poison enemy for 4 turns";
             allBuiltWarriors.add(warrior);
         }
         {
             Warrior warrior = new Warrior(211, "Gorzdar-E-Toorani", 450, 2, 3, 100);
             warrior.getEffects().add(new Melee(-1, Dispelablity.UNDISPELLABLE));
 
+            warrior.descriptionOfSpecialPower = "None";
             allBuiltWarriors.add(warrior);
         }
         {
@@ -105,6 +115,7 @@ public class CardFactory {
 
             warrior.getEffects().add(new Combo(-1, Dispelablity.UNDISPELLABLE));
 
+            warrior.descriptionOfSpecialPower = "Deal 4 more damage for every Turanian soldier that participate in attack (except itself)";
             allBuiltWarriors.add(warrior);
         }
         {
@@ -112,12 +123,14 @@ public class CardFactory {
             warrior.getEffects().add(new Melee(-1, Dispelablity.UNDISPELLABLE));
             warrior.getEffects().add(new Ranged(-1, Dispelablity.UNDISPELLABLE, 7));
 
+            warrior.descriptionOfSpecialPower = "None";
             allBuiltWarriors.add(warrior);
         }
         {
             Warrior warrior = new Warrior(214, "Ghool-E-Sangandaz", 300, 9, 14, 10);
             warrior.getEffects().add(new Ranged(-1, Dispelablity.UNDISPELLABLE, 7));
 
+            warrior.descriptionOfSpecialPower = "None";
             allBuiltWarriors.add(warrior);
         }
         {
@@ -126,12 +139,14 @@ public class CardFactory {
 
             warrior.getEffects().add(new HP(-1, Dispelablity.GOOD, 10));
 
+            warrior.descriptionOfSpecialPower = "Has 10 power buff with increasiing health";
             allBuiltWarriors.add(warrior);
         }
         {
             Warrior warrior = new Warrior(216, "Div-E-Gorazsavar", 300, 6, 16, 8);
             warrior.getEffects().add(new Melee(-1, Dispelablity.UNDISPELLABLE));
 
+            warrior.descriptionOfSpecialPower = "None";
             allBuiltWarriors.add(warrior);
         }
         {
@@ -144,6 +159,7 @@ public class CardFactory {
             trigger.getEffects().add(new HP(-1, Dispelablity.UNDISPELLABLE, -2));
             trigger.getActions().put(new Applier(), new NearbyGetter(false, false));
 
+            warrior.descriptionOfSpecialPower = "Deals 2 damage to every minion in 8 adjacent spaces on death";
             allBuiltWarriors.add(warrior);
         }
         {
@@ -155,12 +171,14 @@ public class CardFactory {
             trigger.getConditions().add(new HasAttacked());
             trigger.getActions().put(new Applier(), new AttackedGetter());
 
+            warrior.descriptionOfSpecialPower = "Poison enemy for 3 turns";
             allBuiltWarriors.add(warrior);
         }
         {
             Warrior warrior = new Warrior(219, "Ejhdeha-E-Atashandaz", 250, 5, 9, 5);
             warrior.getEffects().add(new Ranged(-1, Dispelablity.UNDISPELLABLE, 4));
 
+            warrior.descriptionOfSpecialPower = "None";
             allBuiltWarriors.add(warrior);
         }
         {
@@ -169,6 +187,7 @@ public class CardFactory {
 
             warrior.getEffects().add(new AntiHolyBuff(-1, Dispelablity.UNDISPELLABLE));
 
+            warrior.descriptionOfSpecialPower = "Holy buff doesn't affect its attack";
             allBuiltWarriors.add(warrior);
         }
         {
@@ -180,6 +199,7 @@ public class CardFactory {
             trigger.getTriggers().add(new HolyBuff(-1, Dispelablity.BAD, -1));
             trigger.getActions().put(new Applier(), new WithinDistanceGetter(false, 2, false));
 
+            warrior.descriptionOfSpecialPower = "Minions in 2 spaces distance take 1 more damage when attacked (permanently)";
             allBuiltWarriors.add(warrior);
         }
         {
@@ -196,6 +216,7 @@ public class CardFactory {
             trigger.getTriggers().add(teb1);
             trigger.getTriggers().add(teb2);
 
+            warrior.descriptionOfSpecialPower = "When attack a minion the minion loses 6 health in next turn and 4 health in turn after that";
             allBuiltWarriors.add(warrior);
         }
         {
@@ -210,6 +231,7 @@ public class CardFactory {
             trigger.getTriggers().add(teb);
             warrior.getTriggers().add(trigger);
 
+            warrior.descriptionOfSpecialPower = "When attack a minion the minion loses 8 health in next round";
             allBuiltWarriors.add(warrior);
         }
         {
@@ -224,6 +246,7 @@ public class CardFactory {
             trigger.getTriggers().add(teb);
             warrior.getTriggers().add(trigger);
 
+            warrior.descriptionOfSpecialPower = "When attack a minion the minion loses 6 health in next turn";
             allBuiltWarriors.add(warrior);
         }
         {
@@ -236,6 +259,7 @@ public class CardFactory {
             aura.getEffects().add(new HP(1, Dispelablity.BAD, -1));
             warrior.getTriggers().add(aura);
 
+            warrior.descriptionOfSpecialPower = "Gives a Power buff with +2 AP and a Weakness buff with -1 HP to itself and every friendly minion in 8 adjacent spaces";
             allBuiltWarriors.add(warrior);
         }
         {
@@ -248,6 +272,7 @@ public class CardFactory {
             aura.getTriggers().add(new HolyBuff(1, Dispelablity.GOOD, 1));
             warrior.getTriggers().add(aura);
 
+            warrior.descriptionOfSpecialPower = "Gives a Power buff with +2 AP and a Holy buff to every friendly minion in 8 adjacent spaces";
             allBuiltWarriors.add(warrior);
         }
         {
@@ -258,6 +283,7 @@ public class CardFactory {
             aura.getEffects().add(new AP(1, Dispelablity.GOOD, 1));
             warrior.getTriggers().add(aura);
 
+            warrior.descriptionOfSpecialPower = "Gives all friendly minions a passive Power buff with +1 AP";
             allBuiltWarriors.add(warrior);
         }
         {
@@ -266,6 +292,7 @@ public class CardFactory {
 
             warrior.getTriggers().add(new EffTriggImmune(-1, Dispelablity.UNDISPELLABLE, Disarm.class));
 
+            warrior.descriptionOfSpecialPower = "can't be disarmed";
             allBuiltWarriors.add(warrior);
         }
         {
@@ -274,6 +301,7 @@ public class CardFactory {
 
             warrior.getTriggers().add(new EffTriggImmune(-1, Dispelablity.UNDISPELLABLE, Poisoned.class));
 
+            warrior.descriptionOfSpecialPower = "can't be poisoned";
             allBuiltWarriors.add(warrior);
         }
         {
@@ -282,6 +310,7 @@ public class CardFactory {
 
             warrior.getTriggers().add(new SpellImmune(-1, Dispelablity.UNDISPELLABLE));
 
+            warrior.descriptionOfSpecialPower = "doesn't take negative affects from cards";
             allBuiltWarriors.add(warrior);
         }
         {
@@ -294,6 +323,7 @@ public class CardFactory {
             trigger.getActions().put(new Applier(), new RandomGetter(new AllWarriorsGetter(false, false)));
             warrior.getTriggers().add(trigger);
 
+            warrior.descriptionOfSpecialPower = "Deals 16 damage to a random enemy minion";
             allBuiltWarriors.add(warrior);
         }
         {
@@ -302,12 +332,14 @@ public class CardFactory {
 
             warrior.getTriggers().add(new LowerAttackCanceller(-1, Dispelablity.UNDISPELLABLE));
 
+            warrior.descriptionOfSpecialPower = "Doesn't take damage from minions with less AP";
             allBuiltWarriors.add(warrior);
         }
         {
             Warrior warrior = new Warrior(233, "Iraj", 500, 4, 6, 20);
             warrior.getEffects().add(new Ranged(-1, Dispelablity.UNDISPELLABLE, 3));
 
+            warrior.descriptionOfSpecialPower = "None";
             allBuiltWarriors.add(warrior);
         }
         {
@@ -315,6 +347,7 @@ public class CardFactory {
             warrior.getEffects().add(new Melee(-1, Dispelablity.UNDISPELLABLE));
             warrior.getEffects().add(new Ranged(-1, Dispelablity.UNDISPELLABLE, 2));
 
+            warrior.descriptionOfSpecialPower = "None";
             allBuiltWarriors.add(warrior);
         }
         {
@@ -326,6 +359,7 @@ public class CardFactory {
             trigger.getActions().put(new Dispeller(), new AttackedGetter());
             warrior.getTriggers().add(trigger);
 
+            warrior.descriptionOfSpecialPower = "Disables every positive affects of attacked minion";
             allBuiltWarriors.add(warrior);
         }
         {
@@ -338,6 +372,7 @@ public class CardFactory {
             trigger.getTriggers().add(new Stun(1, Dispelablity.BAD));
             warrior.getTriggers().add(trigger);
 
+            warrior.descriptionOfSpecialPower = "Stun enemy minions in 8 adjacent spaces for one turn";
             allBuiltWarriors.add(warrior);
         }
         {
@@ -348,6 +383,7 @@ public class CardFactory {
             aura.getTriggers().add(new HolyBuff(1, Dispelablity.GOOD, 12));
             warrior.getTriggers().add(aura);
 
+            warrior.descriptionOfSpecialPower = "Turn itself to a random enemy minion";
             allBuiltWarriors.add(warrior);
         }
         {
@@ -359,7 +395,7 @@ public class CardFactory {
             trigger.getActions().put(new Applier(), new HeroGetter(false));
             trigger.getEffects().add(new HP(-1, Dispelablity.UNDISPELLABLE, -6));
 
-
+            warrior.descriptionOfSpecialPower = "Deals 6 damage to enemy Hero on death";
             allBuiltWarriors.add(warrior);
         }
         {
@@ -368,6 +404,7 @@ public class CardFactory {
 
             warrior.getEffects().add(new Combo(-1, Dispelablity.UNDISPELLABLE));
 
+            warrior.descriptionOfSpecialPower = "for every giant that participates in attack (except itself) disarms enemy for one turn";
             allBuiltWarriors.add(warrior);
         }
         {
@@ -376,6 +413,7 @@ public class CardFactory {
 
             warrior.getEffects().add(new Combo(-1, Dispelablity.UNDISPELLABLE));
 
+            warrior.descriptionOfSpecialPower = "Gives a Weakness buff with -1 AP to enemy and for every demon (except itself and white demon) adds -3 to Weakness buff";
             allBuiltWarriors.add(warrior);
         }
     }
