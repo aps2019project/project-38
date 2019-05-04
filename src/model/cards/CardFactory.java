@@ -322,7 +322,7 @@ public class CardFactory {
 
             Trigger trigger = new Trigger(-1,Dispelablity.UNDISPELLABLE);
             trigger.getConditions().add(new HasAttacked());
-            trigger.getActions().put(new Dispeller(),new AttackedGetter());
+            trigger.getActions().put(new Dispeller(Dispelablity.GOOD),new AttackedGetter());
             warrior.getTriggers().add(trigger);
 
             allBuiltWarriors.add(warrior);
