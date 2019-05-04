@@ -2,7 +2,7 @@ package model.gamemoods;
 
 import model.Constant;
 import model.Game;
-import model.cards.warriors.Warrior;
+import model.cards.Warrior;
 import model.triggers.Flag;
 
 public class CarryingFlag extends GameMood {

@@ -1,8 +1,8 @@
 package model.gamemoods;
 
-import model.Board;
+
 import model.Game;
-import model.cards.heros.Hero;
+import model.cards.Hero;
 import model.player.Player;
 
 public class KillingEnemyHero extends GameMood {

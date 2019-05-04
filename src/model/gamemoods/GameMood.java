@@ -3,7 +3,7 @@ package model.gamemoods;
 
 import model.Board;
 import model.Game;
-import model.cards.warriors.Warrior;
+import model.cards.Warrior;
 import model.player.Player;
 import model.triggers.Flag;
 
