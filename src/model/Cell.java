@@ -1,6 +1,6 @@
 package model;
 
-import model.cards.warriors.Warrior;
+import model.cards.Warrior;
 import model.triggers.Trigger;
 
 import java.util.ArrayList;

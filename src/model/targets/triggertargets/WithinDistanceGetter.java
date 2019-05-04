@@ -4,8 +4,8 @@ import model.Board;
 import model.Cell;
 import model.Game;
 import model.QualityHaver;
-import model.cards.heros.Hero;
-import model.cards.warriors.Warrior;
+import model.cards.Hero;
+import model.cards.Warrior;
 import model.gamestate.GameState;
 
 import java.util.ArrayList;

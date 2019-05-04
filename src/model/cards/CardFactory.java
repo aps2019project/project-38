@@ -2,12 +2,10 @@ package model.cards;
 
 import model.actions.triggeractions.Applier;
 import model.actions.triggeractions.Dispeller;
-import model.cards.warriors.Warrior;
 import model.conditions.HasAttacked;
 import model.conditions.HasDied;
 import model.conditions.HasSpawned;
 import model.effects.*;
-import model.gamestate.EffTriggApplyState;
 import model.targets.triggertargets.*;
 import model.triggers.*;
 
@@ -16,7 +14,7 @@ import java.util.ArrayList;
 public class CardFactory {
     ArrayList<Warrior> allBuiltWarriors = new ArrayList<>();
 
-    public void makeAllCards() {
+    public void makeAllMinions() {
         {
             Warrior warrior = new Warrior(21, "Kamandar-E-Fars", 300, 2, 6, 4);
             warrior.getEffects().add(new Ranged(-1, Dispelablity.UNDISPELLABLE, 7));
@@ -379,5 +377,9 @@ public class CardFactory {
 
             allBuiltWarriors.add(warrior);
         }
+    }
+
+    public void makeAllSpells(){
+
     }
 }

@@ -2,7 +2,6 @@ package model.triggers;
 
 import model.QualityHaver;
 import model.actions.triggeractions.Applier;
-import model.cards.warriors.Warrior;
 import model.conditions.*;
 import model.effects.Dispelablity;
 import model.gamestate.*;

@@ -1,8 +1,7 @@
 package model.gamestate;
 
 import model.QualityHaver;
-import model.cards.spells.Spell;
-import model.cards.warriors.Warrior;
+import model.cards.Spell;
 
 public class UseSpellState extends GameState {
     public boolean pending = true;

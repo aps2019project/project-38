@@ -1,7 +1,7 @@
 package model.gamestate;
 
 import model.Cell;
-import model.cards.warriors.Warrior;
+import model.cards.Warrior;
 
 public class MoveState extends GameState {
     public boolean pending = true;

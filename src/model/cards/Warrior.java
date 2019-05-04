@@ -1,7 +1,6 @@
-package model.cards.warriors;
+package model.cards;
 
 import model.Cell;
-import model.cards.Card;
 import model.player.Player;
 
 public class Warrior extends Card {

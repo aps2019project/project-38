@@ -3,8 +3,8 @@ package model.player;
 import model.Constant;
 import model.Deck;
 import model.cards.Card;
-import model.cards.heros.Hero;
-import model.cards.warriors.Warrior;
+import model.cards.Hero;
+import model.cards.Warrior;
 
 import java.util.ArrayList;
 import java.util.HashMap;

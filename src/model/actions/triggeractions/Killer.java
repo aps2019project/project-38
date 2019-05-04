@@ -2,10 +2,9 @@ package model.actions.triggeractions;
 
 import model.Game;
 import model.QualityHaver;
-import model.cards.warriors.Warrior;
+import model.cards.Warrior;
 import model.gamestate.DeathState;
 import model.player.Player;
-import model.triggers.Trigger;
 
 public class Killer implements TriggerAction{
 

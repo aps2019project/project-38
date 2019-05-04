@@ -1,8 +1,8 @@
 package view;
 
 import model.cards.Card;
-import model.cards.heros.Hero;
-import model.cards.spells.Spell;
+import model.cards.Hero;
+import model.cards.Spell;
 
 public interface Message {
     // general messages

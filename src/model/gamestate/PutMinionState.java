@@ -1,6 +1,6 @@
 package model.gamestate;
 
-import model.cards.warriors.Warrior;
+import model.cards.Warrior;
 
 public class PutMinionState extends GameState {
     private Warrior warrior;
