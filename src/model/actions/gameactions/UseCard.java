@@ -28,6 +28,7 @@ public abstract class UseCard {
         if (game.getActivePlayer().mana >= card.getRequiredMana()) {
             game.getActivePlayer().mana -= card.getRequiredMana();
             game.getActivePlayer().getHand().put(handMapKey, null);
+            game.getActivePlayer().getUsedCards().add(card);
             card.apply(cell);
             game.iterateAllTriggers(gameState);
         }

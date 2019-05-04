@@ -16,7 +16,7 @@ public abstract class Player {
     private Deck mainDeck;
     private HashMap<Integer, Card> hand;
     private ArrayList<Warrior> warriors = new ArrayList<>();
-    private ArrayList<Integer> usedCards = new ArrayList<>();
+    private ArrayList<Card> usedCards = new ArrayList<>();
     public boolean ableToReplaceCard;
 
     public Player(Deck deck) {
@@ -27,6 +27,10 @@ public abstract class Player {
             int randomIndex = random.nextInt(this.mainDeck.getCardIDs().size());
             hand.put(i, Card.getAllCards().get(mainDeck.getCardIDs().get(randomIndex)).deepCopy());
         }
+    }
+
+    public ArrayList<Card> getUsedCards() {
+        return usedCards;
     }
 
     public ArrayList<Warrior> getWarriors() {
