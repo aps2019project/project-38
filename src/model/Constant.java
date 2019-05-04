@@ -27,10 +27,6 @@ public interface Constant {
             int poisonBuffDamage = 1;
         }
 
-        interface HolyBuff{
-            int holyBuffReducedDamage = 1;
-        }
-
         interface FiredCell{
             int firedCellDamage = 2;
         }

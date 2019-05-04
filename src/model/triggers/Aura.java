@@ -14,7 +14,8 @@ import model.targets.triggertargets.TriggerTarget;
 public class Aura extends Trigger {
     private TriggerTarget triggerTarget;
     {
-        conditions.add(new HasSpawned().or(new HasDied()).or(new HasMoved()).or(new HasTurnStarted()).or(new IsMoving()));
+        conditions.add(new HasSpawned().or(new HasDied()).or(new HasMoved()).or(new HasTurnStarted()).or(new IsMoving())
+                .or(new IsBeingDispelled()));
     }
 
     public Aura(int duration, Dispelablity dispelablity, TriggerTarget triggerTarget) {
@@ -24,7 +25,7 @@ public class Aura extends Trigger {
 
     @Override
     protected void executeActions(GameState gameState, QualityHaver owner) {
-        if(gameState instanceof DeathState){
+        if(gameState instanceof DeathState || gameState instanceof DispelState){
             removeEffectsAndTriggers(owner,gameState);
         }
 

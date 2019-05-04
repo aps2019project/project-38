@@ -6,6 +6,7 @@ import model.effects.Dispelablity;
 import model.targets.triggertargets.TriggerOwnerGetter;
 
 //special because of special condition.
+//add effect that you want to be added at the end of turn, in "duration" turns.
 public class TimedEffectBomb extends Trigger {
     {
         conditions.add(new HasTurnEnded());
@@ -14,6 +15,6 @@ public class TimedEffectBomb extends Trigger {
     }
 
     public TimedEffectBomb(int duration, Dispelablity dispelablity) {
-        super(duration, dispelablity);
+        super(duration+1, dispelablity);
     }
 }
