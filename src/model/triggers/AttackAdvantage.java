@@ -1,7 +1,7 @@
 package model.triggers;
 
 import model.QualityHaver;
-import model.cards.warriors.Warrior;
+import model.cards.Warrior;
 import model.conditions.IsAttacking;
 import model.effects.Dispelablity;
 import model.gamestate.AttackState;

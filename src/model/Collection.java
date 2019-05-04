@@ -1,9 +1,9 @@
 package model;
 
 import model.cards.Card;
-import model.cards.heros.Hero;
-import model.cards.spells.Spell;
-import model.cards.warriors.Warrior;
+import model.cards.Hero;
+import model.cards.Spell;
+import model.cards.Warrior;
 import view.Message;
 
 import java.util.ArrayList;

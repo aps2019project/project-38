@@ -1,7 +1,7 @@
 package model;
 
 import model.cards.Card;
-import model.cards.heros.Hero;
+import model.cards.Hero;
 
 import java.util.ArrayList;
 import java.util.HashMap;

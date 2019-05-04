@@ -4,7 +4,7 @@ package model;
 import model.actions.gameactions.*;
 import model.actions.triggeractions.Killer;
 import model.cards.Card;
-import model.cards.warriors.Warrior;
+import model.cards.Warrior;
 import model.effects.Effect;
 import model.gamestate.*;
 import model.gamemoods.GameMood;

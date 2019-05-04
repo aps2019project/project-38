@@ -3,7 +3,7 @@ package model.actions.triggeractions;
 import model.Cell;
 import model.Game;
 import model.QualityHaver;
-import model.cards.warriors.Warrior;
+import model.cards.Warrior;
 import model.effects.Effect;
 import model.gamestate.EffTriggApplyState;
 import model.triggers.Trigger;

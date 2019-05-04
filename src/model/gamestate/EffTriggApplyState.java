@@ -1,7 +1,6 @@
 package model.gamestate;
 
 import model.QualityHaver;
-import model.cards.warriors.Warrior;
 
 public class EffTriggApplyState extends GameState {
     private QualityHaver target;

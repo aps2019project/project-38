@@ -1,10 +1,9 @@
 package model;
 
 import model.cards.Card;
-import model.cards.spells.Spell;
+import model.cards.Spell;
 import view.Message;
 
-import javax.swing.*;
 import java.util.ArrayList;
 
 public class Shop {

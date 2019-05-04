@@ -1,16 +1,19 @@
 package model.targets.triggertargets;
 
 import model.QualityHaver;
-import model.cards.warriors.Warrior;
+import model.cards.Hero;
+import model.cards.Warrior;
 import model.gamestate.GameState;
 
 import java.util.ArrayList;
 
 public class AllWarriorsGetter implements TriggerTarget {
     private boolean friendMod;
+    private boolean heroToo;
 
-    public AllWarriorsGetter(boolean friendMod) {
+    public AllWarriorsGetter(boolean friendMod,boolean heroToo) {
         this.friendMod = friendMod;
+        this.heroToo = heroToo;
     }
 
     @Override
@@ -18,10 +21,15 @@ public class AllWarriorsGetter implements TriggerTarget {
         assert triggerOwner instanceof Warrior;
 
         Warrior warrior = (Warrior)triggerOwner;
+        ArrayList<QualityHaver> targets = new ArrayList<>();
         if(friendMod){
-            return warrior.getCell().getBoard().getGame().getWarriorsPlayer(warrior).getWarriors();
+            targets.addAll(warrior.getCell().getBoard().getGame().getWarriorsPlayer(warrior).getWarriors());
+            targets.removeIf(warrior1 -> !heroToo && warrior1 instanceof Hero);
+            return targets;
         }else {
-            return warrior.getCell().getBoard().getGame().getWarriorsEnemyPlayer(warrior).getWarriors();
+            targets.addAll(warrior.getCell().getBoard().getGame().getWarriorsEnemyPlayer(warrior).getWarriors());
+            targets.removeIf(warrior1 -> !heroToo && warrior1 instanceof Hero);
+            return targets;
         }
     }
 }

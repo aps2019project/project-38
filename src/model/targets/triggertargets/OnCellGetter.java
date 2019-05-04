@@ -2,7 +2,7 @@ package model.targets.triggertargets;
 
 import model.Cell;
 import model.QualityHaver;
-import model.cards.warriors.Warrior;
+import model.cards.Warrior;
 import model.gamestate.GameState;
 
 import java.util.ArrayList;

@@ -1,5 +1,6 @@
 package model.triggers;
 
+import model.Constant;
 import model.QualityHaver;
 import model.actions.triggeractions.Applier;
 import model.conditions.HasTurnEnded;
@@ -10,7 +11,7 @@ import model.gamestate.GameState;
 public class Poisoned extends Trigger{
     {
         conditions.add(new HasTurnEnded());
-        effects.add(new HP(-1, Dispelablity.UNDISPELLABLE,-1));
+        effects.add(new HP(-1, Dispelablity.UNDISPELLABLE, -Constant.EffectsTriggersConstants.PoisonBuff.poisonBuffDamage));
     }
 
     public Poisoned(int duration, Dispelablity dispelablity) {

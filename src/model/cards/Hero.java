@@ -1,7 +1,4 @@
-package model.cards.heros;
-
-import model.cards.Card;
-import model.cards.warriors.Warrior;
+package model.cards;
 
 public class Hero extends Warrior {
     private Card card;

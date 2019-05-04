@@ -4,7 +4,7 @@ import model.QualityHaver;
 import model.effects.Dispelablity;
 import model.gamestate.EffTriggApplyState;
 import model.gamestate.GameState;
-
+//special because of unique action and condition.
 public class EffTriggImmune extends Trigger {
     private Class aClass;
 

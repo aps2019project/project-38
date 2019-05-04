@@ -1,7 +1,7 @@
 package model.targets.triggertargets;
 
 import model.QualityHaver;
-import model.cards.warriors.Warrior;
+import model.cards.Warrior;
 import model.gamestate.AttackState;
 import model.gamestate.GameState;
 

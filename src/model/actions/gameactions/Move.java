@@ -3,7 +3,7 @@ package model.actions.gameactions;
 import model.Cell;
 import model.Constant;
 import model.Game;
-import model.cards.warriors.Warrior;
+import model.cards.Warrior;
 import model.effects.Attacked;
 import model.effects.Flying;
 import model.effects.Moved;

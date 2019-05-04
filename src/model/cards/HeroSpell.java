@@ -1,6 +1,4 @@
-package model.cards.herospells;
-
-import model.cards.spells.Spell;
+package model.cards;
 
 public class HeroSpell extends Spell {
     private int coolDown;

@@ -1,7 +1,6 @@
-package model.cards.spells;
+package model.cards;
 
 import model.Cell;
-import model.cards.Card;
 
 public class Spell extends Card {
     private boolean isItem;
