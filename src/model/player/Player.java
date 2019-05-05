@@ -21,11 +21,8 @@ public abstract class Player {
 
     public Player(Deck deck) {
         this.mainDeck = deck;
-        warriors.add(deck.getHero().deepCopy());
-        Random random = new Random();
         for (int i = 0; i < Constant.GameConstants.handSize; i++) {
-            int randomIndex = random.nextInt(this.mainDeck.getCardIDs().size());
-            hand.put(i, Card.getAllCards().get(mainDeck.getCardIDs().get(randomIndex)).deepCopy());
+            hand.put(i, null);
         }
     }
 

@@ -18,7 +18,7 @@ public class GameWindow extends Window {
                 getPlayerAction();
             }
             else {
-                ((AIPlayer)game.getActivePlayer()).doSomthing();
+                ((AIPlayer)game.getActivePlayer()).doSomething();
             }
         }
     }

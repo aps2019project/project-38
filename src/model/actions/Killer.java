@@ -6,6 +6,8 @@ import model.cards.Warrior;
 import model.gamestate.DeathState;
 import model.player.Player;
 
+import java.util.ArrayList;
+
 public class Killer implements TriggerAction{
 
     @Override
@@ -16,7 +18,7 @@ public class Killer implements TriggerAction{
         kill((Warrior)target);
     }
 
-    public static void kill(Warrior warrior){
+    public static void kill(Warrior warrior) {
         Game game = warrior.getCell().getBoard().getGame();
         Player player = game.getWarriorsPlayer(warrior);
         DeathState death = new DeathState(warrior);

@@ -20,15 +20,30 @@ import java.util.Map;
 import java.util.Random;
 
 
-public abstract class Game {
+public class Game {
     GameMood gameMood;
     public int turn;
     Player[] players = new  Player[2];
     private Board board = new Board(this);
     public Timer timer = new Timer(Constant.GameConstants.turnTime, ignored -> endTurn());
 
+    public Game(GameMood gameMood, Account accountOne, Account accountTwo) {
+        this.gameMood = gameMood;
+        int randomIndex = (new Random(2)).nextInt();
+        this.players[randomIndex] = new HumanPlayer(accountOne, accountOne.getCollection().getMainDeck());
+        this.players[(randomIndex + 1) % 2] = new HumanPlayer(accountTwo, accountTwo.getCollection().getMainDeck());
+        initialiseGameFields();
+    }
 
-    {
+    public Game(GameMood gameMood, Account account, Deck aIDeck) {//todo to not getting ai deck
+        this.gameMood = gameMood;
+        int randomIndex = (new Random(2)).nextInt();
+        players[randomIndex] = new HumanPlayer(account, account.getCollection().getMainDeck());
+        players[(randomIndex + 1) % 2] = new AIPlayer(aIDeck);
+        initialiseGameFields();
+    }
+
+    private void initialiseGameFields() {
         turn = 0;
         getActivePlayer().mana = Constant.GameConstants.getTurnMana(turn);
         getActivePlayer().ableToReplaceCard = true;
@@ -36,21 +51,17 @@ public abstract class Game {
                 .setWarrior(players[0].getWarriors().get(0));
         board.getCell(Constant.GameConstants.boardRow / 2 + 1, Constant.GameConstants.boardColumn - 1)
                 .setWarrior(players[1].getWarriors().get(0));
+        initialisePlayerHand(players[0]);
+        initialisePlayerHand(players[1]);
+        startTurn();
         timer.start();
     }
 
-    public Game(GameMood gameMood, Account accountOne, Deck deckOne, Account accountTwo, Deck deckTwo) {
-        this.gameMood = gameMood;
-        int randomIndex = (new Random(2)).nextInt();
-        this.players[randomIndex] = new HumanPlayer(accountOne, deckOne);
-        this.players[(randomIndex + 1) % 2] = new HumanPlayer(accountTwo, deckTwo);
-    }
-
-    public Game(GameMood gameMood, Account account, Deck humanDeck, Deck aIDeck) {
-        this.gameMood = gameMood;
-        int randomIndex = (new Random(2)).nextInt();
-        players[randomIndex] = new HumanPlayer(account, humanDeck);
-        players[(randomIndex + 1) % 2] = new AIPlayer(aIDeck);
+    private void initialisePlayerHand(Player player) {
+        Random random = new Random(player.getMainDeck().getCardIDs().size());
+        for (Map.Entry<Integer, Card> entry : player.getHand().entrySet()) {
+            entry.setValue(Card.getAllCards().get(player.getMainDeck().getCardIDs().get(random.nextInt())));
+        }
     }
 
     public Player getActivePlayer() {
@@ -74,6 +85,10 @@ public abstract class Game {
 
     public Player[] getPlayers() {
         return players;
+    }
+
+    public GameMood getGameMood() {
+        return gameMood;
     }
 
     public void iterateAllTriggersCheck(GameState gameState) {
@@ -140,7 +155,8 @@ public abstract class Game {
         }
     }
 
-    private void killAllDiedWarriors() {
+    private void checkGameEndAndThenKillAllDiedWarriors() {
+        gameMood.checkGameEnd(this);//todo
         killPlayerDiedWarriors(players[0]);
         killPlayerDiedWarriors(players[1]);
     }
@@ -157,7 +173,7 @@ public abstract class Game {
         if (getActivePlayer().getWarriors().contains(originCell.getWarrior()) &&
                 targetCell.getWarrior() == null) {
             Move.doIt(originCell, targetCell);
-            killAllDiedWarriors();
+            checkGameEndAndThenKillAllDiedWarriors();
         }
     }
 
@@ -178,7 +194,7 @@ public abstract class Game {
             return;
         }
         ComboAttack.doIt(attackersCell, defenderCell);
-        killAllDiedWarriors();
+        checkGameEndAndThenKillAllDiedWarriors();
 
     }
 
@@ -187,32 +203,32 @@ public abstract class Game {
         if (activePlayerWarriors.contains(attackerCell.getWarrior()) &&
                 !activePlayerWarriors.contains(defenderCell.getWarrior())) {
             Attack.doIt(attackerCell, defenderCell);
-            killAllDiedWarriors();
+            checkGameEndAndThenKillAllDiedWarriors();
         }
     }
 
     public void replaceCard (int handMapKey) {
         if (getActivePlayer().getHand().get(handMapKey) != null) {
             ReplaceCard.doIt(this, handMapKey);
-            killAllDiedWarriors();
+            checkGameEndAndThenKillAllDiedWarriors();
         }
     }
 
     public void useCard (int handMapKey, Cell cell) {
         if (getActivePlayer().getHand().get(handMapKey) != null) {
             UseCard.doIt(handMapKey, cell);
-            killAllDiedWarriors();
+            checkGameEndAndThenKillAllDiedWarriors();
         }
     }
 
     public void endTurn () {
         EndTurn.doIt(this);
-        killAllDiedWarriors();
+        checkGameEndAndThenKillAllDiedWarriors();
         startTurn();
     }
 
     private void startTurn() {
         StartTurn.doIt(this);
-        killAllDiedWarriors();
+        checkGameEndAndThenKillAllDiedWarriors();
     }
 }

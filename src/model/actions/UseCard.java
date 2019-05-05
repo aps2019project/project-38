@@ -9,7 +9,7 @@ import model.gamestate.GameState;
 import model.gamestate.PutMinionState;
 import model.gamestate.UseSpellState;
 
-public abstract class UseCard {
+public class UseCard {
     public static void doIt(int handMapKey, Cell cell) {
         Game game = cell.getBoard().getGame();
         Card card = game.getActivePlayer().getHand().get(handMapKey);
@@ -24,6 +24,7 @@ public abstract class UseCard {
         else {
             if (cell.getWarrior() != null) return;
             gameState = new PutMinionState((Warrior)card);
+            cell.setWarrior((Warrior) card);
         }
         if (game.getActivePlayer().mana >= card.getRequiredMana()) {
             game.getActivePlayer().mana -= card.getRequiredMana();
