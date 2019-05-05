@@ -20,7 +20,7 @@ public class Killer implements TriggerAction{
         Game game = warrior.getCell().getBoard().getGame();
         Player player = game.getWarriorsPlayer(warrior);
         DeathState death = new DeathState(warrior);
-        game.iterateAllTriggers(death);
+        game.iterateAllTriggersCheck(death);
         player.getWarriors().remove(warrior);
     }
 }

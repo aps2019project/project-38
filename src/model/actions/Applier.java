@@ -15,23 +15,23 @@ public class Applier implements TriggerAction {
 
         for (Trigger trigger : source.getTriggers()) {
             EffTriggApplyState state = new EffTriggApplyState(target,trigger);
-            getGameFromQualityHaver(target).iterateAllTriggers(state);
+            getGameFromQualityHaver(target).iterateAllTriggersCheck(state);
             if(!state.canceled){
                 target.getTriggers().add(trigger);
 
                 state.pending=false;
-                getGameFromQualityHaver(target).iterateAllTriggers(state);
+                getGameFromQualityHaver(target).iterateAllTriggersCheck(state);
             }
         }
 
         for (Effect effect : source.getEffects()) {
             EffTriggApplyState state = new EffTriggApplyState(target,effect);
-            getGameFromQualityHaver(target).iterateAllTriggers(state);
+            getGameFromQualityHaver(target).iterateAllTriggersCheck(state);
             if(!state.canceled){
                 target.getEffects().add(effect);
 
                 state.pending=false;
-                getGameFromQualityHaver(target).iterateAllTriggers(state);
+                getGameFromQualityHaver(target).iterateAllTriggersCheck(state);
             }
         }
     }
