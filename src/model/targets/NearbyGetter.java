@@ -5,11 +5,12 @@ import model.QualityHaver;
 import model.cards.Hero;
 import model.cards.Warrior;
 import model.gamestate.GameState;
+import model.player.Player;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class NearbyGetter implements TriggerTarget {
+public class NearbyGetter implements TriggerTarget , SpellTarget {
     private boolean friendMod;
     private boolean heroToo;
 
@@ -27,5 +28,13 @@ public class NearbyGetter implements TriggerTarget {
                 stream().map(Cell::getWarrior).filter(warrior1 -> warrior.getCell().getBoard().getGame()
                 .getWarriorsPlayer(warrior).getWarriors().contains(warrior1) == friendMod)
                 .filter(warrior1 -> !(warrior instanceof Hero) || heroToo).collect(Collectors.toCollection(ArrayList::new)));
+    }
+
+    //only accepts cells with warriors because of friendMod and heroToo options.
+    @Override
+    public ArrayList<? extends QualityHaver> getTarget(Player spellOwner, Cell cell) {
+        assert cell.getWarrior()!=null;
+
+        return getTarget(cell.getWarrior(),null);
     }
 }

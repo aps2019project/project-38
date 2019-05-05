@@ -8,22 +8,23 @@ import model.cards.Hero;
 import model.player.Player;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Collectors;
-
-public class SqrFromTL implements SpellTarget {
+//in getTarget method i mix cells and warrior it may cause trouble. change cellsToo to cellMod to solve the issue.
+public class RectGetter implements SpellTarget {
     private int rowLen;
     private int colLen;
-    private boolean cellMod;
+    private boolean cellsToo;
     private boolean enemies;
     private boolean friends;
     private boolean enemyHero;
     private boolean friendHero;
 
-    public SqrFromTL(int rowLen,int colLen, boolean cellMod, boolean enemies, boolean friends, boolean enemyHero, boolean friendHero) {
+    public RectGetter(int rowLen, int colLen, boolean cellsToo, boolean enemies, boolean friends, boolean enemyHero, boolean friendHero) {
         this.rowLen=rowLen;
         this.colLen=colLen;
-        this.cellMod = cellMod;
+        this.cellsToo = cellsToo;
         this.enemies = enemies;
         this.friends = friends;
         this.enemyHero = enemyHero;
@@ -35,15 +36,19 @@ public class SqrFromTL implements SpellTarget {
         Game game = cell.getBoard().getGame();
         ArrayList<Cell> cells = new ArrayList<>();
         addCells(cell, cells);
-        if (cellMod) {
-            return cells;
+
+        ArrayList<QualityHaver> targets = new ArrayList<>();
+        if (cellsToo) {
+            targets.addAll(cells);
         }
-        return cells.stream().map(Cell::getWarrior).filter(Objects::nonNull)
+        targets.addAll( cells.stream().map(Cell::getWarrior).filter(Objects::nonNull)
                 .filter(warrior -> (game.getWarriorsEnemyPlayer(warrior).equals(spellOwner) && !(warrior instanceof Hero)) == enemies ||
                         (game.getWarriorsPlayer(warrior).equals(spellOwner) && !(warrior instanceof Hero)) == friends ||
                         (game.getWarriorsEnemyPlayer(warrior).equals(spellOwner) && warrior instanceof Hero) == enemyHero ||
                         (game.getWarriorsPlayer(warrior).equals(spellOwner) && warrior instanceof Hero) == friendHero)
-                .collect(Collectors.toCollection(ArrayList::new));
+                .collect(Collectors.toCollection(ArrayList::new)));
+
+        return targets;
     }
 
     private void addCells(Cell cell, ArrayList<Cell> cells) {

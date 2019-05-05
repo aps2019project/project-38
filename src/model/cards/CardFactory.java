@@ -1,10 +1,13 @@
 package model.cards;
 
+import model.Constant;
 import model.actions.Applier;
 import model.actions.Dispeller;
+import model.actions.Killer;
 import model.conditions.HasAttacked;
 import model.conditions.HasDied;
 import model.conditions.HasSpawned;
+import model.conditions.HasWarriorOnIt;
 import model.effects.*;
 import model.targets.*;
 import model.triggers.*;
@@ -450,12 +453,17 @@ public class CardFactory {
         {
             Spell spell = new Spell(11, "TotalDisarm", 1000, 0, false);
 
+            spell.getTriggers().add(new Disarm(-1, Dispelablity.BAD));
+            spell.getActions().put(new Applier(), new RectGetter(1, 1, false, true, false, true, false));
+
             spell.description.targetType = "one enemy";
             spell.description.descriptionOfCardSpecialAbility = "Disarm to the end of game";
             allBuiltSpells.add(spell);
         }
         {
             Spell spell = new Spell(12, "AreaDispel", 1500, 2, false);
+
+            spell.getActions().put(new Dispeller(), new RectGetter(2, 2, false, true, true, true, true));
 
             spell.description.targetType = "square 2*2";
             spell.description.descriptionOfCardSpecialAbility = "it delete enemy's positive buffs and our negative buffs";
@@ -464,12 +472,18 @@ public class CardFactory {
         {
             Spell spell = new Spell(13, "Empower", 250, 1, false);
 
+            spell.getEffects().add(new AP(-1,Dispelablity.GOOD,2));
+            spell.getActions().put(new Applier(),new RectGetter(1,1,false,false,true,false,true));
+
             spell.description.targetType = "one friend";
             spell.description.descriptionOfCardSpecialAbility = "increase hit power of one person 2 units";
             allBuiltSpells.add(spell);
         }
         {
             Spell spell = new Spell(14, "Fireball", 400, 1, false);
+
+            spell.getEffects().add(new HP(-1,Dispelablity.UNDISPELLABLE,-4));
+            spell.getActions().put(new Applier(),new RectGetter(1,1,false,true,false,true,false));
 
             spell.description.targetType = "one enemy";
             spell.description.descriptionOfCardSpecialAbility = "hit 4 unit to one enemy";
@@ -478,12 +492,22 @@ public class CardFactory {
         {
             Spell spell = new Spell(15, "GodStrength", 450, 2, false);
 
+            spell.getEffects().add(new AP(-1,Dispelablity.GOOD,4));
+            spell.getActions().put(new Applier(),new RectGetter(1,1,false,false,false,false,true));
+
             spell.description.targetType = "hero friend";
             spell.description.descriptionOfCardSpecialAbility = "increase hit power of one hero 4 units";
             allBuiltSpells.add(spell);
         }
         {
             Spell spell = new Spell(16, "HellFire", 600, 3, false);
+
+            Trigger fire = new Trigger(2,Dispelablity.BAD);
+            fire.getConditions().add(new HasWarriorOnIt());
+            fire.getEffects().add(new HP(-1,Dispelablity.UNDISPELLABLE,-2));
+            fire.getActions().put(new Applier(),new OnCellGetter());
+            spell.getTriggers().add(fire);
+            spell.getActions().put(new Applier(),new RectGetter(2,2,true,false,false,false,false));
 
             spell.description.targetType = "square 2*2";
             spell.description.descriptionOfCardSpecialAbility = "make fiery effect in 2 cells for 2 turns";
@@ -492,12 +516,22 @@ public class CardFactory {
         {
             Spell spell = new Spell(17, "LightingBolt", 1250, 2, false);
 
+            spell.getEffects().add(new HP(-1,Dispelablity.UNDISPELLABLE,-8));
+            spell.getActions().put(new Applier(),new RectGetter(1,1,false,false,false,true,false));
+
             spell.description.targetType = "hero enemy";
             spell.description.descriptionOfCardSpecialAbility = "hit 8 units to the hero";
             allBuiltSpells.add(spell);
         }
         {
             Spell spell = new Spell(18, "PoisonLake", 900, 5, false);
+
+            Trigger poison = new Trigger(1,Dispelablity.BAD);
+            poison.getTriggers().add(new Poisoned(3,Dispelablity.BAD));
+            poison.getConditions().add(new HasWarriorOnIt());
+            poison.getActions().put(new Applier(),new OnCellGetter());
+            spell.getTriggers().add(poison);
+            spell.getActions().put(new Applier(),new RectGetter(3,3,true,false,false,false,false));
 
             spell.description.targetType = "square 3*3";
             spell.description.descriptionOfCardSpecialAbility = "make poisoned 8 cells for one turn";
@@ -506,12 +540,19 @@ public class CardFactory {
         {
             Spell spell = new Spell(19, "Madness", 650, 0, false);
 
+            spell.getActions().put(new Applier(),new RectGetter(1,1,false,false,true,false,true));
+            spell.getTriggers().add(new Disarm(3,Dispelablity.BAD));
+            spell.getEffects().add(new AP(3,Dispelablity.GOOD,4));
+
             spell.description.targetType = "one friend";
             spell.description.descriptionOfCardSpecialAbility = "increase hit power of one person 4 units for 3 turns but it disarm";
             allBuiltSpells.add(spell);
         }
         {
             Spell spell = new Spell(110, "AllDisarm", 2000, 9, false);
+
+            spell.getActions().put(new Applier(),new AllWarriorsGetter(false,true));
+            spell.getTriggers().add(new Disarm(1,Dispelablity.BAD));
 
             spell.description.targetType = "all enemies";
             spell.description.descriptionOfCardSpecialAbility = "disarm for one turn";
@@ -520,12 +561,17 @@ public class CardFactory {
         {
             Spell spell = new Spell(111, "AllPoison", 1500, 8, false);
 
+            spell.getActions().put(new Applier(),new AllWarriorsGetter(false,true));
+            spell.getTriggers().add(new Poisoned(4,Dispelablity.BAD));
+
             spell.description.targetType = "all enemies";
             spell.description.descriptionOfCardSpecialAbility = "all heroes poisoned for 4 turns";
             allBuiltSpells.add(spell);
         }
         {
             Spell spell = new Spell(112, "Dispel", 2100, 0, false);
+
+            spell.getActions().put(new Dispeller(),new RectGetter(1,1,false,true,true,true,true));
 
             spell.description.targetType = "one friend or enemy";
             spell.description.descriptionOfCardSpecialAbility = "it delete enemy's positive buffs and our negative buffs";
@@ -534,12 +580,19 @@ public class CardFactory {
         {
             Spell spell = new Spell(113, "HealthWithProfit", 2250, 0, false);
 
+            spell.getActions().put(new Applier(),new RectGetter(1,1,false,false,true,false,true));
+            spell.getTriggers().add(new HolyBuff(3,Dispelablity.GOOD,2));
+            spell.getEffects().add(new HP(3,Dispelablity.BAD,-6));
+
             spell.description.targetType = "one friend";
             spell.description.descriptionOfCardSpecialAbility = "Gives a weakness buff -6 HP but also gives 2 holy buffes for 3 turns";
             allBuiltSpells.add(spell);
         }
         {
             Spell spell = new Spell(114, "GhazaBokhorJoonBegiri", 2500, 2, false);
+
+            spell.getActions().put(new Applier(),new RectGetter(1,1,false,false,true,false,true));
+            spell.getEffects().add(new AP(-1,Dispelablity.GOOD,6));
 
             spell.description.targetType = "one friend";
             spell.description.descriptionOfCardSpecialAbility = "Gives power buff +6 AP";
@@ -548,12 +601,20 @@ public class CardFactory {
         {
             Spell spell = new Spell(115, "AllPower", 2000, 4, false);
 
+            spell.getActions().put(new Applier(),new AllWarriorsGetter(true,true));
+            Aura aura = new Aura(-1,Dispelablity.GOOD,new TriggerOwnerGetter());
+            aura.getEffects().add(new AP(1,Dispelablity.GOOD,2));
+            spell.getTriggers().add(aura);
+
             spell.description.targetType = "all friends";
             spell.description.descriptionOfCardSpecialAbility = "Gives power buff +6 AP";
             allBuiltSpells.add(spell);
         }
         {
             Spell spell = new Spell(116, "AllAttack", 1500, 4, false);
+
+            spell.getActions().put(new Applier(),new RectGetter(Constant.GameConstants.boardRow,1,false,true,false,true,false));
+            spell.getEffects().add(new HP(-1,Dispelablity.UNDISPELLABLE,-6));
 
             spell.description.targetType = "all enemies in one column";
             spell.description.descriptionOfCardSpecialAbility = "hit all enemies 6 units";
@@ -562,12 +623,19 @@ public class CardFactory {
         {
             Spell spell = new Spell(117, "Weakening", 1000, 1, false);
 
+            spell.getActions().put(new Applier(),new RectGetter(1,1,false,true,false,false,false));
+            spell.getEffects().add(new AP(-1,Dispelablity.BAD,-4));
+
             spell.description.targetType = "one minion enemy";
             spell.description.descriptionOfCardSpecialAbility = "Gives weakness buff -4 AP";
             allBuiltSpells.add(spell);
         }
         {
             Spell spell = new Spell(118, "Sacrifice", 1600, 3, false);
+
+            spell.getActions().put(new Applier(),new RectGetter(1,1,false,false,true,false,false));
+            spell.getEffects().add(new AP(-1,Dispelablity.GOOD,8));
+            spell.getEffects().add(new HP(-1,Dispelablity.BAD,-6));
 
             spell.description.targetType = "one minion friend";
             spell.description.descriptionOfCardSpecialAbility = "Gives weakness buff -6 HP and power buff +8 AP";
@@ -576,6 +644,8 @@ public class CardFactory {
         {
             Spell spell = new Spell(119, "KingsGaurd", 1750, 3, false);
 
+            spell.getActions().put(new Killer(),new RandomGetter((SpellTarget) new NearbyGetter(false,false)));
+
             spell.description.targetType = "random enemy minion around hero";
             spell.description.descriptionOfCardSpecialAbility = "killes enemy";
             allBuiltSpells.add(spell);
@@ -583,6 +653,8 @@ public class CardFactory {
         {
             Spell spell = new Spell(120, "Shock", 1200, 1, false);
 
+            spell.getActions().put(new Applier(),new RectGetter(1,1,false,true,false,true,false));
+            spell.getTriggers().add(new Stun(2,Dispelablity.BAD));
 
             spell.description.targetType = "one enemy";
             spell.description.descriptionOfCardSpecialAbility = "stun for 2 turns";
@@ -593,6 +665,8 @@ public class CardFactory {
     public void makeAllHeroes() {
         {
             Hero hero = new Hero(31, "Div_E_Sefid", 8000, 50, 4, -1);
+
+
 
             hero.description.descriptionOfCardSpecialAbility = "Apply power buff with 4 point additional attack damage on himself";
             allBuiltHeroes.add(hero);
