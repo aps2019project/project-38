@@ -34,10 +34,7 @@ public abstract class Card extends QualityHaver implements Serializable {
 
     public abstract void apply(Cell cell);
 
-    public Card deepCopy() {
-        return null;
-        //todo
-    }
+    public abstract Card deepCopy();
 
     //***
 

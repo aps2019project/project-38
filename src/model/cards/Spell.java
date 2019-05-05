@@ -24,7 +24,7 @@ public class Spell extends Card {
 
     @Override
     public void apply(Cell cell) {
-
+        //todo
     }
 
     @Override
