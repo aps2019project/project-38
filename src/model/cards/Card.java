@@ -65,4 +65,8 @@ public abstract class Card extends QualityHaver implements Serializable {
     public int getPrice() {
         return price;
     }
+
+    public String getDescriptionOfSpecialPower() {
+        return description.descriptionOfCardSpecialAbility;
+    }
 }

@@ -342,7 +342,7 @@ public class CardFactory {
             Trigger trigger = new Trigger(-1, Dispelablity.UNDISPELLABLE);
             trigger.getConditions().add(new HasSpawned());
             trigger.getEffects().add(new HP(-1, Dispelablity.UNDISPELLABLE, -16));
-            trigger.getActions().put(new Applier(), new RandomGetter(new AllWarriorsGetter(false, false)));
+            trigger.getActions().put(new Applier(), new RandomGetter((TriggerTarget) new AllWarriorsGetter(false, false)));
             warrior.getTriggers().add(trigger);
 
 

@@ -1,7 +1,5 @@
 package model.cards;
 
-import sun.security.krb5.internal.crypto.Des;
-
 public class Hero extends Warrior {
     private Card card;
 
