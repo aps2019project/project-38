@@ -17,6 +17,7 @@ import static view.Request.getNextRequest;
 public class ShopWindow extends Window {
 
     public void main() {
+        tag1:
         while (true) {
             Message.showShopHelp();
             String input = getNextRequest();
@@ -46,8 +47,9 @@ public class ShopWindow extends Window {
                     ArrayList<Integer> foundIDs = Shop.getShop().searchInCollectionCards(cardName);
                     if (foundIDs.size() > 0) {
                         for (int id : foundIDs) {
-                            Message.printCardID(id);
+                            Message.printSomeThing(((Integer) id).toString());
                         }
+                        Message.INTER();
                         System.out.println();
                     }
                     continue;
@@ -57,15 +59,23 @@ public class ShopWindow extends Window {
                     Shop.getShop().buy(cardName);
                     continue;
                 case 6:
-                    Message.InterCardName();
+                    Message.interCardID();
                     cardName = getNextRequest();
                     Shop.getShop().sell(Integer.parseInt(cardName));
+                case 0:
+                    break tag1;
+                default:
+                    Message.invalidInput();
             }
         }
     }
 
     //kind==1 price for sell is shown //kind==2 price for buy is shown //kind==3 price isn't shown
     public static void handleShowInfoOfCards(ArrayList<Integer> repository, int kind) {
+        if (repository.size() == 0) {
+            Message.noCardInThisRepository();
+            return;
+        }
         ArrayList<Card> heroes = new ArrayList<>();
         ArrayList<Card> items = new ArrayList<>();
         ArrayList<Card> otherCards = new ArrayList<>();

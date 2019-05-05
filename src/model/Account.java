@@ -8,36 +8,46 @@ import java.util.Collections;
 
 public class Account implements Comparable<Account> {
 
-    private static Account activeAccount;
-    private static ArrayList<String> accountNames = new ArrayList<>();
-    private static HashMap<String, Account> accountNameToAccountObject = new HashMap<>();
+    private static Account activeAccount = new Account();
+    private static ArrayList<String> usernames = new ArrayList<>();
+    private static HashMap<String, Account> usernameToAccountObject = new HashMap<>();
     //***
     private int money;
     private ArrayList<MatchHistory> history = new ArrayList<>();
-    private Collection collection;
+    private Collection collection = new Collection();
     private String username;
     private String password;
 
     //***
-    public static void createAccount(String userName, String password) {
-        if (accountNames.contains(userName)) {
+    public static void createAccount(String username, String password, String againPassword) {
+        if (Account.getusernames().contains(username)) {
             Message.thereIsAnAccountWithThisName();
             return;
         }
-        Account account = new Account();
-        account.username = userName;
-        account.password = password;
-        accountNames.add(userName);
-        accountNameToAccountObject.put(userName, account);
-    }
-
-    public static void login(String userName, String password) {
-        Account account = accountNameToAccountObject.get(userName);
-        if (!account.password.equals(password)) {
-            Message.invalidPassword();
+        if (!password.equals(againPassword)) {
+            Message.noIdenticalPassword();
             return;
         }
+        Message.accountCreatedSuccessfully();
+        Account account = new Account();
+        account.username = username;
+        account.password = password;
+        usernames.add(username);
+        usernameToAccountObject.put(username, account);
+    }
+
+    public static boolean login(String username, String password) {
+        if (!Account.getusernames().contains(username)) {
+            Message.thereIsNoAccountWithThisName();
+            return false;
+        }
+        Account account = usernameToAccountObject.get(username);
+        if (!account.password.equals(password)) {
+            Message.incorrectPassword();
+            return false;
+        }
         Account.activeAccount = account;
+        return true;
     }
 
     @Override
@@ -55,8 +65,8 @@ public class Account implements Comparable<Account> {
 
     public static ArrayList<Account> sortAccounts() {
         ArrayList<Account> allAccounts = new ArrayList<>();
-        for (String accountName : getAccountNames()) {
-            allAccounts.add(getAccountNameToAccountObject().get(accountName));
+        for (String username : getusernames()) {
+            allAccounts.add(getusernameToAccountObject().get(username));
         }
         Collections.sort(allAccounts);
         return allAccounts;
@@ -80,12 +90,12 @@ public class Account implements Comparable<Account> {
         return activeAccount;
     }
 
-    public static ArrayList<String> getAccountNames() {
-        return accountNames;
+    public static ArrayList<String> getusernames() {
+        return usernames;
     }
 
-    public static HashMap<String, Account> getAccountNameToAccountObject() {
-        return accountNameToAccountObject;
+    public static HashMap<String, Account> getusernameToAccountObject() {
+        return usernameToAccountObject;
     }
 
     public void setMoney(int money) {

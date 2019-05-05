@@ -4,11 +4,14 @@ import model.Collection;
 import model.Deck;
 import view.Message;
 
+import java.util.ArrayList;
+
 import static view.Request.getNextRequest;
 
 public class CollectionWindow extends Window {
 
-    public void showCollectionMenu() {
+    public void main() {
+        tag1:
         while (true) {
             Message.showCollectionHelp();
             String input = getNextRequest();
@@ -22,38 +25,44 @@ public class CollectionWindow extends Window {
                     ShopWindow.handleShowInfoOfCards(Collection.getCollection().getCardIDs(), 2);
                     continue;
                 case 2:
-                    String cardName = getNextRequest();
-                    for (int ID : Collection.getCollection().searchInCollectionCards(cardName)) {
-                        System.out.print(ID + " ");
-                    }
+                    handleSearchInCollection();
                     continue;
                 case 3:
+                    Message.interDeckName();
                     String deckName = getNextRequest();
                     Collection.getCollection().createDeck(deckName);
                     continue;
                 case 4:
+                    Message.interDeckName();
                     deckName = getNextRequest();
                     Collection.getCollection().deleteDeck(deckName);
                     continue;
                 case 5:
+                    Message.interCardID();
                     int cardID = Integer.parseInt(getNextRequest());
+                    Message.interDeckName();
                     deckName = getNextRequest();
                     Collection.getCollection().addCardToDeck(cardID, deckName);
                     continue;
                 case 6:
+                    Message.interCardID();
                     cardID = Integer.parseInt(getNextRequest());
+                    Message.interDeckName();
                     deckName = getNextRequest();
                     Collection.getCollection().removeCardFromDeck(cardID, deckName);
                     continue;
                 case 7:
+                    Message.interDeckName();
                     deckName = getNextRequest();
                     Collection.getCollection().validateDeck(deckName);
                     continue;
                 case 8:
+                    Message.interDeckName();
                     deckName = getNextRequest();
                     Collection.getCollection().selectMainDeck(deckName);
                     continue;
                 case 9:
+                    Message.interDeckName();
                     deckName = getNextRequest();
                     Deck deck = Deck.getAllDecks().get(deckName);
                     showInfoOfASpecificDeck(deck);
@@ -62,12 +71,34 @@ public class CollectionWindow extends Window {
                     showInfoOfAllDecks();
                     continue;
                 case 11:
-                    Collection.getCollection().save();
+//                    Collection.getCollection().save();
+                    continue;
+                case 0:
+                    break tag1;
+                default:
+                    Message.invalidInput();
             }
         }
     }
 
+    private void handleSearchInCollection() {
+        String cardName = getNextRequest();
+        ArrayList<Integer> template = Collection.getCollection().searchInCollectionCards(cardName);
+        if (template.size() == 0) {
+            Message.thereIsNoCardWithThisNameInCollection();
+            return;
+        }
+        for (int ID : template) {
+            Message.printSomeThing(((Integer) ID).toString());
+        }
+        Message.INTER();
+    }
+
     private void showInfoOfASpecificDeck(Deck deck) {
+        if(deck==null){
+            Message.thereIsNoDeckWithThisName();
+            return;
+        }
         ShopWindow.handleShowInfoOfCards(deck.getCardIDs(), 3);
     }
 

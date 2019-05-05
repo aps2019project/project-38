@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class Collection {
     private ArrayList<Integer> cardIDs = new ArrayList<>();
     private ArrayList<Deck> decks = new ArrayList<>();
-    private Deck mainDeck;
+    private Deck mainDeck = new Deck();
 
     //***
     public static Collection getCollection() {
@@ -26,9 +26,6 @@ public class Collection {
                 foundIDs.add(ID);
             }
         }
-        if (foundIDs.size() == 0) {
-            Message.thereIsNoCardWithThisNameInCollection();
-        }
         return foundIDs;
     }
 
@@ -42,6 +39,8 @@ public class Collection {
         Deck deck = new Deck();
         deck.setName(deckName);
         getDecks().add(deck);
+        Deck.getAllDecks().put(deckName, deck);
+        Message.deckCreated();
     }
 
     public void deleteDeck(String deckName) {
@@ -56,6 +55,7 @@ public class Collection {
             return;
         }
         getDecks().remove(mustBeDeleted);
+        Message.deckDeleted();
     }
 
     public void addCardToDeck(int cardID, String deckName) {
@@ -92,6 +92,7 @@ public class Collection {
             deck.setItem(card);
         }
         deck.getCardIDs().add(cardID);
+        Message.cardAddedToDeckSuccessfully();
     }
 
     public void removeCardFromDeck(int cardID, String deckName) {
@@ -105,6 +106,7 @@ public class Collection {
             return;
         }
         deck.getCardIDs().remove(cardID);
+        Message.cardRemovedFromDeckSuccessfully();
     }
 
     public boolean validateDeck(String deckName) {
@@ -117,6 +119,7 @@ public class Collection {
             Message.deckIsNotValid();
             return false;
         }
+        Message.deckIsValid();
         return true;
     }
 
@@ -127,6 +130,9 @@ public class Collection {
         }
         if (validateDeck(deckName)) {
             setMainDeck(Deck.getAllDecks().get(deckName));
+            Message.deckSelectedAsMain();
+        } else {
+            Message.deckIsNotValid();
         }
     }
 
