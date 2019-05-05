@@ -1,4 +1,4 @@
-package model.targets.triggertargets;
+package model.targets;
 
 import model.Board;
 import model.Cell;

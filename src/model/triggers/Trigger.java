@@ -5,7 +5,7 @@ import model.actions.TriggerAction;
 import model.effects.Dispelablity;
 import model.gamestate.GameState;
 import model.conditions.Condition;
-import model.targets.triggertargets.TriggerTarget;
+import model.targets.TriggerTarget;
 
 import java.io.Serializable;
 import java.util.ArrayList;

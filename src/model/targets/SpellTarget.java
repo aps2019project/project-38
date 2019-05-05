@@ -1,4 +1,4 @@
-package model.targets.spelltargets;
+package model.targets;
 
 import model.Cell;
 import model.QualityHaver;
