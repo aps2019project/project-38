@@ -1,9 +1,10 @@
 package controller.window;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public abstract class Window {
-    private static ArrayList<Window> openWindows = new ArrayList<>();
+    private static ArrayList<Window> openWindows = (ArrayList<Window>)Collections.singletonList((Window) new LoadWindow());
 
     public static boolean runLastOpenWindow() {
         if (openWindows.size() > 0) {
