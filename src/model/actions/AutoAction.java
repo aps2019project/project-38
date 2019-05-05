@@ -6,6 +6,6 @@ import model.QualityHaver;
 import model.cards.Warrior;
 import model.triggers.Trigger;
 
-public interface TriggerAction {
+public interface AutoAction {
     void execute(QualityHaver source, QualityHaver target);
 }

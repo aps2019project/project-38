@@ -6,14 +6,11 @@ import model.cards.Warrior;
 import model.gamestate.DeathState;
 import model.player.Player;
 
-import java.util.ArrayList;
-
-public class Killer implements TriggerAction{
+public class Killer implements AutoAction{
 
     @Override
     public void execute(QualityHaver source, QualityHaver target) {
-        if(!(target instanceof Warrior))
-            return;
+        assert target instanceof Warrior;
 
         kill((Warrior)target);
     }

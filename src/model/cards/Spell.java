@@ -2,7 +2,7 @@ package model.cards;
 
 import model.Cell;
 import model.QualityHaver;
-import model.actions.SpellAction;
+import model.actions.AutoAction;
 import model.player.Player;
 import model.targets.SpellTarget;
 
@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class Spell extends Card {
     private boolean isItem;
-    HashMap<SpellAction, SpellTarget> actions = new HashMap<>();
+    HashMap<AutoAction, SpellTarget> actions = new HashMap<>();
 
     public Spell(int ID, String name, int requiredMana, int price, boolean isItem) {
         super(ID, name, price, requiredMana);
@@ -32,10 +32,11 @@ public class Spell extends Card {
 
     @Override
     public void apply(Cell cell) {
+        //todo
         Player user = cell.getBoard().getGame().getActivePlayer();
-        for (Map.Entry<SpellAction, SpellTarget> entry : actions.entrySet()) {
+        for (Map.Entry<AutoAction, SpellTarget> entry : actions.entrySet()) {
             for (QualityHaver target : entry.getValue().getTarget(user, cell)) {
-                entry.getKey().execute(user,target);
+                entry.getKey().execute(this,target);
             }
         }
     }

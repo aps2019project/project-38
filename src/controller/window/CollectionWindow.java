@@ -10,6 +10,7 @@ import static view.Request.getNextRequest;
 
 public class CollectionWindow extends Window {
 
+    @Override
     public void main() {
         tag1:
         while (true) {

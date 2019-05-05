@@ -8,7 +8,7 @@ import model.triggers.Trigger;
 
 import static model.QualityHaver.getGameFromQualityHaver;
 
-public class Applier implements TriggerAction, SpellAction {
+public class Applier implements AutoAction {
     @Override
     public void execute(QualityHaver source, QualityHaver target) {
         if (target == null || source == null)
@@ -35,10 +35,5 @@ public class Applier implements TriggerAction, SpellAction {
                 getGameFromQualityHaver(target).iterateAllTriggersCheck(state);
             }
         }
-    }
-
-    @Override
-    public void execute(Player spellOwner, QualityHaver target) {
-        //todo
     }
 }

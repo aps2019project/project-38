@@ -12,6 +12,7 @@ public class GameWindow extends Window {
         this.game = game;
     }
 
+    @Override
     public void main() {
         while (true) {
             if (game.getActivePlayer() instanceof HumanPlayer) {

@@ -1,7 +1,7 @@
 package model.triggers;
 
 import model.QualityHaver;
-import model.actions.TriggerAction;
+import model.actions.AutoAction;
 import model.effects.Dispelablity;
 import model.gamestate.GameState;
 import model.conditions.Condition;
@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class Trigger extends QualityHaver implements Serializable {
     ArrayList<Condition> conditions = new ArrayList<>();
-    HashMap<TriggerAction, TriggerTarget> actions = new HashMap<>();
+    HashMap<AutoAction, TriggerTarget> actions = new HashMap<>();
 
     public int duration;
     Dispelablity dispelablity;
@@ -32,12 +32,12 @@ public class Trigger extends QualityHaver implements Serializable {
         return dispelablity;
     }
 
-    public HashMap<TriggerAction, TriggerTarget> getActions() {
+    public HashMap<AutoAction, TriggerTarget> getActions() {
         return actions;
     }
 
-    public void putInActions(TriggerAction triggerAction,TriggerTarget triggerTarget){
-        actions.put(triggerAction,triggerTarget);
+    public void putInActions(AutoAction autoAction, TriggerTarget triggerTarget){
+        actions.put(autoAction,triggerTarget);
     }
 
     public void check(GameState gameState, QualityHaver owner) {
@@ -50,7 +50,7 @@ public class Trigger extends QualityHaver implements Serializable {
     }
 
     protected void executeActions(GameState gameState, QualityHaver owner){
-        for (Map.Entry<TriggerAction, TriggerTarget> entry : actions.entrySet()) {
+        for (Map.Entry<AutoAction, TriggerTarget> entry : actions.entrySet()) {
             for (QualityHaver qualityHaver : entry.getValue().getTarget(owner, gameState)) {
                 entry.getKey().execute(this,qualityHaver);
             }

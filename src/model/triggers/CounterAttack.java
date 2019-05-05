@@ -11,7 +11,7 @@ import model.gamestate.GameState;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-//special because it's so common. also the action attack doesn't implement TriggerAction.
+//special because it's so common. also the action attack doesn't implement AutoAction.
 //this triggers should be added to all minions, with -1 duration.
 public class CounterAttack extends Trigger {
     {
