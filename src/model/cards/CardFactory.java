@@ -7,13 +7,8 @@ import model.conditions.HasDied;
 import model.conditions.HasSpawned;
 import model.effects.*;
 import model.targets.*;
-import model.targets.triggertargets.*;
 import model.triggers.*;
-import sun.security.krb5.internal.crypto.Des;
 
-import java.awt.*;
-import java.net.SocketPermission;
-import java.time.chrono.HijrahEra;
 import java.util.ArrayList;
 
 public class CardFactory {
