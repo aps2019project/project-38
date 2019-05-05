@@ -451,7 +451,7 @@ public class CardFactory {
 
     public void makeAllSpells() {
         {
-            Spell spell = new Spell(11, "TotalDisarm", 1000, 0, false);
+            Spell spell = new Spell(11, "TotalDisarm", 0, 1000, false);
 
             spell.getTriggers().add(new Disarm(-1, Dispelablity.BAD));
             spell.getActions().put(new Applier(), new RectGetter(1, 1, false, true, false, true, false));
@@ -461,7 +461,7 @@ public class CardFactory {
             allBuiltSpells.add(spell);
         }
         {
-            Spell spell = new Spell(12, "AreaDispel", 1500, 2, false);
+            Spell spell = new Spell(12, "AreaDispel", 2, 1500, false);
 
             spell.getActions().put(new Dispeller(), new RectGetter(2, 2, false, true, true, true, true));
 
@@ -470,7 +470,7 @@ public class CardFactory {
             allBuiltSpells.add(spell);
         }
         {
-            Spell spell = new Spell(13, "Empower", 250, 1, false);
+            Spell spell = new Spell(13, "Empower", 1, 250, false);
 
             spell.getEffects().add(new AP(-1,Dispelablity.GOOD,2));
             spell.getActions().put(new Applier(),new RectGetter(1,1,false,false,true,false,true));
@@ -480,7 +480,7 @@ public class CardFactory {
             allBuiltSpells.add(spell);
         }
         {
-            Spell spell = new Spell(14, "Fireball", 400, 1, false);
+            Spell spell = new Spell(14, "Fireball", 1, 400, false);
 
             spell.getEffects().add(new HP(-1,Dispelablity.UNDISPELLABLE,-4));
             spell.getActions().put(new Applier(),new RectGetter(1,1,false,true,false,true,false));
@@ -490,7 +490,7 @@ public class CardFactory {
             allBuiltSpells.add(spell);
         }
         {
-            Spell spell = new Spell(15, "GodStrength", 450, 2, false);
+            Spell spell = new Spell(15, "GodStrength", 2, 450, false);
 
             spell.getEffects().add(new AP(-1,Dispelablity.GOOD,4));
             spell.getActions().put(new Applier(),new RectGetter(1,1,false,false,false,false,true));
@@ -500,7 +500,7 @@ public class CardFactory {
             allBuiltSpells.add(spell);
         }
         {
-            Spell spell = new Spell(16, "HellFire", 600, 3, false);
+            Spell spell = new Spell(16, "HellFire", 3, 600, false);
 
             Trigger fire = new Trigger(2,Dispelablity.BAD);
             fire.getConditions().add(new HasWarriorOnIt());
@@ -514,7 +514,7 @@ public class CardFactory {
             allBuiltSpells.add(spell);
         }
         {
-            Spell spell = new Spell(17, "LightingBolt", 1250, 2, false);
+            Spell spell = new Spell(17, "LightingBolt", 2, 1250, false);
 
             spell.getEffects().add(new HP(-1,Dispelablity.UNDISPELLABLE,-8));
             spell.getActions().put(new Applier(),new RectGetter(1,1,false,false,false,true,false));
@@ -524,7 +524,7 @@ public class CardFactory {
             allBuiltSpells.add(spell);
         }
         {
-            Spell spell = new Spell(18, "PoisonLake", 900, 5, false);
+            Spell spell = new Spell(18, "PoisonLake", 5, 900, false);
 
             Trigger poison = new Trigger(1,Dispelablity.BAD);
             poison.getTriggers().add(new Poisoned(3,Dispelablity.BAD));
@@ -538,7 +538,7 @@ public class CardFactory {
             allBuiltSpells.add(spell);
         }
         {
-            Spell spell = new Spell(19, "Madness", 650, 0, false);
+            Spell spell = new Spell(19, "Madness", 0, 650, false);
 
             spell.getActions().put(new Applier(),new RectGetter(1,1,false,false,true,false,true));
             spell.getTriggers().add(new Disarm(3,Dispelablity.BAD));
@@ -549,7 +549,7 @@ public class CardFactory {
             allBuiltSpells.add(spell);
         }
         {
-            Spell spell = new Spell(110, "AllDisarm", 2000, 9, false);
+            Spell spell = new Spell(110, "AllDisarm", 9, 2000, false);
 
             spell.getActions().put(new Applier(),new AllWarriorsGetter(false,true));
             spell.getTriggers().add(new Disarm(1,Dispelablity.BAD));
@@ -559,7 +559,7 @@ public class CardFactory {
             allBuiltSpells.add(spell);
         }
         {
-            Spell spell = new Spell(111, "AllPoison", 1500, 8, false);
+            Spell spell = new Spell(111, "AllPoison", 8, 1500, false);
 
             spell.getActions().put(new Applier(),new AllWarriorsGetter(false,true));
             spell.getTriggers().add(new Poisoned(4,Dispelablity.BAD));
@@ -569,7 +569,7 @@ public class CardFactory {
             allBuiltSpells.add(spell);
         }
         {
-            Spell spell = new Spell(112, "Dispel", 2100, 0, false);
+            Spell spell = new Spell(112, "Dispel", 0, 2100, false);
 
             spell.getActions().put(new Dispeller(),new RectGetter(1,1,false,true,true,true,true));
 
@@ -578,7 +578,7 @@ public class CardFactory {
             allBuiltSpells.add(spell);
         }
         {
-            Spell spell = new Spell(113, "HealthWithProfit", 2250, 0, false);
+            Spell spell = new Spell(113, "HealthWithProfit", 0, 2250, false);
 
             spell.getActions().put(new Applier(),new RectGetter(1,1,false,false,true,false,true));
             spell.getTriggers().add(new HolyBuff(3,Dispelablity.GOOD,2));
@@ -589,7 +589,7 @@ public class CardFactory {
             allBuiltSpells.add(spell);
         }
         {
-            Spell spell = new Spell(114, "GhazaBokhorJoonBegiri", 2500, 2, false);
+            Spell spell = new Spell(114, "GhazaBokhorJoonBegiri", 2, 2500, false);
 
             spell.getActions().put(new Applier(),new RectGetter(1,1,false,false,true,false,true));
             spell.getEffects().add(new AP(-1,Dispelablity.GOOD,6));
@@ -599,7 +599,7 @@ public class CardFactory {
             allBuiltSpells.add(spell);
         }
         {
-            Spell spell = new Spell(115, "AllPower", 2000, 4, false);
+            Spell spell = new Spell(115, "AllPower", 4, 2000, false);
 
             spell.getActions().put(new Applier(),new AllWarriorsGetter(true,true));
             Aura aura = new Aura(-1,Dispelablity.GOOD,new TriggerOwnerGetter());
@@ -611,7 +611,7 @@ public class CardFactory {
             allBuiltSpells.add(spell);
         }
         {
-            Spell spell = new Spell(116, "AllAttack", 1500, 4, false);
+            Spell spell = new Spell(116, "AllAttack", 4, 1500, false);
 
             spell.getActions().put(new Applier(),new RectGetter(Constant.GameConstants.boardRow,1,false,true,false,true,false));
             spell.getEffects().add(new HP(-1,Dispelablity.UNDISPELLABLE,-6));
@@ -621,7 +621,7 @@ public class CardFactory {
             allBuiltSpells.add(spell);
         }
         {
-            Spell spell = new Spell(117, "Weakening", 1000, 1, false);
+            Spell spell = new Spell(117, "Weakening", 1, 1000, false);
 
             spell.getActions().put(new Applier(),new RectGetter(1,1,false,true,false,false,false));
             spell.getEffects().add(new AP(-1,Dispelablity.BAD,-4));
@@ -631,7 +631,7 @@ public class CardFactory {
             allBuiltSpells.add(spell);
         }
         {
-            Spell spell = new Spell(118, "Sacrifice", 1600, 3, false);
+            Spell spell = new Spell(118, "Sacrifice", 3, 1600, false);
 
             spell.getActions().put(new Applier(),new RectGetter(1,1,false,false,true,false,false));
             spell.getEffects().add(new AP(-1,Dispelablity.GOOD,8));
@@ -642,7 +642,7 @@ public class CardFactory {
             allBuiltSpells.add(spell);
         }
         {
-            Spell spell = new Spell(119, "KingsGaurd", 1750, 3, false);
+            Spell spell = new Spell(119, "KingsGaurd", 3, 1750, false);
 
             spell.getActions().put(new Killer(),new RandomGetter((SpellTarget) new NearbyGetter(false,false)));
 
@@ -651,7 +651,7 @@ public class CardFactory {
             allBuiltSpells.add(spell);
         }
         {
-            Spell spell = new Spell(120, "Shock", 1200, 1, false);
+            Spell spell = new Spell(120, "Shock", 1, 1200, false);
 
             spell.getActions().put(new Applier(),new RectGetter(1,1,false,true,false,true,false));
             spell.getTriggers().add(new Stun(2,Dispelablity.BAD));
@@ -729,121 +729,121 @@ public class CardFactory {
 
     public void makeAllItems() {
         {
-            Spell item = new Spell(41, "Taj-E-Daanayi", -1, 300, true);
+            Spell item = new Spell(41, "Taj-E-Daanayi", 0, 300, true);
 
             item.description.descriptionOfCardSpecialAbility = "increasing mana from roand 3 onwards";
             allBuiltItems.add(item);
         }
         {
-            Spell item = new Spell(42, "Namoos-E-Separ", -1, 4000, true);
+            Spell item = new Spell(42, "Namoos-E-Separ", 0, 4000, true);
 
             item.description.descriptionOfCardSpecialAbility = "activate holy buff in our hero in passive kind";
             allBuiltItems.add(item);
         }
         {
-            Spell item = new Spell(43, "Kaman-E-Daamol", -1, 30000, true);
+            Spell item = new Spell(43, "Kaman-E-Daamol", 0, 30000, true);
 
             item.description.descriptionOfCardSpecialAbility = "just for ranged and hybrid : increasing hero range 2 units";
             allBuiltItems.add(item);
         }
         {
-            Spell item = new Spell(44, "NooshDaroo", -1, -1, true);
+            Spell item = new Spell(44, "NooshDaroo", 0, 0, true);
 
             item.description.descriptionOfCardSpecialAbility = "increasing HP 6 units";
             allBuiltItems.add(item);
         }
         {
-            Spell item = new Spell(45, "Tir-E-DoShakh", -1, -1, true);
+            Spell item = new Spell(45, "Tir-E-DoShakh", 0, 0, true);
 
             item.description.descriptionOfCardSpecialAbility = "Hitting power of one ranged or increase hybrid 2 units";
             allBuiltItems.add(item);
         }
         {
-            Spell item = new Spell(46, "Par-E-Simorgh", -1, 3500, true);
+            Spell item = new Spell(46, "Par-E-Simorgh", 0, 3500, true);
 
             item.description.descriptionOfCardSpecialAbility = "When for the first time our heroes HP reach less than 15, make its HP double";
             allBuiltItems.add(item);
         }
         {
-            Spell item = new Spell(47, "Eksir", -1, -1, true);
+            Spell item = new Spell(47, "Eksir", 0, 0, true);
 
             item.description.descriptionOfCardSpecialAbility = "Increase each of health and hitting power 3 units";
             allBuiltItems.add(item);
         }
         {
-            Spell item = new Spell(48, "Maajoon-E-Mana", -1, -1, true);
+            Spell item = new Spell(48, "Maajoon-E-Mana", 0, 0, true);
 
-            item.description.descriptionOfCardSpecialAbility = "Increase mana 3 units";
+            item.description.descriptionOfCardSpecialAbility = "Increase Mana 3 units";
             allBuiltItems.add(item);
         }
         {
-            Spell item = new Spell(49, "Maajoon-E-RooyinTanoo", -1, -1, true);
+            Spell item = new Spell(49, "Maajoon-E-RooyinTanoo", 0, 0, true);
 
             item.description.descriptionOfCardSpecialAbility = "In two turn activate 10 holy buff inside ours";
             allBuiltItems.add(item);
         }
         {
-            Spell item = new Spell(410, "Nefrin-E-Marg", -1, -1, true);
+            Spell item = new Spell(410, "Nefrin-E-Marg", 0, 0, true);
 
             item.description.descriptionOfCardSpecialAbility = "For one minion : at death time 8 hits to random nearest person";
             allBuiltItems.add(item);
         }
         {
-            Spell item = new Spell(411, "RandomDamage", -1, -1, true);
+            Spell item = new Spell(411, "RandomDamage", 0, 0, true);
 
             item.description.descriptionOfCardSpecialAbility = "Two hits to three random persons";
             allBuiltItems.add(item);
         }
         {
-            Spell item = new Spell(412, "TerrorHood", -1, 5000, true);
+            Spell item = new Spell(412, "TerrorHood", 0, 5000, true);
 
             item.description.descriptionOfCardSpecialAbility = "Apply a WeaknessBuff with two decrement in AP of a random enemy";
             allBuiltItems.add(item);
         }
         {
-            Spell item = new Spell(413, "BladesOfAgility", -1, -1, true);
+            Spell item = new Spell(413, "BladesOfAgility", 0, 0, true);
 
             item.description.descriptionOfCardSpecialAbility = "Increase hit power six units";
             allBuiltItems.add(item);
         }
         {
-            Spell item = new Spell(414, "KingWisdom", -1, 9000, true);
+            Spell item = new Spell(414, "KingWisdom", 0, 9000, true);
 
             item.description.descriptionOfCardSpecialAbility = "Take one mana in each turn and killed enemy hero after 15 turn";
             allBuiltItems.add(item);
         }
         {
-            Spell item = new Spell(415, "AssassinationDagger", -1, 15000, true);
+            Spell item = new Spell(415, "AssassinationDagger", 0, 15000, true);
 
             item.description.descriptionOfCardSpecialAbility = "Just for ranged and hybrid: increase hit power when our hero hit enemy hero";
             allBuiltItems.add(item);
         }
         {
-            Spell item = new Spell(416, "PoisonousDagger", -1, 7000, true);
+            Spell item = new Spell(416, "PoisonousDagger", 0, 7000, true);
 
             item.description.descriptionOfCardSpecialAbility = "Each of ours poison one enemy when hit";
             allBuiltItems.add(item);
         }
         {
-            Spell item = new Spell(417, "ShockHammer", -1, 15000, true);
+            Spell item = new Spell(417, "ShockHammer", 0, 15000, true);
 
             item.description.descriptionOfCardSpecialAbility = "Just in one turn stun enemy when hit";
             allBuiltItems.add(item);
         }
         {
-            Spell item = new Spell(418, "SoulEater", -1, 25000, true);
+            Spell item = new Spell(418, "SoulEater", 0, 25000, true);
 
             item.description.descriptionOfCardSpecialAbility = "Just for melee: increase its HP 2 units when hit";
             allBuiltItems.add(item);
         }
         {
-            Spell item = new Spell(419, "Ghosl-E-Taamid", -1, 20000, true);
+            Spell item = new Spell(419, "Ghosl-E-Taamid", 0, 20000, true);
 
             item.description.descriptionOfCardSpecialAbility = "When put each minion has holy buff until toe turn";
             allBuiltItems.add(item);
         }
         {
-            Spell item = new Spell(420, "Shamshir-E-Chini", -1, -1, true);
+            Spell item = new Spell(420, "Shamshir-E-Chini", 0, 0, true);
 
             item.description.descriptionOfCardSpecialAbility = "Until warrior doesn't hit, for 5 times it hits 5 times more";
             allBuiltItems.add(item);
