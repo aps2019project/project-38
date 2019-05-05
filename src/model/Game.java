@@ -80,6 +80,7 @@ public abstract class Game {
         board.iterateBoardTriggers(gameState);
         iteratePlayerTriggers(players[0], gameState);
         iteratePlayerTriggers(players[1], gameState);
+        //apply buffer here if not in kill mod
     }
 
     private void iteratePlayerTriggers (Player player, GameState gameState) {
@@ -141,8 +142,11 @@ public abstract class Game {
     }
 
     private void killAllDiedWarriors() {
+        //kill mod: ON
         killPlayerDiedWarriors(players[0]);
         killPlayerDiedWarriors(players[1]);
+        //apply buffer here
+        //kil mod: OFF
     }
 
     private void killPlayerDiedWarriors(Player player) {

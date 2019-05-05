@@ -19,6 +19,7 @@ public class CardFactory {
         {
             Spell spell = new Spell(11, "TotalDisarm", 1000, 0,false);
             //one enemy
+
             spell.descriptionOfSpecialPower = "Disarm to the end of game";
             allBuiltSpells.add(spell);
         }

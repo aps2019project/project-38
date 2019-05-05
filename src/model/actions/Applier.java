@@ -39,6 +39,6 @@ public class Applier implements TriggerAction, SpellAction {
 
     @Override
     public void execute(Player spellOwner, QualityHaver target) {
-        //todo
+
     }
 }

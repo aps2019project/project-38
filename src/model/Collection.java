@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class Collection {
     private ArrayList<Integer> cardIDs = new ArrayList<>();
     private ArrayList<Deck> decks = new ArrayList<>();
-    private Deck mainDeck = new Deck();
+    private Deck mainDeck = new Deck();//remove this plese dear hashem. it should't be an empty deck.//todo
 
     //***
     public static Collection getCollection() {

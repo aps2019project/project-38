@@ -6,14 +6,18 @@ import model.cards.Warrior;
 import model.gamestate.DeathState;
 import model.player.Player;
 
-public class Killer implements TriggerAction{
+public class Killer implements TriggerAction,SpellAction{
 
     @Override
     public void execute(QualityHaver source, QualityHaver target) {
-        if(!(target instanceof Warrior))
-            return;
+        assert target instanceof Warrior;
 
         kill((Warrior)target);
+    }
+
+    @Override
+    public void execute(Player spellOwner, QualityHaver target) {
+
     }
 
     public static void kill(Warrior warrior){
