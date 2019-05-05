@@ -3,7 +3,7 @@ package model.triggers;
 import model.actions.Applier;
 import model.conditions.HasTurnEnded;
 import model.effects.Dispelablity;
-import model.targets.triggertargets.TriggerOwnerGetter;
+import model.targets.TriggerOwnerGetter;
 
 //special because of special condition.
 //add effect that you want to be added at the end of turn, in "duration" turns.

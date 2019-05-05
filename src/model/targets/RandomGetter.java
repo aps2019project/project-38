@@ -4,8 +4,6 @@ import model.Cell;
 import model.QualityHaver;
 import model.gamestate.GameState;
 import model.player.Player;
-import model.targets.spelltargets.SpellTarget;
-import model.targets.triggertargets.TriggerTarget;
 
 import java.util.ArrayList;
 import java.util.Random;

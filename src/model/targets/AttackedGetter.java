@@ -1,4 +1,4 @@
-package model.targets.triggertargets;
+package model.targets;
 
 import model.QualityHaver;
 import model.cards.Warrior;
@@ -7,7 +7,7 @@ import model.gamestate.GameState;
 
 import java.util.ArrayList;
 
-public class AttackerGetter implements TriggerTarget {
+public class AttackedGetter implements TriggerTarget {
 
     @Override
     public ArrayList<? extends QualityHaver> getTarget(QualityHaver triggerOwner, GameState gameState) {
@@ -15,7 +15,7 @@ public class AttackerGetter implements TriggerTarget {
         assert triggerOwner instanceof Warrior;
 
         ArrayList<Warrior> target = new ArrayList<>();
-        target.add(((AttackState)gameState).getAttacker());
+        target.add(((AttackState)gameState).getAttacked());
         return target;
     }
 }
