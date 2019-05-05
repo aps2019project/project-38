@@ -34,7 +34,7 @@ public class RandomGetter implements TriggerTarget ,SpellTarget{
 
     private ArrayList<? extends QualityHaver> returnSORandom(ArrayList<? extends QualityHaver> targets){
         Random random = new Random(System.currentTimeMillis());
-        ArrayList<QualityHaver> arrayList = new ArrayList<>();//i don't get it. why cant i write ? extend QualityHaver in generic.
+        ArrayList<QualityHaver> arrayList = new ArrayList<>();//i don't get it. why cant i write <? extend QualityHaver> in generic.
         arrayList.add(targets.get(random.nextInt(targets.size())));
         return arrayList;
     }

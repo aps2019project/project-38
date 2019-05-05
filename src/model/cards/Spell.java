@@ -3,13 +3,11 @@ package model.cards;
 import model.Cell;
 
 public class Spell extends Card {
-    private int coolDown;
     private boolean isItem;
 
-    public Spell(int ID, String name, int requiredMana, int price, boolean isItem,int coolDown) {
+    public Spell(int ID, String name, int requiredMana, int price, boolean isItem) {
         super(ID, name, price, requiredMana);
         this.isItem = isItem;
-        this.coolDown=coolDown;
     }
 
     public static boolean checkIsItem(Card card) {
@@ -22,10 +20,6 @@ public class Spell extends Card {
 
     public boolean isItem() {
         return isItem;
-    }
-
-    public int getCoolDown() {
-        return coolDown;
     }
 
     @Override
