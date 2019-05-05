@@ -1,6 +1,6 @@
 package model.cards;
 
 public class Description {
-    protected String descriptionOfCardSpecialAbility;
-    protected String targetType;
+    public String descriptionOfCardSpecialAbility;
+    public String targetType;
 }
