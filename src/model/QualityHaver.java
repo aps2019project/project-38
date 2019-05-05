@@ -1,5 +1,6 @@
 package model;
 
+import model.cards.Warrior;
 import model.effects.Effect;
 import model.triggers.Trigger;
 
@@ -15,5 +16,15 @@ public abstract class QualityHaver {
 
     public ArrayList<Trigger> getTriggers() {
         return triggers;
+    }
+
+    public static Game getGameFromQualityHaver(QualityHaver qualityHaver){
+        assert ((qualityHaver instanceof Warrior)|(qualityHaver instanceof Cell));
+
+        if(qualityHaver instanceof Warrior){
+            return ((Warrior)qualityHaver).getCell().getBoard().getGame();
+        }else {
+            return ((Cell)qualityHaver).getBoard().getGame();
+        }
     }
 }

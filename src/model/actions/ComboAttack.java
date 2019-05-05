@@ -1,4 +1,4 @@
-package model.actions.gameactions;
+package model.actions;
 
 import model.Cell;
 import model.Game;
@@ -11,9 +11,9 @@ import model.gamestate.AttackState;
 
 import java.util.Arrays;
 
-import static model.actions.gameactions.Attack.checkWarriorsEffectsForAttack;
+import static model.actions.Attack.checkWarriorsEffectsForAttack;
 
-public abstract class ComboAttack {
+public class ComboAttack {
     public static void doIt(Cell[] attackersCell, Cell defenderCell) {
         Game game = attackersCell[0].getBoard().getGame();
         Warrior defender = defenderCell.getWarrior();
@@ -25,14 +25,14 @@ public abstract class ComboAttack {
                     checkWarriorHasComboEffect(attacker) && !attackState.canceled) {
                 attackState.ap += attacker.getAp();
                 attackState.setAttacker(attacker);
-                game.iterateAllTriggers(attackState);
+                game.iterateAllTriggersCheck(attackState);
             }
         }
         if (!attackState.canceled) {
             Arrays.stream(attackersCell).forEach(cell -> cell.getWarrior().getEffects().add(new Attacked()));
             defender.getEffects().add(new HP(-1, Dispelablity.UNDISPELLABLE, -1 * attackState.ap));
             attackState.pending = false;
-            game.iterateAllTriggers(attackState);
+            game.iterateAllTriggersCheck(attackState);
         }
     }
 

@@ -1,4 +1,4 @@
-package model.actions.gameactions;
+package model.actions;
 
 import model.Cell;
 import model.Game;
@@ -16,7 +16,7 @@ public abstract class UseCard {
         GameState gameState;
         if (card instanceof Spell) {
             UseSpellState useSpellState = new UseSpellState(cell, (Spell)card);
-            game.iterateAllTriggers(useSpellState);
+            game.iterateAllTriggersCheck(useSpellState);
             if (useSpellState.canceled) return;
             useSpellState.pending = false;
             gameState = useSpellState;
@@ -30,7 +30,7 @@ public abstract class UseCard {
             game.getActivePlayer().getHand().put(handMapKey, null);
             game.getActivePlayer().getUsedCards().add(card);
             card.apply(cell);
-            game.iterateAllTriggers(gameState);
+            game.iterateAllTriggersCheck(gameState);
         }
     }
 }

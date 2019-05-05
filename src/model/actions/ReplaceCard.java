@@ -1,4 +1,4 @@
-package model.actions.gameactions;
+package model.actions;
 
 import model.Game;
 import model.cards.Card;
@@ -6,7 +6,7 @@ import model.gamestate.ReplaceCardState;
 
 import java.util.Random;
 
-public abstract class ReplaceCard {
+public class ReplaceCard {
     public static void doIt(Game game, int handMapKey) {
         if (game.getActivePlayer().ableToReplaceCard) {
             Card card = game.getActivePlayer().getHand().get(handMapKey);
@@ -23,7 +23,7 @@ public abstract class ReplaceCard {
             game.getActivePlayer().getHand().put(handMapKey, newCard);
             game.getActivePlayer().ableToReplaceCard = false;
             ReplaceCardState replaceCardState = new ReplaceCardState();
-            game.iterateAllTriggers(replaceCardState);
+            game.iterateAllTriggersCheck(replaceCardState);
         }
     }
 }

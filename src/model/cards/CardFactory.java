@@ -1,11 +1,12 @@
 package model.cards;
 
-import model.actions.triggeractions.Applier;
-import model.actions.triggeractions.Dispeller;
+import model.actions.Applier;
+import model.actions.Dispeller;
 import model.conditions.HasAttacked;
 import model.conditions.HasDied;
 import model.conditions.HasSpawned;
 import model.effects.*;
+import model.targets.*;
 import model.targets.triggertargets.*;
 import model.triggers.*;
 
@@ -13,6 +14,129 @@ import java.util.ArrayList;
 
 public class CardFactory {
     ArrayList<Warrior> allBuiltWarriors = new ArrayList<>();
+    ArrayList<Spell> allBuiltSpells = new ArrayList<>();
+
+    public void makeAllSpells() {
+        {
+            Spell spell = new Spell(11, "TotalDisarm", 1000, 0,false);
+            //one enemy
+            spell.descriptionOfSpecialPower = "Disarm to the end of game";
+            allBuiltSpells.add(spell);
+        }
+        {
+            Spell spell = new Spell(12, "AreaDispel", 1500, 2, false);
+            //square 2*2
+            spell.descriptionOfSpecialPower = "it delet enemys possetive buffs and our negative buffs";
+            allBuiltSpells.add(spell);
+        }
+        {
+            Spell spell = new Spell(13, "Empower", 250, 1,  false);
+            //one friend
+            spell.descriptionOfSpecialPower = "increase hit power of one person 2 units";
+            allBuiltSpells.add(spell);
+        }
+        {
+            Spell spell = new Spell(14, "Fireball", 400, 1,  false);
+            //one enemy
+            spell.descriptionOfSpecialPower = "hit 4 unit to one enemy";
+            allBuiltSpells.add(spell);
+        }
+        {
+            Spell spell = new Spell(15, "GodStrength", 450, 2, false);
+            //hero friend
+            spell.descriptionOfSpecialPower = "increase hit power of one hero 4 units";
+            allBuiltSpells.add(spell);
+        }
+        {
+            Spell spell = new Spell(16, "HellFire", 600, 3, false);
+            //square 2*2
+            spell.descriptionOfSpecialPower = "make fiery effect in 2 cells for 2 turns";
+            allBuiltSpells.add(spell);
+        }
+        {
+            Spell spell = new Spell(17, "LightingBolt", 1250, 2, false);
+            //hero enemy
+            allBuiltSpells.add(spell);
+        }
+        {
+            Spell spell = new Spell(18, "PoisonLake", 900, 5,  false);
+            //square 3*3
+            spell.descriptionOfSpecialPower = "make poisond 8 cells for one turn";
+            allBuiltSpells.add(spell);
+        }
+        {
+            Spell spell = new Spell(19, "Madness", 650, 0, false);
+            //one friend
+            spell.descriptionOfSpecialPower = "increase hit power of one person 4 units for 3 turns but it disarm";
+            allBuiltSpells.add(spell);
+        }
+        {
+            Spell spell = new Spell(110, "AllDisarm", 2000, 9,  false);
+            //all enemies
+            spell.descriptionOfSpecialPower = "disarm for one turn";
+            allBuiltSpells.add(spell);
+        }
+        {
+            Spell spell = new Spell(111, "AllPoison", 1500, 8,  false);
+            //all enemies
+            spell.descriptionOfSpecialPower = "all heros poisonds for 4 turns";
+            allBuiltSpells.add(spell);
+        }
+        {
+            Spell spell = new Spell(112, "Dispel", 2100, 0,  false);
+            //one friend or enemy
+            spell.descriptionOfSpecialPower = "it delet enemys possetive buffs and our negative buffs";
+            allBuiltSpells.add(spell);
+        }
+        {
+            Spell spell = new Spell(113, "HealthWithProfit", 2250, 0,  false);
+            //one friend
+            spell.descriptionOfSpecialPower = "Gives a weakness buff -6 HP but also gives 2 holy buffes for 3 turns";
+            allBuiltSpells.add(spell);
+        }
+        {
+            Spell spell = new Spell(114, "GhazaBokhorJoonBegiri", 2500, 2,  false);
+            //one friend
+            spell.descriptionOfSpecialPower = "Gives power buff +6 AP";
+            allBuiltSpells.add(spell);
+        }
+        {
+            Spell spell = new Spell(115, "AllPower", 2000, 4,  false);
+            //all friends
+            spell.descriptionOfSpecialPower = "Gives power buff +6 AP";
+            allBuiltSpells.add(spell);
+        }
+        {
+            Spell spell = new Spell(116, "AllAttack", 1500, 4, false);
+            //all enemies in one column
+            spell.descriptionOfSpecialPower = "hit all enemies 6 units";
+            allBuiltSpells.add(spell);
+        }
+        {
+            Spell spell = new Spell(117, "Weakening", 1000, 1,  false);
+            //one minion enemy
+            spell.descriptionOfSpecialPower = "Gives weakness buff -4 AP";
+            allBuiltSpells.add(spell);
+        }
+        {
+            Spell spell = new Spell(118, "Sacrifice", 1600, 3,  false);
+            //one minion friend
+            spell.descriptionOfSpecialPower = "Gives weakness buff -6 HP and power buff +8 AP";
+            allBuiltSpells.add(spell);
+        }
+        {
+            Spell spell = new Spell(119, "KingsGaurd", 1750, 3,  false);
+            //random enemy minion around hero
+            spell.descriptionOfSpecialPower = "killes enemy";
+            allBuiltSpells.add(spell);
+        }
+        {
+            Spell spell = new Spell(120, "Shock", 1200, 1, false);
+            //one enemy
+            spell.descriptionOfSpecialPower = "stun for 2 turns";
+            allBuiltSpells.add(spell);
+        }
+    }
 
     public void makeAllMinions() {
         {
@@ -322,7 +446,7 @@ public class CardFactory {
 
             Trigger trigger = new Trigger(-1,Dispelablity.UNDISPELLABLE);
             trigger.getConditions().add(new HasAttacked());
-            trigger.getActions().put(new Dispeller(),new AttackedGetter());
+            trigger.getActions().put(new Dispeller(Dispelablity.GOOD),new AttackedGetter());
             warrior.getTriggers().add(trigger);
 
             allBuiltWarriors.add(warrior);
@@ -377,9 +501,5 @@ public class CardFactory {
 
             allBuiltWarriors.add(warrior);
         }
-    }
-
-    public void makeAllSpells(){
-
     }
 }

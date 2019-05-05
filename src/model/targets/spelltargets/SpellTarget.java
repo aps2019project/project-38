@@ -1,5 +1,11 @@
 package model.targets.spelltargets;
 
-public interface SpellTarget {
+import model.Cell;
+import model.QualityHaver;
+import model.player.Player;
 
+import java.util.ArrayList;
+
+public interface SpellTarget {
+    ArrayList<? extends QualityHaver> getTarget(Player spellOwner, Cell cell);
 }

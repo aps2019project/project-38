@@ -1,4 +1,4 @@
-package model.actions.gameactions;
+package model.actions;
 
 import model.Cell;
 import model.Game;
@@ -8,7 +8,7 @@ import model.gamestate.AttackState;
 
 import java.util.stream.Stream;
 
-public abstract class Attack {
+public class Attack {
     public static void doIt(Cell attackerCell, Cell defenderCell) {
         Game game = attackerCell.getBoard().getGame();
         Warrior attacker = attackerCell.getWarrior();
@@ -16,12 +16,12 @@ public abstract class Attack {
         int jumperManhattanDistance = game.getBoard().getJumperManhattanDistance(attackerCell, defenderCell);
         if (checkWarriorsEffectsForAttack(game, attackerCell, defenderCell, jumperManhattanDistance)) {
             AttackState attackState = new AttackState(attacker, defender, attacker.getAp());
-            game.iterateAllTriggers(attackState);
+            game.iterateAllTriggersCheck(attackState);
             if (!attackState.canceled) {
                 attacker.getEffects().add(new Attacked());
                 defender.getEffects().add(new HP(-1, Dispelablity.UNDISPELLABLE, -1 * attackState.ap));
                 attackState.pending = false;
-                game.iterateAllTriggers(attackState);
+                game.iterateAllTriggersCheck(attackState);
             }
         }
     }

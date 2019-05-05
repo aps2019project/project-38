@@ -66,13 +66,12 @@ public class Shop {
             account.setMoney(account.getMoney() - card.getPrice());
             shop.getCardIDs().remove(card.getID());
             account.getCollection().getCardIDs().add(card.getID());
-            account.getCollection().getAllCards().put(card.getID(), card.deepCopy());
+//            account.getCollection().getAllCards().put(card.getID(), card.deepCopy());
             Message.buyWasSuccessful();
         } else {
             Message.haveNotEnoughMoney();
         }
     }
-
 
 
     public void sell(int cardID) {
@@ -85,7 +84,12 @@ public class Shop {
         account.setMoney(account.getMoney() + card.getPrice());
         shop.getCardIDs().add(card.getID());
         account.getCollection().getCardIDs().remove(card.getID());
-        account.getCollection().getAllCards().remove(card.getID());
+        for (Deck deck : account.getCollection().getDecks()) {
+            if (deck.getCardIDs().contains(card.getID())) {
+                deck.getCardIDs().remove(card.getID());
+            }
+        }
+//        account.getCollection().getAllCards().remove(card.getID());
         Message.sellWasSuccessful();
     }
 

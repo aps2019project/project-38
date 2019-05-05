@@ -1,12 +1,11 @@
-package model.actions.triggeractions;
+package model.actions;
 
-import model.Cell;
-import model.Game;
 import model.QualityHaver;
-import model.cards.Warrior;
 import model.effects.Effect;
 import model.gamestate.EffTriggApplyState;
 import model.triggers.Trigger;
+
+import static model.QualityHaver.getGameFromQualityHaver;
 
 public class Applier implements TriggerAction {
     @Override
@@ -16,28 +15,24 @@ public class Applier implements TriggerAction {
 
         for (Trigger trigger : source.getTriggers()) {
             EffTriggApplyState state = new EffTriggApplyState(target,trigger);
-            getGameFromTarget(target).iterateAllTriggers(state);
+            getGameFromQualityHaver(target).iterateAllTriggersCheck(state);
             if(!state.canceled){
                 target.getTriggers().add(trigger);
+
+                state.pending=false;
+                getGameFromQualityHaver(target).iterateAllTriggersCheck(state);
             }
         }
 
         for (Effect effect : source.getEffects()) {
             EffTriggApplyState state = new EffTriggApplyState(target,effect);
-            getGameFromTarget(target).iterateAllTriggers(state);
+            getGameFromQualityHaver(target).iterateAllTriggersCheck(state);
             if(!state.canceled){
                 target.getEffects().add(effect);
+
+                state.pending=false;
+                getGameFromQualityHaver(target).iterateAllTriggersCheck(state);
             }
-        }
-    }
-
-    private Game getGameFromTarget(QualityHaver target){
-        assert ((target instanceof Warrior)|(target instanceof Cell));
-
-        if(target instanceof Warrior){
-            return ((Warrior)target).getCell().getBoard().getGame();
-        }else {
-            return ((Cell)target).getBoard().getGame();
         }
     }
 }

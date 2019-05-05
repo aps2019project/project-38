@@ -14,6 +14,6 @@ public class IsBeingDispelled implements Condition {
         }
 
         DispelState dispelState = (DispelState)gameState;
-        return dispelState.pending && dispelState.getBeingDispelled().equals(trigger);
+        return dispelState.getBeingDispelled().equals(trigger);
     }
 }
