@@ -14,11 +14,11 @@ public abstract class Window {
         return false;
     }
 
-    public static void openWindow(Window window) {
+    static void openWindow(Window window) {
         openWindows.add(window);
     }
 
-    public static void closeWindow(Window window) {
+    static void closeWindow(Window window) {
         openWindows.remove(window);
     }
 

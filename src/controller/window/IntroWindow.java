@@ -10,6 +10,7 @@ import static view.Request.getNextRequest;
 
 public class IntroWindow extends Window {
 
+    @Override
     public void main() {
         tag1:
         while (true) {
@@ -53,8 +54,8 @@ public class IntroWindow extends Window {
         String userName = getNextRequest();
         Message.interPassword();
         String password = getNextRequest();
-        if (Account.login(userName, password)) {
-            new MainMenu().main();
+        if (Account.login(userName, password)) { // :(
+            Window.openWindow(new MainMenu());
         }
     }
 
