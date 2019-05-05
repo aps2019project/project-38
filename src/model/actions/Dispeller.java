@@ -23,7 +23,7 @@ public class Dispeller implements TriggerAction{
         for (Trigger trigger : qualityHaver.getTriggers()) {
             if(trigger.getDispelablity().equals(dispelType)) {
                 DispelState state = new DispelState(trigger);
-                QualityHaver.getGameFromQualityHaver(qualityHaver).iterateAllTriggers(state);
+                QualityHaver.getGameFromQualityHaver(qualityHaver).iterateAllTriggersCheck(state);
                 qualityHaver.getTriggers().remove(trigger);
             }
         }

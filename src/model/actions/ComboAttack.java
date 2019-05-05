@@ -25,14 +25,14 @@ public class ComboAttack {
                     checkWarriorHasComboEffect(attacker) && !attackState.canceled) {
                 attackState.ap += attacker.getAp();
                 attackState.setAttacker(attacker);
-                game.iterateAllTriggers(attackState);
+                game.iterateAllTriggersCheck(attackState);
             }
         }
         if (!attackState.canceled) {
             Arrays.stream(attackersCell).forEach(cell -> cell.getWarrior().getEffects().add(new Attacked()));
             defender.getEffects().add(new HP(-1, Dispelablity.UNDISPELLABLE, -1 * attackState.ap));
             attackState.pending = false;
-            game.iterateAllTriggers(attackState);
+            game.iterateAllTriggersCheck(attackState);
         }
     }
 
