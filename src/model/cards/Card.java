@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 public abstract class Card extends QualityHaver implements Serializable {
     protected static HashMap<Integer, Card> allCards = new HashMap<>();
-    public String descriptionOfSpecialPower;
+    public Description description = new Description();
     protected int ID;
     protected String name;
     protected int requiredMana;
@@ -37,10 +37,6 @@ public abstract class Card extends QualityHaver implements Serializable {
     public abstract Card deepCopy();
 
     //***
-
-    public String getDescriptionOfSpecialPower() {
-        return descriptionOfSpecialPower;
-    }
 
     public static HashMap<Integer, Card> getAllCards() {
         return allCards;
