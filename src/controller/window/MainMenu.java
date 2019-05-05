@@ -17,15 +17,16 @@ public class MainMenu extends Window{
             int indexOfSelectedSubMenu = Integer.parseInt(input);
             switch (indexOfSelectedSubMenu){
                 case 1:
-                    new CollectionWindow().main();
+                    Window.openWindow(new CollectionWindow());
                     continue;
                 case 2:
-                    new ShopWindow().main();
+                    Window.openWindow(new ShopWindow());
                     continue;
                 case 3:
                     //todo for ALI
                     continue;
                 case 0:
+                    Window.closeWindow(this);
                     break tag1;
                 default:
                     Message.invalidInput();
