@@ -1,4 +1,4 @@
-package model.actions.triggeractions;
+package model.actions;
 
 import model.Game;
 import model.QualityHaver;

@@ -1,11 +1,12 @@
 package model.cards;
 
-import model.actions.triggeractions.Applier;
-import model.actions.triggeractions.Dispeller;
+import model.actions.Applier;
+import model.actions.Dispeller;
 import model.conditions.HasAttacked;
 import model.conditions.HasDied;
 import model.conditions.HasSpawned;
 import model.effects.*;
+import model.targets.*;
 import model.targets.triggertargets.*;
 import model.triggers.*;
 

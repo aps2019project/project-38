@@ -1,4 +1,4 @@
-package model.actions.gameactions;
+package model.actions;
 
 import model.Cell;
 import model.Game;

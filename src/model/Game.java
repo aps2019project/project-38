@@ -1,8 +1,8 @@
 package model;
 
 
-import model.actions.gameactions.*;
-import model.actions.triggeractions.Killer;
+import model.actions.*;
+import model.actions.Killer;
 import model.cards.Card;
 import model.cards.Warrior;
 import model.effects.Effect;

@@ -1,10 +1,10 @@
-package model.actions.gameactions;
+package model.actions;
 
 import model.Constant;
 import model.Game;
 import model.gamestate.TurnEndState;
 
-public abstract class EndTurn {
+public class EndTurn {
     public static void doIt(Game game) {
         TurnEndState turnEnd = new TurnEndState();
         game.iterateAndExpireAllEffects();

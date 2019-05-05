@@ -33,7 +33,8 @@ public class Warrior extends Card {
 
     @Override
     public void apply(Cell cell) {
-
+        cell.setWarrior(this);
+        this.cell=cell;
     }
 
     @Override

@@ -2,7 +2,7 @@ package model.triggers;
 
 import model.Constant;
 import model.QualityHaver;
-import model.actions.triggeractions.Applier;
+import model.actions.Applier;
 import model.conditions.HasTurnEnded;
 import model.effects.Dispelablity;
 import model.effects.HP;

@@ -1,4 +1,4 @@
-package model.actions.gameactions;
+package model.actions;
 
 import model.Cell;
 import model.Game;
@@ -8,7 +8,7 @@ import model.gamestate.AttackState;
 
 import java.util.stream.Stream;
 
-public abstract class Attack {
+public class Attack {
     public static void doIt(Cell attackerCell, Cell defenderCell) {
         Game game = attackerCell.getBoard().getGame();
         Warrior attacker = attackerCell.getWarrior();

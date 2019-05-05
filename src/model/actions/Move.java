@@ -1,4 +1,4 @@
-package model.actions.gameactions;
+package model.actions;
 
 import model.Cell;
 import model.Constant;
@@ -9,7 +9,7 @@ import model.effects.Flying;
 import model.effects.Moved;
 import model.gamestate.MoveState;
 
-public abstract class Move {
+public class Move {
     public static void doIt(Cell originCell, Cell targetCell) {
         Game game = originCell.getBoard().getGame();
         Warrior warrior = originCell.getWarrior();
