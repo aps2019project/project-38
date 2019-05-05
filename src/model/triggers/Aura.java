@@ -5,7 +5,7 @@ import model.actions.Applier;
 import model.conditions.*;
 import model.effects.Dispelablity;
 import model.gamestate.*;
-import model.targets.triggertargets.TriggerTarget;
+import model.targets.TriggerTarget;
 
 /*special because of complexity*/
 //add triggers and effects with "1" duration to this trigger.

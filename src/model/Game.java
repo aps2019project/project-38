@@ -76,7 +76,7 @@ public abstract class Game {
         return players;
     }
 
-    public void iterateAllTriggers (GameState gameState) {
+    public void iterateAllTriggersCheck(GameState gameState) {
         board.iterateBoardTriggers(gameState);
         iteratePlayerTriggers(players[0], gameState);
         iteratePlayerTriggers(players[1], gameState);
@@ -207,6 +207,12 @@ public abstract class Game {
 
     public void endTurn () {
         EndTurn.doIt(this);
+        killAllDiedWarriors();
+        startTurn();
+    }
+
+    private void startTurn() {
+        StartTurn.doIt(this);
         killAllDiedWarriors();
     }
 }

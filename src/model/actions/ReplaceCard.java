@@ -23,7 +23,7 @@ public class ReplaceCard {
             game.getActivePlayer().getHand().put(handMapKey, newCard);
             game.getActivePlayer().ableToReplaceCard = false;
             ReplaceCardState replaceCardState = new ReplaceCardState();
-            game.iterateAllTriggers(replaceCardState);
+            game.iterateAllTriggersCheck(replaceCardState);
         }
     }
 }

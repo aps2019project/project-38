@@ -1,7 +1,9 @@
 package model.actions;
 
+import model.Game;
+
 public class StartTurn {
-    public void doIt() {
+    public static void doIt(Game game) {
 
     }
 }

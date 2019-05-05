@@ -16,14 +16,14 @@ public class Move {
         int manhattanDistance = game.getBoard().getManhattanDistance(originCell, targetCell);
         if (checkWarriorEffectsForMove(warrior, manhattanDistance)) {
             MoveState moveState = new MoveState(warrior, originCell, targetCell);
-            game.iterateAllTriggers(moveState);
+            game.iterateAllTriggersCheck(moveState);
             if (!moveState.canceled) {
                 originCell.setWarrior(null);
                 targetCell.setWarrior(warrior);
                 warrior.setCell(targetCell);
                 warrior.getEffects().add(new Moved());
                 moveState.pending = false;
-                game.iterateAllTriggers(moveState);
+                game.iterateAllTriggersCheck(moveState);
             }
         }
     }
