@@ -58,10 +58,21 @@ public class Game {
         initialisePlayerHand(players[0]);
         initialisePlayerHand(players[1]);
 
-        new Applier().execute(players[0].getMainDeck().getItem(), players[0].getPlayerHero());
-        new Applier().execute(players[1].getMainDeck().getItem(), players[1].getPlayerHero());
+        useUsableItem(players[0].getMainDeck().getItem());
+        useUsableItem(players[1].getMainDeck().getItem());
+
         startTurn();
 //        timer.start();
+    }
+
+    private void useUsableItem(Spell spell){
+        for (int i = 0; i < Constant.GameConstants.boardRow; i++) {
+            for (int j = 0; j < Constant.GameConstants.boardColumn; j++) {
+                if(spell.apply(board.getCell(i,j))) {
+                    return;
+                }
+            }
+        }
     }
 
     private void initialisePlayerHand(Player player) {

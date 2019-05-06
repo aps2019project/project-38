@@ -13,8 +13,11 @@ public class HeroPower extends Spell {
     }
 
     @Override
-    public void apply(Cell cell) {
-        super.apply(cell);
-        coolDownRemaining=coolDown;
+    public boolean apply(Cell cell) {
+        boolean didSth = super.apply(cell);
+        if(didSth) {
+            coolDownRemaining = coolDown;
+        }
+        return didSth;
     }
 }

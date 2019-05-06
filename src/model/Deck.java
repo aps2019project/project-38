@@ -2,6 +2,7 @@ package model;
 
 import model.cards.Card;
 import model.cards.Hero;
+import model.cards.Spell;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,14 +12,14 @@ public class Deck {
     private String name;
     private ArrayList<Integer> cardIDs = new ArrayList<>();
     private Hero hero;
-    private Card item;
+    private Spell item;
     //***
 
-    public void setItem(Card item) {
+    public void setItem(Spell item) {
         this.item = item;
     }
 
-    public Card getItem() {
+    public Spell getItem() {
         return item;
     }
 

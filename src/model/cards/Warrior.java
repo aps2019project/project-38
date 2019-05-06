@@ -35,9 +35,10 @@ public class Warrior extends Card {
     }
 
     @Override
-    public void apply(Cell cell) {
+    public boolean apply(Cell cell) {
         cell.setWarrior(this);
         this.cell=cell;
+        return true;
     }
 
     @Override

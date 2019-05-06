@@ -93,7 +93,7 @@ public class Collection {
             }
         }
         if (Spell.checkIsItem(card)) {
-            deck.setItem(card);
+            deck.setItem((Spell) card);
         }
         int numberOf = 0;
         for (int ID : deck.getCardIDs()) {
