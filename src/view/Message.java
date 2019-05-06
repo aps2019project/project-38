@@ -435,10 +435,15 @@ public interface Message {
                 System.out.println("(if you selected more than one warrior you can combo attack to an enemy warrior): Attack combo [row] [column]");
                 System.out.println("(if you selected a card you can put it on board): Insert in [row] [column]");
                 System.out.println("Use Special Power: Use special power [row] [column]");
-                System.out.println("Show card info [cardID]");
+                System.out.println("Show Card Info: Show card info [cardID]");
                 System.out.println("End Turn: End turn");
                 System.out.println("Show Collectable Items: Show collectables");
-                System.out.println("(if you selected an war you can attack to an enemy warrior): Attack [row] [column]");
+                System.out.println("(get out of above window): Exit");
+                System.out.println("(if you selected an collectable item you can see item info): Show info");
+                System.out.println("(if you selected an collectable item you can use it): Use [row] [column]");
+                System.out.println("Show Next Card Info: Show next card");
+                System.out.println("Show Graveyard: Enter graveyard");
+                System.out.println("(you can see info of above cards): Show card info [cardID]");
             }
         }
     }
