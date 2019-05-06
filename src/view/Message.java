@@ -296,7 +296,7 @@ public interface Message {
             }
 
             static void moodAndDeckMenu() {
-                System.out.println("Select deck and mood --> for example: " +
+                System.out.println("Select mood and enemy deck\nfor example: " +
                         "Start game [deck name] [mood name] [number of flags]*");
                 System.out.println("Decks:");
                 for (Map.Entry<String, Deck> entry : Deck.getAllDecks().entrySet()) {
@@ -309,7 +309,7 @@ public interface Message {
             }
 
             static void accountMenu(HashMap<String, Account> accounts) {
-                System.out.println("Select a ready account --> for example: Select user [user name]");
+                System.out.println("Select a ready account\nfor example: Select user [user name]");
                 for (Map.Entry<String, Account> entry : accounts.entrySet()) {
                     System.out.println(entry.getKey());
                 }
@@ -320,7 +320,7 @@ public interface Message {
             }
 
             static void moodMenu() {
-                System.out.println("Choose mood --> for example: Start multiplayer game [mood name] [number of flags]*");
+                System.out.println("Choose mood\nfor example: Start multiplayer game [mood name] [number of flags]*");
                 System.out.println("Moods:");
                 System.out.println("KillingEnemyHero");
                 System.out.println("CarryingFlag");

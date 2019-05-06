@@ -27,7 +27,7 @@ public class MainMenu extends Window {
                     Window.openWindow(new ShopWindow());
                     break tag1;
                 case 3:
-                    //todo for ALI
+                    Window.openWindow(new GameWindow());
                     break tag1;
                 case 0:
                     Window.closeWindow(this);
