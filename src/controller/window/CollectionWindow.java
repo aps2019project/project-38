@@ -73,7 +73,7 @@ public class CollectionWindow extends Window {
                     showInfoOfAllDecks();
                     continue;
                 case 11:
-//                    Collection.getCollection().save();
+//                    Collection.getCollection().saveAccounts();
                     continue;
                 case 0:
                     Window.closeWindow(this);

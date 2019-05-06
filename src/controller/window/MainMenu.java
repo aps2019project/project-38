@@ -31,7 +31,7 @@ public class MainMenu extends Window {
                     break tag1;
                 case 0:
                     Window.closeWindow(this);
-                    Account.getActiveAccount().save();
+                    Account.getActiveAccount().saveAccounts();
                     break tag1;
                 default:
                     Message.invalidInput();

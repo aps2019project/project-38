@@ -351,9 +351,9 @@ public interface Message {
                             entry.getValue().getRequiredMana() + " CardID:" + entry.getValue().getID());
                 }
                 HeroPower specialPower = game.getActivePlayer().getPlayerHero().getPower();
-                System.out.println("SpecialPower: Name" + specialPower.getCard().getName() +
-                        " Required Mana:" + specialPower.getCard().getRequiredMana() +
-                        " Cool Down:" + specialPower.coolDownRemaining + " CardID:" + specialPower.getCard().getID());
+                System.out.println("SpecialPower: Name" + specialPower.getName() +
+                        " Required Mana:" + specialPower.getRequiredMana() +
+                        " Cool Down:" + specialPower.coolDownRemaining + " CardID:" + specialPower.getID());
             }
 
             static void showBoard(Game game) {

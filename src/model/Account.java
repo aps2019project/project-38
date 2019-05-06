@@ -2,6 +2,7 @@ package model;
 
 import view.Message;
 
+import java.io.*;
 import java.util.*;
 import java.util.Collections;
 
@@ -73,8 +74,32 @@ public class Account implements Comparable<Account>, java.io.Serializable {
     }
 
     //***
-    public void save() {
+    public static void saveAccounts() {
+        try {
+            File file = new File(System.getProperty("user.home") + "/Selistdar");
+            file.mkdirs();
+            FileOutputStream fos = new FileOutputStream(file.getPath() + "/acc");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(usernameToAccountObject);
+            fos.close();
+            oos.close();
+        } catch (IOException e) {
+            System.err.println("could save accounts");
+        }
+    }
 
+    public static void loadAccounts() {
+        try {
+            File file = new File(System.getProperty("user.home") + "/Selistdar");
+            file.mkdirs();
+            FileInputStream fis = new FileInputStream(file.getPath() + "/acc");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            usernameToAccountObject = (HashMap<String, Account>) ois.readObject();
+            fis.close();
+            ois.close();
+        } catch (Exception e) {
+            System.err.println("couldn't read accounts.");
+        }
     }
 
     public void putGameInHistory(String opponentName, boolean didWin) {
