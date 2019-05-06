@@ -36,13 +36,16 @@ public class Spell extends Card {
     }
 
     @Override
-    public void apply(Cell cell) {
+    public boolean apply(Cell cell) {
         Player user = cell.getBoard().getGame().getActivePlayer();
+        boolean didSth = false;
         for (Map.Entry<AutoAction, SpellTarget> entry : actions.entrySet()) {
             for (QualityHaver target : entry.getValue().getTarget(user, cell)) {
+                didSth = true;
                 entry.getKey().execute(this, target);
             }
         }
+        return didSth;
     }
 
     @Override

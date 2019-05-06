@@ -15,7 +15,7 @@ public class Deck {
     private String name;
     private ArrayList<Integer> cardIDs = new ArrayList<>();
     private Hero hero;
-    private Card item;
+    private Spell item;
     //***
 
     static {
@@ -51,11 +51,11 @@ public class Deck {
         return lowerCaseNamesToOriginalName;
     }
 
-    public void setItem(Card item) {
+    public void setItem(Spell item) {
         this.item = item;
     }
 
-    public Card getItem() {
+    public Spell getItem() {
         return item;
     }
 
