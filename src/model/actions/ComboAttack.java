@@ -9,15 +9,16 @@ import model.effects.Dispelablity;
 import model.effects.HP;
 import model.gamestate.AttackState;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import static model.actions.Attack.checkWarriorsEffectsForAttack;
 
 public class ComboAttack {
-    public static void doIt(Cell[] attackersCell, Cell defenderCell) {
-        Game game = attackersCell[0].getBoard().getGame();
+    public static void doIt(ArrayList<Cell> attackersCell, Cell defenderCell) {
+        Game game = attackersCell.get(0).getBoard().getGame();
         Warrior defender = defenderCell.getWarrior();
-        AttackState attackState = new AttackState(attackersCell[0].getWarrior(), defender, 0);
+        AttackState attackState = new AttackState(attackersCell.get(0).getWarrior(), defender, 0);
         for (Cell attackerCell : attackersCell) {
             Warrior attacker = attackerCell.getWarrior();
             int jumperManhattanDistance = game.getBoard().getJumperManhattanDistance(attackerCell, defenderCell);
@@ -29,7 +30,7 @@ public class ComboAttack {
             }
         }
         if (!attackState.canceled) {
-            Arrays.stream(attackersCell).forEach(cell -> cell.getWarrior().getEffects().add(new Attacked()));
+            attackersCell.forEach(cell -> cell.getWarrior().getEffects().add(new Attacked()));
             defender.getEffects().add(new HP(-1, Dispelablity.UNDISPELLABLE, -1 * attackState.ap));
             attackState.pending = false;
             game.iterateAllTriggersCheck(attackState);

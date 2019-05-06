@@ -445,7 +445,21 @@ public interface Message {
                 System.out.println("Show Graveyard: Enter graveyard");
                 System.out.println("(you can see info of above cards): Show card info [cardID]");
             }
+
+            interface failCommand {
+                static void indexOutOfBoard() {
+                    System.out.println("index out of board");
+                }
+                static void youHaveNoOwnWarriorInThisCell() {
+                    System.out.println("you have no own warrior in that cell");
+                }
+                static void thereIsNoEnemyWarriorInThisCell() {
+                    System.out.println("there is no enemy warrior in that cell");
+                }
+            }
         }
+
+
     }
 
     static void notEnoughCardNumber(){

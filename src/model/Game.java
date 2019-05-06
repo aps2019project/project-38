@@ -14,7 +14,6 @@ import model.player.HumanPlayer;
 import model.player.Player;
 import model.triggers.Trigger;
 
-import javax.swing.Timer;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -27,8 +26,9 @@ public class Game {
     public int turn;
     Player[] players = new  Player[2];
     private Board board = new Board(this);
-    public Timer timer = new Timer(Constant.GameConstants.turnTime, ignored -> endTurn());
+//    public Timer timer = new Timer(Constant.GameConstants.turnTime, ignored -> endTurn());
     ArrayList<Spell> colletableItems = new ArrayList<>();
+    private Selectable selecteds = new Selectable();
 
 
     public Game(GameMood gameMood, Account accountOne, Account accountTwo) {
@@ -60,7 +60,7 @@ public class Game {
         new Applier().execute(players[0].getMainDeck().getItem(), players[0].getPlayerHero());
         new Applier().execute(players[1].getMainDeck().getItem(), players[1].getPlayerHero());
         startTurn();
-        timer.start();
+//        timer.start();
     }
 
     private void initialisePlayerHand(Player player) {
@@ -99,6 +99,10 @@ public class Game {
 
     public GameMood getGameMood() {
         return gameMood;
+    }
+
+    public Selectable getSelecteds() {
+        return selecteds;
     }
 
     public void iterateAllTriggersCheck(GameState gameState) {
@@ -191,20 +195,20 @@ public class Game {
         }
     }
 
-    public void comboAttack(Cell[] attackersCell, Cell defenderCell) {
+    public void comboAttack(ArrayList<Cell> attackersCell, Cell defenderCell) {
         if (defenderCell.getWarrior() == null) return;
         for (Cell cell : attackersCell) {
             if (cell.getWarrior() == null) {
                 return;
             }
         }
-        for (int i = 0; i < attackersCell.length - 1; i++) {
-            if (getWarriorsPlayer(attackersCell[i].getWarrior()) !=
-                    getWarriorsPlayer(attackersCell[i + 1].getWarrior())) {
+        for (int i = 0; i < attackersCell.size() - 1; i++) {
+            if (getWarriorsPlayer(attackersCell.get(i).getWarrior()) !=
+                    getWarriorsPlayer(attackersCell.get(i + 1).getWarrior())) {
                 return;
             }
         }
-        if (defenderCell.getWarrior() == attackersCell[0].getWarrior()) {
+        if (defenderCell.getWarrior() == attackersCell.get(0).getWarrior()) {
             return;
         }
         ComboAttack.doIt(attackersCell, defenderCell);
@@ -247,52 +251,3 @@ public class Game {
     }
 }
 
-class Selectable {
-    private ArrayList<Cell> warriorsCell = new ArrayList<>();
-    public Integer cardHandIndex;
-    public boolean specialPowerIsSelected;
-    public Spell collectableItem;
-
-    public void seletWarrior(Cell cell) {
-        Game game = cell.getBoard().getGame();
-        if (game.getActivePlayer().getWarriors().contains(cell.getWarrior())) {
-            cardHandIndex = null;
-            specialPowerIsSelected = false;
-            collectableItem = null;
-            warriorsCell.add(cell);
-        }
-        else {
-            //todo
-        }
-    }
-
-    public void selectCard(Game game, int cardHandIndex) {
-        if (game.getActivePlayer().getHand().get(cardHandIndex) != null) {
-            warriorsCell = new ArrayList<>();
-            specialPowerIsSelected = false;
-            collectableItem = null;
-            this.cardHandIndex = cardHandIndex;
-        }
-        else {
-            //todo
-        }
-    }
-
-    public void selectSpecialPower(Game game) {
-        warriorsCell = new ArrayList<>();
-        cardHandIndex = null;
-        collectableItem = null;
-        specialPowerIsSelected = true;
-    }
-
-    public void selectColletableItem(Spell collectableItem) {
-        this.collectableItem = collectableItem;
-    }
-
-    public void deselectAll() {
-        warriorsCell = new ArrayList<>();
-        cardHandIndex = null;
-        specialPowerIsSelected =  false;
-        collectableItem = null;
-    }
-}

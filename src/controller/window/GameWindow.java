@@ -1,8 +1,6 @@
 package controller.window;
 
-import model.Account;
-import model.Deck;
-import model.Game;
+import model.*;
 import model.gamemoods.CarryingFlag;
 import model.gamemoods.CollectingFlag;
 import model.gamemoods.KillingEnemyHero;
@@ -10,6 +8,9 @@ import model.player.AIPlayer;
 import model.player.HumanPlayer;
 import view.Message;
 import view.Request;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class GameWindow extends Window {
     private Game game;
@@ -33,8 +34,116 @@ public class GameWindow extends Window {
         String input = Request.getNextRequest();
         if (input.matches("Help")) {
             help();
-        }
+        }else if (input.matches("Select \\d \\d")) {
+            Pattern pattern = Pattern.compile("(\\d)");
+            Matcher matcher = pattern.matcher(input);
+            matcher.matches();
+            int row = Integer.parseInt(matcher.group(1));
+            matcher.matches();
+            int column = Integer.parseInt(matcher.group());
+            if (row < Constant.GameConstants.boardRow && column < Constant.GameConstants.boardColumn) {
+                Cell cell = new Cell(row, column);
+                if (cell.getWarrior() != null && game.getActivePlayer() == game.getWarriorsPlayer(cell.getWarrior())) {
+                    game.getSelecteds().seletWarrior(game.getBoard().getCell(row, column));
+                }
+                else {
+                    Message.GameWindow.insideGame.failCommand.youHaveNoOwnWarriorInThisCell();
+                }
+            }
+            else {
+                Message.GameWindow.insideGame.failCommand.indexOutOfBoard();
+            }
+        }else if (input.matches("Select \\d")) {
+            int index = Integer.parseInt(input.replace("Select ", ""));
+            if (index < Constant.GameConstants.handSize) {
+                if (game.getActivePlayer().getHand().get(index) != null) {
+                    game.getSelecteds().selectCard(game, index);
+                }else {
+                    System.out.println("you selected null cart");
+                }
+            }else {
+                System.out.println("wrong index");
+            }
+        }else if (input.equals("Select SPP")) {
+            game.getSelecteds().selectSpecialPower(game);
+        }else if (input.equals("Deselect warriors")) {
+            game.getSelecteds().deselectAll();
+        }else if (input.matches("Attack \\d \\d")) {
+            Pattern pattern = Pattern.compile("(\\d)");
+            Matcher matcher = pattern.matcher(input);
+            matcher.matches();
+            int row = Integer.parseInt(matcher.group(1));
+            matcher.matches();
+            int column = Integer.parseInt(matcher.group());
+            if (game.getSelecteds().getWarriorsCell().size() == 1) {
+                if (row < Constant.GameConstants.boardRow && column < Constant.GameConstants.boardColumn) {
+                    Cell cell = new Cell(row, column);
+                    if (cell.getWarrior() != null && game.getActivePlayer() == game.getWarriorsPlayer(cell.getWarrior())) {
+                        game.attack(game.getSelecteds().getWarriorsCell().get(0), cell);
+                    } else {
+                        Message.GameWindow.insideGame.failCommand.thereIsNoEnemyWarriorInThisCell();
+                    }
+                } else {
+                    Message.GameWindow.insideGame.failCommand.indexOutOfBoard();
+                }
+            }else {
+                System.out.println("you should select just one warrior for attack");
+            }
+        }else if (input.matches("Attack combo \\d \\d")) {
+            Pattern pattern = Pattern.compile("(\\d)");
+            Matcher matcher = pattern.matcher(input);
+            matcher.matches();
+            int row = Integer.parseInt(matcher.group(1));
+            matcher.matches();
+            int column = Integer.parseInt(matcher.group());
+            if (game.getSelecteds().getWarriorsCell().size() > 1) {
+                if (row < Constant.GameConstants.boardRow && column < Constant.GameConstants.boardColumn) {
+                    Cell cell = new Cell(row, column);
+                    if (cell.getWarrior() != null && game.getActivePlayer() == game.getWarriorsPlayer(cell.getWarrior())) {
+                        game.comboAttack(game.getSelecteds().getWarriorsCell(), cell);
+                    } else {
+                        Message.GameWindow.insideGame.failCommand.thereIsNoEnemyWarriorInThisCell();
+                    }
+                } else {
+                    Message.GameWindow.insideGame.failCommand.indexOutOfBoard();
+                }
+            }else {
+                System.out.println("you should select more than one warrior for attack");
+            }
+        }else if (input.matches("Insert in \\d \\d")) {
+            Pattern pattern = Pattern.compile("(\\d)");
+            Matcher matcher = pattern.matcher(input);
+            matcher.matches();
+            int row = Integer.parseInt(matcher.group(1));
+            matcher.matches();
+            int column = Integer.parseInt(matcher.group());
+            if (game.getSelecteds().cardHandIndex != null) {
+                if (row < Constant.GameConstants.boardRow && column < Constant.GameConstants.boardColumn) {
+                    Cell cell = new Cell(row, column);
+                    game.useCard(game.getSelecteds().cardHandIndex, cell);
+                } else {
+                    Message.GameWindow.insideGame.failCommand.indexOutOfBoard();
+                }
+            }else {
+                System.out.println("no card selected");
+            }
+        }else if (input.matches("Use special power \\d \\d")) {
+            game.getSelecteds().deselectAll();
+            Pattern pattern = Pattern.compile("(\\d)");
+            Matcher matcher = pattern.matcher(input);
+            matcher.matches();
+            int row = Integer.parseInt(matcher.group(1));
+            matcher.matches();
+            int column = Integer.parseInt(matcher.group());
+            if (row < Constant.GameConstants.boardRow && column < Constant.GameConstants.boardColumn) {
+                Cell cell = new Cell(row, column);
+                //todo use special power
+            } else {
+                Message.GameWindow.insideGame.failCommand.indexOutOfBoard();
+            }
+        }else if () {
 
+        }
     }
 
     private void help() {
