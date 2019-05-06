@@ -1,6 +1,9 @@
 package controller.window;
 
+import model.Account;
 import view.Message;
+
+import java.nio.channels.AcceptPendingException;
 
 import static view.Request.getNextRequest;
 
@@ -27,6 +30,7 @@ public class MainMenu extends Window{
                     continue;
                 case 0:
                     Window.closeWindow(this);
+                    Account.getActiveAccount().save();
                     break tag1;
                 default:
                     Message.invalidInput();

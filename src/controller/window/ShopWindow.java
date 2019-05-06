@@ -36,22 +36,12 @@ public class ShopWindow extends Window {
                 case 3:
                     Message.InterCardName();
                     String cardName = getNextRequest();
-                    int ID = Shop.getShop().searchInShopCards(cardName);
-                    if (ID != -1) {
-                        Message.printCardID(ID);
-                    }
+                    Shop.getShop().searchInShopCards(cardName);
                     continue;
                 case 4:
                     Message.InterCardName();
                     cardName = getNextRequest();
-                    ArrayList<Integer> foundIDs = Shop.getShop().searchInCollectionCards(cardName);
-                    if (foundIDs.size() > 0) {
-                        for (int id : foundIDs) {
-                            Message.printSomeThing(((Integer) id).toString());
-                        }
-                        Message.INTER();
-                        System.out.println();
-                    }
+                    Shop.getShop().searchInCollectionCards(cardName);
                     continue;
                 case 5:
                     Message.InterCardName();
@@ -117,7 +107,7 @@ public class ShopWindow extends Window {
                 Message.showInfoOfHeroPlusPrice((Hero) heroes.get(i), i, kindOfAttackArea, "Buy");
             }
             if (kind == 3) {
-                Message.showInfoOfHeroMinesPrice((Hero) heroes.get(i), i, kindOfAttackArea);
+                Message.showInfoOfHeroMinusPrice((Hero) heroes.get(i), i, kindOfAttackArea);
             }
         }
     }
@@ -132,7 +122,7 @@ public class ShopWindow extends Window {
                 Message.showInfoOfItemPlusPrice((Spell) items.get(i), i, "Buy");
             }
             if (kind == 3) {
-                Message.showInfoOfItemMinesPrice((Spell) items.get(i), i);
+                Message.showInfoOfItemMinusPrice((Spell) items.get(i), i);
             }
         }
     }
@@ -150,7 +140,7 @@ public class ShopWindow extends Window {
                 Message.showInfoOfCardPlusPrice(others.get(i), i, type, "Buy");
             }
             if (kind == 3) {
-                Message.showInfoOfCardMinesPrice(others.get(i), i, type);
+                Message.showInfoOfCardMinusPrice(others.get(i), i, type);
             }
         }
     }
