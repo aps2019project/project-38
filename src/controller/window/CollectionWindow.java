@@ -22,7 +22,7 @@ public class CollectionWindow extends Window {
             int indexOfSelectedSubMenu = Integer.parseInt(input);
             switch (indexOfSelectedSubMenu) {
                 case 1:
-                    ShopWindow.handleShowInfoOfCards(Collection.getCollection().getCardIDs(), 2);
+                    ShopWindow.handleShowInfoOfCards(Collection.getCollection().getCardIDs(), 1);
                     continue;
                 case 2:
                     Message.interCardName();
@@ -40,23 +40,23 @@ public class CollectionWindow extends Window {
                     Collection.getCollection().deleteDeck(deckName);
                     continue;
                 case 5:
-                    Message.interCardID();
-                    int cardID = Integer.parseInt(getNextRequest());
+                    Message.interCardName();
+                    cardName = getNextRequest();
                     Message.interDeckName();
                     deckName = getNextRequest();
-                    Collection.getCollection().addCardToDeck(cardID, deckName);
+                    Collection.getCollection().addCardToDeck(cardName, deckName);
                     continue;
                 case 6:
-                    Message.interCardID();
-                    cardID = Integer.parseInt(getNextRequest());
+                    Message.interCardName();
+                    cardName = getNextRequest();
                     Message.interDeckName();
                     deckName = getNextRequest();
-                    Collection.getCollection().removeCardFromDeck(cardID, deckName);
+                    Collection.getCollection().removeCardFromDeck(cardName, deckName);
                     continue;
                 case 7:
                     Message.interDeckName();
                     deckName = getNextRequest();
-                    Collection.getCollection().validateDeck(deckName,true);
+                    Collection.getCollection().validateDeck(deckName, true);
                     continue;
                 case 8:
                     Message.interDeckName();
@@ -95,19 +95,19 @@ public class CollectionWindow extends Window {
     private void showInfoOfAllDecks() {
         Deck deck = Collection.getCollection().getMainDeck();
         int i = 1;
-        if(deck!=null) {
-            Message.showDeckName(i,deck.getName());
+        if (deck != null) {
+            Message.showDeckName(i, deck.getName());
             showInfoOfASpecificDeck(deck);
-            i=2;
+            i = 2;
         }
         for (String deckName : Collection.getCollection().getDecks()) {
             Deck deck1 = Deck.getAllDecks().get(deckName);
             if (deck1.equals(deck)) continue;
-            Message.showDeckName(i,deck1.getName());
+            Message.showDeckName(i, deck1.getName());
             showInfoOfASpecificDeck(deck1);
             i++;
         }
-        if(i==1){
+        if (i == 1) {
             Message.noDeckExist();
         }
     }

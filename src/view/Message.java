@@ -126,11 +126,11 @@ public interface Message {
     }
 
     static void haveXNumberOfCardIDInYourCollection(int numberOfFoundIDs) {
-        System.out.printf("You have %d number of this card in your collection :)", numberOfFoundIDs);
+        System.out.printf("You have %d number of this card in your collection :)\n", numberOfFoundIDs);
     }
 
     static void existACardWithThisIDInShop() {
-        System.out.println("There is a card with this ID in shop :)");
+        System.out.println("There is a card with this name in shop :)");
     }
 
     // in account:
@@ -186,7 +186,7 @@ public interface Message {
     // in collection
     static void showCollectionHelp() {
         System.out.println("___--Collection Menu--___");
-        System.out.println("    1- Show Info Of Cards Of Collection:");
+        System.out.println("    1- Show Info Of Cards Of Collection");
         System.out.println("    2- Search In Collection");
         System.out.println("    3- Create Deck");
         System.out.println("    4- Delete Deck");
@@ -212,8 +212,8 @@ public interface Message {
         System.out.println("There is no deck with this name :(");
     }
 
-    static void thereIsACardWithThisIDInThisDeck() {
-        System.out.println("There is already a card whit this ID in this deck");
+    static void thereIsACardWithThisNameInThisDeck() {
+        System.out.println("There is already a card whit this name in this deck");
     }
 
     static void have20CardsInThisDeck() {
@@ -265,7 +265,7 @@ public interface Message {
     }
 
     static void interCardName() {
-        System.out.println("Please inter cardName");
+        System.out.println("Please inter cardName:");
     }
 
     static void showDeckName(int index, String deckName) {
