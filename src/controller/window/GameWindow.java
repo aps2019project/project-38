@@ -14,12 +14,13 @@ import view.Request;
 
 public class GameWindow extends Window {
     private Game game;
-    private MoodData moodData;
+    private MoodData moodData;//todo
 
     @Override
     public void main() {
         initialiseGame();
         while (true) {
+            Message.GameWindow.insideGame.showMainView(game);
             if (game.getActivePlayer() instanceof HumanPlayer) {
                 getPlayerAction();
             }
@@ -29,7 +30,25 @@ public class GameWindow extends Window {
         }
     }
 
+    private void getPlayerAction() {
+        String input = Request.getNextRequest();
+        if (input.matches("Help")) {
+            help();
+        }
+
+    }
+
+    private void help() {
+        while (true) {
+            String input = Request.getNextRequest();
+            if (input.matches("exit")) {
+                break;
+            }
+        }
+    }
+
     private boolean initialiseGame() {
+        MoodData moodData = new MoodData();//todo
         if (!checkDeck()) {
             this.closeWindow();
             return false;
@@ -83,12 +102,6 @@ public class GameWindow extends Window {
             return false;
         }
         return true;
-    }
-
-    private void getPlayerAction() {
-        String input = Request.getNextRequest();
-        switch (input) {
-        }
     }
 
     private boolean checkDeck() {

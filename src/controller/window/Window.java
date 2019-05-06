@@ -8,7 +8,7 @@ public abstract class Window {
 
     public static boolean runLastOpenWindow() {
         if (openWindows.size() > 0) {
-            openWindows.get(openWindows.size() - 1);
+            openWindows.get(openWindows.size() - 1).main();
             return true;
         }
         return false;

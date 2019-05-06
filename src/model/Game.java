@@ -4,6 +4,7 @@ package model;
 import model.actions.*;
 import model.actions.Killer;
 import model.cards.Card;
+import model.cards.Spell;
 import model.cards.Warrior;
 import model.effects.Effect;
 import model.gamestate.*;
@@ -26,6 +27,8 @@ public class Game {
     Player[] players = new  Player[2];
     private Board board = new Board(this);
     public Timer timer = new Timer(Constant.GameConstants.turnTime, ignored -> endTurn());
+    ArrayList<Spell> colletableItems = new ArrayList<>();
+
 
     public Game(GameMood gameMood, Account accountOne, Account accountTwo) {
         this.gameMood = gameMood;
@@ -75,6 +78,10 @@ public class Game {
             return players[0];
         }
         return players[1];
+    }
+
+    public Player getOtherPlayer(Player player) {
+        return player != players[0] ? players[0] : players[1];
     }
 
     public Player getWarriorsEnemyPlayer(Warrior warrior) {
@@ -236,5 +243,40 @@ public class Game {
     private void startTurn() {
         StartTurn.doIt(this);
         checkGameEndAndThenKillAllDiedWarriors();
+    }
+}
+
+class Selectable {
+    private ArrayList<Cell> warriorsCell = new ArrayList<>();
+    public Integer cardHandIndex;
+    public boolean specialPowerIsSelected;
+
+    public void seletWarrior(Cell cell) {
+        Game game = cell.getBoard().getGame();
+        if (game.getActivePlayer().getWarriors().contains(cell.getWarrior())) {
+            cardHandIndex = null;
+            specialPowerIsSelected = false;
+            warriorsCell.add(cell);
+        }
+        else {
+            //todo
+        }
+    }
+
+    public void selectCard(Game game, int cardHandIndex) {
+        if (game.getActivePlayer().getHand().get(cardHandIndex) != null) {
+            warriorsCell = new ArrayList<>();
+            specialPowerIsSelected = false;
+            this.cardHandIndex = cardHandIndex;
+        }
+        else {
+            //todo
+        }
+    }
+
+    public void selectSpecialPower(Game game) {
+        warriorsCell = new ArrayList<>();
+        cardHandIndex = null;
+        specialPowerIsSelected = true;
     }
 }

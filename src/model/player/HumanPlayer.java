@@ -10,4 +10,8 @@ public class HumanPlayer extends Player {
         super(deck);
         this.account = account;
     }
+
+    public Account getAccount() {
+        return account;
+    }
 }
