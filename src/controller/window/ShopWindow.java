@@ -51,8 +51,13 @@ public class ShopWindow extends Window {
                 case 6:
                     Message.interCardID();
                     cardName = getNextRequest();
-                    Shop.getShop().sell(Integer.parseInt(cardName));
+                    if (!cardName.matches("\\d+")) {
+                        Message.invalidInput();
+                    } else {
+                        Shop.getShop().sell(Integer.parseInt(cardName));
+                    }
                 case 0:
+                    Window.closeWindow(this);
                     break tag1;
                 default:
                     Message.invalidInput();

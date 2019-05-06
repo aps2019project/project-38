@@ -26,13 +26,13 @@ public class IntroWindow extends Window {
                     handleCreatingAccount();
                     continue;
                 case 2:
-                    handleLoginAccount();
+                    if(handleLoginAccount())break tag1;
                     continue;
                 case 3:
                     calculateLeaderBoard();
                     continue;
                 case 0:
-                    break tag1;
+                    System.exit(0);
                 default:
                     Message.invalidInput();
             }
@@ -49,14 +49,16 @@ public class IntroWindow extends Window {
         Account.createAccount(userName, password, againPassword);
     }
 
-    private void handleLoginAccount() {
+    private boolean handleLoginAccount() {
         Message.interUsername();
         String userName = getNextRequest();
         Message.interPassword();
         String password = getNextRequest();
         if (Account.login(userName, password)) { // :(
             Window.openWindow(new MainMenu());
+            return true;
         }
+        return false;
     }
 
     private void calculateLeaderBoard() {

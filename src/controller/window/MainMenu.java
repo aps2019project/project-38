@@ -21,13 +21,13 @@ public class MainMenu extends Window{
             switch (indexOfSelectedSubMenu){
                 case 1:
                     Window.openWindow(new CollectionWindow());
-                    continue;
+                    break tag1;
                 case 2:
                     Window.openWindow(new ShopWindow());
-                    continue;
+                    break tag1;
                 case 3:
                     //todo for ALI
-                    continue;
+                    break tag1;
                 case 0:
                     Window.closeWindow(this);
                     Account.getActiveAccount().save();
