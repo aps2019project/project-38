@@ -18,52 +18,57 @@ public class Deck {
     private Spell item;
     //***
 
-    static {
-        Deck deck1 = new Deck();
-        deck1.setHero((Hero) CardFactory.getAllBuiltHeroes().get(1));
-        deck1.setItem((Spell) CardFactory.getAllBuiltItems().get(1));
-        //***
-        int[] spellIndex = {1, 7, 10, 11, 12, 18, 20};
-        for (int i = 0; i < 7; i++) {
-            deck1.getCardIDs().add(CardFactory.getAllBuiltSpells().get(spellIndex[i]).getID());
+    public static void deckLevelBuilder(){
+        {
+            Deck deck1 = new Deck();
+            deck1.name="level1";
+            deck1.setHero((Hero) CardFactory.getAllBuiltHeroes().get(1));
+            deck1.setItem((Spell) CardFactory.getAllBuiltItems().get(1));
+            //***
+            int[] spellIndex = {1, 7, 10, 11, 12, 18, 20};
+            for (int i = 0; i < 7; i++) {
+                deck1.getCardIDs().add(CardFactory.getAllBuiltSpells().get(spellIndex[i]-1).getID());
+            }
+            int[] minionIndex = {1, 9, 11, 11, 13, 17, 18, 21, 22, 26, 36, 38, 40};
+            for (int i = 0; i < 13; i++) {
+                deck1.getCardIDs().add(CardFactory.getAllBuiltMinions().get(minionIndex[i]-1).getID());
+            }
+            levels.add(deck1);
         }
-        int[] minionIndex = {1, 9, 11, 11, 13, 17, 18, 21, 22, 26, 36, 38, 40};
-        for (int i = 0; i < 13; i++) {
-            deck1.getCardIDs().add(CardFactory.getAllBuiltMinions().get(minionIndex[i]).getID());
-        }
-        levels.add(deck1);
-    }
+        {
+            Deck deck2 = new Deck();
+            deck2.name="level2";
 
-    static {
-        Deck deck2 = new Deck();
-        deck2.setHero((Hero) CardFactory.getAllBuiltHeroes().get(5));
-        deck2.setItem((Spell) CardFactory.getAllBuiltItems().get(18));
-        //***
-        int[] spellIndex = {2, 3, 5, 8, 9, 13, 19};
-        for (int i = 0; i < 7; i++) {
-            deck2.getCardIDs().add(CardFactory.getAllBuiltSpells().get(spellIndex[i]).getID());
+            deck2.setHero((Hero) CardFactory.getAllBuiltHeroes().get(5));
+            deck2.setItem((Spell) CardFactory.getAllBuiltItems().get(18));
+            //***
+            int[] spellIndex = {2, 3, 5, 8, 9, 13, 19};
+            for (int i = 0; i < 7; i++) {
+                deck2.getCardIDs().add(CardFactory.getAllBuiltSpells().get(spellIndex[i]-1).getID());
+            }
+            int[] minionIndex = {2, 3, 5, 8, 12, 15, 15, 19, 23, 27, 30, 33, 39};
+            for (int i = 0; i < 13; i++) {
+                deck2.getCardIDs().add(CardFactory.getAllBuiltMinions().get(minionIndex[i]-1).getID());
+            }
+            levels.add(deck2);
         }
-        int[] minionIndex = {2, 3, 5, 8, 12, 15, 15, 19, 23, 27, 30, 33, 39};
-        for (int i = 0; i < 13; i++) {
-            deck2.getCardIDs().add(CardFactory.getAllBuiltMinions().get(minionIndex[i]).getID());
-        }
-        levels.add(deck2);
-    }
+        {
+            Deck deck3 = new Deck();
+            deck3.name="level3";
 
-    static {
-        Deck deck3 = new Deck();
-        deck3.setHero((Hero) CardFactory.getAllBuiltHeroes().get(7));
-        deck3.setItem((Spell) CardFactory.getAllBuiltItems().get(12));
-        //***
-        int[] spellIndex = {6, 10, 12, 14, 15, 16, 17};
-        for (int i = 0; i < 7; i++) {
-            deck3.getCardIDs().add(CardFactory.getAllBuiltSpells().get(spellIndex[i]).getID());
+            deck3.setHero((Hero) CardFactory.getAllBuiltHeroes().get(7));
+            deck3.setItem((Spell) CardFactory.getAllBuiltItems().get(12));
+            //***
+            int[] spellIndex = {6, 10, 12, 14, 15, 16, 17};
+            for (int i = 0; i < 7; i++) {
+                deck3.getCardIDs().add(CardFactory.getAllBuiltSpells().get(spellIndex[i]-1).getID());
+            }
+            int[] minionIndex = {6, 7, 10, 14, 16, 16, 20, 24, 25, 28, 29, 31, 34};
+            for (int i = 0; i < 13; i++) {
+                deck3.getCardIDs().add(CardFactory.getAllBuiltMinions().get(minionIndex[i]-1).getID());
+            }
+            levels.add(deck3);
         }
-        int[] minionIndex = {6, 7, 10, 14, 16, 16, 20, 24, 25, 28, 29, 31, 34};
-        for (int i = 0; i < 13; i++) {
-            deck3.getCardIDs().add(CardFactory.getAllBuiltMinions().get(minionIndex[i]).getID());
-        }
-        levels.add(deck3);
     }
 
     public static HashMap<String, String> getLowerCaseNamesToOriginalName() {
@@ -100,5 +105,9 @@ public class Deck {
 
     public Hero getHero() {
         return hero;
+    }
+
+    public static ArrayList<Deck> getLevels() {
+        return levels;
     }
 }

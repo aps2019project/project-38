@@ -17,11 +17,14 @@ import java.util.regex.Pattern;
 
 public class GameWindow extends Window {
     private Game game;
-    private MoodData moodData;//todo
+    private MoodData moodData = new MoodData();//todo
 
     @Override
     public void main() {
-        initialiseGame();
+        if (!initialiseGame()) {
+            System.out.println("you have no main deck");
+            return;
+        }
         while (true) {
             Message.GameWindow.insideGame.showMainView(game);
             if (game.getActivePlayer() instanceof HumanPlayer) {
@@ -244,7 +247,7 @@ public class GameWindow extends Window {
     }
 
     private boolean initialiseGame() {
-        MoodData moodData = new MoodData();//todo
+//        MoodData moodData = new MoodData();//todo
         if (!checkDeck()) {
             this.closeWindow();
             return false;
