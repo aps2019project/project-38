@@ -1,10 +1,10 @@
 package controller.window;
 
+import model.Account;
 import model.Collection;
 import model.Deck;
 import model.Shop;
 import model.cards.Card;
-import model.cards.Hero;
 import view.Message;
 
 import java.util.ArrayList;
@@ -70,7 +70,7 @@ public class CollectionWindow extends Window {
                 case 9:
                     Message.interDeckName();
                     deckName = getNextRequest();
-                    Deck deck = Deck.getAllDecks().get(deckName);
+                    Deck deck = Account.getActiveAccount().getCollection().getAllDecks().get(deckName);
                     showInfoOfASpecificDeck(deck);
                     continue;
                 case 10:
@@ -115,7 +115,7 @@ public class CollectionWindow extends Window {
             i = 2;
         }
         for (String deckName : Collection.getCollection().getDecks()) {
-            Deck deck1 = Deck.getAllDecks().get(deckName);
+            Deck deck1 = Account.getActiveAccount().getCollection().getAllDecks().get(deckName);
             if (deck1.equals(deck)) continue;
             Message.showDeckName(i, deck1.getName());
             showInfoOfASpecificDeck(deck1);

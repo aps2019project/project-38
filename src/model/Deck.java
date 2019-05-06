@@ -11,10 +11,10 @@ import java.util.HashMap;
 public class Deck implements Serializable {
     private static HashMap<String, Deck> allDecks = new HashMap<>();
     private static HashMap<String, String> lowerCaseNamesToOriginalName = new HashMap<>();
-    private String name;
     private ArrayList<Integer> cardIDs = new ArrayList<>();
-    private Hero hero;
+    private String name;
     private Spell item;
+    private Hero hero;
     //***
 
     public static void deckLevelBuilder() {
@@ -86,10 +86,6 @@ public class Deck implements Serializable {
         this.hero = hero;
     }
 
-    public static HashMap<String, Deck> getAllDecks() {
-        return allDecks;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -106,7 +102,7 @@ public class Deck implements Serializable {
         return hero;
     }
 
-    public static HashMap<String, Deck> getDeckLevels() {
-        return deckLevels;
+    public static HashMap<String, Deck> getAllDecks() {
+        return allDecks;
     }
 }

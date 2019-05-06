@@ -1,8 +1,6 @@
 package controller.window;
 
 import model.Account;
-import model.Collection;
-import model.Shop;
 import view.Message;
 
 
@@ -31,7 +29,7 @@ public class MainMenu extends Window {
                     break tag1;
                 case 0:
                     Window.closeWindow(this);
-                    Account.getActiveAccount().saveAccounts();
+                    Account.saveAccounts();
                     break tag1;
                 default:
                     Message.invalidInput();
