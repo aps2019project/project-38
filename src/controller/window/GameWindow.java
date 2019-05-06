@@ -34,30 +34,13 @@ public class GameWindow extends Window {
     }
 
     private void getPlayerAction() {
-        String input = Request.getNextRequest();
-        if (input.matches("Help")) {
+        String request = Request.getNextRequest();
+        if (request.matches("Help")) {
             help();
-        }else if (input.matches("Select \\d \\d")) {
-            Pattern pattern = Pattern.compile("(\\d)");
-            Matcher matcher = pattern.matcher(input);
-            matcher.matches();
-            int row = Integer.parseInt(matcher.group(1));
-            matcher.matches();
-            int column = Integer.parseInt(matcher.group());
-            if (row < Constant.GameConstants.boardRow && column < Constant.GameConstants.boardColumn) {
-                Cell cell = new Cell(row, column);
-                if (cell.getWarrior() != null && game.getActivePlayer() == game.getWarriorsPlayer(cell.getWarrior())) {
-                    game.getSelecteds().seletWarrior(game.getBoard().getCell(row, column));
-                }
-                else {
-                    Message.GameWindow.insideGame.failCommand.youHaveNoOwnWarriorInThisCell();
-                }
-            }
-            else {
-                Message.GameWindow.insideGame.failCommand.indexOutOfBoard();
-            }
-        }else if (input.matches("Select \\d")) {
-            int index = Integer.parseInt(input.replace("Select ", ""));
+        }else if (request.matches("Select \\d \\d")) {
+            selectWarrior(request);
+        }else if (request.matches("Select \\d")) {
+            int index = Integer.parseInt(request.replace("Select ", ""));
             if (index < Constant.GameConstants.handSize) {
                 if (game.getActivePlayer().getHand().get(index) != null) {
                     game.getSelecteds().selectCard(game, index);
@@ -67,13 +50,13 @@ public class GameWindow extends Window {
             }else {
                 System.out.println("wrong index");
             }
-        }else if (input.equals("Select SPP")) {
+        }else if (request.equals("Select SPP")) {
             game.getSelecteds().selectSpecialPower(game);
-        }else if (input.equals("Deselect warriors")) {
+        }else if (request.equals("Deselect warriors")) {
             game.getSelecteds().deselectAll();
-        }else if (input.matches("Attack \\d \\d")) {
+        }else if (request.matches("Attack \\d \\d")) {
             Pattern pattern = Pattern.compile("(\\d)");
-            Matcher matcher = pattern.matcher(input);
+            Matcher matcher = pattern.matcher(request);
             matcher.matches();
             int row = Integer.parseInt(matcher.group(1));
             matcher.matches();
@@ -92,9 +75,9 @@ public class GameWindow extends Window {
             }else {
                 System.out.println("you should select just one warrior for attack");
             }
-        }else if (input.matches("Attack combo \\d \\d")) {
+        }else if (request.matches("Attack combo \\d \\d")) {
             Pattern pattern = Pattern.compile("(\\d)");
-            Matcher matcher = pattern.matcher(input);
+            Matcher matcher = pattern.matcher(request);
             matcher.matches();
             int row = Integer.parseInt(matcher.group(1));
             matcher.matches();
@@ -113,9 +96,9 @@ public class GameWindow extends Window {
             }else {
                 System.out.println("you should select more than one warrior for attack");
             }
-        }else if (input.matches("Insert in \\d \\d")) {
+        }else if (request.matches("Insert in \\d \\d")) {
             Pattern pattern = Pattern.compile("(\\d)");
-            Matcher matcher = pattern.matcher(input);
+            Matcher matcher = pattern.matcher(request);
             matcher.matches();
             int row = Integer.parseInt(matcher.group(1));
             matcher.matches();
@@ -130,10 +113,10 @@ public class GameWindow extends Window {
             }else {
                 System.out.println("no card selected");
             }
-        }else if (input.matches("Use special power \\d \\d")) {
+        }else if (request.matches("Use special power \\d \\d")) {
             game.getSelecteds().deselectAll();
             Pattern pattern = Pattern.compile("(\\d)");
-            Matcher matcher = pattern.matcher(input);
+            Matcher matcher = pattern.matcher(request);
             matcher.matches();
             int row = Integer.parseInt(matcher.group(1));
             matcher.matches();
@@ -144,9 +127,9 @@ public class GameWindow extends Window {
             } else {
                 Message.GameWindow.insideGame.failCommand.indexOutOfBoard();
             }
-        }else if (input.matches("Show card info \\d{2,3}")) {
+        }else if (request.matches("Show card info \\d{2,3}")) {
             Pattern pattern = Pattern.compile("(\\d{2,3})");
-            Matcher matcher = pattern.matcher(input);
+            Matcher matcher = pattern.matcher(request);
             matcher.matches();
             int cardID = Integer.parseInt(matcher.group(1));
             if (Card.getAllCards().containsKey(cardID)) {
@@ -157,11 +140,11 @@ public class GameWindow extends Window {
             }else {
                 System.out.println("no card matched");
             }
-        }else if (input.equals("End turn")) {
+        }else if (request.equals("End turn")) {
             game.endTurn();
-        }else if (input.equals("Show collectables")) {
+        }else if (request.equals("Show collectables")) {
             collatableItemsMenu();
-        }else if (input.equals("Show collectable item info")) {
+        }else if (request.equals("Show collectable item info")) {
             if (game.getSelecteds().collectableItem != null) {
                 Spell item = game.getSelecteds().collectableItem;
                 System.out.println("Description Of Card Ability: " + item.description.descriptionOfCardSpecialAbility);
@@ -169,9 +152,9 @@ public class GameWindow extends Window {
             }else {
                 System.out.println("no selected collectable item");
             }
-        }else if (input.matches("Use collectable item \\d \\d")) {
+        }else if (request.matches("Use collectable item \\d \\d")) {
             Pattern pattern = Pattern.compile("(\\d)");
-            Matcher matcher = pattern.matcher(input);
+            Matcher matcher = pattern.matcher(request);
             matcher.matches();
             int row = Integer.parseInt(matcher.group(1));
             matcher.matches();
@@ -186,9 +169,9 @@ public class GameWindow extends Window {
             }else {
                 System.out.println("no collectable item selected");
             }
-        }else if (input.equals("Show next card")) {
+        }else if (request.equals("Show next card")) {
             //todo in game
-        }else if (input.equals("Enter graveyard")) {
+        }else if (request.equals("Enter graveyard")) {
             graveyardMenu();
         }
     }
@@ -236,6 +219,27 @@ public class GameWindow extends Window {
             }else {
                 System.out.println("invalid command");
             }
+        }
+    }
+
+    private void selectWarrior(String request) {
+        Pattern pattern = Pattern.compile("(\\d)");
+        Matcher matcher = pattern.matcher(request);
+        matcher.matches();
+        int row = Integer.parseInt(matcher.group(1));
+        matcher.matches();
+        int column = Integer.parseInt(matcher.group());
+        if (row < Constant.GameConstants.boardRow && column < Constant.GameConstants.boardColumn) {
+            Cell cell = new Cell(row, column);
+            if (cell.getWarrior() != null && game.getActivePlayer() == game.getWarriorsPlayer(cell.getWarrior())) {
+                game.getSelecteds().seletWarrior(game.getBoard().getCell(row, column));
+            }
+            else {
+                Message.GameWindow.insideGame.failCommand.youHaveNoOwnWarriorInThisCell();
+            }
+        }
+        else {
+            Message.GameWindow.insideGame.failCommand.indexOutOfBoard();
         }
     }
 

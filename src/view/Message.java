@@ -445,7 +445,7 @@ public interface Message {
                 System.out.println("Show Next Card Info: Show next card");
                 System.out.println("Show Graveyard: Enter graveyard");
                 System.out.println("(get out of above window): Exit");
-                System.out.println("(you can see info of above cards): Show card info [cardID]");
+//                System.out.println("(you can see info of above cards): Show card info [cardID]");
                 System.out.println("(get out of above window): Exit");
             }
 
