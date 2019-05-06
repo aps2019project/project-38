@@ -235,7 +235,7 @@ public class Game {
         }
     }
 
-    public void endTurn () {
+    public void endTurn () throws IOException, ClassNotFoundException {
         EndTurn.doIt(this);
         checkGameEndAndThenKillAllDiedWarriors();
         startTurn();
