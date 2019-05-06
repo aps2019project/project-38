@@ -10,11 +10,11 @@ import model.player.Player;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class NearbyGetter implements TriggerTarget , SpellTarget {
+public class AdjacentGetter implements TriggerTarget , SpellTarget {
     private boolean friendMod;
     private boolean heroToo;
 
-    public NearbyGetter(boolean friendMod, boolean heroToo) {
+    public AdjacentGetter(boolean friendMod, boolean heroToo) {
         this.friendMod = friendMod;
         this.heroToo = heroToo;
     }

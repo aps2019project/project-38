@@ -8,7 +8,7 @@ public class Warrior extends Card {
     private int hp;
     private int ap;
 
-    public Warrior(int ID, String name, int price, int requiredMana, int hp, int ap) {
+    public Warrior(Integer ID, String name, Integer price, int requiredMana, int hp, int ap) {
         super(ID, name, price, requiredMana);
         this.hp = hp;
         this.ap = ap;

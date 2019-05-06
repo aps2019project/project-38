@@ -20,6 +20,7 @@ public class Killer implements AutoAction{
         Player player = game.getWarriorsPlayer(warrior);
         DeathState death = new DeathState(warrior);
         game.iterateAllTriggersCheck(death);
+        warrior.getCell().setWarrior(null);
         player.getWarriors().remove(warrior);
     }
 }

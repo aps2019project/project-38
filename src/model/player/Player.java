@@ -14,7 +14,7 @@ import java.util.Random;
 public abstract class Player {
     public int mana;
     private Deck mainDeck;
-    private HashMap<Integer, Card> hand;
+    private HashMap<Integer, Card> hand = new HashMap<>();
     private ArrayList<Warrior> warriors = new ArrayList<>();
     private ArrayList<Card> usedCards = new ArrayList<>();
     public boolean ableToReplaceCard;
