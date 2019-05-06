@@ -42,7 +42,7 @@ public class Trigger extends QualityHaver implements Serializable {
 
     public void check(GameState gameState, QualityHaver owner) {
         for (Condition condition : conditions) {
-            if (condition.check(gameState, this,owner)) {
+            if (!condition.check(gameState, this,owner)) {
                 return;
             }
         }

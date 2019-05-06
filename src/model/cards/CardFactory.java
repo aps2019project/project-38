@@ -126,7 +126,7 @@ public class CardFactory {
             allBuiltMinions.add(warrior);
         }
         {
-            Warrior warrior = new Warrior(211, "Gorzdar-E-Toorani", 450, 2, 3, 100);
+            Warrior warrior = new Warrior(211, "Gorzdar-E-Toorani", 450, 2, 3, 10);
             warrior.getEffects().add(new Melee(-1, Dispelablity.UNDISPELLABLE));
 
 

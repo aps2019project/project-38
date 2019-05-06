@@ -351,6 +351,9 @@ public interface Message {
             static void showBoardBottom(Game game) {
                 System.out.println("Hand:");
                 for (Map.Entry<Integer, Card> entry : game.getActivePlayer().getHand().entrySet()) {
+                    if(entry.getValue()==null){
+                        continue;
+                    }
                     System.out.println(entry.getKey() + ": Name" + entry.getValue().getName() + " Required Mana: " +
                             entry.getValue().getRequiredMana() + " CardID:" + entry.getValue().getID());
                 }
