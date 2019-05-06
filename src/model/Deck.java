@@ -8,11 +8,16 @@ import java.util.HashMap;
 
 public class Deck {
     private static HashMap<String, Deck> allDecks = new HashMap<>();
+    private static HashMap<String,String> lowerCaseNamesToOriginalName = new HashMap<>();
     private String name;
     private ArrayList<Integer> cardIDs = new ArrayList<>();
     private Hero hero;
     private Card item;
     //***
+
+    public static HashMap<String, String> getLowerCaseNamesToOriginalName() {
+        return lowerCaseNamesToOriginalName;
+    }
 
     public void setItem(Card item) {
         this.item = item;
