@@ -3,7 +3,10 @@ package view;
 import model.*;
 import model.cards.Card;
 import model.cards.Hero;
+import model.cards.HeroPower;
 import model.cards.Spell;
+import model.player.AIPlayer;
+import model.player.HumanPlayer;
 import model.triggers.Flag;
 import model.triggers.HolyBuff;
 import model.triggers.Poisoned;
@@ -30,7 +33,7 @@ public interface Message {
     }
 
     static void showAWordAsTitle(String aWord) {
-        System.out.println("    " + aWord + " :");
+        System.out.println("        " + aWord + " :");
     }
 
     // mainMenu messages
@@ -60,19 +63,19 @@ public interface Message {
                 numberOfHeroes, hero.getName(), hero.getAp(), hero.getHp(), kindOfAttackArea, hero.description.descriptionOfCardSpecialAbility, buyOrSell, hero.getPrice());
     }
 
-    static void showInfoOfHeroMinusPrice(Hero hero, int numberOfHeroes, String kindOfAttackArea) {
+    static void showInfoOfHeroMinesPrice(Hero hero, int numberOfHeroes, String kindOfAttackArea) {
         System.out.printf("%d ) Name : %s - AP : %d - HP : %d - class : %s - SpecialPower : %s\n",
-                numberOfHeroes, hero.getName(), hero.getAp(), hero.getHp(), kindOfAttackArea, hero.description.descriptionOfCardSpecialAbility);
+                numberOfHeroes, hero.getName(), hero.getAp(), hero.getHp(), kindOfAttackArea, hero.getDescriptionOfSpecialPower());
     }
 
     static void showInfoOfItemPlusPrice(Spell spell, int numberOfItems, String buyOrSell) {
         System.out.printf("%d ) Name : %s - Description : %s - %sCost : %d\n",
-                numberOfItems, spell.getName(), spell.description.descriptionOfCardSpecialAbility, buyOrSell, spell.getPrice());
+                numberOfItems, spell.getName(), spell.getDescriptionOfSpecialPower(), buyOrSell, spell.getPrice());
     }
 
-    static void showInfoOfItemMinusPrice(Spell spell, int numberOfItems) {
+    static void showInfoOfItemMinesPrice(Spell spell, int numberOfItems) {
         System.out.printf("%d ) Name : %s - Description : %s\n",
-                numberOfItems, spell.getName(), spell.description.descriptionOfCardSpecialAbility);
+                numberOfItems, spell.getName(), spell.getDescriptionOfSpecialPower());
     }
 
     static void showInfoOfCardPlusPrice(Card card, int numberOfCards, String typeOfCard, String buyOrSell) {
@@ -303,7 +306,34 @@ public interface Message {
             }
         }
         interface insideGame {
-            static void showBoard(Game game) {
+            static void showMainView(Game game) {
+                showBoardAbove(game);
+                showBoard(game);
+                showBoardBottom(game);
+            }
+
+            private static void showBoardAbove(Game game) {
+                int activePlayerNumber = game.getActivePlayer() == game.getPlayers()[0] ? 0 : 1;
+                String completeName = game.getActivePlayer() instanceof AIPlayer ? "AI" : "Human User Name:" +
+                        ((HumanPlayer)game.getActivePlayer()).getAccount().getUsername();
+                System.out.println("Game Mood: " + game.getGameMood().getClass());
+                System.out.println(activePlayerNumber + ": " + completeName);
+                System.out.println("Mana: " + game.getActivePlayer().mana);
+            }
+
+            private static void showBoardBottom(Game game) {
+                System.out.println("Hand:");
+                for (Map.Entry<Integer, Card> entry : game.getActivePlayer().getHand().entrySet()) {
+                    System.out.println(entry.getKey() + ": Name" + entry.getValue().getName() + " Required Mana: " +
+                            entry.getValue().getRequiredMana() + " CardID:" + entry.getValue().getID());
+                }
+                HeroPower specialPower = game.getActivePlayer().getPlayerHero().getPower();
+                System.out.println("SpecialPower: Name" + specialPower.getCard().getName() +
+                        " Required Mana:" + specialPower.getCard().getRequiredMana() +
+                        " Cool Down:" + specialPower.coolDownRemaining + " CardID:" + specialPower.getCard().getID());
+            }
+
+            private static void showBoard(Game game) {
                 horizontalBoardLine();
                 for (int i = 0; i < Constant.GameConstants.boardRow; i++) {
                     for (int j = 0; j < 3; j++) {
@@ -394,21 +424,26 @@ public interface Message {
                 //todo --> B
                 System.out.println(" ");
             }
+
+            static void help() {
+                System.out.println("Select Warrior: Select [row] [column]");
+                System.out.println("(you can select multi warriors for combo by using above command repeatedly)");
+                System.out.println("Select Card From Hand: Select [hand index]");
+                System.out.println("Select Special Power: Select SPP");
+                System.out.println("Deselect Warriors: Deselect warriors");
+                System.out.println("(if you selected just one warrior you can attack to an enemy warrior): Attack [row] [column]");
+                System.out.println("(if you selected more than one warrior you can combo attack to an enemy warrior): Attack combo [row] [column]");
+                System.out.println("(if you selected a card you can put it on board): Insert in [row] [column]");
+                System.out.println("Use Special Power: Use special power [row] [column]");
+                System.out.println("Show card info [cardID]");
+                System.out.println("End Turn: End turn");
+                System.out.println("Show Collectable Items: Show collectables");
+                System.out.println("(if you selected an war you can attack to an enemy warrior): Attack [row] [column]");
+            }
         }
     }
 
     static void notEnoughCardNumber(){
         System.out.println("You can't add this card to your deck. You haven't enough number of it in your collection");
-    }
-
-    static void interCardName(){
-        System.out.println("Please inter card name:");
-    }
-
-    static void showDeckName(int index,String deckName){
-        System.out.printf("%d ) %s :\n",index,deckName);
-    }
-    static void noDeckExist(){
-        System.out.println("There is no deck :(");
     }
 }
