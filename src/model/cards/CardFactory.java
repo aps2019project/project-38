@@ -510,11 +510,7 @@ public class CardFactory {
         {
             Spell spell = new Spell(16, "HellFire", 3, 600, false);
 
-            Trigger fire = new Trigger(2, Dispelablity.BAD);
-            fire.getConditions().add(new HasWarriorOnIt());
-            fire.getEffects().add(new HP(-1, Dispelablity.UNDISPELLABLE, -2));
-            fire.getActions().put(new Applier(), new OnCellGetter());
-            spell.getTriggers().add(fire);
+            spell.getTriggers().add(new BurningCell(2,Dispelablity.BAD));
             spell.getActions().put(new Applier(), new RectGetter(2, 2, true, false, false, false, false));
 
             spell.description.targetType = "square 2*2";
