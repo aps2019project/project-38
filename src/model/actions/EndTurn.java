@@ -7,7 +7,7 @@ import model.gamestate.TurnEndState;
 import java.io.IOException;
 
 public class EndTurn {
-    public static void doIt(Game game) throws IOException, ClassNotFoundException {
+    public static void doIt(Game game){
         TurnEndState turnEnd = new TurnEndState();
         game.iterateAllTriggersCheck(turnEnd);
         game.iterateAndExpireAllTriggers();

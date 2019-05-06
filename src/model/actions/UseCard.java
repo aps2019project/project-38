@@ -11,18 +11,19 @@ import model.gamestate.PutMinionState;
 import model.gamestate.UseSpellState;
 
 public class UseCard {
-    public static void doIt(int handMapKey, Cell cell) {
+    public static boolean doIt(int handMapKey, Cell cell) {
+        boolean didSth = false;
         Game game = cell.getBoard().getGame();
         Card card = game.getActivePlayer().getHand().get(handMapKey);
         GameState gameState;
         if (card instanceof Spell) {
             UseSpellState useSpellState = new UseSpellState(cell, (Spell) card);
             game.iterateAllTriggersCheck(useSpellState);
-            if (useSpellState.canceled) return;
+            if (useSpellState.canceled) return false;
             useSpellState.pending = false;
             gameState = useSpellState;
         } else {
-            if (cell.getWarrior() != null) return;
+            if (cell.getWarrior() != null) return false;
             gameState = new PutMinionState((Warrior) card);
             cell.setWarrior((Warrior) card);
         }
@@ -32,8 +33,10 @@ public class UseCard {
                 game.getActivePlayer().getHand().put(handMapKey, null);
                 game.getActivePlayer().getUsedCards().add(card);
                 game.iterateAllTriggersCheck(gameState);
+                didSth = true;
             }
         }
+        return didSth;
     }
 
     public static void doIt(HeroPower heroPower, Cell cell) {

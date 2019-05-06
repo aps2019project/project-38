@@ -168,7 +168,7 @@ public class Game {
         }
     }
 
-    public void addNewCardToPlayerHand(Player player) throws IOException, ClassNotFoundException {
+    public void addNewCardToPlayerHand(Player player){
         for (Map.Entry<Integer, Card> entry : player.getHand().entrySet()) {
             if (entry.getValue() == null) {
                 int randomIndex = (new Random(player.getMainDeck().getCardIDs().size())).nextInt();
