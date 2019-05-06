@@ -279,4 +279,10 @@ class Selectable {
         cardHandIndex = null;
         specialPowerIsSelected = true;
     }
+
+    public void deselectAll() {
+        warriorsCell = new ArrayList<>();
+        cardHandIndex = null;
+        specialPowerIsSelected =  false;
+    }
 }
