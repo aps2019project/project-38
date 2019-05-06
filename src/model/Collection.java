@@ -6,10 +6,11 @@ import model.cards.Spell;
 import model.cards.Warrior;
 import view.Message;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Collection {
+public class Collection implements Serializable {
     private ArrayList<Integer> cardIDs = new ArrayList<>();
     private ArrayList<String> decks = new ArrayList<>();
     private HashMap<String, Integer> howManyCard = new HashMap<>();

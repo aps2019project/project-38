@@ -2,7 +2,6 @@ package model;
 
 import model.cards.Card;
 import model.cards.Spell;
-import org.omg.CORBA.CODESET_INCOMPATIBLE;
 import view.Message;
 
 import java.util.ArrayList;

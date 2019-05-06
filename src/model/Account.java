@@ -95,6 +95,7 @@ public class Account implements Comparable<Account>, java.io.Serializable {
             FileInputStream fis = new FileInputStream(file.getPath() + "/acc");
             ObjectInputStream ois = new ObjectInputStream(fis);
             usernameToAccountObject = (HashMap<String, Account>) ois.readObject();
+            userNames.addAll(usernameToAccountObject.keySet());
             fis.close();
             ois.close();
         } catch (Exception e) {
