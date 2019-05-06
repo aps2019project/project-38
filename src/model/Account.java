@@ -2,6 +2,7 @@ package model;
 
 import view.Message;
 
+import java.io.*;
 import java.util.*;
 import java.util.Collections;
 
@@ -73,8 +74,15 @@ public class Account implements Comparable<Account>, java.io.Serializable {
     }
 
     //***
-    public void save() {
-
+    //todo call it when exiting the game.
+    public void save() throws IOException {
+        File file = new File(System.getProperty("user.home")+"/Selistdar");
+        file.mkdirs();
+        FileOutputStream fos = new FileOutputStream(file.getPath()+"/acc1");
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+        oos.writeObject(usernameToAccountObject);
+        fos.close();
+        oos.close();
     }
 
     public void putGameInHistory(String opponentName, boolean didWin) {
