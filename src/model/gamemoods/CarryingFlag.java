@@ -2,12 +2,16 @@ package model.gamemoods;
 
 import model.Constant;
 import model.Game;
+import model.cards.Card;
 import model.cards.Warrior;
 import model.triggers.Flag;
+
+import java.util.Random;
 
 public class CarryingFlag extends GameMood {
     private int[] playersScore = {0, 0};
     private int previousTurn = 0;
+    private  boolean gameHasFlag = false;
 
     @Override
     public boolean checkGameEnd(Game game) {
@@ -35,6 +39,10 @@ public class CarryingFlag extends GameMood {
 
     @Override
     public void applyTriggerToBoard(Game game) {
-
+        if (!gameHasFlag) {
+            int randomRow = new Random(Constant.GameConstants.boardRow).nextInt();
+            game.getBoard().getCell(randomRow, Constant.GameConstants.boardColumn / 2 + 1)
+                    .getTriggers().add(new Flag());
+        }
     }
 }

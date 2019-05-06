@@ -1,8 +1,15 @@
 package view;
 
+import model.*;
 import model.cards.Card;
 import model.cards.Hero;
 import model.cards.Spell;
+import model.triggers.Flag;
+import model.triggers.HolyBuff;
+import model.triggers.Poisoned;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public interface Message {
     // general messages
@@ -251,6 +258,143 @@ public interface Message {
 
     static void interDeckName() {
         System.out.println("Please inter deckName:");
+    }
+
+    interface GameWindow {
+        interface beforeGame {
+            static void invalidDeckForPlayerOne() {
+                System.out.println("selected deck is invalid");
+            }
+            static void singleOrMultiMenu() {
+                System.out.println("1. Single player");
+                System.out.println("2. Multi player");
+            }
+            static void StoryOrCustomMenu() {
+                System.out.println("1. Story");
+                System.out.println("2. Custom game");
+            }
+            static void moodAndDeckMenu() {
+                System.out.println("Select deck and mood --> for example: " +
+                        "Start game [deck name] [mood name] [number of flags]*");
+                System.out.println("Decks:");
+                for (Map.Entry<String, Deck> entry : Deck.getAllDecks().entrySet()) {
+                    System.out.println(entry.getKey());
+                }
+                System.out.println("Moods:");
+                System.out.println("KillingEnemyHero");
+                System.out.println("CarryingFlag");
+                System.out.println("CollectingFlag");
+            }
+            static void accountMenu(HashMap<String, Account> accounts) {
+                System.out.println("Select a ready account --> for example: Select user [user name]");
+                for (Map.Entry<String, Account> entry : accounts.entrySet()) {
+                    System.out.println(entry.getKey());
+                }
+            }
+            static void invalidDeckForPlayerTwo() {
+                System.out.println("selected deck for second player is invalid");
+            }
+            static void moodMenu() {
+                System.out.println("Choose mood --> for example: Start multiplayer game [mood name] [number of flags]*");
+                System.out.println("Moods:");
+                System.out.println("KillingEnemyHero");
+                System.out.println("CarryingFlag");
+                System.out.println("CollectingFlag");
+            }
+        }
+        interface insideGame {
+            static void showBoard(Game game) {
+                horizontalBoardLine();
+                for (int i = 0; i < Constant.GameConstants.boardRow; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        for (int k = 0; k < Constant.GameConstants.boardColumn; j++) {
+                            switch (j) {
+                                case 0:
+                                    System.out.print("|");
+                                    cellFirstLine(game.getBoard().getCell(i, k));
+                                    break;
+                                case 1:
+                                    System.out.print("|");
+                                    cellSecondLine(game.getBoard().getCell(i, k));
+                                    break;
+                                case 2:
+                                    cellThirdLine(game.getBoard().getCell(i, k));
+                                    System.out.print("|");
+                                    break;
+
+                            }
+                        }
+                    }
+                    horizontalBoardLine();
+                }
+            }
+            private static void horizontalBoardLine() {
+                System.out.print("+");
+                for (int i = 0; i < Constant.GameConstants.boardColumn; i++) {
+                    System.out.print("----+");
+                }
+                System.out.println();
+            }
+
+            private static void cellFirstLine(Cell cell) {
+                Game game = cell.getBoard().getGame();
+                if (cell.getWarrior() != null) {
+                    int playerNumber = game.getWarriorsPlayer(cell.getWarrior()) == game.getPlayers()[0] ? 1 : 2;
+                    System.out.print(playerNumber + "" + cell.getWarrior().getID());
+                }
+                else {
+                    System.out.print("    ");
+                }
+                System.out.print("|");
+            }
+            private static void cellSecondLine(Cell cell) {
+                if (cell.getWarrior() != null) {
+                    System.out.print(cell.getWarrior().getAp() + "" + cell.getWarrior().getHp());
+                }
+                else {
+                    System.out.print("    ");
+                }
+                System.out.print("|");
+            }
+            private static void cellThirdLine(Cell cell) {
+                //Flag --> F
+                if (cell.getWarrior() != null) {
+                    if (cell.getWarrior().getTriggers().stream().anyMatch(trigger -> trigger instanceof Flag)) {
+                        System.out.print("F");
+                    }
+                    else {
+                        System.out.print(" ");
+                    }
+                }
+                else {
+                    System.out.print("  ");
+                    if (cell.getTriggers().stream().anyMatch(trigger -> trigger instanceof Flag)) {
+                        System.out.print("F");
+                    }
+                    else {
+                        System.out.print(" ");
+                    }
+                }
+                //HolyBuff --> H
+                if (cell.getTriggers().stream().anyMatch(trigger -> trigger.getTriggers().stream().anyMatch
+                        (insideTrigger -> insideTrigger instanceof HolyBuff))) {
+                    System.out.print("H");
+                }
+                else {
+                    System.out.print(" ");
+                }
+                //Poison --> P
+                if (cell.getTriggers().stream().anyMatch(trigger -> trigger.getTriggers().stream().anyMatch
+                        (insideTrigger -> insideTrigger instanceof Poisoned))) {
+                    System.out.print("P");
+                }
+                else {
+                    System.out.print(" ");
+                }
+                //todo --> B
+                System.out.println(" ");
+            }
+        }
     }
 
     static void notEnoughCardNumber(){

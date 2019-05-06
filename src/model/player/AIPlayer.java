@@ -8,7 +8,7 @@ public class AIPlayer extends Player {
         super(deck);
     }
 
-    public void doSomthing() {
+    public void doSomething() {
 
     }
 }

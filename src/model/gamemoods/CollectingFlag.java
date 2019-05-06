@@ -8,7 +8,11 @@ import model.triggers.Flag;
 import java.util.Random;
 
 public class CollectingFlag extends GameMood {
-    private int gameFlags = 0;
+    private int gameFlags;
+
+    public CollectingFlag(int gameFlags) {
+        this.gameFlags = gameFlags;
+    }
 
     @Override
     public boolean checkGameEnd(Game game) {
