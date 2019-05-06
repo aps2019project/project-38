@@ -52,9 +52,9 @@ public class Game {
         getActivePlayer().ableToReplaceCard = true;
         players[0].getWarriors().add(players[0].getMainDeck().getHero().deepCopy());
         players[1].getWarriors().add(players[1].getMainDeck().getHero().deepCopy());
-        putWarriorInCell(board.getCell(Constant.GameConstants.boardRow / 2 + 1,
+        putWarriorInCell(board.getCell(Constant.GameConstants.boardRow / 2,
                 0), players[0].getWarriors().get(0));
-        putWarriorInCell(board.getCell(Constant.GameConstants.boardRow / 2 + 1,
+        putWarriorInCell(board.getCell(Constant.GameConstants.boardRow / 2,
                 Constant.GameConstants.boardColumn - 1), players[1].getWarriors().get(0));
         initialisePlayerHand(players[0]);
         initialisePlayerHand(players[1]);

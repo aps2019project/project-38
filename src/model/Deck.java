@@ -105,8 +105,4 @@ public class Deck implements Serializable {
     public Hero getHero() {
         return hero;
     }
-
-    public static HashMap<String, Deck> getDeckLevels() {
-        return deckLevels;
-    }
 }
