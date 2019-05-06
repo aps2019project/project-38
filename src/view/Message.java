@@ -277,6 +277,9 @@ public interface Message {
         System.out.println("There is no deck :(");
     }
 
+    static void thereIsAnItemInThisDeck(){
+        System.out.println("There is an item in this deck");
+    }
 
     //******************************************************
 

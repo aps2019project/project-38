@@ -81,10 +81,6 @@ public class Collection implements Serializable {
             Message.thereIsACardWithThisNameInThisDeck();
             return;
         }
-        if (deck.getCardIDs().size() == 20) {
-            Message.have20CardsInThisDeck();
-            return;
-        }
         if (card instanceof Warrior) {
             Warrior warrior = (Warrior) card;
             if (warrior instanceof Hero) {
@@ -93,11 +89,22 @@ public class Collection implements Serializable {
                     return;
                 } else {
                     deck.setHero((Hero) card);
+                    return;
                 }
             }
         }
         if (Spell.checkIsItem(card)) {
-            deck.setItem((Spell) card);
+            if(deck.getItem()!=null){
+                Message.thereIsAnItemInThisDeck();
+                return;
+            }else {
+                deck.setItem((Spell) card);
+                return;
+            }
+        }
+        if (deck.getCardIDs().size() == 20) {
+            Message.have20CardsInThisDeck();
+            return;
         }
         int numberOf = 0;
         for (int ID : deck.getCardIDs()) {

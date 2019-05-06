@@ -86,7 +86,7 @@ public class ShopWindow extends Window {
         showInfoOfOtherCards(otherCards, kind);
     }
 
-    private static void showInfoOfHeroes(ArrayList<Card> heroes, int kind) {
+    public static void showInfoOfHeroes(ArrayList<Card> heroes, int kind) {
         Message.showAWordAsTitle("_-Hero-_");
         for (int i = 0; i < heroes.size(); i++) {
             int template = 0;
@@ -114,7 +114,7 @@ public class ShopWindow extends Window {
         }
     }
 
-    private static void showInfoOfItems(ArrayList<Card> items, int kind) {
+    public static void showInfoOfItems(ArrayList<Card> items, int kind) {
         Message.showAWordAsTitle("_-Item-_");
         for (int i = 0; i < items.size(); i++) {
             if (kind == 1) {
@@ -129,7 +129,7 @@ public class ShopWindow extends Window {
         }
     }
 
-    private static void showInfoOfOtherCards(ArrayList<Card> others, int kind) {
+    public static void showInfoOfOtherCards(ArrayList<Card> others, int kind) {
         Message.showAWordAsTitle("_-Cards-_");
         for (int i = 0; i < others.size(); i++) {
             String type;

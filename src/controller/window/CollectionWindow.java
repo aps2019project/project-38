@@ -3,7 +3,11 @@ package controller.window;
 import model.Collection;
 import model.Deck;
 import model.Shop;
+import model.cards.Card;
+import model.cards.Hero;
 import view.Message;
+
+import java.util.ArrayList;
 
 import static view.Request.getNextRequest;
 
@@ -89,7 +93,17 @@ public class CollectionWindow extends Window {
             Message.thereIsNoDeckWithThisName();
             return;
         }
-        ShopWindow.handleShowInfoOfCards(deck.getCardIDs(), 3);
+        ArrayList<Card> oneHero = new ArrayList<>();
+        oneHero.add(deck.getHero());
+        ShopWindow.showInfoOfHeroes(oneHero, 3);
+        ArrayList<Card> oneItem = new ArrayList<>();
+        oneItem.add(deck.getItem());
+        ShopWindow.showInfoOfItems(oneItem, 3);
+        ArrayList<Card> otherCards = new ArrayList<>();
+        for (int ID : deck.getCardIDs()) {
+            otherCards.add(Card.getAllCards().get(ID));
+        }
+        ShopWindow.showInfoOfOtherCards(otherCards, 3);
     }
 
     private void showInfoOfAllDecks() {

@@ -34,7 +34,7 @@ public class Deck implements Serializable {
                 deck1.getCardIDs().add(CardFactory.getAllBuiltMinions().get(minionIndex[i]-1).getID());
             }
             deckLevels.add(deck1);
-            allDecks.put("level1",deck1);
+            allDecks.put("level1",deck1); // danger
         }
         {
             Deck deck2 = new Deck();
