@@ -13,10 +13,10 @@ import java.util.Random;
 
 public abstract class Player {
     public int mana;
-    private Deck mainDeck;
-    private HashMap<Integer, Card> hand = new HashMap<>();
-    private ArrayList<Warrior> warriors = new ArrayList<>();
-    private ArrayList<Card> usedCards = new ArrayList<>();
+    protected Deck mainDeck;
+    protected HashMap<Integer, Card> hand = new HashMap<>();
+    protected ArrayList<Warrior> warriors = new ArrayList<>();
+    protected ArrayList<Card> usedCards = new ArrayList<>();
     public boolean ableToReplaceCard;
 
     public Player(Deck deck) {

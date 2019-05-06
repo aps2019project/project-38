@@ -10,7 +10,8 @@ import model.effects.Moved;
 import model.gamestate.MoveState;
 
 public class Move {
-    public static void doIt(Cell originCell, Cell targetCell) {
+    public static boolean doIt(Cell originCell, Cell targetCell) {
+        boolean didSth = false;
         Game game = originCell.getBoard().getGame();
         Warrior warrior = originCell.getWarrior();
         int manhattanDistance = game.getBoard().getManhattanDistance(originCell, targetCell);
@@ -24,8 +25,10 @@ public class Move {
                 warrior.getEffects().add(new Moved());
                 moveState.pending = false;
                 game.iterateAllTriggersCheck(moveState);
+                didSth = true;
             }
         }
+        return didSth;
     }
 
     private static boolean checkWarriorEffectsForMove (Warrior warrior, int manhattanDistance) {
