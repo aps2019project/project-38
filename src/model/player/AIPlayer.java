@@ -33,7 +33,7 @@ public class AIPlayer extends Player {
         for (Map.Entry<Integer, Card> cardEntry : hand.entrySet()) {
             if(cardEntry.getValue()!=null){
                 for (Cell cell : getBoardCells()) {
-                    if(UseCard.doIt(cardEntry.getKey(),cell)){
+                    if(UseCard.useCard(cardEntry.getKey(),cell)){
                         continue outer2;
                     }
                 }

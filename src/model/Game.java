@@ -14,8 +14,6 @@ import model.player.HumanPlayer;
 import model.player.Player;
 import model.triggers.Trigger;
 
-import javax.swing.Timer;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
@@ -251,13 +249,14 @@ public class Game {
 
     public void useCard(int handMapKey, Cell cell) {
         if (getActivePlayer().getHand().get(handMapKey) != null) {
-            UseCard.doIt(handMapKey, cell);
+            UseCard.useCard(handMapKey, cell);
             checkGameEndAndThenKillAllDiedWarriors();
         }
     }
 
     public void useCollectable(Spell spell, Cell cell) {
-        //todo
+        UseCard.useCollectible(spell,cell);
+        checkGameEndAndThenKillAllDiedWarriors();
     }
 
     public void endTurn () {
