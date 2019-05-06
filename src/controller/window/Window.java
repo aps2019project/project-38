@@ -18,8 +18,16 @@ public abstract class Window {
         openWindows.add(window);
     }
 
+    void openWindow() {
+        openWindows.add(this);
+    }
+
     static void closeWindow(Window window) {
         openWindows.remove(window);
+    }
+
+    void closeWindow() {
+        openWindows.remove(this);
     }
 
     public abstract void main();

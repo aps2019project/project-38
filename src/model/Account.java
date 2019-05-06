@@ -9,7 +9,7 @@ import java.util.Collections;
 public class Account implements Comparable<Account> {
 
     private static Account activeAccount = new Account();
-    private static ArrayList<String> usernames = new ArrayList<>();
+    private static ArrayList<String> userNames = new ArrayList<>();//todo in chiye?
     private static HashMap<String, Account> usernameToAccountObject = new HashMap<>();
     //***
     private int money;
@@ -32,7 +32,7 @@ public class Account implements Comparable<Account> {
         Account account = new Account();
         account.username = username;
         account.password = password;
-        usernames.add(username);
+        userNames.add(username);
         usernameToAccountObject.put(username, account);
     }
 
@@ -91,7 +91,7 @@ public class Account implements Comparable<Account> {
     }
 
     public static ArrayList<String> getusernames() {
-        return usernames;
+        return userNames;
     }
 
     public static HashMap<String, Account> getusernameToAccountObject() {

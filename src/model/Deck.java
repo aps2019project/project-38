@@ -18,6 +18,10 @@ public class Deck {
         this.item = item;
     }
 
+    public Card getItem() {
+        return item;
+    }
+
     public void setHero(Hero hero) {
         this.hero = hero;
     }
