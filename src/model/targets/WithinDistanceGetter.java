@@ -7,12 +7,13 @@ import model.QualityHaver;
 import model.cards.Hero;
 import model.cards.Warrior;
 import model.gamestate.GameState;
+import model.player.Player;
 
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class WithinDistanceGetter implements TriggerTarget {
+public class WithinDistanceGetter implements TriggerTarget,SpellTarget {
     private boolean friendMod;
     private boolean heroToo;
     private int distance;
@@ -31,8 +32,18 @@ public class WithinDistanceGetter implements TriggerTarget {
         Board board = warrior.getCell().getBoard();
         Game game = board.getGame();
         return board.getCellWithinDistance(warrior.getCell(), distance).stream().map(Cell::getWarrior)
-                .filter(Objects::nonNull).filter(warrior1 -> !(warrior instanceof Hero) || heroToo)
+                .filter(Objects::nonNull).filter(warrior1 -> !(warrior1 instanceof Hero) || heroToo)
                 .filter(warrior1 -> friendMod == game.getWarriorsPlayer(warrior).equals(game.getWarriorsPlayer(warrior1)))
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    @Override
+    public ArrayList<? extends QualityHaver> getTarget(Player spellOwner, Cell cell) {
+        Board board = cell.getBoard();
+        Game game = board.getGame();
+        return board.getCellWithinDistance(cell, distance).stream().map(Cell::getWarrior)
+                .filter(Objects::nonNull).filter(warrior1 -> !(warrior1 instanceof Hero) || heroToo)
+                .filter(warrior1 -> friendMod == spellOwner.equals(game.getWarriorsPlayer(warrior1)))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 }

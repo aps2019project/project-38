@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 public class Collection {
     private ArrayList<Integer> cardIDs = new ArrayList<>();
-    private ArrayList<Deck> decks = new ArrayList<>();
+    private ArrayList<String> decks = new ArrayList<>();
     private HashMap<Integer, Integer> howManyCard = new HashMap<>();
     private Deck mainDeck = null;
 
@@ -33,31 +33,32 @@ public class Collection {
     }
 
     public void createDeck(String deckName) {
-        for (Deck deck : getDecks()) {
-            if (deck.getName().equals(deckName)) {
+        for (String template : getDecks()) {
+            if (template.equals(deckName)) {
                 Message.thereIsADeckWhitThisName();
                 return;
             }
         }
         Deck deck = new Deck();
         deck.setName(deckName);
-        getDecks().add(deck);
+        getDecks().add(deckName);
         Deck.getAllDecks().put(deckName, deck);
         Message.deckCreated();
     }
 
     public void deleteDeck(String deckName) {
-        Deck mustBeDeleted = null;
-        for (Deck deck : getDecks()) {
-            if (deck.getName().equals(deckName)) {
-                mustBeDeleted = deck;
+        boolean isDeckNameValid = false;
+        for (String template : getDecks()) {
+            if (template.equals(deckName)) {
+                isDeckNameValid = true;
             }
         }
-        if (mustBeDeleted == null) {
+        if (!isDeckNameValid) {
             Message.thereIsNoDeckWithThisName();
             return;
         }
-        getDecks().remove(mustBeDeleted);
+        Deck.getAllDecks().remove(deckName);
+        getDecks().remove(deckName);
         Message.deckDeleted();
     }
 
@@ -122,17 +123,17 @@ public class Collection {
         Message.cardRemovedFromDeckSuccessfully();
     }
 
-    public boolean validateDeck(String deckName) {
+    public boolean validateDeck(String deckName, boolean showResultsOrNot) {
         if (!Deck.getAllDecks().containsKey(deckName)) {
-            Message.thereIsNoDeckWithThisName();
+            if (showResultsOrNot) Message.thereIsNoDeckWithThisName();
             return false;
         }
         Deck deck = Deck.getAllDecks().get(deckName);
         if (deck.getCardIDs().size() != 20 || deck.getHero() == null) {
-            Message.deckIsNotValid();
+            if (showResultsOrNot) Message.deckIsNotValid();
             return false;
         }
-        Message.deckIsValid();
+        if (showResultsOrNot) Message.deckIsValid();
         return true;
     }
 
@@ -141,7 +142,7 @@ public class Collection {
             Message.thereIsNoDeckWithThisName();
             return;
         }
-        if (validateDeck(deckName)) {
+        if (validateDeck(deckName, false)) {
             setMainDeck(Deck.getAllDecks().get(deckName));
             Message.deckSelectedAsMain();
         } else {
@@ -162,7 +163,7 @@ public class Collection {
         return cardIDs;
     }
 
-    public ArrayList<Deck> getDecks() {
+    public ArrayList<String> getDecks() {
         return decks;
     }
 

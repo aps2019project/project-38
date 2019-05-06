@@ -14,7 +14,7 @@ public abstract class Window {
         return false;
     }
 
-    static void openWindow(Window window) {
+    public static void openWindow(Window window) {
         openWindows.add(window);
     }
 

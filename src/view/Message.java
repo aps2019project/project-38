@@ -30,7 +30,7 @@ public interface Message {
     }
 
     static void showAWordAsTitle(String aWord) {
-        System.out.println("        " + aWord + " :");
+        System.out.println("    " + aWord + " :");
     }
 
     // mainMenu messages
@@ -399,5 +399,16 @@ public interface Message {
 
     static void notEnoughCardNumber(){
         System.out.println("You can't add this card to your deck. You haven't enough number of it in your collection");
+    }
+
+    static void interCardName(){
+        System.out.println("Please inter card name:");
+    }
+
+    static void showDeckName(int index,String deckName){
+        System.out.printf("%d ) %s :\n",index,deckName);
+    }
+    static void noDeckExist(){
+        System.out.println("There is no deck :(");
     }
 }

@@ -87,12 +87,13 @@ public class Shop {
         account.setMoney(account.getMoney() + card.getPrice());
         shop.getCardIDs().add(card.getID());
         account.getCollection().getCardIDs().remove(card.getID());
-        for (Deck deck : account.getCollection().getDecks()) {
+        for (String deckName : account.getCollection().getDecks()) {
+            Deck deck = Deck.getAllDecks().get(deckName);
             if (deck.getCardIDs().contains(card.getID())) {
                 deck.getCardIDs().remove(card.getID());
             }
         }
-//        account.getCollection().getAllCards().remove(card.getID());
+        account.getCollection().getCardIDs().remove(card.getID());
         Message.sellWasSuccessful();
     }
 

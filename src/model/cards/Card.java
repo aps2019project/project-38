@@ -17,7 +17,7 @@ public abstract class Card extends QualityHaver implements Serializable {
     protected int requiredMana;
     protected int price;
 
-    public Card(int ID, String name, int price, int requiredMana) {
+    public Card(Integer ID, String name, Integer price, int requiredMana) {
         this.ID = ID;
         this.name = name;
         this.requiredMana = requiredMana;
@@ -64,9 +64,5 @@ public abstract class Card extends QualityHaver implements Serializable {
 
     public int getPrice() {
         return price;
-    }
-
-    public String getDescriptionOfSpecialPower() {
-        return description.descriptionOfCardSpecialAbility;
     }
 }
