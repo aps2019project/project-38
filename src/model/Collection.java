@@ -6,13 +6,14 @@ import model.cards.Spell;
 import model.cards.Warrior;
 import view.Message;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Collection {
+public class Collection implements Serializable {
     private ArrayList<Integer> cardIDs = new ArrayList<>();
     private ArrayList<String> decks = new ArrayList<>();
-    private HashMap<Integer, Integer> howManyCard = new HashMap<>();
+    private HashMap<String, Integer> howManyCard = new HashMap<>();
     private Deck mainDeck = null;
 
     //***
@@ -34,7 +35,7 @@ public class Collection {
 
     public void createDeck(String deckName) {
         for (String template : getDecks()) {
-            if (template.equals(deckName)) {
+            if (template.toLowerCase().equals(deckName.toLowerCase())) {
                 Message.thereIsADeckWhitThisName();
                 return;
             }
@@ -42,6 +43,7 @@ public class Collection {
         Deck deck = new Deck();
         deck.setName(deckName);
         getDecks().add(deckName);
+        Deck.getLowerCaseNamesToOriginalName().put(deckName.toLowerCase(), deckName);
         Deck.getAllDecks().put(deckName, deck);
         Message.deckCreated();
     }
@@ -49,7 +51,7 @@ public class Collection {
     public void deleteDeck(String deckName) {
         boolean isDeckNameValid = false;
         for (String template : getDecks()) {
-            if (template.equals(deckName)) {
+            if (template.toLowerCase().equals(deckName.toLowerCase())) {
                 isDeckNameValid = true;
             }
         }
@@ -57,24 +59,26 @@ public class Collection {
             Message.thereIsNoDeckWithThisName();
             return;
         }
+        Deck.getLowerCaseNamesToOriginalName().remove(deckName.toLowerCase(), deckName);
         Deck.getAllDecks().remove(deckName);
         getDecks().remove(deckName);
         Message.deckDeleted();
     }
 
-    public void addCardToDeck(int cardID, String deckName) {
-        if (!Deck.getAllDecks().containsKey(deckName)) {
+    public void addCardToDeck(String cardName, String deckName) {
+        if (!Deck.getLowerCaseNamesToOriginalName().containsKey(deckName.toLowerCase())) {
             Message.thereIsNoDeckWithThisName();
             return;
         }
+        Deck deck = Deck.getAllDecks().get(Deck.getLowerCaseNamesToOriginalName().get(deckName.toLowerCase()));
+        int cardID = getIDFromName(cardName);
         if (!getCardIDs().contains(cardID)) {
-            Message.thereIsNoCardWithThisIDInCollection();
+            Message.thereIsNoCardWithThisNameInCollection();
             return;
         }
-        Deck deck = Deck.getAllDecks().get(deckName);
         Card card = Card.getAllCards().get(cardID);
         if (deck.getCardIDs().contains(cardID)) {
-            Message.thereIsACardWithThisIDInThisDeck();
+            Message.thereIsACardWithThisNameInThisDeck();
             return;
         }
         if (deck.getCardIDs().size() == 20) {
@@ -93,7 +97,7 @@ public class Collection {
             }
         }
         if (Spell.checkIsItem(card)) {
-            deck.setItem(card);
+            deck.setItem((Spell) card);
         }
         int numberOf = 0;
         for (int ID : deck.getCardIDs()) {
@@ -101,7 +105,7 @@ public class Collection {
                 numberOf++;
             }
         }
-        if (numberOf > Collection.getCollection().howManyCard.get(cardID)) {
+        if (numberOf > Collection.getCollection().howManyCard.get(cardName)) {
             Message.notEnoughCardNumber();
             return;
         }
@@ -109,17 +113,18 @@ public class Collection {
         Message.cardAddedToDeckSuccessfully();
     }
 
-    public void removeCardFromDeck(int cardID, String deckName) {
+    public void removeCardFromDeck(String cardName, String deckName) {
         if (!Deck.getAllDecks().containsKey(deckName)) {
             Message.thereIsNoDeckWithThisName();
             return;
         }
         Deck deck = Deck.getAllDecks().get(deckName);
+        int cardID = getIDFromName(cardName);
         if (!deck.getCardIDs().contains(cardID)) {
             Message.thereIsNoCardWithThisIDInThisDeck();
             return;
         }
-        deck.getCardIDs().remove(cardID);
+        deck.getCardIDs().remove((Integer)cardID);
         Message.cardRemovedFromDeckSuccessfully();
     }
 
@@ -150,6 +155,15 @@ public class Collection {
         }
     }
 
+    private int getIDFromName(String cardName) {
+        for (int ID : Shop.getShop().getCardIDs()) {
+            if (Card.getAllCards().get(ID).getName().equals(cardName)) {
+                return ID;
+            }
+        }
+        return -1;
+    }
+
     //***
 
     public void setMainDeck(Deck mainDeck) {
@@ -166,5 +180,9 @@ public class Collection {
 
     public Deck getMainDeck() {
         return mainDeck;
+    }
+
+    public HashMap<String, Integer> getHowManyCard() {
+        return howManyCard;
     }
 }

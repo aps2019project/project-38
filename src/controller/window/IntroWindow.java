@@ -34,6 +34,7 @@ public class IntroWindow extends Window {
                     calculateLeaderBoard();
                     continue;
                 case 0:
+                    Account.saveAccounts();
                     System.exit(0);
                 default:
                     Message.invalidInput();

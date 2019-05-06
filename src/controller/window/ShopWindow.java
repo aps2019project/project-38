@@ -28,10 +28,10 @@ public class ShopWindow extends Window {
             int indexOfSelectedSubMenu = Integer.parseInt(input);
             switch (indexOfSelectedSubMenu) {
                 case 1:
-                    handleShowInfoOfCards(Shop.getShop().getCardIDs(), 1);
+                    handleShowInfoOfCards(Shop.getShop().getCardIDs(), 2);
                     continue;
                 case 2:
-                    handleShowInfoOfCards(Collection.getCollection().getCardIDs(), 2);
+                    handleShowInfoOfCards(Collection.getCollection().getCardIDs(), 1);
                     continue;
                 case 3:
                     Message.InterCardName();

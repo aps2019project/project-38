@@ -36,23 +36,32 @@ public class Spell extends Card {
     }
 
     @Override
-    public void apply(Cell cell) {
+    public boolean apply(Cell cell) {
         Player user = cell.getBoard().getGame().getActivePlayer();
+        boolean didSth = false;
         for (Map.Entry<AutoAction, SpellTarget> entry : actions.entrySet()) {
             for (QualityHaver target : entry.getValue().getTarget(user, cell)) {
+                didSth = true;
                 entry.getKey().execute(this, target);
             }
         }
+        return didSth;
     }
 
     @Override
-    public Spell deepCopy() throws IOException, ClassNotFoundException {
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        ObjectOutputStream oos = new ObjectOutputStream(bos);
-        oos.writeObject(this);
-        oos.flush();
-        ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
-        ObjectInputStream ois = new ObjectInputStream(bis);
-        return (Spell) ois.readObject();
+    public Spell deepCopy(){
+        try {
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(bos);
+            oos.writeObject(this);
+            oos.flush();
+            ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
+            ObjectInputStream ois = new ObjectInputStream(bis);
+            return (Spell) ois.readObject();
+        }catch (IOException | ClassNotFoundException e){
+            System.err.println("could deep copy in spell:");
+            e.printStackTrace();
+        }
+        return this;
     }
 }

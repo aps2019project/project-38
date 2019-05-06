@@ -35,19 +35,26 @@ public class Warrior extends Card {
     }
 
     @Override
-    public void apply(Cell cell) {
+    public boolean apply(Cell cell) {
         cell.setWarrior(this);
         this.cell=cell;
+        return true;
     }
 
     @Override
-    public Warrior deepCopy() throws IOException, ClassNotFoundException {
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        ObjectOutputStream oos = new ObjectOutputStream(bos);
-        oos.writeObject(this);
-        oos.flush();
-        ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
-        ObjectInputStream ois = new ObjectInputStream(bis);
-        return (Warrior) ois.readObject();
+    public Warrior deepCopy(){
+        try {
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(bos);
+            oos.writeObject(this);
+            oos.flush();
+            ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
+            ObjectInputStream ois = new ObjectInputStream(bis);
+            return (Warrior) ois.readObject();
+        }catch (IOException | ClassNotFoundException e){
+            System.err.println("could deep copy in Warrior");
+            e.printStackTrace();
+        }
+        return this;
     }
 }

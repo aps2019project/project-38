@@ -14,6 +14,8 @@ import model.player.HumanPlayer;
 import model.player.Player;
 import model.triggers.Trigger;
 
+import javax.swing.Timer;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
@@ -23,7 +25,7 @@ import java.util.Random;
 public class Game {
     GameMood gameMood;
     public int turn;
-    Player[] players = new  Player[2];
+    Player[] players = new Player[2];
     private Board board = new Board(this);
 //    public Timer timer = new Timer(Constant.GameConstants.turnTime, ignored -> endTurn());
     private ArrayList<Spell> colletableItems = new ArrayList<>();
@@ -56,10 +58,22 @@ public class Game {
                 .setWarrior(players[1].getWarriors().get(0));
         initialisePlayerHand(players[0]);
         initialisePlayerHand(players[1]);
-        new Applier().execute(players[0].getMainDeck().getItem(), players[0].getPlayerHero());
-        new Applier().execute(players[1].getMainDeck().getItem(), players[1].getPlayerHero());
+
+        useUsableItem(players[0].getMainDeck().getItem());
+        useUsableItem(players[1].getMainDeck().getItem());
+
         startTurn();
 //        timer.start();
+    }
+
+    private void useUsableItem(Spell spell){
+        for (int i = 0; i < Constant.GameConstants.boardRow; i++) {
+            for (int j = 0; j < Constant.GameConstants.boardColumn; j++) {
+                if(spell.apply(board.getCell(i,j))) {
+                    return;
+                }
+            }
+        }
     }
 
     private void initialisePlayerHand(Player player) {
@@ -73,7 +87,7 @@ public class Game {
         return players[turn % 2];
     }
 
-    public Player getWarriorsPlayer(Warrior warrior){
+    public Player getWarriorsPlayer(Warrior warrior) {
         if (players[0].getWarriors().contains(warrior)) {
             return players[0];
         }
@@ -115,10 +129,10 @@ public class Game {
         //apply buffer here if not in kill mod
     }
 
-    private void iteratePlayerTriggers (Player player, GameState gameState) {
+    private void iteratePlayerTriggers(Player player, GameState gameState) {
         for (Warrior warrior : player.getWarriors()) {
             for (Trigger trigger : warrior.getTriggers()) {
-                trigger.check(gameState,warrior);
+                trigger.check(gameState, warrior);
             }
         }
     }
@@ -131,10 +145,10 @@ public class Game {
 
     private void iterateAndExpirePlayerTriggers(Player player) {
         for (Warrior warrior : player.getWarriors()) {
-            for (Iterator<Trigger> iterator = warrior.getTriggers().iterator(); iterator.hasNext();) {
+            for (Iterator<Trigger> iterator = warrior.getTriggers().iterator(); iterator.hasNext(); ) {
                 Trigger trigger = iterator.next();
                 if (trigger.duration > 0) {
-                    trigger.duration --;
+                    trigger.duration--;
                     if (trigger.duration == 0) {
                         iterator.remove();
                     }
@@ -151,10 +165,10 @@ public class Game {
 
     private void iterateAndExpirePlayerEffects(Player player) {
         for (Warrior warrior : player.getWarriors()) {
-            for (Iterator<Effect> iterator = warrior.getEffects().iterator(); iterator.hasNext();) {
+            for (Iterator<Effect> iterator = warrior.getEffects().iterator(); iterator.hasNext(); ) {
                 Effect effect = iterator.next();
                 if (effect.duration > 0) {
-                    effect.duration --;
+                    effect.duration--;
                     if (effect.duration == 0) {
                         iterator.remove();
                     }
@@ -219,7 +233,7 @@ public class Game {
 
     }
 
-    public void attack (Cell attackerCell, Cell defenderCell) {
+    public void attack(Cell attackerCell, Cell defenderCell) {
         ArrayList<Warrior> activePlayerWarriors = getActivePlayer().getWarriors();
         if (activePlayerWarriors.contains(attackerCell.getWarrior()) &&
                 !activePlayerWarriors.contains(defenderCell.getWarrior())) {
@@ -228,14 +242,14 @@ public class Game {
         }
     }
 
-    public void replaceCard (int handMapKey) {
+    public void replaceCard(int handMapKey) {
         if (getActivePlayer().getHand().get(handMapKey) != null) {
             ReplaceCard.doIt(this, handMapKey);
             checkGameEndAndThenKillAllDiedWarriors();
         }
     }
 
-    public void useCard (int handMapKey, Cell cell) {
+    public void useCard(int handMapKey, Cell cell) {
         if (getActivePlayer().getHand().get(handMapKey) != null) {
             UseCard.doIt(handMapKey, cell);
             checkGameEndAndThenKillAllDiedWarriors();

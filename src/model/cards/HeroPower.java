@@ -1,23 +1,23 @@
 package model.cards;
 
 import model.Cell;
+
 //used decorator pattern instead of subClassing because i wanted to be able to have a warrior card as powerCard too.
-public class HeroPower {
-    private Card card;
+public class HeroPower extends Spell {
     private int coolDown;
     public int coolDownRemaining;
 
-    public HeroPower(Card card, int coolDown) {
-        this.card = card;
+    public HeroPower(Integer ID, String name, int requiredMana, Integer price, boolean isItem, int coolDown) {
+        super(ID, name, requiredMana, price, isItem);
         this.coolDown = coolDown;
     }
 
-    public void use(Cell cell){
-        coolDownRemaining=coolDown;
-        card.apply(cell);
-    }
-
-    public Card getCard() {
-        return card;
+    @Override
+    public boolean apply(Cell cell) {
+        boolean didSth = super.apply(cell);
+        if(didSth) {
+            coolDownRemaining = coolDown;
+        }
+        return didSth;
     }
 }

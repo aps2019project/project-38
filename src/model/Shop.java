@@ -67,6 +67,14 @@ public class Shop {
             account.setMoney(account.getMoney() - card.getPrice());
 //            shop.getCardIDs().remove(card.getID());
             account.getCollection().getCardIDs().add(card.getID());
+
+            if(Collection.getCollection().getHowManyCard().containsKey(cardName)){
+                int keyValue = Collection.getCollection().getHowManyCard().get(cardName);
+                Collection.getCollection().getHowManyCard().put(card.getName(),keyValue+1);
+            }else{
+                Collection.getCollection().getHowManyCard().put(card.getName(),1);
+            }
+
             Message.buyWasSuccessful();
         } else {
             Message.haveNotEnoughMoney();
@@ -96,6 +104,10 @@ public class Shop {
             }
         }
         account.getCollection().getCardIDs().remove((Integer) card.getID());
+
+        int keyValue = Collection.getCollection().getHowManyCard().get(card.getName());
+        Collection.getCollection().getHowManyCard().put(card.getName(),keyValue-1);
+
         Message.sellWasSuccessful();
     }
 
