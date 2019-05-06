@@ -123,7 +123,7 @@ public class Game {
         return selecteds;
     }
 
-    public ArrayList<Spell> getColletableItems() {
+    public ArrayList<Spell> getCollectibleItems() {
         return colletableItems;
     }
 

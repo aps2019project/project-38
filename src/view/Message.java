@@ -300,7 +300,7 @@ public interface Message {
                 System.out.println("Select mood and enemy deck\nfor example: " +
                         "Start game [deck name] [mood name] [number of flags]*");
                 System.out.println("Decks:");
-                for (Map.Entry<String, Deck> entry : Deck.getAllDecks().entrySet()) {
+                for (Map.Entry<String, Deck> entry : Account.getActiveAccount().getCollection().getDecks()) {
                     System.out.println(entry.getKey());
                 }
                 System.out.println("Moods:");
@@ -472,8 +472,8 @@ public interface Message {
 
             static void colletableWindow(Game game) {
                 System.out.println("Collectable Items:");
-                for (int i = 0; i < game.getColletableItems().size(); i++) {
-                    Spell item = game.getColletableItems().get(i);
+                for (int i = 0; i < game.getCollectibleItems().size(); i++) {
+                    Spell item = game.getCollectibleItems().get(i);
                     System.out.println(i + ": Name: " + item.getName() + " Requird Mana: " +
                             item.getRequiredMana() + " Card ID:" + item.getID());
                 }

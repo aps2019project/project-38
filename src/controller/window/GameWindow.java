@@ -200,8 +200,8 @@ public class GameWindow extends Window {
                 return;
             }else if (request.matches("Select \\d+")) {
                 int index = Integer.parseInt(request.replace("Select ", ""));
-                if (index < game.getColletableItems().size()) {
-                    game.getSelecteds().selectColletableItem(game.getColletableItems().get(index));
+                if (index < game.getCollectibleItems().size()) {
+                    game.getSelecteds().selectColletableItem(game.getCollectibleItems().get(index));
                 }else {
                     System.out.println("index is too big");
                 }
