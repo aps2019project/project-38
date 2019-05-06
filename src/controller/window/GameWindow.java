@@ -1,6 +1,8 @@
 package controller.window;
 
 import model.*;
+import model.cards.Card;
+import model.cards.Description;
 import model.gamemoods.CarryingFlag;
 import model.gamemoods.CollectingFlag;
 import model.gamemoods.KillingEnemyHero;
@@ -141,8 +143,22 @@ public class GameWindow extends Window {
             } else {
                 Message.GameWindow.insideGame.failCommand.indexOutOfBoard();
             }
-        }else if () {
+        }else if (input.matches("Show card info \\d{2,3}")) {
+            Pattern pattern = Pattern.compile("(\\d{2,3})");
+            Matcher matcher = pattern.matcher(input);
+            matcher.matches();
+            int cardID = Integer.parseInt(matcher.group(1));
+            if (Card.getAllCards().containsKey(cardID)) {
+                Description description = Card.getAllCards().get(cardID).description;
+                System.out.println("Description Of Card Ability: " +
+                        Card.getAllCards().get(cardID).description.descriptionOfCardSpecialAbility);
+                System.out.println("Target Type: " + Card.getAllCards().get(cardID).description.targetType);
 
+            }else {
+                System.out.println("no card matched");
+            }
+        }else if (input.equals("End turn")) {
+            game.endTurn();
         }
     }
 
