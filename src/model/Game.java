@@ -25,9 +25,9 @@ import java.util.Random;
 public class Game {
     GameMood gameMood;
     public int turn;
-    Player[] players = new  Player[2];
+    Player[] players = new Player[2];
     private Board board = new Board(this);
-    public Timer timer = new Timer(Constant.GameConstants.turnTime, ignored -> endTurn());
+    //    public Timer timer = new Timer(Constant.GameConstants.turnTime, ignored -> endTurn());
     ArrayList<Spell> colletableItems = new ArrayList<>();
 
 
@@ -60,7 +60,7 @@ public class Game {
         new Applier().execute(players[0].getMainDeck().getItem(), players[0].getPlayerHero());
         new Applier().execute(players[1].getMainDeck().getItem(), players[1].getPlayerHero());
         startTurn();
-        timer.start();
+//        timer.start();
     }
 
     private void initialisePlayerHand(Player player) {
@@ -74,7 +74,7 @@ public class Game {
         return players[turn % 2];
     }
 
-    public Player getWarriorsPlayer(Warrior warrior){
+    public Player getWarriorsPlayer(Warrior warrior) {
         if (players[0].getWarriors().contains(warrior)) {
             return players[0];
         }
@@ -108,10 +108,10 @@ public class Game {
         //apply buffer here if not in kill mod
     }
 
-    private void iteratePlayerTriggers (Player player, GameState gameState) {
+    private void iteratePlayerTriggers(Player player, GameState gameState) {
         for (Warrior warrior : player.getWarriors()) {
             for (Trigger trigger : warrior.getTriggers()) {
-                trigger.check(gameState,warrior);
+                trigger.check(gameState, warrior);
             }
         }
     }
@@ -124,10 +124,10 @@ public class Game {
 
     private void iterateAndExpirePlayerTriggers(Player player) {
         for (Warrior warrior : player.getWarriors()) {
-            for (Iterator<Trigger> iterator = warrior.getTriggers().iterator(); iterator.hasNext();) {
+            for (Iterator<Trigger> iterator = warrior.getTriggers().iterator(); iterator.hasNext(); ) {
                 Trigger trigger = iterator.next();
                 if (trigger.duration > 0) {
-                    trigger.duration --;
+                    trigger.duration--;
                     if (trigger.duration == 0) {
                         iterator.remove();
                     }
@@ -144,10 +144,10 @@ public class Game {
 
     private void iterateAndExpirePlayerEffects(Player player) {
         for (Warrior warrior : player.getWarriors()) {
-            for (Iterator<Effect> iterator = warrior.getEffects().iterator(); iterator.hasNext();) {
+            for (Iterator<Effect> iterator = warrior.getEffects().iterator(); iterator.hasNext(); ) {
                 Effect effect = iterator.next();
                 if (effect.duration > 0) {
-                    effect.duration --;
+                    effect.duration--;
                     if (effect.duration == 0) {
                         iterator.remove();
                     }
@@ -157,7 +157,7 @@ public class Game {
     }
 
     public void addNewCardToPlayerHand(Player player) throws IOException, ClassNotFoundException {
-        for (Map.Entry<Integer, Card> entry: player.getHand().entrySet()) {
+        for (Map.Entry<Integer, Card> entry : player.getHand().entrySet()) {
             if (entry.getValue() == null) {
                 int randomIndex = (new Random(player.getMainDeck().getCardIDs().size())).nextInt();
                 entry.setValue(Card.getAllCards().get(player.getMainDeck().getCardIDs().get(randomIndex)).deepCopy());
@@ -212,7 +212,7 @@ public class Game {
 
     }
 
-    public void attack (Cell attackerCell, Cell defenderCell) {
+    public void attack(Cell attackerCell, Cell defenderCell) {
         ArrayList<Warrior> activePlayerWarriors = getActivePlayer().getWarriors();
         if (activePlayerWarriors.contains(attackerCell.getWarrior()) &&
                 !activePlayerWarriors.contains(defenderCell.getWarrior())) {
@@ -221,21 +221,21 @@ public class Game {
         }
     }
 
-    public void replaceCard (int handMapKey) {
+    public void replaceCard(int handMapKey) {
         if (getActivePlayer().getHand().get(handMapKey) != null) {
             ReplaceCard.doIt(this, handMapKey);
             checkGameEndAndThenKillAllDiedWarriors();
         }
     }
 
-    public void useCard (int handMapKey, Cell cell) {
+    public void useCard(int handMapKey, Cell cell) {
         if (getActivePlayer().getHand().get(handMapKey) != null) {
             UseCard.doIt(handMapKey, cell);
             checkGameEndAndThenKillAllDiedWarriors();
         }
     }
 
-    public void endTurn () throws IOException, ClassNotFoundException {
+    public void endTurn() throws IOException, ClassNotFoundException {
         EndTurn.doIt(this);
         checkGameEndAndThenKillAllDiedWarriors();
         startTurn();
@@ -260,8 +260,7 @@ class Selectable {
             specialPowerIsSelected = false;
             collectableItem = null;
             warriorsCell.add(cell);
-        }
-        else {
+        } else {
             //todo
         }
     }
@@ -272,8 +271,7 @@ class Selectable {
             specialPowerIsSelected = false;
             collectableItem = null;
             this.cardHandIndex = cardHandIndex;
-        }
-        else {
+        } else {
             //todo
         }
     }
@@ -292,7 +290,7 @@ class Selectable {
     public void deselectAll() {
         warriorsCell = new ArrayList<>();
         cardHandIndex = null;
-        specialPowerIsSelected =  false;
+        specialPowerIsSelected = false;
         collectableItem = null;
     }
 }

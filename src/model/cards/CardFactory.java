@@ -685,7 +685,7 @@ public class CardFactory {
         {
             Hero hero = new Hero(32, "Simorgh", 9000, 50, 4, -1);
 
-            Spell spell = new Spell(null, null, 5, null, false);
+            Spell spell = new Spell(0, "", 5, 0, false);
             spell.getActions().put(new Applier(), new AllWarriorsGetter(false, true));
             spell.getTriggers().add(new Stun(1, Dispelablity.BAD));
             hero.power = new HeroPower(spell, 8);
@@ -696,7 +696,7 @@ public class CardFactory {
         {
             Hero hero = new Hero(33, "Ezhdeha-E-Haftsar", 8000, 50, 4, -1);
 
-            Spell spell = new Spell(null, null, 0, null, false);
+            Spell spell = new Spell(0, "", 0, 0, false);
             spell.getActions().put(new Applier(), new RectGetter(1, 1, false, true, false, true, false));
             spell.getTriggers().add(new Disarm(1, Dispelablity.BAD));
             hero.power = new HeroPower(spell, 1);
@@ -707,7 +707,7 @@ public class CardFactory {
         {
             Hero hero = new Hero(34, "Rakhsh", 8000, 50, 4, -1);
 
-            Spell spell = new Spell(null, null, 1, null, false);
+            Spell spell = new Spell(0, "", 1, 0, false);
             spell.getActions().put(new Applier(), new RectGetter(1, 1, false, true, false, true, false));
             spell.getTriggers().add(new Stun(1, Dispelablity.BAD));
             hero.power = new HeroPower(spell, 2);
@@ -734,7 +734,7 @@ public class CardFactory {
             holyCell.getConditions().add(new HasWarriorOnIt());
             holyCell.getActions().put(new Applier(), new OnCellGetter());
             holyCell.getTriggers().add(new HolyBuff(1, Dispelablity.GOOD, 1));
-            Spell spell = new Spell(null, null, 1, null, false);
+            Spell spell = new Spell(0, "", 1, 0, false);
             spell.getActions().put(new Applier(), new RectGetter(1, 1, true, false, false, false, false));
             spell.getTriggers().add(holyCell);
             hero.power = new HeroPower(spell, 3);
@@ -745,7 +745,7 @@ public class CardFactory {
         {
             Hero hero = new Hero(37, "Arash", 10000, 30, 2, -1);
 
-            Spell spell = new Spell(null, null, 2, null, false);
+            Spell spell = new Spell(0, "", 2, 0, false);
             spell.getActions().put(new Applier(), new RectGetter(1, Constant.GameConstants.boardColumn, false, true, false, true, false));
             spell.getEffects().add(new HP(-1, Dispelablity.UNDISPELLABLE, -4));
             hero.power = new HeroPower(spell, 2);
@@ -756,7 +756,7 @@ public class CardFactory {
         {
             Hero hero = new Hero(38, "Afsane", 11000, 40, 3, -1);
 
-            Spell spell = new Spell(null, null, 1, null, false);
+            Spell spell = new Spell(0, "", 1, 0, false);
             spell.getActions().put(new Dispeller(), new RectGetter(1, 1, false, true, false, true, false));
             hero.power = new HeroPower(spell, 2);
 
