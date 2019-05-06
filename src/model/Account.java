@@ -12,7 +12,7 @@ public class Account implements Comparable<Account>, java.io.Serializable {
     private static ArrayList<String> usernames = new ArrayList<>();
     private static HashMap<String, Account> usernameToAccountObject = new HashMap<>();
     //***
-    private int money;
+    private int money=15000;
     private ArrayList<MatchHistory> history = new ArrayList<>();
     private Collection collection = new Collection();
     private String username;

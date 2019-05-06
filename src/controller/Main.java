@@ -1,8 +1,8 @@
 package controller;
 
-import controller.window.IntroWindow;
 import controller.window.LoadWindow;
 import controller.window.Window;
+import model.cards.CardFactory;
 
 public class Main {
     public static void main(String[] args) {

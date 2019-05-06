@@ -18,7 +18,7 @@ public class Shop {
     public void searchInShopCards(String cardName) {
         for (int ID : shop.getCardIDs()) {
             Card card = Card.getAllCards().get(ID);
-            if (card.getName().equals(cardName)) {
+            if (card.getName().toLowerCase().equals(cardName.toLowerCase())) {
                 Message.existACardWithThisIDInShop();
                 return;
             }
@@ -32,7 +32,7 @@ public class Shop {
         int numberOfFoundIDs = 0;
         for (int ID : collection.getCardIDs()) {
             Card card = Card.getAllCards().get(ID);
-            if (card.getName().equals(cardName)) {
+            if (card.getName().toLowerCase().equals(cardName.toLowerCase())) {
                 numberOfFoundIDs++;
             }
         }
@@ -44,18 +44,14 @@ public class Shop {
     }
 
     public void buy(String cardName) {
-        Card card = null;
-        for (int ID : shop.getCardIDs()) {
-            if (Card.getAllCards().get(ID).getName().equals(cardName)) {
-                card = Card.getAllCards().get(ID);
-            }
-        }
-
+        Card card = getCardByItsName(Card.lowerNametoOriginalName.get(cardName.toLowerCase()));
         Account account = Account.getActiveAccount();
+
         if (card == null) {
             Message.thereIsNoCardWithThisNameInShop();
             return;
         }
+
         if (account.getMoney() >= card.getPrice()) {
             if (Spell.checkIsItem(card)) {
                 int numberOfItems = 0;
@@ -69,7 +65,7 @@ public class Shop {
                 }
             }
             account.setMoney(account.getMoney() - card.getPrice());
-            shop.getCardIDs().remove(card.getID());
+//            shop.getCardIDs().remove(card.getID());
             account.getCollection().getCardIDs().add(card.getID());
             Message.buyWasSuccessful();
         } else {
@@ -77,24 +73,43 @@ public class Shop {
         }
     }
 
-    public void sell(int cardID) {
+    public void sell(String cardName) {
+        Card card = getCardByItsName(Card.lowerNametoOriginalName.get(cardName.toLowerCase()));
         Account account = Account.getActiveAccount();
-        Card card = Card.getAllCards().get(cardID);
-        if (!account.getCollection().getCardIDs().contains(cardID)) {
+
+        if (card == null) {
+            Message.thereIsNoCardWithThisNameInCollection();
+            return;
+        }
+
+        if (!account.getCollection().getCardIDs().contains(card.getID())) {
             Message.haveNotThisCardInYourCollection();
             return;
         }
         account.setMoney(account.getMoney() + card.getPrice());
         shop.getCardIDs().add(card.getID());
-        account.getCollection().getCardIDs().remove(card.getID());
+        account.getCollection().getCardIDs().remove((Integer) card.getID());
         for (String deckName : account.getCollection().getDecks()) {
             Deck deck = Deck.getAllDecks().get(deckName);
             if (deck.getCardIDs().contains(card.getID())) {
                 deck.getCardIDs().remove(card.getID());
             }
         }
-        account.getCollection().getCardIDs().remove(card.getID());
+        account.getCollection().getCardIDs().remove((Integer) card.getID());
         Message.sellWasSuccessful();
+    }
+
+    private Card getCardByItsName(String cardName) {
+        Card card = null;
+        for (int ID : shop.getCardIDs()) {
+            if (Card.getAllCards().get(ID).getName().equals(cardName)) {
+                card = Card.getAllCards().get(ID);
+            }
+        }
+        if (card == null) {
+
+        }
+        return card;
     }
 
     //***

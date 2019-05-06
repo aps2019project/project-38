@@ -150,9 +150,6 @@ public class Collection {
         }
     }
 
-    public void save() {
-        //todo
-    }
     //***
 
     public void setMainDeck(Deck mainDeck) {
