@@ -358,7 +358,7 @@ public interface Message {
                     horizontalBoardLine();
                 }
             }
-            private static void horizontalBoardLine() {
+            static void horizontalBoardLine() {
                 System.out.print("+");
                 for (int i = 0; i < Constant.GameConstants.boardColumn; i++) {
                     System.out.print("----+");
@@ -366,7 +366,7 @@ public interface Message {
                 System.out.println();
             }
 
-            private static void cellFirstLine(Cell cell) {
+             static void cellFirstLine(Cell cell) {
                 Game game = cell.getBoard().getGame();
                 if (cell.getWarrior() != null) {
                     int playerNumber = game.getWarriorsPlayer(cell.getWarrior()) == game.getPlayers()[0] ? 1 : 2;
@@ -377,7 +377,7 @@ public interface Message {
                 }
                 System.out.print("|");
             }
-            private static void cellSecondLine(Cell cell) {
+             static void cellSecondLine(Cell cell) {
                 if (cell.getWarrior() != null) {
                     System.out.print(cell.getWarrior().getAp() + "" + cell.getWarrior().getHp());
                 }
@@ -386,7 +386,7 @@ public interface Message {
                 }
                 System.out.print("|");
             }
-            private static void cellThirdLine(Cell cell) {
+             static void cellThirdLine(Cell cell) {
                 //Flag --> F
                 if (cell.getWarrior() != null) {
                     if (cell.getWarrior().getTriggers().stream().anyMatch(trigger -> trigger instanceof Flag)) {

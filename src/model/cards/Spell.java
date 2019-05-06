@@ -6,6 +6,7 @@ import model.actions.AutoAction;
 import model.player.Player;
 import model.targets.SpellTarget;
 
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,18 +37,22 @@ public class Spell extends Card {
 
     @Override
     public void apply(Cell cell) {
-        //todo
         Player user = cell.getBoard().getGame().getActivePlayer();
         for (Map.Entry<AutoAction, SpellTarget> entry : actions.entrySet()) {
             for (QualityHaver target : entry.getValue().getTarget(user, cell)) {
-                entry.getKey().execute(this,target);
+                entry.getKey().execute(this, target);
             }
         }
     }
 
     @Override
-    public Spell deepCopy() {
-        //todo
-        return null;
+    public Spell deepCopy() throws IOException, ClassNotFoundException {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream(bos);
+        oos.writeObject(this);
+        oos.flush();
+        ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
+        ObjectInputStream ois = new ObjectInputStream(bis);
+        return (Spell) ois.readObject();
     }
 }

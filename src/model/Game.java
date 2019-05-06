@@ -15,6 +15,7 @@ import model.player.Player;
 import model.triggers.Trigger;
 
 import javax.swing.Timer;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
@@ -155,7 +156,7 @@ public class Game {
         }
     }
 
-    public void addNewCardToPlayerHand(Player player) {
+    public void addNewCardToPlayerHand(Player player) throws IOException, ClassNotFoundException {
         for (Map.Entry<Integer, Card> entry: player.getHand().entrySet()) {
             if (entry.getValue() == null) {
                 int randomIndex = (new Random(player.getMainDeck().getCardIDs().size())).nextInt();

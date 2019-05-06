@@ -49,13 +49,10 @@ public class ShopWindow extends Window {
                     Shop.getShop().buy(cardName);
                     continue;
                 case 6:
-                    Message.interCardID();
+                    Message.interCardName();
                     cardName = getNextRequest();
-                    if (!cardName.matches("\\d+")) {
-                        Message.invalidInput();
-                    } else {
-                        Shop.getShop().sell(Integer.parseInt(cardName));
-                    }
+                    Shop.getShop().sell(cardName);
+                    continue;
                 case 0:
                     Window.closeWindow(this);
                     break tag1;
@@ -90,6 +87,7 @@ public class ShopWindow extends Window {
     }
 
     private static void showInfoOfHeroes(ArrayList<Card> heroes, int kind) {
+        Message.showAWordAsTitle("_-Hero-_");
         for (int i = 0; i < heroes.size(); i++) {
             int template = 0;
             String kindOfAttackArea = "Hybrid"; // byDefault
@@ -104,48 +102,47 @@ public class ShopWindow extends Window {
             if (template == 1) kindOfAttackArea = "Melee";
             if (template == 2) kindOfAttackArea = "Ranged";
 
-            Message.showAWordAsTitle("Hero");
             if (kind == 1) {
-                Message.showInfoOfHeroPlusPrice((Hero) heroes.get(i), i, kindOfAttackArea, "Sell");
+                Message.showInfoOfHeroPlusPrice((Hero) heroes.get(i), i + 1, kindOfAttackArea, "Sell");
             }
             if (kind == 2) {
-                Message.showInfoOfHeroPlusPrice((Hero) heroes.get(i), i, kindOfAttackArea, "Buy");
+                Message.showInfoOfHeroPlusPrice((Hero) heroes.get(i), i + 1, kindOfAttackArea, "Buy");
             }
             if (kind == 3) {
-                Message.showInfoOfHeroMinusPrice((Hero) heroes.get(i), i, kindOfAttackArea);
+                Message.showInfoOfHeroMinusPrice((Hero) heroes.get(i), i + 1, kindOfAttackArea);
             }
         }
     }
 
     private static void showInfoOfItems(ArrayList<Card> items, int kind) {
-        Message.showAWordAsTitle("Item");
+        Message.showAWordAsTitle("_-Item-_");
         for (int i = 0; i < items.size(); i++) {
             if (kind == 1) {
-                Message.showInfoOfItemPlusPrice((Spell) items.get(i), i, "Sell");
+                Message.showInfoOfItemPlusPrice((Spell) items.get(i), i + 1, "Sell");
             }
             if (kind == 2) {
-                Message.showInfoOfItemPlusPrice((Spell) items.get(i), i, "Buy");
+                Message.showInfoOfItemPlusPrice((Spell) items.get(i), i + 1, "Buy");
             }
             if (kind == 3) {
-                Message.showInfoOfItemMinusPrice((Spell) items.get(i), i);
+                Message.showInfoOfItemMinusPrice((Spell) items.get(i), i + 1);
             }
         }
     }
 
     private static void showInfoOfOtherCards(ArrayList<Card> others, int kind) {
-        Message.showAWordAsTitle("Cards");
+        Message.showAWordAsTitle("_-Cards-_");
         for (int i = 0; i < others.size(); i++) {
             String type;
             if (others.get(i) instanceof Spell) type = "Spell";
             else type = "Minion";
             if (kind == 1) {
-                Message.showInfoOfCardPlusPrice(others.get(i), i, type, "Sell");
+                Message.showInfoOfCardPlusPrice(others.get(i), i + 1, type, "Sell");
             }
             if (kind == 2) {
-                Message.showInfoOfCardPlusPrice(others.get(i), i, type, "Buy");
+                Message.showInfoOfCardPlusPrice(others.get(i), i + 1, type, "Buy");
             }
             if (kind == 3) {
-                Message.showInfoOfCardMinusPrice(others.get(i), i, type);
+                Message.showInfoOfCardMinusPrice(others.get(i), i + 1, type);
             }
         }
     }
