@@ -40,7 +40,7 @@ public class CarryingFlag extends GameMood {
     @Override
     public void applyTriggerToBoard(Game game) {
         if (!gameHasFlag) {
-            int randomRow = new Random(Constant.GameConstants.boardRow).nextInt();
+            int randomRow = new Random(System.currentTimeMillis()).nextInt(Constant.GameConstants.boardRow);
             game.getBoard().getCell(randomRow, Constant.GameConstants.boardColumn / 2 + 1)
                     .getTriggers().add(new Flag());
         }

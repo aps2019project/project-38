@@ -3,9 +3,10 @@ package model.targets;
 import model.QualityHaver;
 import model.gamestate.GameState;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public interface TriggerTarget {
+public interface TriggerTarget extends Serializable {
     ArrayList<? extends QualityHaver> getTarget(QualityHaver triggerOwner, GameState gameState);
 
     default TriggerTarget and (TriggerTarget other){

@@ -6,6 +6,8 @@ import model.gamestate.EffTriggApplyState;
 import model.player.Player;
 import model.triggers.Trigger;
 
+import java.io.Serializable;
+
 import static model.QualityHaver.getGameFromQualityHaver;
 
 public class Applier implements AutoAction {

@@ -32,7 +32,7 @@ public class Game {
 
     public Game(GameMood gameMood, Account accountOne, Account accountTwo) {
         this.gameMood = gameMood;
-        int randomIndex = (new Random(2)).nextInt();
+        int randomIndex = (new Random(System.currentTimeMillis())).nextInt(2);
         this.players[randomIndex] = new HumanPlayer(accountOne, accountOne.getCollection().getMainDeck());
         this.players[(randomIndex + 1) % 2] = new HumanPlayer(accountTwo, accountTwo.getCollection().getMainDeck());
         initialiseGameFields();
@@ -40,7 +40,7 @@ public class Game {
 
     public Game(GameMood gameMood, Account account, Deck aIDeck) {//todo to not getting ai deck
         this.gameMood = gameMood;
-        int randomIndex = (new Random(2)).nextInt();
+        int randomIndex = (new Random(System.currentTimeMillis())).nextInt(2);
         players[randomIndex] = new HumanPlayer(account, account.getCollection().getMainDeck());
         players[(randomIndex + 1) % 2] = new AIPlayer(aIDeck);
         initialiseGameFields();
@@ -50,6 +50,8 @@ public class Game {
         turn = 0;
         getActivePlayer().mana = Constant.GameConstants.getTurnMana(turn);
         getActivePlayer().ableToReplaceCard = true;
+        players[0].getWarriors().add(players[0].getMainDeck().getHero().deepCopy());
+        players[1].getWarriors().add(players[1].getMainDeck().getHero().deepCopy());
         board.getCell(Constant.GameConstants.boardRow / 2 + 1, 0)
                 .setWarrior(players[0].getWarriors().get(0));
         board.getCell(Constant.GameConstants.boardRow / 2 + 1, Constant.GameConstants.boardColumn - 1)
@@ -75,9 +77,9 @@ public class Game {
     }
 
     private void initialisePlayerHand(Player player) {
-        Random random = new Random(player.getMainDeck().getCardIDs().size());
+        Random random = new Random(System.currentTimeMillis());
         for (Map.Entry<Integer, Card> entry : player.getHand().entrySet()) {
-            entry.setValue(Card.getAllCards().get(player.getMainDeck().getCardIDs().get(random.nextInt())));
+            entry.setValue(Card.getAllCards().get(player.getMainDeck().getCardIDs().get(random.nextInt(player.getMainDeck().getCardIDs().size()))));
         }
     }
 
@@ -178,7 +180,7 @@ public class Game {
     public void addNewCardToPlayerHand(Player player){
         for (Map.Entry<Integer, Card> entry: player.getHand().entrySet()) {
             if (entry.getValue() == null) {
-                int randomIndex = (new Random(player.getMainDeck().getCardIDs().size())).nextInt();
+                int randomIndex = (new Random(System.currentTimeMillis()).nextInt(player.getMainDeck().getCardIDs().size()));
                 entry.setValue(Card.getAllCards().get(player.getMainDeck().getCardIDs().get(randomIndex)).deepCopy());
                 break;
             }

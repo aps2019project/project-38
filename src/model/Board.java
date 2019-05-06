@@ -9,7 +9,7 @@ import java.util.Iterator;
 
 
 public class Board {
-    private ArrayList<ArrayList<Cell>> table;
+    private ArrayList<ArrayList<Cell>> table = new ArrayList<>();
     private Game game;
 
     public Board(Game game) {

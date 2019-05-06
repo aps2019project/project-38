@@ -85,6 +85,7 @@ public class Account implements Comparable<Account>, java.io.Serializable {
             oos.close();
         } catch (IOException e) {
             System.err.println("could save accounts");
+            e.printStackTrace();
         }
     }
 

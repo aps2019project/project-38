@@ -14,7 +14,7 @@ public class Collection implements Serializable {
     private ArrayList<Integer> cardIDs = new ArrayList<>();
     private ArrayList<String> decks = new ArrayList<>();
     private HashMap<String, Integer> howManyCard = new HashMap<>();
-    private Deck mainDeck = Deck.getLevels().get(0);
+    private Deck mainDeck = Deck.getDeckLevels().get(0); //danger
 
     //***
     public static Collection getCollection() {

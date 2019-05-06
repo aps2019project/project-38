@@ -29,8 +29,8 @@ public class CollectingFlag extends GameMood {
     public void applyTriggerToBoard(Game game) {
         if (game.turn % 4 != 0 && gameFlags < Constant.GameConstants.collectingFlagMoodFlags &&
                 new Random().nextBoolean()) {
-            int row = new Random(Constant.GameConstants.boardRow).nextInt();
-            int column = new Random(Constant.GameConstants.boardColumn).nextInt();
+            int row = new Random(System.currentTimeMillis()).nextInt(Constant.GameConstants.boardRow);
+            int column = new Random(System.currentTimeMillis()).nextInt(Constant.GameConstants.boardColumn);
             game.getBoard().getCell(row, column).getTriggers().add(new Flag());
             gameFlags++;
         }

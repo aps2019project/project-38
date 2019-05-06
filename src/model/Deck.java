@@ -1,17 +1,17 @@
 package model;
 
-import model.cards.Card;
 import model.cards.CardFactory;
 import model.cards.Hero;
 import model.cards.Spell;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Deck {
+public class Deck implements Serializable {
     private static HashMap<String, Deck> allDecks = new HashMap<>();
     private static HashMap<String, String> lowerCaseNamesToOriginalName = new HashMap<>();
-    public static ArrayList<Deck> levels = new ArrayList<>();
+    public static ArrayList<Deck> deckLevels = new ArrayList<>();
     private String name;
     private ArrayList<Integer> cardIDs = new ArrayList<>();
     private Hero hero;
@@ -33,7 +33,8 @@ public class Deck {
             for (int i = 0; i < 13; i++) {
                 deck1.getCardIDs().add(CardFactory.getAllBuiltMinions().get(minionIndex[i]-1).getID());
             }
-            levels.add(deck1);
+            deckLevels.add(deck1);
+            allDecks.put("level1",deck1);
         }
         {
             Deck deck2 = new Deck();
@@ -50,7 +51,7 @@ public class Deck {
             for (int i = 0; i < 13; i++) {
                 deck2.getCardIDs().add(CardFactory.getAllBuiltMinions().get(minionIndex[i]-1).getID());
             }
-            levels.add(deck2);
+            deckLevels.add(deck2);
         }
         {
             Deck deck3 = new Deck();
@@ -67,7 +68,7 @@ public class Deck {
             for (int i = 0; i < 13; i++) {
                 deck3.getCardIDs().add(CardFactory.getAllBuiltMinions().get(minionIndex[i]-1).getID());
             }
-            levels.add(deck3);
+            deckLevels.add(deck3);
         }
     }
 
@@ -107,7 +108,7 @@ public class Deck {
         return hero;
     }
 
-    public static ArrayList<Deck> getLevels() {
-        return levels;
+    public static ArrayList<Deck> getDeckLevels() {
+        return deckLevels;
     }
 }

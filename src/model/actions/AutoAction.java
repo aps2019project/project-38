@@ -6,6 +6,8 @@ import model.QualityHaver;
 import model.cards.Warrior;
 import model.triggers.Trigger;
 
-public interface AutoAction {
+import java.io.Serializable;
+
+public interface AutoAction extends Serializable {
     void execute(QualityHaver source, QualityHaver target);
 }
