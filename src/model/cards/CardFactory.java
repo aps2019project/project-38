@@ -1081,4 +1081,23 @@ public class CardFactory {
             Shop.getShop().getCardIDs().add(card.getID());
         }
     }
+
+    //***
+
+
+    public static ArrayList<Card> getAllBuiltMinions() {
+        return allBuiltMinions;
+    }
+
+    public static ArrayList<Card> getAllBuiltSpells() {
+        return allBuiltSpells;
+    }
+
+    public static ArrayList<Card> getAllBuiltHeroes() {
+        return allBuiltHeroes;
+    }
+
+    public static ArrayList<Card> getAllBuiltItems() {
+        return allBuiltItems;
+    }
 }

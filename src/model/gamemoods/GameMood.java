@@ -7,8 +7,15 @@ import model.cards.Warrior;
 import model.player.Player;
 import model.triggers.Flag;
 
+import java.util.ArrayList;
+
 public abstract class GameMood {
+    static ArrayList<Game> steps = new ArrayList<>();
     Player winner;
+
+    static {
+        //todo
+    }
 
     public abstract boolean checkGameEnd(Game game);
 
