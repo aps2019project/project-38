@@ -5,6 +5,7 @@ import model.QualityHaver;
 import model.effects.Effect;
 import model.triggers.Trigger;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,7 +19,7 @@ public abstract class Card extends QualityHaver implements Serializable {
     protected int requiredMana;
     protected int price;
 
-    public Card(int ID, String name, int price, int requiredMana) {
+    public Card(Integer ID, String name, Integer price, int requiredMana) {
         this.ID = ID;
         this.name = name;
         this.requiredMana = requiredMana;
@@ -36,7 +37,7 @@ public abstract class Card extends QualityHaver implements Serializable {
 
     public abstract void apply(Cell cell);
 
-    public abstract Card deepCopy();
+    public abstract Card deepCopy() throws IOException, ClassNotFoundException;
 
     //***
 
@@ -66,9 +67,5 @@ public abstract class Card extends QualityHaver implements Serializable {
 
     public int getPrice() {
         return price;
-    }
-
-    public String getDescriptionOfSpecialPower() {
-        return description.descriptionOfCardSpecialAbility;
     }
 }

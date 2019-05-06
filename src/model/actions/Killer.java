@@ -15,11 +15,12 @@ public class Killer implements AutoAction{
         kill((Warrior)target);
     }
 
-    public static void kill(Warrior warrior){
+    public static void kill(Warrior warrior) {
         Game game = warrior.getCell().getBoard().getGame();
         Player player = game.getWarriorsPlayer(warrior);
         DeathState death = new DeathState(warrior);
         game.iterateAllTriggersCheck(death);
+        warrior.getCell().setWarrior(null);
         player.getWarriors().remove(warrior);
     }
 }

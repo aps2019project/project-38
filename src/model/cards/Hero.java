@@ -1,9 +1,13 @@
 package model.cards;
 
 public class Hero extends Warrior {
-    private Card card;
+    HeroPower power;
 
-    public Hero(int ID, String name, int price, int HP, int AP, int requiredMana) {
+    public Hero(Integer ID, String name, Integer price, int HP, int AP, int requiredMana) {
         super(ID, name, price, requiredMana, HP, AP);
+    }
+
+    public HeroPower getPower() {
+        return power;
     }
 }
