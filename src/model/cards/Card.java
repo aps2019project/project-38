@@ -35,7 +35,7 @@ public abstract class Card extends QualityHaver implements Serializable {
 
     public abstract void apply(Cell cell);
 
-    public abstract Card deepCopy() throws IOException, ClassNotFoundException;
+    public abstract Card deepCopy();
 
     //***
 
