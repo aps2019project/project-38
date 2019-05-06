@@ -16,4 +16,8 @@ public class HeroPower {
         coolDownRemaining=coolDown;
         card.apply(cell);
     }
+
+    public Card getCard() {
+        return card;
+    }
 }

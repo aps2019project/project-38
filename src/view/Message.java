@@ -3,6 +3,7 @@ package view;
 import model.*;
 import model.cards.Card;
 import model.cards.Hero;
+import model.cards.HeroPower;
 import model.cards.Spell;
 import model.player.AIPlayer;
 import model.player.HumanPlayer;
@@ -315,6 +316,7 @@ public interface Message {
                 int activePlayerNumber = game.getActivePlayer() == game.getPlayers()[0] ? 0 : 1;
                 String completeName = game.getActivePlayer() instanceof AIPlayer ? "AI" : "Human User Name:" +
                         ((HumanPlayer)game.getActivePlayer()).getAccount().getUsername();
+                System.out.println("Game Mood: " + game.getGameMood().getClass());
                 System.out.println(activePlayerNumber + ": " + completeName);
                 System.out.println("Mana: " + game.getActivePlayer().mana);
             }
@@ -323,9 +325,12 @@ public interface Message {
                 System.out.println("Hand:");
                 for (Map.Entry<Integer, Card> entry : game.getActivePlayer().getHand().entrySet()) {
                     System.out.println(entry.getKey() + ": Name" + entry.getValue().getName() + " Required Mana: " +
-                            entry.getValue().getRequiredMana());
+                            entry.getValue().getRequiredMana() + " CardID:" + entry.getValue().getID());
                 }
-                System.out.println("SpecialPower:");
+                HeroPower specialPower = game.getActivePlayer().getPlayerHero().getPower();
+                System.out.println("SpecialPower: Name" + specialPower.getCard().getName() +
+                        " Required Mana:" + specialPower.getCard().getRequiredMana() +
+                        " Cool Down:" + specialPower.coolDownRemaining + " CardID:" + specialPower.getCard().getID());
             }
 
             private static void showBoard(Game game) {
@@ -418,6 +423,22 @@ public interface Message {
                 }
                 //todo --> B
                 System.out.println(" ");
+            }
+
+            static void help() {
+                System.out.println("Select Warrior: Select [row] [column]");
+                System.out.println("(you can select multi warriors for combo by using above command repeatedly)");
+                System.out.println("Select Card From Hand: Select [hand index]");
+                System.out.println("Select Special Power: Select SPP");
+                System.out.println("Deselect Warriors: Deselect warriors");
+                System.out.println("(if you selected just one warrior you can attack to an enemy warrior): Attack [row] [column]");
+                System.out.println("(if you selected more than one warrior you can combo attack to an enemy warrior): Attack combo [row] [column]");
+                System.out.println("(if you selected a card you can put it on board): Insert in [row] [column]");
+                System.out.println("Use Special Power: Use special power [row] [column]");
+                System.out.println("Show card info [cardID]");
+                System.out.println("End Turn: End turn");
+                System.out.println("Show Collectable Items: Show collectables");
+                System.out.println("(if you selected an war you can attack to an enemy warrior): Attack [row] [column]");
             }
         }
     }
