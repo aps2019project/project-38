@@ -2,9 +2,8 @@ package controller.window;
 
 import model.Collection;
 import model.Deck;
+import model.Shop;
 import view.Message;
-
-import java.util.ArrayList;
 
 import static view.Request.getNextRequest;
 
@@ -26,7 +25,9 @@ public class CollectionWindow extends Window {
                     ShopWindow.handleShowInfoOfCards(Collection.getCollection().getCardIDs(), 2);
                     continue;
                 case 2:
-                    handleSearchInCollection();
+                    Message.interCardName();
+                    String cardName = getNextRequest();
+                    Shop.getShop().searchInCollectionCards(cardName);
                     continue;
                 case 3:
                     Message.interDeckName();
@@ -55,7 +56,7 @@ public class CollectionWindow extends Window {
                 case 7:
                     Message.interDeckName();
                     deckName = getNextRequest();
-                    Collection.getCollection().validateDeck(deckName);
+                    Collection.getCollection().validateDeck(deckName,true);
                     continue;
                 case 8:
                     Message.interDeckName();
@@ -75,6 +76,7 @@ public class CollectionWindow extends Window {
 //                    Collection.getCollection().save();
                     continue;
                 case 0:
+                    Window.closeWindow(this);
                     break tag1;
                 default:
                     Message.invalidInput();
@@ -82,21 +84,8 @@ public class CollectionWindow extends Window {
         }
     }
 
-    private void handleSearchInCollection() {
-        String cardName = getNextRequest();
-        ArrayList<Integer> template = Collection.getCollection().searchInCollectionCards(cardName);
-        if (template.size() == 0) {
-            Message.thereIsNoCardWithThisNameInCollection();
-            return;
-        }
-        for (int ID : template) {
-            Message.printSomeThing(((Integer) ID).toString());
-        }
-        Message.INTER();
-    }
-
     private void showInfoOfASpecificDeck(Deck deck) {
-        if(deck==null){
+        if (deck == null) {
             Message.thereIsNoDeckWithThisName();
             return;
         }
@@ -105,14 +94,21 @@ public class CollectionWindow extends Window {
 
     private void showInfoOfAllDecks() {
         Deck deck = Collection.getCollection().getMainDeck();
-        Message.showAWordAsTitle("Deck 1");
-        showInfoOfASpecificDeck(deck);
-        int i = 2;
-        for (Deck deck1 : Collection.getCollection().getDecks()) {
+        int i = 1;
+        if(deck!=null) {
+            Message.showDeckName(i,deck.getName());
+            showInfoOfASpecificDeck(deck);
+            i=2;
+        }
+        for (String deckName : Collection.getCollection().getDecks()) {
+            Deck deck1 = Deck.getAllDecks().get(deckName);
             if (deck1.equals(deck)) continue;
-            Message.showAWordAsTitle("Deck " + i);
+            Message.showDeckName(i,deck1.getName());
             showInfoOfASpecificDeck(deck1);
             i++;
+        }
+        if(i==1){
+            Message.noDeckExist();
         }
     }
 }
