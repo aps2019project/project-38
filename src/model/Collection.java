@@ -7,26 +7,29 @@ import model.cards.Warrior;
 import view.Message;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Collection {
     private ArrayList<Integer> cardIDs = new ArrayList<>();
     private ArrayList<Deck> decks = new ArrayList<>();
-    private Deck mainDeck = new Deck();//remove this plese dear hashem. it should't be an empty deck.//todo
+    private HashMap<Integer, Integer> howManyCard = new HashMap<>();
+    private Deck mainDeck = null;
 
     //***
     public static Collection getCollection() {
         return Account.getActiveAccount().getCollection();
     }
 
-    public ArrayList<Integer> searchInCollectionCards(String cardName) {
-        ArrayList<Integer> foundIDs = new ArrayList<>();
+    public int searchInCollectionCards(String cardName) {
+        int numberOf = 0;
+        Card card = null;
         for (int ID : getCardIDs()) {
-            Card card = Card.getAllCards().get(ID);
+            card = Card.getAllCards().get(ID);
             if (card.getName().equals(cardName)) {
-                foundIDs.add(ID);
+                numberOf++;
             }
         }
-        return foundIDs;
+        return numberOf;
     }
 
     public void createDeck(String deckName) {
@@ -90,6 +93,16 @@ public class Collection {
         }
         if (Spell.checkIsItem(card)) {
             deck.setItem(card);
+        }
+        int numberOf = 0;
+        for (int ID : deck.getCardIDs()) {
+            if (ID == cardID) {
+                numberOf++;
+            }
+        }
+        if (numberOf > Collection.getCollection().howManyCard.get(cardID)) {
+            Message.notEnoughCardNumber();
+            return;
         }
         deck.getCardIDs().add(cardID);
         Message.cardAddedToDeckSuccessfully();

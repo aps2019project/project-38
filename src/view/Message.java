@@ -57,32 +57,32 @@ public interface Message {
 
     static void showInfoOfHeroPlusPrice(Hero hero, int numberOfHeroes, String kindOfAttackArea, String buyOrSell) {
         System.out.printf("%d ) Name : %s - AP : %d - HP : %d - class : %s - SpecialPower : %s - %sCost : %d\n",
-                numberOfHeroes, hero.getName(), hero.getAp(), hero.getHp(), kindOfAttackArea, hero.getDescriptionOfSpecialPower(), buyOrSell, hero.getPrice());
+                numberOfHeroes, hero.getName(), hero.getAp(), hero.getHp(), kindOfAttackArea, hero.description.descriptionOfCardSpecialAbility, buyOrSell, hero.getPrice());
     }
 
-    static void showInfoOfHeroMinesPrice(Hero hero, int numberOfHeroes, String kindOfAttackArea) {
+    static void showInfoOfHeroMinusPrice(Hero hero, int numberOfHeroes, String kindOfAttackArea) {
         System.out.printf("%d ) Name : %s - AP : %d - HP : %d - class : %s - SpecialPower : %s\n",
-                numberOfHeroes, hero.getName(), hero.getAp(), hero.getHp(), kindOfAttackArea, hero.getDescriptionOfSpecialPower());
+                numberOfHeroes, hero.getName(), hero.getAp(), hero.getHp(), kindOfAttackArea, hero.description.descriptionOfCardSpecialAbility);
     }
 
     static void showInfoOfItemPlusPrice(Spell spell, int numberOfItems, String buyOrSell) {
         System.out.printf("%d ) Name : %s - Description : %s - %sCost : %d\n",
-                numberOfItems, spell.getName(), spell.getDescriptionOfSpecialPower(), buyOrSell, spell.getPrice());
+                numberOfItems, spell.getName(), spell.description.descriptionOfCardSpecialAbility, buyOrSell, spell.getPrice());
     }
 
-    static void showInfoOfItemMinesPrice(Spell spell, int numberOfItems) {
+    static void showInfoOfItemMinusPrice(Spell spell, int numberOfItems) {
         System.out.printf("%d ) Name : %s - Description : %s\n",
-                numberOfItems, spell.getName(), spell.getDescriptionOfSpecialPower());
+                numberOfItems, spell.getName(), spell.description.descriptionOfCardSpecialAbility);
     }
 
     static void showInfoOfCardPlusPrice(Card card, int numberOfCards, String typeOfCard, String buyOrSell) {
         System.out.printf("%d ) Type : %s - Name : %s - MP : %d - Description : %s - %sCost : %d\n",
-                numberOfCards, typeOfCard, card.getName(), card.getRequiredMana(), card.getDescriptionOfSpecialPower(), buyOrSell, card.getPrice());
+                numberOfCards, typeOfCard, card.getName(), card.getRequiredMana(), card.description.descriptionOfCardSpecialAbility, buyOrSell, card.getPrice());
     }
 
-    static void showInfoOfCardMinesPrice(Card card, int numberOfCards, String typeOfCard) {
+    static void showInfoOfCardMinusPrice(Card card, int numberOfCards, String typeOfCard) {
         System.out.printf("%d ) Type : %s - Name : %s - MP : %d - Description : %s\n",
-                numberOfCards, typeOfCard, card.getName(), card.getRequiredMana(), card.getDescriptionOfSpecialPower());
+                numberOfCards, typeOfCard, card.getName(), card.getRequiredMana(), card.description.descriptionOfCardSpecialAbility);
     }
 
     static void InterCardName() {
@@ -119,6 +119,14 @@ public interface Message {
 
     static void sellWasSuccessful() {
         System.out.println("You sell the card successfully :)");
+    }
+
+    static void haveXNumberOfCardIDInYourCollection(int numberOfFoundIDs){
+        System.out.printf("You have %d number of this card in your collection :)");
+    }
+
+    static void existACardWithThisIDInShop(){
+        System.out.println("There is a card with this ID in shop :)");
     }
 
     // in account:
@@ -387,5 +395,9 @@ public interface Message {
                 System.out.println(" ");
             }
         }
+    }
+
+    static void notEnoughCardNumber(){
+        System.out.println("You can't add this card to your deck. You haven't enough number of it in your collection");
     }
 }

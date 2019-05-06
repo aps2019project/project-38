@@ -11,11 +11,15 @@ import java.util.Map;
 
 public class Spell extends Card {
     private boolean isItem;
-    HashMap<AutoAction, SpellTarget> actions = new HashMap<>();
+    private HashMap<AutoAction, SpellTarget> actions = new HashMap<>();
 
     public Spell(int ID, String name, int requiredMana, int price, boolean isItem) {
         super(ID, name, price, requiredMana);
         this.isItem = isItem;
+    }
+
+    public HashMap<AutoAction, SpellTarget> getActions() {
+        return actions;
     }
 
     public static boolean checkIsItem(Card card) {

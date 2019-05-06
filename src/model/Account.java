@@ -6,7 +6,7 @@ import java.util.*;
 import java.util.Collections;
 
 
-public class Account implements Comparable<Account> {
+public class Account implements Comparable<Account>, java.io.Serializable {
 
     private static Account activeAccount = new Account();
     private static ArrayList<String> userNames = new ArrayList<>();//todo in chiye?
@@ -74,7 +74,7 @@ public class Account implements Comparable<Account> {
 
     //***
     public void save() {
-        //todo
+
     }
 
     public void putGameInHistory(String opponentName, boolean didWin) {

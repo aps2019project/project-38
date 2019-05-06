@@ -2,9 +2,8 @@ package controller.window;
 
 import model.Collection;
 import model.Deck;
+import model.Shop;
 import view.Message;
-
-import java.util.ArrayList;
 
 import static view.Request.getNextRequest;
 
@@ -26,7 +25,8 @@ public class CollectionWindow extends Window {
                     ShopWindow.handleShowInfoOfCards(Collection.getCollection().getCardIDs(), 2);
                     continue;
                 case 2:
-                    handleSearchInCollection();
+                    String cardName = getNextRequest();
+                    Shop.getShop().searchInCollectionCards(cardName);
                     continue;
                 case 3:
                     Message.interDeckName();
@@ -82,21 +82,8 @@ public class CollectionWindow extends Window {
         }
     }
 
-    private void handleSearchInCollection() {
-        String cardName = getNextRequest();
-        ArrayList<Integer> template = Collection.getCollection().searchInCollectionCards(cardName);
-        if (template.size() == 0) {
-            Message.thereIsNoCardWithThisNameInCollection();
-            return;
-        }
-        for (int ID : template) {
-            Message.printSomeThing(((Integer) ID).toString());
-        }
-        Message.INTER();
-    }
-
     private void showInfoOfASpecificDeck(Deck deck) {
-        if(deck==null){
+        if (deck == null) {
             Message.thereIsNoDeckWithThisName();
             return;
         }
