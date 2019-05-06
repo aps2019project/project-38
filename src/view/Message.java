@@ -7,6 +7,7 @@ import model.cards.HeroPower;
 import model.cards.Spell;
 import model.player.AIPlayer;
 import model.player.HumanPlayer;
+import model.triggers.BurningCell;
 import model.triggers.Flag;
 import model.triggers.HolyBuff;
 import model.triggers.Poisoned;
@@ -360,7 +361,7 @@ public interface Message {
                 horizontalBoardLine();
                 for (int i = 0; i < Constant.GameConstants.boardRow; i++) {
                     for (int j = 0; j < 3; j++) {
-                        for (int k = 0; k < Constant.GameConstants.boardColumn; j++) {
+                        for (int k = 0; k < Constant.GameConstants.boardColumn; k++) {
                             switch (j) {
                                 case 0:
                                     System.out.print("|");
@@ -371,12 +372,12 @@ public interface Message {
                                     cellSecondLine(game.getBoard().getCell(i, k));
                                     break;
                                 case 2:
-                                    cellThirdLine(game.getBoard().getCell(i, k));
                                     System.out.print("|");
+                                    cellThirdLine(game.getBoard().getCell(i, k));
                                     break;
-
                             }
                         }
+                        System.out.println("|");
                     }
                     horizontalBoardLine();
                 }
@@ -394,20 +395,18 @@ public interface Message {
                 Game game = cell.getBoard().getGame();
                 if (cell.getWarrior() != null) {
                     int playerNumber = game.getWarriorsPlayer(cell.getWarrior()) == game.getPlayers()[0] ? 1 : 2;
-                    System.out.print(playerNumber + "" + cell.getWarrior().getID());
+                    System.out.print(playerNumber + String.format("%3d",cell.getWarrior().getID()));
                 } else {
                     System.out.print("    ");
                 }
-                System.out.print("|");
             }
 
             static void cellSecondLine(Cell cell) {
                 if (cell.getWarrior() != null) {
-                    System.out.print(cell.getWarrior().getAp() + "" + cell.getWarrior().getHp());
+                    System.out.print(String.format("%2d%2d",cell.getWarrior().getAp(),cell.getWarrior().getHp()));
                 } else {
                     System.out.print("    ");
                 }
-                System.out.print("|");
             }
 
             static void cellThirdLine(Cell cell) {
@@ -419,7 +418,6 @@ public interface Message {
                         System.out.print(" ");
                     }
                 } else {
-                    System.out.print("  ");
                     if (cell.getTriggers().stream().anyMatch(trigger -> trigger instanceof Flag)) {
                         System.out.print("F");
                     } else {
@@ -441,7 +439,11 @@ public interface Message {
                     System.out.print(" ");
                 }
                 //todo --> B
-                System.out.println(" ");
+                if (cell.getTriggers().stream().anyMatch(trigger -> trigger instanceof BurningCell)) {
+                    System.out.print("B");
+                }else {
+                    System.out.print(" ");
+                }
             }
 
             static void help() {

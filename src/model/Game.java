@@ -38,7 +38,7 @@ public class Game {
         initialiseGameFields();
     }
 
-    public Game(GameMood gameMood, Account account, Deck aIDeck) {//todo to not getting ai deck
+    public Game(GameMood gameMood, Account account, Deck aIDeck) {
         this.gameMood = gameMood;
         int randomIndex = (new Random(System.currentTimeMillis())).nextInt(2);
         players[randomIndex] = new HumanPlayer(account, account.getCollection().getMainDeck());
@@ -52,10 +52,10 @@ public class Game {
         getActivePlayer().ableToReplaceCard = true;
         players[0].getWarriors().add(players[0].getMainDeck().getHero().deepCopy());
         players[1].getWarriors().add(players[1].getMainDeck().getHero().deepCopy());
-        board.getCell(Constant.GameConstants.boardRow / 2 + 1, 0)
-                .setWarrior(players[0].getWarriors().get(0));
-        board.getCell(Constant.GameConstants.boardRow / 2 + 1, Constant.GameConstants.boardColumn - 1)
-                .setWarrior(players[1].getWarriors().get(0));
+        putWarriorInCell(board.getCell(Constant.GameConstants.boardRow / 2 + 1,
+                0), players[0].getWarriors().get(0));
+        putWarriorInCell(board.getCell(Constant.GameConstants.boardRow / 2 + 1,
+                Constant.GameConstants.boardColumn - 1), players[1].getWarriors().get(0));
         initialisePlayerHand(players[0]);
         initialisePlayerHand(players[1]);
 
@@ -81,6 +81,11 @@ public class Game {
         for (Map.Entry<Integer, Card> entry : player.getHand().entrySet()) {
             entry.setValue(Card.getAllCards().get(player.getMainDeck().getCardIDs().get(random.nextInt(player.getMainDeck().getCardIDs().size()))));
         }
+    }
+
+    private void putWarriorInCell(Cell cell, Warrior warrior) {
+        cell.setWarrior(warrior);
+        warrior.setCell(cell);
     }
 
     public Player getActivePlayer() {

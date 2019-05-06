@@ -17,7 +17,7 @@ public class Board {
         for (int i = 0; i < Constant.GameConstants.boardRow; i++) {
             table.add(new ArrayList<>());
             for (int j = 0; j < Constant.GameConstants.boardColumn; j++) {
-                table.get(i).add(new Cell(i, j));
+                table.get(i).add(new Cell(this, i, j));
             }
         }
     }

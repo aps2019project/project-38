@@ -11,13 +11,10 @@ public class Cell extends QualityHaver {
     private int row;
     private int column;
 
-    public Cell (int row, int column) {
+    public Cell (Board board, int row, int column) {
         this.row = row;
         this.column = column;
-    }
-
-    public Cell(Board board) {
-        this.board = board;
+        this.board=board;
     }
 
     public Warrior getWarrior() {

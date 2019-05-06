@@ -60,13 +60,13 @@ public class GameWindow extends Window {
         }else if (request.matches("Attack \\d \\d")) {
             Pattern pattern = Pattern.compile("(\\d)");
             Matcher matcher = pattern.matcher(request);
-            matcher.matches();
+            matcher.find();
             int row = Integer.parseInt(matcher.group(1));
-            matcher.matches();
+            matcher.find();
             int column = Integer.parseInt(matcher.group());
             if (game.getSelecteds().getWarriorsCell().size() == 1) {
                 if (row < Constant.GameConstants.boardRow && column < Constant.GameConstants.boardColumn) {
-                    Cell cell = new Cell(row, column);
+                    Cell cell = game.getBoard().getCell(row, column);
                     if (cell.getWarrior() != null && game.getActivePlayer() == game.getWarriorsPlayer(cell.getWarrior())) {
                         game.attack(game.getSelecteds().getWarriorsCell().get(0), cell);
                     } else {
@@ -81,13 +81,13 @@ public class GameWindow extends Window {
         }else if (request.matches("Attack combo \\d \\d")) {
             Pattern pattern = Pattern.compile("(\\d)");
             Matcher matcher = pattern.matcher(request);
-            matcher.matches();
+            matcher.find();
             int row = Integer.parseInt(matcher.group(1));
-            matcher.matches();
+            matcher.find();
             int column = Integer.parseInt(matcher.group());
             if (game.getSelecteds().getWarriorsCell().size() > 1) {
                 if (row < Constant.GameConstants.boardRow && column < Constant.GameConstants.boardColumn) {
-                    Cell cell = new Cell(row, column);
+                    Cell cell = game.getBoard().getCell(row, column);
                     if (cell.getWarrior() != null && game.getActivePlayer() == game.getWarriorsPlayer(cell.getWarrior())) {
                         game.comboAttack(game.getSelecteds().getWarriorsCell(), cell);
                     } else {
@@ -102,13 +102,13 @@ public class GameWindow extends Window {
         }else if (request.matches("Insert in \\d \\d")) {
             Pattern pattern = Pattern.compile("(\\d)");
             Matcher matcher = pattern.matcher(request);
-            matcher.matches();
+            matcher.find();
             int row = Integer.parseInt(matcher.group(1));
-            matcher.matches();
+            matcher.find();
             int column = Integer.parseInt(matcher.group());
             if (game.getSelecteds().cardHandIndex != null) {
                 if (row < Constant.GameConstants.boardRow && column < Constant.GameConstants.boardColumn) {
-                    Cell cell = new Cell(row, column);
+                    Cell cell = game.getBoard().getCell(row, column);
                     game.useCard(game.getSelecteds().cardHandIndex, cell);
                 } else {
                     Message.GameWindow.insideGame.failCommand.indexOutOfBoard();
@@ -120,12 +120,12 @@ public class GameWindow extends Window {
             game.getSelecteds().deselectAll();
             Pattern pattern = Pattern.compile("(\\d)");
             Matcher matcher = pattern.matcher(request);
-            matcher.matches();
+            matcher.find();
             int row = Integer.parseInt(matcher.group(1));
-            matcher.matches();
+            matcher.find();
             int column = Integer.parseInt(matcher.group());
             if (row < Constant.GameConstants.boardRow && column < Constant.GameConstants.boardColumn) {
-                Cell cell = new Cell(row, column);
+                Cell cell = game.getBoard().getCell(row, column);
                 //todo use special power
             } else {
                 Message.GameWindow.insideGame.failCommand.indexOutOfBoard();
@@ -133,7 +133,7 @@ public class GameWindow extends Window {
         }else if (request.matches("Show card info \\d{2,3}")) {
             Pattern pattern = Pattern.compile("(\\d{2,3})");
             Matcher matcher = pattern.matcher(request);
-            matcher.matches();
+            matcher.find();
             int cardID = Integer.parseInt(matcher.group(1));
             if (Card.getAllCards().containsKey(cardID)) {
                 Description description = Card.getAllCards().get(cardID).description;
@@ -158,13 +158,13 @@ public class GameWindow extends Window {
         }else if (request.matches("Use collectable item \\d \\d")) {
             Pattern pattern = Pattern.compile("(\\d)");
             Matcher matcher = pattern.matcher(request);
-            matcher.matches();
+            matcher.find();
             int row = Integer.parseInt(matcher.group(1));
-            matcher.matches();
+            matcher.find();
             int column = Integer.parseInt(matcher.group());
             if (game.getSelecteds().collectableItem != null) {
                 if (row < Constant.GameConstants.boardRow && column < Constant.GameConstants.boardColumn) {
-                    Cell cell = new Cell(row, column);
+                    Cell cell = game.getBoard().getCell(row, column);
                     game.useCollectable(game.getSelecteds().collectableItem, cell);
                 } else {
                     Message.GameWindow.insideGame.failCommand.indexOutOfBoard();
@@ -228,12 +228,12 @@ public class GameWindow extends Window {
     private void selectWarrior(String request) {
         Pattern pattern = Pattern.compile("(\\d)");
         Matcher matcher = pattern.matcher(request);
-        matcher.matches();
+        matcher.find();
         int row = Integer.parseInt(matcher.group(1));
-        matcher.matches();
+        matcher.find();
         int column = Integer.parseInt(matcher.group());
         if (row < Constant.GameConstants.boardRow && column < Constant.GameConstants.boardColumn) {
-            Cell cell = new Cell(row, column);
+            Cell cell = game.getBoard().getCell(row, column);
             if (cell.getWarrior() != null && game.getActivePlayer() == game.getWarriorsPlayer(cell.getWarrior())) {
                 game.getSelecteds().seletWarrior(game.getBoard().getCell(row, column));
             }
@@ -365,15 +365,19 @@ public class GameWindow extends Window {
                 }
             }
             else if (request.matches("Start game \\w+ (KillingEnemyHero|CarryingFlag)")) {
-                String mood = request.replaceFirst("Start game \\w+ ", "");
-                String deckName = request.replaceFirst("Start game ", "")
-                        .replaceFirst(" (KillingEnemyHero|CarryingFlag)", "");
+                Pattern pattern = Pattern.compile("(\\w+) (KillingEnemyHero|CarryingFlag)");
+                Matcher matcher = pattern.matcher(request);
+                matcher.find();
+                String mood = matcher.group(2);
+                String deckName = matcher.group(1);
                 if (Deck.getAllDecks().containsKey(deckName)) {
                     if (mood.equals("KillingEnemyHero")) {
-                        game = new Game(new KillingEnemyHero(), Account.getActiveAccount(), moodData.aIDeck);
+                        game = new Game(new KillingEnemyHero(), Account.getActiveAccount(), Deck.getAllDecks().get(deckName));
+                        return true;
                     }
                     else {
-                        game = new Game(new CarryingFlag(), Account.getActiveAccount(), moodData.aIDeck);
+                        game = new Game(new CarryingFlag(), Account.getActiveAccount(), Deck.getAllDecks().get(deckName));
+                        return true;
                     }
                 }
             }
