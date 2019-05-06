@@ -57,6 +57,7 @@ public class Game {
                 .setWarrior(players[1].getWarriors().get(0));
         initialisePlayerHand(players[0]);
         initialisePlayerHand(players[1]);
+
         new Applier().execute(players[0].getMainDeck().getItem(), players[0].getPlayerHero());
         new Applier().execute(players[1].getMainDeck().getItem(), players[1].getPlayerHero());
         startTurn();
