@@ -149,6 +149,7 @@ public class Collection {
             Message.deckIsNotValid();
         }
     }
+
     //***
 
     public void setMainDeck(Deck mainDeck) {

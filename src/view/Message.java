@@ -3,7 +3,10 @@ package view;
 import model.*;
 import model.cards.Card;
 import model.cards.Hero;
+import model.cards.HeroPower;
 import model.cards.Spell;
+import model.player.AIPlayer;
+import model.player.HumanPlayer;
 import model.triggers.Flag;
 import model.triggers.HolyBuff;
 import model.triggers.Poisoned;
@@ -30,7 +33,7 @@ public interface Message {
     }
 
     static void showAWordAsTitle(String aWord) {
-        System.out.println("    " + aWord + " :");
+        System.out.println("        " + aWord + " :");
     }
 
     // mainMenu messages
@@ -81,7 +84,8 @@ public interface Message {
     }
 
     static void showInfoOfCardMinusPrice(Card card, int numberOfCards, String typeOfCard) {
-        System.out.printf("%d ) Type : %s - Name : %s - MP : %d - Description : %s\n",
+        System.out.printf("%d ) Type : %s - Name : %s - MP : %d " +
+                        "- Description : %s\n",
                 numberOfCards, typeOfCard, card.getName(), card.getRequiredMana(), card.description.descriptionOfCardSpecialAbility);
     }
 
@@ -121,11 +125,11 @@ public interface Message {
         System.out.println("You sell the card successfully :)");
     }
 
-    static void haveXNumberOfCardIDInYourCollection(int numberOfFoundIDs){
-        System.out.printf("You have %d number of this card in your collection :)");
+    static void haveXNumberOfCardIDInYourCollection(int numberOfFoundIDs) {
+        System.out.printf("You have %d number of this card in your collection :)", numberOfFoundIDs);
     }
 
-    static void existACardWithThisIDInShop(){
+    static void existACardWithThisIDInShop() {
         System.out.println("There is a card with this ID in shop :)");
     }
 
@@ -260,19 +264,37 @@ public interface Message {
         System.out.println("Please inter deckName:");
     }
 
+    static void interCardName() {
+        System.out.println("Please inter cardName");
+    }
+
+    static void showDeckName(int index, String deckName) {
+        System.out.printf("%d ) %s :\n", index, deckName);
+    }
+
+    static void noDeckExist() {
+        System.out.println("There is no deck :(");
+    }
+
+
+    //******************************************************
+
     interface GameWindow {
         interface beforeGame {
             static void invalidDeckForPlayerOne() {
                 System.out.println("selected deck is invalid");
             }
+
             static void singleOrMultiMenu() {
                 System.out.println("1. Single player");
                 System.out.println("2. Multi player");
             }
+
             static void StoryOrCustomMenu() {
                 System.out.println("1. Story");
                 System.out.println("2. Custom game");
             }
+
             static void moodAndDeckMenu() {
                 System.out.println("Select deck and mood --> for example: " +
                         "Start game [deck name] [mood name] [number of flags]*");
@@ -285,15 +307,18 @@ public interface Message {
                 System.out.println("CarryingFlag");
                 System.out.println("CollectingFlag");
             }
+
             static void accountMenu(HashMap<String, Account> accounts) {
                 System.out.println("Select a ready account --> for example: Select user [user name]");
                 for (Map.Entry<String, Account> entry : accounts.entrySet()) {
                     System.out.println(entry.getKey());
                 }
             }
+
             static void invalidDeckForPlayerTwo() {
                 System.out.println("selected deck for second player is invalid");
             }
+
             static void moodMenu() {
                 System.out.println("Choose mood --> for example: Start multiplayer game [mood name] [number of flags]*");
                 System.out.println("Moods:");
@@ -302,7 +327,35 @@ public interface Message {
                 System.out.println("CollectingFlag");
             }
         }
+
         interface insideGame {
+            static void showMainView(Game game) {
+                showBoardAbove(game);
+                showBoard(game);
+                showBoardBottom(game);
+            }
+
+            static void showBoardAbove(Game game) {
+                int activePlayerNumber = game.getActivePlayer() == game.getPlayers()[0] ? 0 : 1;
+                String completeName = game.getActivePlayer() instanceof AIPlayer ? "AI" : "Human User Name:" +
+                        ((HumanPlayer) game.getActivePlayer()).getAccount().getUsername();
+                System.out.println("Game Mood: " + game.getGameMood().getClass());
+                System.out.println(activePlayerNumber + ": " + completeName);
+                System.out.println("Mana: " + game.getActivePlayer().mana);
+            }
+
+            static void showBoardBottom(Game game) {
+                System.out.println("Hand:");
+                for (Map.Entry<Integer, Card> entry : game.getActivePlayer().getHand().entrySet()) {
+                    System.out.println(entry.getKey() + ": Name" + entry.getValue().getName() + " Required Mana: " +
+                            entry.getValue().getRequiredMana() + " CardID:" + entry.getValue().getID());
+                }
+                HeroPower specialPower = game.getActivePlayer().getPlayerHero().getPower();
+                System.out.println("SpecialPower: Name" + specialPower.getCard().getName() +
+                        " Required Mana:" + specialPower.getCard().getRequiredMana() +
+                        " Cool Down:" + specialPower.coolDownRemaining + " CardID:" + specialPower.getCard().getID());
+            }
+
             static void showBoard(Game game) {
                 horizontalBoardLine();
                 for (int i = 0; i < Constant.GameConstants.boardRow; i++) {
@@ -328,7 +381,8 @@ public interface Message {
                     horizontalBoardLine();
                 }
             }
-            private static void horizontalBoardLine() {
+
+            static void horizontalBoardLine() {
                 System.out.print("+");
                 for (int i = 0; i < Constant.GameConstants.boardColumn; i++) {
                     System.out.print("----+");
@@ -336,42 +390,39 @@ public interface Message {
                 System.out.println();
             }
 
-            private static void cellFirstLine(Cell cell) {
+            static void cellFirstLine(Cell cell) {
                 Game game = cell.getBoard().getGame();
                 if (cell.getWarrior() != null) {
                     int playerNumber = game.getWarriorsPlayer(cell.getWarrior()) == game.getPlayers()[0] ? 1 : 2;
                     System.out.print(playerNumber + "" + cell.getWarrior().getID());
-                }
-                else {
+                } else {
                     System.out.print("    ");
                 }
                 System.out.print("|");
             }
-            private static void cellSecondLine(Cell cell) {
+
+            static void cellSecondLine(Cell cell) {
                 if (cell.getWarrior() != null) {
                     System.out.print(cell.getWarrior().getAp() + "" + cell.getWarrior().getHp());
-                }
-                else {
+                } else {
                     System.out.print("    ");
                 }
                 System.out.print("|");
             }
-            private static void cellThirdLine(Cell cell) {
+
+            static void cellThirdLine(Cell cell) {
                 //Flag --> F
                 if (cell.getWarrior() != null) {
                     if (cell.getWarrior().getTriggers().stream().anyMatch(trigger -> trigger instanceof Flag)) {
                         System.out.print("F");
-                    }
-                    else {
+                    } else {
                         System.out.print(" ");
                     }
-                }
-                else {
+                } else {
                     System.out.print("  ");
                     if (cell.getTriggers().stream().anyMatch(trigger -> trigger instanceof Flag)) {
                         System.out.print("F");
-                    }
-                    else {
+                    } else {
                         System.out.print(" ");
                     }
                 }
@@ -379,36 +430,39 @@ public interface Message {
                 if (cell.getTriggers().stream().anyMatch(trigger -> trigger.getTriggers().stream().anyMatch
                         (insideTrigger -> insideTrigger instanceof HolyBuff))) {
                     System.out.print("H");
-                }
-                else {
+                } else {
                     System.out.print(" ");
                 }
                 //Poison --> P
                 if (cell.getTriggers().stream().anyMatch(trigger -> trigger.getTriggers().stream().anyMatch
                         (insideTrigger -> insideTrigger instanceof Poisoned))) {
                     System.out.print("P");
-                }
-                else {
+                } else {
                     System.out.print(" ");
                 }
                 //todo --> B
                 System.out.println(" ");
             }
+
+            static void help() {
+                System.out.println("Select Warrior: Select [row] [column]");
+                System.out.println("(you can select multi warriors for combo by using above command repeatedly)");
+                System.out.println("Select Card From Hand: Select [hand index]");
+                System.out.println("Select Special Power: Select SPP");
+                System.out.println("Deselect Warriors: Deselect warriors");
+                System.out.println("(if you selected just one warrior you can attack to an enemy warrior): Attack [row] [column]");
+                System.out.println("(if you selected more than one warrior you can combo attack to an enemy warrior): Attack combo [row] [column]");
+                System.out.println("(if you selected a card you can put it on board): Insert in [row] [column]");
+                System.out.println("Use Special Power: Use special power [row] [column]");
+                System.out.println("Show card info [cardID]");
+                System.out.println("End Turn: End turn");
+                System.out.println("Show Collectable Items: Show collectables");
+                System.out.println("(if you selected an war you can attack to an enemy warrior): Attack [row] [column]");
+            }
         }
     }
 
-    static void notEnoughCardNumber(){
+    static void notEnoughCardNumber() {
         System.out.println("You can't add this card to your deck. You haven't enough number of it in your collection");
-    }
-
-    static void interCardName(){
-        System.out.println("Please inter card name:");
-    }
-
-    static void showDeckName(int index,String deckName){
-        System.out.printf("%d ) %s :\n",index,deckName);
-    }
-    static void noDeckExist(){
-        System.out.println("There is no deck :(");
     }
 }

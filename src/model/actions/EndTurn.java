@@ -4,8 +4,10 @@ import model.Constant;
 import model.Game;
 import model.gamestate.TurnEndState;
 
+import java.io.IOException;
+
 public class EndTurn {
-    public static void doIt(Game game) {
+    public static void doIt(Game game) throws IOException, ClassNotFoundException {
         TurnEndState turnEnd = new TurnEndState();
         game.iterateAllTriggersCheck(turnEnd);
         game.iterateAndExpireAllTriggers();
@@ -14,6 +16,6 @@ public class EndTurn {
         game.addNewCardToPlayerHand(game.getActivePlayer());
         game.getActivePlayer().mana = Constant.GameConstants.getTurnMana(game.turn);
         game.getActivePlayer().ableToReplaceCard = true;
-        game.timer.restart();
+//        game.timer.restart();
     }
 }

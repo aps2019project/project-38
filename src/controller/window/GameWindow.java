@@ -5,7 +5,6 @@ import model.Deck;
 import model.Game;
 import model.gamemoods.CarryingFlag;
 import model.gamemoods.CollectingFlag;
-import model.gamemoods.GameMood;
 import model.gamemoods.KillingEnemyHero;
 import model.player.AIPlayer;
 import model.player.HumanPlayer;
@@ -23,9 +22,8 @@ public class GameWindow extends Window {
             Message.GameWindow.insideGame.showMainView(game);
             if (game.getActivePlayer() instanceof HumanPlayer) {
                 getPlayerAction();
-            }
-            else {
-                ((AIPlayer)game.getActivePlayer()).doSomething();
+            } else {
+                ((AIPlayer) game.getActivePlayer()).doSomething();
             }
         }
     }
@@ -62,8 +60,7 @@ public class GameWindow extends Window {
                 this.closeWindow();
                 return false;
             }
-        }
-        else { //multi player
+        } else { //multi player
             if (!initializeMultiPlayer()) {
                 this.closeWindow();
                 return false;
@@ -82,8 +79,7 @@ public class GameWindow extends Window {
                 this.closeWindow();
                 return false;
             }
-        }
-        else { // custom mood
+        } else { // custom mood
             if (!chooseMoodAndEnemyDeck()) {
                 this.closeWindow();
                 return false;
@@ -120,10 +116,10 @@ public class GameWindow extends Window {
                 case "1":
                     moodData.singlePlayer = true;
                     return true;
-                case "2" :
+                case "2":
                     moodData.singlePlayer = false;
                     return true;
-                case "exit" :
+                case "exit":
                     return false;
             }
         }
@@ -137,10 +133,10 @@ public class GameWindow extends Window {
                 case "1":
                     moodData.story = true;
                     return true;
-                case "2" :
+                case "2":
                     moodData.story = false;
                     return true;
-                case "exit" :
+                case "exit":
                     return false;
             }
         }
@@ -164,21 +160,18 @@ public class GameWindow extends Window {
                             Account.getActiveAccount(), Deck.getAllDecks().get(deckName));
                     return true;
                 }
-            }
-            else if (request.matches("Start game \\w+ (KillingEnemyHero|CarryingFlag)")) {
+            } else if (request.matches("Start game \\w+ (KillingEnemyHero|CarryingFlag)")) {
                 String mood = request.replaceFirst("Start game \\w+ ", "");
                 String deckName = request.replaceFirst("Start game ", "")
                         .replaceFirst(" (KillingEnemyHero|CarryingFlag)", "");
                 if (Deck.getAllDecks().containsKey(deckName)) {
                     if (mood.equals("KillingEnemyHero")) {
                         game = new Game(new KillingEnemyHero(), Account.getActiveAccount(), moodData.aIDeck);
-                    }
-                    else {
+                    } else {
                         game = new Game(new CarryingFlag(), Account.getActiveAccount(), moodData.aIDeck);
                     }
                 }
-            }
-            else if (request.equals("exit")) {
+            } else if (request.equals("exit")) {
                 return false;
             }
         }
@@ -195,13 +188,11 @@ public class GameWindow extends Window {
                     if (account.getCollection().getMainDeck() != null) {
                         moodData.secondAccount = Account.getusernameToAccountObject().get(userName);
                         return true;
-                    }
-                    else {
+                    } else {
                         Message.GameWindow.beforeGame.invalidDeckForPlayerTwo();
                     }
                 }
-            }
-            else if (request.matches("exit")) {
+            } else if (request.matches("exit")) {
                 return false;
             }
         }
@@ -216,17 +207,14 @@ public class GameWindow extends Window {
                         (request.replaceFirst("Start multiplayer game CollectingFlag ", ""));
                 game = new Game(new CollectingFlag(numberOfFlags), Account.getActiveAccount(), moodData.secondAccount);
 
-            }
-            else if (request.matches("Start multiplayer game (KillingEnemyHero|CarryingFlag)")) {
+            } else if (request.matches("Start multiplayer game (KillingEnemyHero|CarryingFlag)")) {
                 String gameMood = request.replaceFirst("Start multiplayer game ", "");
                 if (gameMood.equals("KillingEnemyHero")) {
                     game = new Game(new KillingEnemyHero(), Account.getActiveAccount(), moodData.secondAccount);
-                }
-                else {
+                } else {
                     game = new Game(new CarryingFlag(), Account.getActiveAccount(), moodData.secondAccount);
                 }
-            }
-            else if(request.equals("exit")) {
+            } else if (request.equals("exit")) {
                 return false;
             }
         }

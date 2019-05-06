@@ -1,6 +1,5 @@
 package controller;
 
-import controller.window.IntroWindow;
 import controller.window.LoadWindow;
 import controller.window.Window;
 
