@@ -14,7 +14,6 @@ import model.player.HumanPlayer;
 import model.player.Player;
 import model.triggers.Trigger;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
@@ -27,7 +26,7 @@ public class Game {
     Player[] players = new  Player[2];
     private Board board = new Board(this);
 //    public Timer timer = new Timer(Constant.GameConstants.turnTime, ignored -> endTurn());
-    ArrayList<Spell> colletableItems = new ArrayList<>();
+    private ArrayList<Spell> colletableItems = new ArrayList<>();
     private Selectable selecteds = new Selectable();
 
 
@@ -103,6 +102,10 @@ public class Game {
 
     public Selectable getSelecteds() {
         return selecteds;
+    }
+
+    public ArrayList<Spell> getColletableItems() {
+        return colletableItems;
     }
 
     public void iterateAllTriggersCheck(GameState gameState) {
@@ -237,6 +240,10 @@ public class Game {
             UseCard.doIt(handMapKey, cell);
             checkGameEndAndThenKillAllDiedWarriors();
         }
+    }
+
+    public void useCollectable(Spell spell, Cell cell) {
+        //todo
     }
 
     public void endTurn () {

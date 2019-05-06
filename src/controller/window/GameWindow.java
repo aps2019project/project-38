@@ -3,6 +3,7 @@ package controller.window;
 import model.*;
 import model.cards.Card;
 import model.cards.Description;
+import model.cards.Spell;
 import model.gamemoods.CarryingFlag;
 import model.gamemoods.CollectingFlag;
 import model.gamemoods.KillingEnemyHero;
@@ -150,17 +151,81 @@ public class GameWindow extends Window {
             int cardID = Integer.parseInt(matcher.group(1));
             if (Card.getAllCards().containsKey(cardID)) {
                 Description description = Card.getAllCards().get(cardID).description;
-                System.out.println("Description Of Card Ability: " +
-                        Card.getAllCards().get(cardID).description.descriptionOfCardSpecialAbility);
-                System.out.println("Target Type: " + Card.getAllCards().get(cardID).description.targetType);
+                System.out.println("Description Of Card Ability: " + description.descriptionOfCardSpecialAbility);
+                System.out.println("Target Type: " + description.targetType);
 
             }else {
                 System.out.println("no card matched");
             }
         }else if (input.equals("End turn")) {
             game.endTurn();
+        }else if (input.equals("Show collectables")) {
+            collatableItemsMenu();
+        }else if (input.equals("Show collectable item info")) {
+            if (game.getSelecteds().collectableItem != null) {
+                Spell item = game.getSelecteds().collectableItem;
+                System.out.println("Description Of Card Ability: " + item.description.descriptionOfCardSpecialAbility);
+                System.out.println("Target Type: " + item.description.targetType);
+            }else {
+                System.out.println("no selected collectable item");
+            }
+        }else if (input.matches("Use collectable item \\d \\d")) {
+            Pattern pattern = Pattern.compile("(\\d)");
+            Matcher matcher = pattern.matcher(input);
+            matcher.matches();
+            int row = Integer.parseInt(matcher.group(1));
+            matcher.matches();
+            int column = Integer.parseInt(matcher.group());
+            if (game.getSelecteds().collectableItem != null) {
+                if (row < Constant.GameConstants.boardRow && column < Constant.GameConstants.boardColumn) {
+                    Cell cell = new Cell(row, column);
+                    game.useCollectable(game.getSelecteds().collectableItem, cell);
+                } else {
+                    Message.GameWindow.insideGame.failCommand.indexOutOfBoard();
+                }
+            }else {
+                System.out.println("no collectable item selected");
+            }
+        }else if (input.equals("Show next card")) {
+            //todo in game
+        }else if (input.equals("Enter graveyard")) {
+            graveyardMenu();
         }
     }
+
+    private void graveyardMenu() {
+        while (true) {
+            Message.GameWindow.insideGame.graveyardWindow(game);
+            String request = Request.getNextRequest();
+            if (request.equals("Exit")) {
+                return;
+            }else {
+                System.out.println("invalid command");
+            }
+        }
+    }
+
+    private void collatableItemsMenu() {
+        game.getSelecteds().deselectAll();
+        while (true) {
+            Message.GameWindow.insideGame.colletableWindow(game);
+            String request = Request.getNextRequest();
+            if (request.equals("exit")) {
+                return;
+            }else if (request.matches("Select \\d+")) {
+                int index = Integer.parseInt(request.replace("Select ", ""));
+                if (index < game.getColletableItems().size()) {
+                    game.getSelecteds().selectColletableItem(game.getColletableItems().get(index));
+                }else {
+                    System.out.println("index is too big");
+                }
+            }else {
+                System.out.println("invalid command");
+            }
+        }
+    }
+
+
 
     private void help() {
         while (true) {
@@ -168,6 +233,8 @@ public class GameWindow extends Window {
             String input = Request.getNextRequest();
             if (input.matches("exit")) {
                 break;
+            }else {
+                System.out.println("invalid command");
             }
         }
     }

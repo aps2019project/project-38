@@ -438,12 +438,33 @@ public interface Message {
                 System.out.println("Show Card Info: Show card info [cardID]");
                 System.out.println("End Turn: End turn");
                 System.out.println("Show Collectable Items: Show collectables");
+                System.out.println("(if you are in collectable items window you can select colectable item): Select [item index]");
                 System.out.println("(get out of above window): Exit");
-                System.out.println("(if you selected an collectable item you can see item info): Show info");
-                System.out.println("(if you selected an collectable item you can use it): Use [row] [column]");
+                System.out.println("(if you selected an collectable item in board window you can see item info): Show collectable item info");
+                System.out.println("(if you selected an collectable item in board window you can use it): Use collectable item [row] [column]");
                 System.out.println("Show Next Card Info: Show next card");
                 System.out.println("Show Graveyard: Enter graveyard");
+                System.out.println("(get out of above window): Exit");
                 System.out.println("(you can see info of above cards): Show card info [cardID]");
+                System.out.println("(get out of above window): Exit");
+            }
+
+            static void colletableWindow(Game game) {
+                System.out.println("Collectable Items:");
+                for (int i = 0; i < game.getColletableItems().size(); i++) {
+                    Spell item = game.getColletableItems().get(i);
+                    System.out.println(i + ": Name: " + item.getName() + " Requird Mana: " +
+                            item.getRequiredMana() + " Card ID:" + item.getID());
+                }
+            }
+
+            static void graveyardWindow(Game game) {
+                System.out.println("Graveyard Cards: ");
+                for (Card card : game.getActivePlayer().getUsedCards()) {
+                    System.out.println(": Name: " + card.getName() + " Requird Mana: " +
+                            card.getRequiredMana() + " Card ID:" + card.getID());
+                    //todo badana.
+                }
             }
 
             interface failCommand {
