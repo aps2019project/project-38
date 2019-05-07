@@ -42,10 +42,10 @@ public class RectGetter implements SpellTarget {
             targets.addAll(cells);
         }
         targets.addAll( cells.stream().map(Cell::getWarrior).filter(Objects::nonNull)
-                .filter(warrior -> (game.getWarriorsEnemyPlayer(warrior).equals(spellOwner) && !(warrior instanceof Hero)) == enemies ||
-                        (game.getWarriorsPlayer(warrior).equals(spellOwner) && !(warrior instanceof Hero)) == friends ||
-                        (game.getWarriorsEnemyPlayer(warrior).equals(spellOwner) && warrior instanceof Hero) == enemyHero ||
-                        (game.getWarriorsPlayer(warrior).equals(spellOwner) && warrior instanceof Hero) == friendHero)
+                .filter(warrior -> (((game.getWarriorsEnemyPlayer(warrior).equals(spellOwner) && !(warrior instanceof Hero)) == enemies)&&enemies) ||
+                        (((game.getWarriorsPlayer(warrior).equals(spellOwner) && !(warrior instanceof Hero)) == friends)&&friends) ||
+                        (((game.getWarriorsEnemyPlayer(warrior).equals(spellOwner) && (warrior instanceof Hero)) == enemyHero)&&enemyHero) ||
+                        (((game.getWarriorsPlayer(warrior).equals(spellOwner) && (warrior instanceof Hero)) == friendHero)&&friendHero))
                 .collect(Collectors.toCollection(ArrayList::new)));
 
         return targets;

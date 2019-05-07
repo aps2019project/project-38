@@ -39,7 +39,7 @@ public class AllWarriorsGetter implements TriggerTarget, SpellTarget {
         if(friendMod){
             targets.addAll(spellOwner.getWarriors());
         }else {
-            //todo don't have the method yet
+            targets.addAll(spellOwner.getGame().getOtherPlayer(spellOwner).getWarriors());
         }
         targets.removeIf(warrior1 -> !heroToo && warrior1 instanceof Hero);
         return targets;

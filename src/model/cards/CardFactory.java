@@ -624,7 +624,7 @@ public class CardFactory {
             spell.description.descriptionOfCardSpecialAbility = "hit all enemies 6 units";
             allBuiltSpells.add(spell);
         }
-        {
+        {//w
             Spell spell = new Spell(117, "Weakening", 1, 1000, false);
 
             spell.getActions().put(new Applier(), new RectGetter(1, 1, false, true, false, false, false));
@@ -673,7 +673,6 @@ public class CardFactory {
             Aura aura = new Aura(-1, Dispelablity.UNDISPELLABLE, new TriggerOwnerGetter());
             aura.getEffects().add(new AP(1, Dispelablity.GOOD, 4));
             hero.getTriggers().add(aura);
-
 
             hero.description.descriptionOfCardSpecialAbility = "Apply power buff with 4 point additional attack damage on himself";
             allBuiltHeroes.add(hero);

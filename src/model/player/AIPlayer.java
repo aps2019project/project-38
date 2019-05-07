@@ -45,8 +45,4 @@ public class AIPlayer extends Player {
         Collections.shuffle(cells);
         return cells;
     }
-
-    private Game getGame(){
-        return warriors.get(0).getCell().getBoard().getGame();
-    }
 }

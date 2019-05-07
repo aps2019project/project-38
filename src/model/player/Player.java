@@ -2,6 +2,7 @@ package model.player;
 
 import model.Constant;
 import model.Deck;
+import model.Game;
 import model.cards.Card;
 import model.cards.Hero;
 import model.cards.Warrior;
@@ -55,5 +56,9 @@ public abstract class Player {
 
     public Card getNextCard() {
         return nextCard;
+    }
+
+    public Game getGame(){
+        return warriors.get(0).getCell().getBoard().getGame();
     }
 }

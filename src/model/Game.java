@@ -29,6 +29,10 @@ public class Game {
     private ArrayList<Spell> colletableItems = new ArrayList<>();
     private Selectable selecteds = new Selectable();
 
+    public HashMap<Trigger,QualityHaver> triggBuffer = new HashMap<>();
+    public HashMap<Effect,QualityHaver> effBuffer = new HashMap<>();
+    private boolean attackMod=false;
+
     public Game(GameMood gameMood, Account accountOne, Account accountTwo) {
         this.gameMood = gameMood;
         int randomIndex = (new Random(System.currentTimeMillis())).nextInt(2);
@@ -84,6 +88,15 @@ public class Game {
         }
     }
 
+    private void flushBuffer(){
+        for (Map.Entry<Trigger, QualityHaver> entry : triggBuffer.entrySet()) {
+            entry.getValue().getTriggers().add(entry.getKey());
+        }
+        for (Map.Entry<Effect, QualityHaver> entry : effBuffer.entrySet()) {
+            entry.getValue().getEffects().add(entry.getKey());
+        }
+    }
+
     private void initialisePlayerHand(Player player) {
         Random random = new Random(System.currentTimeMillis());
         for (Map.Entry<Integer, Card> entry : player.getHand().entrySet()) {
@@ -113,7 +126,7 @@ public class Game {
     }
 
     public Player getWarriorsEnemyPlayer(Warrior warrior) {
-        return getWarriorsPlayer(warrior) == players[0] ? players[0] : players[1];
+        return getWarriorsPlayer(warrior) == players[0] ? players[1] : players[0];
     }
 
     public Board getBoard() {
@@ -140,7 +153,9 @@ public class Game {
         board.iterateBoardTriggers(gameState);
         iteratePlayerTriggers(players[0], gameState);
         iteratePlayerTriggers(players[1], gameState);
-        //apply buffer here if not in kill mod
+        if(!attackMod){
+            flushBuffer();
+        }
     }
 
     private void iteratePlayerTriggers(Player player, GameState gameState) {
@@ -242,16 +257,25 @@ public class Game {
         if (defenderCell.getWarrior() == attackersCell.get(0).getWarrior()) {
             return;
         }
-        ComboAttack.doIt(attackersCell, defenderCell);
-        checkGameEndAndThenKillAllDiedWarriors();
 
+        attackMod=true;
+        ComboAttack.doIt(attackersCell, defenderCell);
+        attackMod=false;
+        flushBuffer();
+
+        checkGameEndAndThenKillAllDiedWarriors();
     }
 
     public void attack(Cell attackerCell, Cell defenderCell) {
         ArrayList<Warrior> activePlayerWarriors = getActivePlayer().getWarriors();
         if (activePlayerWarriors.contains(attackerCell.getWarrior()) &&
                 !activePlayerWarriors.contains(defenderCell.getWarrior())) {
+
+            attackMod=true;
             Attack.doIt(attackerCell, defenderCell);
+            attackMod=false;
+            flushBuffer();
+
             checkGameEndAndThenKillAllDiedWarriors();
         }
     }
