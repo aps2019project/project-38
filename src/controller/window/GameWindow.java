@@ -39,7 +39,7 @@ public class GameWindow extends Window {
     private void endGame(Game game) {
         Player winner = game.getGameMood().getWinner();
         if (winner instanceof HumanPlayer) {
-            ((HumanPlayer)winner).getAccount().derrick += game.getPrise();
+            ((HumanPlayer)winner).getAccount().derrick += game.prise;
         }
         while (true) {
             Message.GameWindow.AfterGame.showWinner(winner);
@@ -107,7 +107,7 @@ public class GameWindow extends Window {
         if (game.getSelectedThings().collectibleItem != null) {
             game.useCollectible(game.getSelectedThings().collectibleItem, cell);
         } else {
-            System.out.println("no collectible item selected");
+            Message.GameWindow.failMessage.noSelectedCollectibleItem();
         }
         game.getSelectedThings().deselectAll();
     }

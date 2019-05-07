@@ -7,9 +7,10 @@ import model.cards.Warrior;
 import model.player.Player;
 import model.triggers.Flag;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class GameMood {
+public abstract class GameMood implements Serializable {
     static ArrayList<Game> steps = new ArrayList<>();
     Player winner;
 

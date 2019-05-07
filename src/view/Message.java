@@ -552,15 +552,19 @@ public interface Message {
             }
 
             static void youHaveNoOwnWarriorInThisCell() {
-                System.out.println("you have no own warrior in that cell");
+                System.out.println("you have no own warrior in this cell");
             }
 
             static void thereIsNoEnemyWarriorInThisCell() {
-                System.out.println("there is no enemy warrior in that cell");
+                System.out.println("there is no enemy warrior in this cell");
             }
 
             static void invalidCommand() {
                 System.out.println("invalid command");
+            }
+
+            static void noSelectedCollectibleItem() {
+                System.out.println("you have no selected collectible item");
             }
         }
     }

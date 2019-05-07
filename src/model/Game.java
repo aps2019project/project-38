@@ -14,10 +14,11 @@ import model.player.HumanPlayer;
 import model.player.Player;
 import model.triggers.Trigger;
 
+import java.io.Serializable;
 import java.util.*;
 
 
-public class Game {
+public class Game implements Serializable {
     GameMood gameMood;
     public int turn;
     Player[] players = new Player[2];
@@ -25,13 +26,13 @@ public class Game {
 //    public Timer timer = new Timer(Constant.GameConstants.turnTime, ignored -> endTurn());
     private ArrayList<Spell> collectibleItems = new ArrayList<>();
     private Selectable selectedThings = new Selectable();
-    private int prise;
+    public int prise;
 
     public HashMap<Trigger,QualityHaver> triggBuffer = new HashMap<>();
     public HashMap<Effect,QualityHaver> effBuffer = new HashMap<>();
     private boolean killMod=false;
 
-    public Game(GameMood gameMood, Account accountOne, Account accountTwo, int prise) {
+    public Game(GameMood gameMood, Account accountOne, Account accountTwo) {
         this.gameMood = gameMood;
         int randomIndex = (new Random(System.currentTimeMillis())).nextInt(2);
         this.players[randomIndex] = new HumanPlayer(accountOne, accountOne.getCollection().getMainDeck());
@@ -40,35 +41,13 @@ public class Game {
         initialiseGameFields();
     }
 
-    public Game(GameMood gameMood, Account account, Deck aIDeck, int prise) {
+    public Game(GameMood gameMood, Account account, Deck aIDeck) {
         this.gameMood = gameMood;
         int randomIndex = (new Random(System.currentTimeMillis())).nextInt(2);
         players[randomIndex] = new HumanPlayer(account, account.getCollection().getMainDeck());
         players[(randomIndex + 1) % 2] = new AIPlayer(aIDeck);
         this.prise = prise;
         initialiseGameFields();
-    }
-
-    public Game(GameMood gameMood, Account account, Deck aIDeck) {
-        Game game = new Game(gameMood, account, aIDeck, Constant.GameConstants.defaultPrise);
-        this.gameMood = game.gameMood;
-        this.turn = game.turn;
-        this.players = game.players;
-        this.board = game.board;
-        this.collectibleItems = game.collectibleItems;
-        this.selectedThings = game.selectedThings;
-        this.prise = game.prise;
-    }
-
-    public Game(GameMood gameMood, Account accountOne, Account accountTwo) {
-        Game game = new Game(gameMood, accountOne, accountTwo, Constant.GameConstants.defaultPrise);
-        this.gameMood = game.gameMood;
-        this.turn = game.turn;
-        this.players = game.players;
-        this.board = game.board;
-        this.collectibleItems = game.collectibleItems;
-        this.selectedThings = game.selectedThings;
-        this.prise = game.prise;
     }
 
     private void initialiseGameFields() {
@@ -140,10 +119,6 @@ public class Game {
 
     public int getPlayerNumber(Player player) {
         return player == players[0] ? 0 : 1;
-    }
-
-    public int getPrise() {
-        return prise;
     }
 
     public Player getWarriorsPlayer(Warrior warrior) {
