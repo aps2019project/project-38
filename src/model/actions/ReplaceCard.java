@@ -7,7 +7,7 @@ import model.gamestate.ReplaceCardState;
 import java.util.Random;
 
 public class ReplaceCard {
-    public static void doIt(Game game, int handMapKey) {
+    public static boolean doIt(Game game, int handMapKey) {
         if (game.getActivePlayer().ableToReplaceCard) {
             Card card = game.getActivePlayer().getHand().get(handMapKey);
             Random random = new Random();
@@ -24,6 +24,8 @@ public class ReplaceCard {
             game.getActivePlayer().ableToReplaceCard = false;
             ReplaceCardState replaceCardState = new ReplaceCardState();
             game.iterateAllTriggersCheck(replaceCardState);
+            return true;
         }
+        return false;
     }
 }

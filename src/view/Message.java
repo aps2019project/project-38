@@ -544,6 +544,10 @@ public interface Message {
                 System.out.printf("Description Of Card Ability: %s\n",card.description.descriptionOfCardSpecialAbility);
                 System.out.printf("Target Type: %s\n", card.description.targetType);
             }
+
+            static void betweenTwoPage() {
+                System.out.println("*******************************************************************");
+            }
         }
 
         interface AfterGame {
@@ -554,6 +558,10 @@ public interface Message {
         }
 
         interface failMessage {
+            static void notEnoughNecessaryCondition() {
+                System.out.println("not enough necessary condition");
+            }
+
             static void indexOutOfBoard() {
                 System.out.println("index out of board");
             }

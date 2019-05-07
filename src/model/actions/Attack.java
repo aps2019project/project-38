@@ -9,7 +9,7 @@ import model.gamestate.AttackState;
 import java.util.stream.Stream;
 
 public class Attack {
-    public static void doIt(Cell attackerCell, Cell defenderCell) {
+    public static boolean doIt(Cell attackerCell, Cell defenderCell) {
         Game game = attackerCell.getBoard().getGame();
         Warrior attacker = attackerCell.getWarrior();
         Warrior defender = defenderCell.getWarrior();
@@ -23,7 +23,9 @@ public class Attack {
                 attackState.pending = false;
                 game.iterateAllTriggersCheck(attackState);
             }
+            return !attackState.canceled;
         }
+        return false;
     }
 
     static boolean checkWarriorsEffectsForAttack

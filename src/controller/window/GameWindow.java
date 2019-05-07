@@ -128,7 +128,12 @@ public class GameWindow extends Window {
             return;
         }
         if (game.getSelectedThings().collectibleItem != null) {
-            game.useCollectible(game.getSelectedThings().collectibleItem, cell);
+            if (game.useCollectible(game.getSelectedThings().collectibleItem, cell)) {
+                System.out.println("using item is done");
+            }
+            else {
+                Message.GameWindow.failMessage.notEnoughNecessaryCondition();
+            }
         } else {
             Message.GameWindow.failMessage.noSelectedCollectibleItem();
         }
@@ -174,13 +179,22 @@ public class GameWindow extends Window {
         if (cell == null) {
             return;
         }
-        game.useSpecialPower(cell);
+        if (game.useSpecialPower(cell)) {
+            System.out.println("using special power is done");
+        }else {
+            Message.GameWindow.failMessage.notEnoughNecessaryCondition();
+        }
         game.getSelectedThings().deselectAll();
     }
 
     private void replaceCard() {
         if (game.getSelectedThings().cardHandIndex != null) {
-            game.replaceCard(game.getSelectedThings().cardHandIndex);
+            if(game.replaceCard(game.getSelectedThings().cardHandIndex)) {
+                System.out.println("replace card is done");
+            }
+            else {
+                Message.GameWindow.failMessage.notEnoughNecessaryCondition();
+            }
         }else {
             System.out.println("no selected card");
         }
@@ -193,7 +207,12 @@ public class GameWindow extends Window {
             return;
         }
         if (game.getSelectedThings().cardHandIndex != null) {
-            game.useCard(game.getSelectedThings().cardHandIndex, cell);
+            if (game.useCard(game.getSelectedThings().cardHandIndex, cell)) {
+                System.out.println("use card is done");
+            }
+            else {
+                Message.GameWindow.failMessage.notEnoughNecessaryCondition();
+            }
         } else {
             System.out.println("no card selected");
         }
@@ -207,7 +226,11 @@ public class GameWindow extends Window {
         }
         if (game.getSelectedThings().getWarriorsCell().size() > 1) {
             if (cell.getWarrior() != null && game.getActivePlayer() == game.getWarriorsPlayer(cell.getWarrior())) {
-                game.comboAttack(game.getSelectedThings().getWarriorsCell(), cell);
+                if (game.comboAttack(game.getSelectedThings().getWarriorsCell(), cell)) {
+                    System.out.println("combo attack is done");
+                } else  {
+                    Message.GameWindow.failMessage.notEnoughNecessaryCondition();
+                }
             } else {
                 Message.GameWindow.failMessage.thereIsNoEnemyWarriorInThisCell();
             }
@@ -224,7 +247,11 @@ public class GameWindow extends Window {
         }
         if (game.getSelectedThings().getWarriorsCell().size() == 1) {
             if (cell.getWarrior() == null) {
-                game.move(game.getSelectedThings().getWarriorsCell().get(0), cell);
+                if (game.move(game.getSelectedThings().getWarriorsCell().get(0), cell)) {
+                    System.out.println("move is done");
+                }else {
+                    Message.GameWindow.failMessage.notEnoughNecessaryCondition();
+                }
             } else {
                 System.out.println("target cell is filled");
             }
@@ -240,8 +267,12 @@ public class GameWindow extends Window {
             return;
         }
         if (game.getSelectedThings().getWarriorsCell().size() == 1) {
-            if (cell.getWarrior() != null && game.getActivePlayer() == game.getWarriorsPlayer(cell.getWarrior())) {
-                game.attack(game.getSelectedThings().getWarriorsCell().get(0), cell);
+            if (cell.getWarrior() != null && game.getActivePlayer() != game.getWarriorsPlayer(cell.getWarrior())) {
+                if (game.attack(game.getSelectedThings().getWarriorsCell().get(0), cell)) {
+                    System.out.println("attack done");
+                }else {
+                    Message.GameWindow.failMessage.notEnoughNecessaryCondition();
+                }
             } else {
                 Message.GameWindow.failMessage.thereIsNoEnemyWarriorInThisCell();
             }
@@ -256,6 +287,7 @@ public class GameWindow extends Window {
         if (index < Constant.GameConstants.handSize) {
             if (game.getActivePlayer().getHand().get(index) != null) {
                 game.getSelectedThings().selectCard(game, index);
+                System.out.println("select card done");
             } else {
                 System.out.println("you selected null cart");
             }
@@ -291,8 +323,8 @@ public class GameWindow extends Window {
     }
 
     private void collectibleItemsMenu() {
-        game.getSelectedThings().deselectAll();
         while (true) {
+            Message.GameWindow.insideGame.betweenTwoPage();
             Message.GameWindow.insideGame.collectiblesWindow(game);
             String request = Request.getNextRequest();
             if (request.equals("exit")) {
@@ -301,6 +333,7 @@ public class GameWindow extends Window {
                 int index = Integer.parseInt(request.replace("Select ", ""));
                 if (index < game.getCollectibleItems().size()) {
                     game.getSelectedThings().selectColletableItem(game.getCollectibleItems().get(index));
+                    System.out.println("item selecting done");
                 } else {
                     System.out.println("index is too big");
                 }
@@ -313,6 +346,7 @@ public class GameWindow extends Window {
 
     private void help() {
         while (true) {
+            Message.GameWindow.insideGame.betweenTwoPage();
             Message.GameWindow.insideGame.help();
             String input = Request.getNextRequest();
             if (input.matches("exit")) {
@@ -331,6 +365,7 @@ public class GameWindow extends Window {
         if (!game.getSelectedThings().getWarriorsCell().contains(cell) && cell.getWarrior() != null &&
                 game.getActivePlayer() == game.getWarriorsPlayer(cell.getWarrior())) {
             game.getSelectedThings().seletWarrior(game.getBoard().getCell(cell.getRow(), cell.getColumn()));
+            System.out.println("warrior selecting done");
         } else {
             Message.GameWindow.failMessage.youHaveNoOwnWarriorInThisCell();
         }
