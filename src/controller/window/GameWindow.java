@@ -227,7 +227,7 @@ public class GameWindow extends Window {
     private void collatableItemsMenu() {
         game.getSelecteds().deselectAll();
         while (true) {
-            Message.GameWindow.insideGame.colletableWindow(game);
+            Message.GameWindow.insideGame.collectiblesWindow(game);
             String request = Request.getNextRequest();
             if (request.equals("exit")) {
                 return;

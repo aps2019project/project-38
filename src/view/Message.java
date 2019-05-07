@@ -362,7 +362,12 @@ public interface Message {
                                 entry.getValue().getRequiredMana() + " CardID:" + entry.getValue().getID());
                     }
                 }
+                Card nextCard = game.getActivePlayer().getNextCard();
+                System.out.printf("Next Turn Card: Name: %s ID: %d Required Mana: %d\n",
+                        nextCard.getName(), nextCard.getID(), nextCard.getRequiredMana());
                 HeroPower specialPower = game.getActivePlayer().getPlayerHero().getPower();
+                System.out.printf("SpecialPower: Name: %s Cool Down Remaining: %d Required Mana: %d \n",
+                        specialPower.getName(), specialPower.coolDownRemaining, specialPower.getRequiredMana());
                 System.out.println("SpecialPower: Name" + specialPower.getName() +
                         " Required Mana:" + specialPower.getRequiredMana() +
                         " Cool Down:" + specialPower.coolDownRemaining + " CardID:" + specialPower.getID());
@@ -516,7 +521,7 @@ public interface Message {
 //                System.out.println("(you can see info of above cards): Show card info [cardID]");
             }
 
-            static void colletableWindow(Game game) {
+            static void collectiblesWindow(Game game) {
                 System.out.println("Collectable Items:");
                 for (int i = 0; i < game.getCollectibleItems().size(); i++) {
                     Spell item = game.getCollectibleItems().get(i);
