@@ -12,6 +12,7 @@ import model.cards.Card;
 import model.cards.Warrior;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Map;
 
 public class AIPlayer extends Player {
@@ -50,6 +51,7 @@ public class AIPlayer extends Player {
                 cells.add(getGame().getBoard().getCell(i,j));
             }
         }
+        Collections.shuffle(cells);
         return cells;
     }
 

@@ -15,7 +15,12 @@ public class Collection implements Serializable {
     private ArrayList<String> decks = new ArrayList<>();
     private HashMap<String, Deck> allDecks = new HashMap<>();
     private HashMap<String, Integer> howManyCard = new HashMap<>();
-    private Deck mainDeck = Deck.getAllDecks().get("level1"); //danger
+    private Deck mainDeck = null;
+    {//todo danger for test
+        mainDeck = Deck.getAllDecks().get("level3");
+        decks.add("level2");
+        allDecks.put("level2",Deck.getAllDecks().get("level2"));
+    }
 
     //***
     public static Collection getCollection() {
