@@ -512,16 +512,16 @@ public interface Message {
                 System.out.println("(if you selected a card you can replace it(once in each turn)): Replace");
                 System.out.println("Use Special Power: Use special power [row] [column]");
                 System.out.println("Show Card Info: Show card info [cardID]");
+                System.out.println("(get out of above window): exit");
                 System.out.println("End Turn: End turn");
                 System.out.println("Show Collectible Items: Show collectibles");
+                System.out.println("(get out of above window): exit");
                 System.out.println("(if you are in collectible items window you can select collectible item): Select [item index]");
-                System.out.println("(get out of above window): Exit");
+                System.out.println("(get out of above window): exit");
                 System.out.println("(if you selected an collectible item in board window you can see item info): Show collectible item info");
                 System.out.println("(if you selected an collectible item in board window you can use it): Use collectible item [row] [column]");
-                System.out.println("Show Next Card Info: Show next card");
                 System.out.println("Show Graveyard: Enter graveyard");
                 System.out.println("(get out of above window): exit");
-//                System.out.println("(you can see info of above cards): Show card info [cardID]");
             }
 
             static void collectiblesWindow(Game game) {
