@@ -77,6 +77,27 @@ public class GameWindow extends Window {
             } else {
                 System.out.println("you should select just one warrior for attack");
             }
+        } else if (request.matches("Move \\d \\d")) {
+            Pattern pattern = Pattern.compile("(\\d)");
+            Matcher matcher = pattern.matcher(request);
+            matcher.find();
+            int row = Integer.parseInt(matcher.group(1));
+            matcher.find();
+            int column = Integer.parseInt(matcher.group());
+            if (game.getSelecteds().getWarriorsCell().size() == 1) {
+                if (row < Constant.GameConstants.boardRow && column < Constant.GameConstants.boardColumn) {
+                    Cell cell = game.getBoard().getCell(row, column);
+                    if (cell.getWarrior() == null) {
+                        game.move(game.getSelecteds().getWarriorsCell().get(0), cell);
+                    } else {
+                        System.out.println("target cell is filled");
+                    }
+                } else {
+                    Message.GameWindow.insideGame.failCommand.indexOutOfBoard();
+                }
+            } else {
+                System.out.println("you should select just one warrior for attack");
+            }
         } else if (request.matches("Attack combo \\d \\d")) {
             Pattern pattern = Pattern.compile("(\\d)");
             Matcher matcher = pattern.matcher(request);
