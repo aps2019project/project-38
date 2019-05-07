@@ -19,7 +19,9 @@ public class Shop {
         for (int ID : shop.getCardIDs()) {
             Card card = Card.getAllCards().get(ID);
             if (card.getName().toLowerCase().equals(cardName.toLowerCase())) {
-                Message.existACardWithThisIDInShop();
+
+                Message.existACardWithThisNameInShop();
+                Message.printSomeThing("It's ID is "+ID);
                 return;
             }
         }
@@ -60,7 +62,7 @@ public class Shop {
                     if (Spell.checkIsItem(card1)) numberOfItems++;
                 }
                 if (numberOfItems >= 3) {
-                    Message.have3Items();
+                    Message.haveAlready3Items();
                     return;
                 }
             }

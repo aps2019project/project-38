@@ -20,7 +20,8 @@ public class Applier implements AutoAction {
             EffTriggApplyState state = new EffTriggApplyState(target, trigger);
             getGameFromQualityHaver(target).iterateAllTriggersCheck(state);
             if (!state.canceled) {
-                target.getTriggers().add(trigger);
+//                target.getTriggers().add(trigger);
+                getGameFromQualityHaver(target).triggBuffer.put(trigger,target);
 
                 state.pending = false;
                 getGameFromQualityHaver(target).iterateAllTriggersCheck(state);
@@ -31,7 +32,8 @@ public class Applier implements AutoAction {
             EffTriggApplyState state = new EffTriggApplyState(target, effect);
             getGameFromQualityHaver(target).iterateAllTriggersCheck(state);
             if (!state.canceled) {
-                target.getEffects().add(effect);
+//                target.getEffects().add(effect);
+                getGameFromQualityHaver(target).effBuffer.put(effect,target);
 
                 state.pending = false;
                 getGameFromQualityHaver(target).iterateAllTriggersCheck(state);

@@ -3,7 +3,6 @@ package model;
 import model.cards.Card;
 import model.cards.Hero;
 import model.cards.Spell;
-import model.cards.Warrior;
 import view.Message;
 
 import java.io.Serializable;
@@ -15,36 +14,28 @@ public class Collection implements Serializable {
     private ArrayList<String> decks = new ArrayList<>();
     private HashMap<String, Deck> allDecks = new HashMap<>();
     private HashMap<String, Integer> howManyCard = new HashMap<>();
-    private Deck mainDeck = null;
+    private Deck mainDeck = null ;
+
     {//todo danger for test
         mainDeck = Deck.getAllDecks().get("level3");
-        decks.add("level3");
-        allDecks.put("level3",Deck.getAllDecks().get("level3"));
-        decks.add("level2");
-        allDecks.put("level2",Deck.getAllDecks().get("level2"));
+        this.decks.add("level3");
+        allDecks.put("level3", Deck.getAllDecks().get("level3"));
+        this.getCardIDs().addAll(Deck.getAllDecks().get("level3").getCardIDs());
+        this.getCardIDs().add(Deck.getAllDecks().get("level3").getHero().getID());
+        this.getCardIDs().add(Deck.getAllDecks().get("level3").getItem().getID());
+        this.decks.add("level2");
+        allDecks.put("level2", Deck.getAllDecks().get("level2"));
+        this.getCardIDs().addAll(Deck.getAllDecks().get("level2").getCardIDs());
+        this.getCardIDs().add(Deck.getAllDecks().get("level2").getHero().getID());
+        this.getCardIDs().add(Deck.getAllDecks().get("level2").getItem().getID());
     }
 
     //***
-    public static Collection getCollection() {
-        return Account.getActiveAccount().getCollection();
-    }
-
-    public int searchInCollectionCards(String cardName) {
-        int numberOf = 0;
-        Card card = null;
-        for (int ID : getCardIDs()) {
-            card = Card.getAllCards().get(ID);
-            if (card.getName().equals(cardName)) {
-                numberOf++;
-            }
-        }
-        return numberOf;
-    }
 
     public void createDeck(String deckName) {
         for (String template : getDecks()) {
             if (template.toLowerCase().equals(deckName.toLowerCase())) {
-                Message.thereIsADeckWhitThisName();
+                Message.thereIsAlreadyADeckWhitThisName();
                 return;
             }
         }
@@ -52,14 +43,13 @@ public class Collection implements Serializable {
         deck.setName(deckName);
         getDecks().add(deckName);
         getAllDecks().put(deckName, deck);
-        Deck.getLowerCaseNamesToOriginalName().put(deckName.toLowerCase(), deckName);
         Message.deckCreated();
     }
 
     public void deleteDeck(String deckName) {
         boolean isDeckNameValid = false;
         for (String template : getDecks()) {
-            if (template.toLowerCase().equals(deckName.toLowerCase())) {
+            if (template.equals(deckName)) {
                 isDeckNameValid = true;
             }
         }
@@ -67,20 +57,23 @@ public class Collection implements Serializable {
             Message.thereIsNoDeckWithThisName();
             return;
         }
+        Deck deck = Account.getActiveAccount().getCollection().getAllDecks().get(deckName);
+        if(this.getMainDeck().equals(deck)){
+            this.setMainDeck(null);
+        }
         getDecks().remove(deckName);
         getAllDecks().remove(deckName);
-        Deck.getLowerCaseNamesToOriginalName().remove(deckName.toLowerCase(), deckName);
         Message.deckDeleted();
     }
 
     public void addCardToDeck(String cardName, String deckName) {
-        if (!Deck.getLowerCaseNamesToOriginalName().containsKey(deckName.toLowerCase())) {
+        if (!Account.getActiveAccount().getCollection().getAllDecks().containsKey(deckName)) {
             Message.thereIsNoDeckWithThisName();
             return;
         }
-        Deck deck = Account.getActiveAccount().getCollection().getAllDecks().get(Deck.getLowerCaseNamesToOriginalName().get(deckName.toLowerCase()));
-        int cardID = getIDFromName(cardName);
-        if (!getCardIDs().contains(cardID)) {
+        Deck deck = Account.getActiveAccount().getCollection().getAllDecks().get(deckName);
+        int cardID = getIDByName(cardName);
+        if (!this.getCardIDs().contains(cardID)) {
             Message.thereIsNoCardWithThisNameInCollection();
             return;
         }
@@ -89,16 +82,14 @@ public class Collection implements Serializable {
             Message.thereIsACardWithThisNameInThisDeck();
             return;
         }
-        if (card instanceof Warrior) {
-            Warrior warrior = (Warrior) card;
-            if (warrior instanceof Hero) {
-                if (deck.getHero() != null) {
-                    Message.thereIsAHeroInThisDeck();
-                    return;
-                } else {
-                    deck.setHero((Hero) card);
-                    return;
-                }
+        if (card instanceof Hero) {
+            if (deck.getHero() != null) {
+                Message.thereIsAHeroInThisDeck();
+                return;
+            } else {
+                deck.setHero((Hero) card);
+                Message.cardAddedToDeckSuccessfully();
+                return;
             }
         }
         if (Spell.checkIsItem(card)) {
@@ -107,6 +98,7 @@ public class Collection implements Serializable {
                 return;
             } else {
                 deck.setItem((Spell) card);
+                Message.cardAddedToDeckSuccessfully();
                 return;
             }
         }
@@ -114,13 +106,13 @@ public class Collection implements Serializable {
             Message.have20CardsInThisDeck();
             return;
         }
-        int numberOf = 0;
+        int numberOfCard = 0;
         for (int ID : deck.getCardIDs()) {
             if (ID == cardID) {
-                numberOf++;
+                numberOfCard++;
             }
         }
-        if (numberOf > Collection.getCollection().howManyCard.get(cardName)) {
+        if (numberOfCard > Collection.getCollection().howManyCard.get(cardName)) {
             Message.notEnoughCardNumber();
             return;
         }
@@ -129,18 +121,44 @@ public class Collection implements Serializable {
     }
 
     public void removeCardFromDeck(String cardName, String deckName) {
+        int cardID = getIDByName(cardName);
         if (!Account.getActiveAccount().getCollection().getAllDecks().containsKey(deckName)) {
             Message.thereIsNoDeckWithThisName();
             return;
         }
-        Deck deck = Account.getActiveAccount().getCollection().getAllDecks().get(deckName);
-        int cardID = getIDFromName(cardName);
-        if (!deck.getCardIDs().contains(cardID)) {
-            Message.thereIsNoCardWithThisIDInThisDeck();
+        if (!Card.getAllCards().containsKey(cardID)) {
+            Message.thereIsNoCardWithThisNameInThisDeck();
             return;
         }
-        deck.getCardIDs().remove((Integer) cardID);
-        Message.cardRemovedFromDeckSuccessfully();
+        Deck deck = Account.getActiveAccount().getCollection().getAllDecks().get(deckName);
+        Card card = Card.getAllCards().get(cardID);
+
+        if (card instanceof Hero) {
+            if (deck.getHero().equals((Hero) card)) {
+                deck.setHero(null);
+                Message.cardRemovedFromDeckSuccessfully();
+                return;
+            } else {
+                Message.thereIsNoCardWithThisNameInThisDeck();
+                return;
+            }
+        }
+        if (card instanceof Spell) {
+            if (deck.getItem().equals((Spell) card)) {
+                deck.setItem(null);
+                Message.cardRemovedFromDeckSuccessfully();
+                return;
+            } else {
+                Message.thereIsNoCardWithThisNameInThisDeck();
+                return;
+            }
+        }
+        if (deck.getCardIDs().contains(cardID)) {
+            deck.getCardIDs().remove((Integer) cardID);
+            Message.cardRemovedFromDeckSuccessfully();
+        } else {
+            Message.thereIsNoCardWithThisNameInThisDeck();
+        }
     }
 
     public boolean validateDeck(String deckName, boolean showResultsOrNot) {
@@ -170,7 +188,7 @@ public class Collection implements Serializable {
         }
     }
 
-    private int getIDFromName(String cardName) {
+    private int getIDByName(String cardName) {
         for (int ID : Shop.getShop().getCardIDs()) {
             if (Card.getAllCards().get(ID).getName().equals(cardName)) {
                 return ID;
@@ -180,6 +198,10 @@ public class Collection implements Serializable {
     }
 
     //***
+
+    public static Collection getCollection() {
+        return Account.getActiveAccount().getCollection();
+    }
 
     public void setMainDeck(Deck mainDeck) {
         this.mainDeck = mainDeck;

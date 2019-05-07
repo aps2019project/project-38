@@ -27,6 +27,10 @@ public class Game {
     private Selectable selectedThings = new Selectable();
     private int prise;
 
+    public HashMap<Trigger,QualityHaver> triggBuffer = new HashMap<>();
+    public HashMap<Effect,QualityHaver> effBuffer = new HashMap<>();
+    private boolean killMod=false;
+
     public Game(GameMood gameMood, Account accountOne, Account accountTwo, int prise) {
         this.gameMood = gameMood;
         int randomIndex = (new Random(System.currentTimeMillis())).nextInt(2);
@@ -102,6 +106,17 @@ public class Game {
         }
     }
 
+    private void flushBuffer(){
+        for (Map.Entry<Trigger, QualityHaver> entry : triggBuffer.entrySet()) {
+            entry.getValue().getTriggers().add(entry.getKey());
+        }
+        for (Map.Entry<Effect, QualityHaver> entry : effBuffer.entrySet()) {
+            entry.getValue().getEffects().add(entry.getKey());
+        }
+        triggBuffer = new HashMap<>();
+        effBuffer = new HashMap<>();
+    }
+
     private void initialisePlayerHand(Player player) {
         Random random = new Random(System.currentTimeMillis());
         for (Map.Entry<Integer, Card> entry : player.getHand().entrySet()) {
@@ -139,7 +154,7 @@ public class Game {
     }
 
     public Player getWarriorsEnemyPlayer(Warrior warrior) {
-        return getWarriorsPlayer(warrior) == players[0] ? players[0] : players[1];
+        return getWarriorsPlayer(warrior) == players[0] ? players[1] : players[0];
     }
 
     public Board getBoard() {
@@ -166,7 +181,9 @@ public class Game {
         board.iterateBoardTriggers(gameState);
         iteratePlayerTriggers(players[0], gameState);
         iteratePlayerTriggers(players[1], gameState);
-        //apply buffer here if not in kill mod
+        if(!killMod){
+            flushBuffer();
+        }
     }
 
     private void iteratePlayerTriggers(Player player, GameState gameState) {
@@ -228,12 +245,12 @@ public class Game {
     }
 
     private void checkGameEndAndThenKillAllDiedWarriors() {
-        //kill mod: ON
+        killMod = true;
         gameMood.checkGameEnd(this);//todo
         killPlayerDiedWarriors(players[0]);
         killPlayerDiedWarriors(players[1]);
-        //apply buffer here
-        //kil mod: OFF
+        killMod = false;
+        flushBuffer();
     }
 
     private void killPlayerDiedWarriors(Player player) {
@@ -270,13 +287,13 @@ public class Game {
         }
         ComboAttack.doIt(attackersCell, defenderCell);
         checkGameEndAndThenKillAllDiedWarriors();
-
     }
 
     public void attack(Cell attackerCell, Cell defenderCell) {
         ArrayList<Warrior> activePlayerWarriors = getActivePlayer().getWarriors();
         if (activePlayerWarriors.contains(attackerCell.getWarrior()) &&
                 !activePlayerWarriors.contains(defenderCell.getWarrior())) {
+
             Attack.doIt(attackerCell, defenderCell);
             checkGameEndAndThenKillAllDiedWarriors();
         }
