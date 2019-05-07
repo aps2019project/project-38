@@ -13,6 +13,7 @@ import java.util.HashMap;
 public class Collection implements Serializable {
     private ArrayList<Integer> cardIDs = new ArrayList<>();
     private ArrayList<String> decks = new ArrayList<>();
+    private HashMap<String, Deck> allDecks = new HashMap<>();
     private HashMap<String, Integer> howManyCard = new HashMap<>();
     private Deck mainDeck = Deck.getAllDecks().get("level1"); //danger
 
@@ -43,8 +44,8 @@ public class Collection implements Serializable {
         Deck deck = new Deck();
         deck.setName(deckName);
         getDecks().add(deckName);
+        getAllDecks().put(deckName, deck);
         Deck.getLowerCaseNamesToOriginalName().put(deckName.toLowerCase(), deckName);
-        Deck.getAllDecks().put(deckName, deck);
         Message.deckCreated();
     }
 
@@ -59,9 +60,9 @@ public class Collection implements Serializable {
             Message.thereIsNoDeckWithThisName();
             return;
         }
-        Deck.getLowerCaseNamesToOriginalName().remove(deckName.toLowerCase(), deckName);
-        Deck.getAllDecks().remove(deckName);
         getDecks().remove(deckName);
+        getAllDecks().remove(deckName);
+        Deck.getLowerCaseNamesToOriginalName().remove(deckName.toLowerCase(), deckName);
         Message.deckDeleted();
     }
 
@@ -70,7 +71,7 @@ public class Collection implements Serializable {
             Message.thereIsNoDeckWithThisName();
             return;
         }
-        Deck deck = Deck.getAllDecks().get(Deck.getLowerCaseNamesToOriginalName().get(deckName.toLowerCase()));
+        Deck deck = Account.getActiveAccount().getCollection().getAllDecks().get(Deck.getLowerCaseNamesToOriginalName().get(deckName.toLowerCase()));
         int cardID = getIDFromName(cardName);
         if (!getCardIDs().contains(cardID)) {
             Message.thereIsNoCardWithThisNameInCollection();
@@ -94,10 +95,10 @@ public class Collection implements Serializable {
             }
         }
         if (Spell.checkIsItem(card)) {
-            if(deck.getItem()!=null){
+            if (deck.getItem() != null) {
                 Message.thereIsAnItemInThisDeck();
                 return;
-            }else {
+            } else {
                 deck.setItem((Spell) card);
                 return;
             }
@@ -121,26 +122,26 @@ public class Collection implements Serializable {
     }
 
     public void removeCardFromDeck(String cardName, String deckName) {
-        if (!Deck.getAllDecks().containsKey(deckName)) {
+        if (!Account.getActiveAccount().getCollection().getAllDecks().containsKey(deckName)) {
             Message.thereIsNoDeckWithThisName();
             return;
         }
-        Deck deck = Deck.getAllDecks().get(deckName);
+        Deck deck = Account.getActiveAccount().getCollection().getAllDecks().get(deckName);
         int cardID = getIDFromName(cardName);
         if (!deck.getCardIDs().contains(cardID)) {
             Message.thereIsNoCardWithThisIDInThisDeck();
             return;
         }
-        deck.getCardIDs().remove((Integer)cardID);
+        deck.getCardIDs().remove((Integer) cardID);
         Message.cardRemovedFromDeckSuccessfully();
     }
 
     public boolean validateDeck(String deckName, boolean showResultsOrNot) {
-        if (!Deck.getAllDecks().containsKey(deckName)) {
+        if (!Account.getActiveAccount().getCollection().getAllDecks().containsKey(deckName)) {
             if (showResultsOrNot) Message.thereIsNoDeckWithThisName();
             return false;
         }
-        Deck deck = Deck.getAllDecks().get(deckName);
+        Deck deck = Account.getActiveAccount().getCollection().getAllDecks().get(deckName);
         if (deck.getCardIDs().size() != 20 || deck.getHero() == null) {
             if (showResultsOrNot) Message.deckIsNotValid();
             return false;
@@ -150,12 +151,12 @@ public class Collection implements Serializable {
     }
 
     public void selectMainDeck(String deckName) {
-        if (!Deck.getAllDecks().containsKey(deckName)) {
+        if (!Account.getActiveAccount().getCollection().getAllDecks().containsKey(deckName)) {
             Message.thereIsNoDeckWithThisName();
             return;
         }
         if (validateDeck(deckName, false)) {
-            setMainDeck(Deck.getAllDecks().get(deckName));
+            setMainDeck(Account.getActiveAccount().getCollection().getAllDecks().get(deckName));
             Message.deckSelectedAsMain();
         } else {
             Message.deckIsNotValid();
@@ -191,5 +192,9 @@ public class Collection implements Serializable {
 
     public HashMap<String, Integer> getHowManyCard() {
         return howManyCard;
+    }
+
+    public HashMap<String, Deck> getAllDecks() {
+        return allDecks;
     }
 }

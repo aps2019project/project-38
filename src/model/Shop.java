@@ -68,11 +68,11 @@ public class Shop {
 //            shop.getCardIDs().remove(card.getID());
             account.getCollection().getCardIDs().add(card.getID());
 
-            if(Collection.getCollection().getHowManyCard().containsKey(cardName)){
+            if (Collection.getCollection().getHowManyCard().containsKey(cardName)) {
                 int keyValue = Collection.getCollection().getHowManyCard().get(cardName);
-                Collection.getCollection().getHowManyCard().put(card.getName(),keyValue+1);
-            }else{
-                Collection.getCollection().getHowManyCard().put(card.getName(),1);
+                Collection.getCollection().getHowManyCard().put(card.getName(), keyValue + 1);
+            } else {
+                Collection.getCollection().getHowManyCard().put(card.getName(), 1);
             }
 
             Message.buyWasSuccessful();
@@ -98,7 +98,7 @@ public class Shop {
         shop.getCardIDs().add(card.getID());
         account.getCollection().getCardIDs().remove((Integer) card.getID());
         for (String deckName : account.getCollection().getDecks()) {
-            Deck deck = Deck.getAllDecks().get(deckName);
+            Deck deck = Account.getActiveAccount().getCollection().getAllDecks().get(deckName);
             if (deck.getCardIDs().contains(card.getID())) {
                 deck.getCardIDs().remove(card.getID());
             }
@@ -106,7 +106,7 @@ public class Shop {
         account.getCollection().getCardIDs().remove((Integer) card.getID());
 
         int keyValue = Collection.getCollection().getHowManyCard().get(card.getName());
-        Collection.getCollection().getHowManyCard().put(card.getName(),keyValue-1);
+        Collection.getCollection().getHowManyCard().put(card.getName(), keyValue - 1);
 
         Message.sellWasSuccessful();
     }
@@ -117,9 +117,6 @@ public class Shop {
             if (Card.getAllCards().get(ID).getName().equals(cardName)) {
                 card = Card.getAllCards().get(ID);
             }
-        }
-        if (card == null) {
-
         }
         return card;
     }
