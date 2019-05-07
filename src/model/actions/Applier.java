@@ -21,7 +21,7 @@ public class Applier implements AutoAction {
             getGameFromQualityHaver(target).iterateAllTriggersCheck(state);
             if (!state.canceled) {
 //                target.getTriggers().add(trigger);
-                getGameFromQualityHaver(source).triggBuffer.put(trigger,target);
+                getGameFromQualityHaver(target).triggBuffer.put(trigger,target);
 
                 state.pending = false;
                 getGameFromQualityHaver(target).iterateAllTriggersCheck(state);
@@ -33,7 +33,7 @@ public class Applier implements AutoAction {
             getGameFromQualityHaver(target).iterateAllTriggersCheck(state);
             if (!state.canceled) {
 //                target.getEffects().add(effect);
-                getGameFromQualityHaver(source).effBuffer.put(effect,target);
+                getGameFromQualityHaver(target).effBuffer.put(effect,target);
 
                 state.pending = false;
                 getGameFromQualityHaver(target).iterateAllTriggersCheck(state);

@@ -530,10 +530,8 @@ public class CardFactory {
         {
             Spell spell = new Spell(18, "PoisonLake", 5, 900, false);
 
-            Trigger poison = new Trigger(1, Dispelablity.BAD);
+            Trigger poison = new Mine(1, Dispelablity.BAD);
             poison.getTriggers().add(new Poisoned(3, Dispelablity.BAD));
-            poison.getConditions().add(new HasWarriorOnIt());
-            poison.getActions().put(new Applier(), new OnCellGetter());
             spell.getTriggers().add(poison);
             spell.getActions().put(new Applier(), new RectGetter(3, 3, true, false, false, false, false));
 

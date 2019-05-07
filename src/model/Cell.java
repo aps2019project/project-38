@@ -3,9 +3,10 @@ package model;
 import model.cards.Warrior;
 import model.triggers.Trigger;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Cell extends QualityHaver {
+public class Cell extends QualityHaver implements Serializable {
     private Board board;
     private Warrior warrior;
     private int row;

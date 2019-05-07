@@ -31,7 +31,7 @@ public class Game {
 
     public HashMap<Trigger,QualityHaver> triggBuffer = new HashMap<>();
     public HashMap<Effect,QualityHaver> effBuffer = new HashMap<>();
-    private boolean attackMod=false;
+    private boolean killMod=false;
 
     public Game(GameMood gameMood, Account accountOne, Account accountTwo) {
         this.gameMood = gameMood;
@@ -95,6 +95,8 @@ public class Game {
         for (Map.Entry<Effect, QualityHaver> entry : effBuffer.entrySet()) {
             entry.getValue().getEffects().add(entry.getKey());
         }
+        triggBuffer = new HashMap<>();
+        effBuffer = new HashMap<>();
     }
 
     private void initialisePlayerHand(Player player) {
@@ -153,7 +155,7 @@ public class Game {
         board.iterateBoardTriggers(gameState);
         iteratePlayerTriggers(players[0], gameState);
         iteratePlayerTriggers(players[1], gameState);
-        if(!attackMod){
+        if(!killMod){
             flushBuffer();
         }
     }
@@ -217,12 +219,12 @@ public class Game {
     }
 
     private void checkGameEndAndThenKillAllDiedWarriors() {
-        //kill mod: ON
+        killMod = true;
         gameMood.checkGameEnd(this);//todo
         killPlayerDiedWarriors(players[0]);
         killPlayerDiedWarriors(players[1]);
-        //apply buffer here
-        //kil mod: OFF
+        killMod = false;
+        flushBuffer();
     }
 
     private void killPlayerDiedWarriors(Player player) {
@@ -257,12 +259,7 @@ public class Game {
         if (defenderCell.getWarrior() == attackersCell.get(0).getWarrior()) {
             return;
         }
-
-        attackMod=true;
         ComboAttack.doIt(attackersCell, defenderCell);
-        attackMod=false;
-        flushBuffer();
-
         checkGameEndAndThenKillAllDiedWarriors();
     }
 
@@ -271,11 +268,7 @@ public class Game {
         if (activePlayerWarriors.contains(attackerCell.getWarrior()) &&
                 !activePlayerWarriors.contains(defenderCell.getWarrior())) {
 
-            attackMod=true;
             Attack.doIt(attackerCell, defenderCell);
-            attackMod=false;
-            flushBuffer();
-
             checkGameEndAndThenKillAllDiedWarriors();
         }
     }
