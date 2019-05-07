@@ -19,7 +19,7 @@ public class Flag extends Trigger {
 
     @Override
     protected void executeActions(GameState gameState, QualityHaver owner) {
-        owner.getTriggers().remove(this);
+        QualityHaver.getGameFromQualityHaver(owner).triggRemoveBuffer.put(this,owner);
         if(owner instanceof Cell){
             new OnCellGetter().getTarget(owner,gameState).get(0).getTriggers().add(this);
         }else {
