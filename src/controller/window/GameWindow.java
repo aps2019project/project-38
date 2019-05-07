@@ -135,7 +135,14 @@ public class GameWindow extends Window {
             } else {
                 System.out.println("no card selected");
             }
-        } else if (request.matches("Use special power \\d \\d")) {
+        }else if (request.equals("Replace")) {
+            if (game.getSelecteds().cardHandIndex != null) {
+                game.replaceCard(game.getSelecteds().cardHandIndex);
+            }else {
+                System.out.println("no selected card");
+            }
+        }
+        else if (request.matches("Use special power \\d \\d")) {
             game.getSelecteds().deselectAll();
             Pattern pattern = Pattern.compile("(\\d)");
             Matcher matcher = pattern.matcher(request);

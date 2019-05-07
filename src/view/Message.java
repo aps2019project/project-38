@@ -501,6 +501,7 @@ public interface Message {
                 System.out.println("(if you selected just one warrior you can move it): Move [row] [column]");
                 System.out.println("(if you selected more than one warrior you can combo attack to an enemy warrior): Attack combo [row] [column]");
                 System.out.println("(if you selected a card you can put it on board): Insert in [row] [column]");
+                System.out.println("(if you selected a card you can replace it(once in each turn)): Replace");
                 System.out.println("Use Special Power: Use special power [row] [column]");
                 System.out.println("Show Card Info: Show card info [cardID]");
                 System.out.println("End Turn: End turn");
