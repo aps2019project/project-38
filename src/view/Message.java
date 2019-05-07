@@ -14,7 +14,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public interface Message {
+
     // general messages
+
     static void invalidInput() {
         System.out.println("Invalid input");
     }
@@ -24,15 +26,11 @@ public interface Message {
     }
 
     static void printSomeThing(String someThing) {
-        System.out.print(someThing + " ");
+        System.out.println(someThing);
     }
 
     static void INTER() {
         System.out.println();
-    }
-
-    static void showAWordAsTitle(String aWord) {
-        System.out.println("        " + aWord + " :");
     }
 
     // mainMenu messages
@@ -58,32 +56,32 @@ public interface Message {
     }
 
     static void showInfoOfHeroPlusPrice(Hero hero, int numberOfHeroes, String kindOfAttackArea, String buyOrSell) {
-        System.out.printf("%d ) Name : %s - AP : %d - HP : %d - class : %s - SpecialPower : %s - %sCost : %d\n",
+        System.out.printf("     %d ) Name : %s - AP : %d - HP : %d - class : %s - SpecialPower : %s - %sCost : %d\n",
                 numberOfHeroes, hero.getName(), hero.getAp(), hero.getHp(), kindOfAttackArea, hero.description.descriptionOfCardSpecialAbility, buyOrSell, hero.getPrice());
     }
 
     static void showInfoOfHeroMinusPrice(Hero hero, int numberOfHeroes, String kindOfAttackArea) {
-        System.out.printf("%d ) Name : %s - AP : %d - HP : %d - class : %s - SpecialPower : %s\n",
+        System.out.printf("     %d ) Name : %s - AP : %d - HP : %d - class : %s - SpecialPower : %s\n",
                 numberOfHeroes, hero.getName(), hero.getAp(), hero.getHp(), kindOfAttackArea, hero.description.descriptionOfCardSpecialAbility);
     }
 
     static void showInfoOfItemPlusPrice(Spell spell, int numberOfItems, String buyOrSell) {
-        System.out.printf("%d ) Name : %s - Description : %s - %sCost : %d\n",
+        System.out.printf("     %d ) Name : %s - Description : %s - %sCost : %d\n",
                 numberOfItems, spell.getName(), spell.description.descriptionOfCardSpecialAbility, buyOrSell, spell.getPrice());
     }
 
     static void showInfoOfItemMinusPrice(Spell spell, int numberOfItems) {
-        System.out.printf("%d ) Name : %s - Description : %s\n",
+        System.out.printf("     %d ) Name : %s - Description : %s\n",
                 numberOfItems, spell.getName(), spell.description.descriptionOfCardSpecialAbility);
     }
 
     static void showInfoOfCardPlusPrice(Card card, int numberOfCards, String typeOfCard, String buyOrSell) {
-        System.out.printf("%d ) Type : %s - Name : %s - MP : %d - Description : %s - %sCost : %d\n",
+        System.out.printf("     %d ) Type : %s - Name : %s - MP : %d - Description : %s - %sCost : %d\n",
                 numberOfCards, typeOfCard, card.getName(), card.getRequiredMana(), card.description.descriptionOfCardSpecialAbility, buyOrSell, card.getPrice());
     }
 
     static void showInfoOfCardMinusPrice(Card card, int numberOfCards, String typeOfCard) {
-        System.out.printf("%d ) Type : %s - Name : %s - MP : %d " +
+        System.out.printf("     %d ) Type : %s - Name : %s - MP : %d " +
                         "- Description : %s\n",
                 numberOfCards, typeOfCard, card.getName(), card.getRequiredMana(), card.description.descriptionOfCardSpecialAbility);
     }
@@ -100,35 +98,39 @@ public interface Message {
         System.out.println("There is no card with this name in shop cards :(");
     }
 
-    static void haveNotEnoughMoney() {
-        System.out.println("You haven't enough money");
-    }
-
-    static void buyWasSuccessful() {
-        System.out.println("You bought the cart successfully :)");
-    }
-
     static void thereIsNoCardWithThisNameInCollection() {
         System.out.println("There is no card with this name in collection cards :(");
     }
 
-    static void have3Items() {
-        System.out.println("You have 3 items. You couldn't buy any other item :(");
+    static void thereIsNoCardWithThisNameAtAll() {
+        System.out.println("There is no card with this name at all :(");
     }
 
     static void haveNotThisCardInYourCollection() {
         System.out.println("You haven't this card in your collection. You can't sell it :(");
     }
 
+    static void haveNotEnoughMoney() {
+        System.out.println("You haven't enough money :(");
+    }
+
+    static void buyWasSuccessful() {
+        System.out.println("You bought the cart successfully :)");
+    }
+
     static void sellWasSuccessful() {
         System.out.println("You sell the card successfully :)");
+    }
+
+    static void haveAlready3Items() {
+        System.out.println("You have 3 items. You couldn't buy any other item :(");
     }
 
     static void haveXNumberOfCardIDInYourCollection(int numberOfFoundIDs) {
         System.out.printf("You have %d number of this card in your collection :)\n", numberOfFoundIDs);
     }
 
-    static void existACardWithThisIDInShop() {
+    static void existACardWithThisNameInShop() {
         System.out.println("There is a card with this name in shop :)");
     }
 
@@ -159,11 +161,11 @@ public interface Message {
     }
 
     static void noIdenticalPassword() {
-        System.out.println("Your passwords aren't identical");
+        System.out.println("Your passwords aren't identical :(");
     }
 
     static void accountCreatedSuccessfully() {
-        System.out.println("Account created successfully!");
+        System.out.println("Account created successfully :)");
     }
 
     static void leaderBoardIsEmpty() {
@@ -171,7 +173,7 @@ public interface Message {
     }
 
     static void thereIsAnAccountWithThisName() {
-        System.out.println("There is already an account with this name.");
+        System.out.println("There is already an account with this name :(");
     }
 
     static void thereIsNoAccountWithThisName() {
@@ -179,7 +181,7 @@ public interface Message {
     }
 
     static void incorrectPassword() {
-        System.out.println("Your password is incorrect.");
+        System.out.println("Your password is incorrect :(");
     }
 
     // in collection
@@ -199,11 +201,7 @@ public interface Message {
         System.out.println("    0- Exit");
     }
 
-    static void thereIsNoCardWithThisIDInCollection() {
-        System.out.println("There is no card with this ID in collection cards :(");
-    }
-
-    static void thereIsADeckWhitThisName() {
+    static void thereIsAlreadyADeckWhitThisName() {
         System.out.println("There is already a deck with this name");
     }
 
@@ -223,8 +221,8 @@ public interface Message {
         System.out.println("there is already a hero in this deck. You can't add any other");
     }
 
-    static void thereIsNoCardWithThisIDInThisDeck() {
-        System.out.println("There is no card with this ID in this deck :(");
+    static void thereIsNoCardWithThisNameInThisDeck() {
+        System.out.println("There is no card with this name in this deck :(");
     }
 
     static void deckCreated() {
@@ -243,20 +241,16 @@ public interface Message {
         System.out.println("Card removed from deck successfully :)");
     }
 
-    static void deckIsNotValid() {
-        System.out.println("This deck is not valid :(");
-    }
-
     static void deckIsValid() {
         System.out.println("This deck is valid :)");
     }
 
-    static void deckSelectedAsMain() {
-        System.out.println("This deck selected as main successfully :)");
+    static void deckIsNotValid() {
+        System.out.println("This deck is not valid :(");
     }
 
-    static void interCardID() {
-        System.out.println("Please inter cardID:");
+    static void deckSelectedAsMain() {
+        System.out.println("This deck selected as main successfully :)");
     }
 
     static void interDeckName() {
@@ -268,7 +262,7 @@ public interface Message {
     }
 
     static void showDeckName(int index, String deckName) {
-        System.out.printf("%d ) %s :\n", index, deckName);
+        System.out.printf("(( %d )) %s :\n", index, deckName);
     }
 
     static void noDeckExist() {
@@ -278,6 +272,8 @@ public interface Message {
     static void thereIsAnItemInThisDeck() {
         System.out.println("There is an item in this deck");
     }
+
+
 
     //******************************************************
 
