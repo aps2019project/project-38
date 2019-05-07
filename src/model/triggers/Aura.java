@@ -1,7 +1,6 @@
 package model.triggers;
 
 import model.QualityHaver;
-import model.actions.Applier;
 import model.conditions.*;
 import model.effects.Dispelablity;
 import model.gamestate.*;
@@ -45,7 +44,8 @@ public class Aura extends Trigger {
 
     private void addEffectsAndTriggers(QualityHaver owner,GameState gameState){
         triggerTarget.getTarget(owner,gameState).forEach(warrior -> {
-            new Applier().execute(this,warrior);
+            warrior.getEffects().addAll(effects);
+            warrior.getTriggers().addAll(triggers);
         });
     }
 
