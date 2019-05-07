@@ -33,6 +33,7 @@ public class UseCard {
                 game.getActivePlayer().getUsedCards().add(card);
                 game.iterateAllTriggersCheck(gameState);
                 didSth = true;
+                System.err.println(card.getName()+" "+cell.getRow()+" "+cell.getColumn());
             }
         }
         return didSth;

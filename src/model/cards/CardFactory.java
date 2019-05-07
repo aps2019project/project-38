@@ -648,7 +648,7 @@ public class CardFactory {
         {
             Spell spell = new Spell(119, "KingsGaurd", 3, 1750, false);
 
-            spell.getActions().put(new Killer(), new RandomGetter((SpellTarget) new AdjacentGetter(false, false)));
+            spell.getActions().put(new Killer(), new RandomGetter((SpellTarget) new AdjacentGetter(new RectGetter(1,1,false,false,false,false,true))));
 
             spell.description.targetType = "random enemy minion around hero";
             spell.description.descriptionOfCardSpecialAbility = "killes enemy";
@@ -1030,8 +1030,10 @@ public class CardFactory {
             trigger.getActions().put(new Applier(), (triggerOwner, gameState) -> {
                 assert gameState instanceof PutMinionState;
                 PutMinionState state = (PutMinionState) gameState;
+                ArrayList<QualityHaver> arrayList = new ArrayList<>();
+                arrayList.add(state.getWarrior());
 
-                return (ArrayList<? extends QualityHaver>) Collections.singletonList(state.getWarrior());
+                return arrayList;
             });
             trigger.getConditions().add((gameState, trigger1, triggerOwner) -> {
                 assert triggerOwner instanceof Warrior;

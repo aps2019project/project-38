@@ -14,9 +14,16 @@ public class AdjacentGetter implements TriggerTarget , SpellTarget {
     private boolean friendMod;
     private boolean heroToo;
 
+    //use this for trigger target
     public AdjacentGetter(boolean friendMod, boolean heroToo) {
         this.friendMod = friendMod;
         this.heroToo = heroToo;
+    }
+
+    SpellTarget spellTarget;
+    //use this for spellTarget. give a spell target that only returns a single warrior.
+    public AdjacentGetter(SpellTarget spellTarget) {
+        this.spellTarget = spellTarget;
     }
 
     @Override
@@ -30,11 +37,13 @@ public class AdjacentGetter implements TriggerTarget , SpellTarget {
                 .filter(warrior1 -> !(warrior instanceof Hero) || heroToo).collect(Collectors.toCollection(ArrayList::new)));
     }
 
-    //only accepts cells with warriors because of friendMod and heroToo options.
     @Override
     public ArrayList<? extends QualityHaver> getTarget(Player spellOwner, Cell cell) {
-        assert cell.getWarrior()!=null;
-
-        return getTarget(cell.getWarrior(),null);
+        ArrayList<? extends QualityHaver> targets = spellTarget.getTarget(spellOwner,cell);
+        if(targets.size()>0) {
+            return getTarget(spellTarget.getTarget(spellOwner, cell).get(0), null);
+        }else {
+            return targets;
+        }
     }
 }

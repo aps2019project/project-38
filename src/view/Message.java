@@ -355,7 +355,7 @@ public interface Message {
                         System.out.println(entry.getKey() + ": Empty");
                     }
                     else {
-                        System.out.println(entry.getKey() + ": Name" + entry.getValue().getName() + " Required Mana: " +
+                        System.out.println(entry.getKey() + " Name: " + entry.getValue().getName() + " Required Mana: " +
                                 entry.getValue().getRequiredMana() + " CardID:" + entry.getValue().getID());
                     }
                 }
