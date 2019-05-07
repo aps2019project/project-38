@@ -46,7 +46,7 @@ public class CollectingFlag extends GameMood {
                         randomColumn = random.nextInt(5);
                     }
                     Cell cell = game.getBoard().getCell(randomRow, randomColumn);
-                    if (cell.getWarrior() == null) {
+                    if (cell.getWarrior() == null && cell.getTriggers().stream().noneMatch(trigger -> trigger instanceof Flag)) {
                         cell.getTriggers().add(new Flag());
                         break;
                     }
