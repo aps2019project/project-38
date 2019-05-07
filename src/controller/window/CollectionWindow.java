@@ -80,7 +80,7 @@ public class CollectionWindow extends Window {
 //                    Collection.getCollection().saveAccounts();
                     continue;
                 case 0:
-                    Window.closeWindow(this);
+                    this.closeWindow();
                     break tag1;
                 default:
                     Message.invalidInput();

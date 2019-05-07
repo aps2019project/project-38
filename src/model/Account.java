@@ -105,11 +105,8 @@ public class Account implements Comparable<Account>, java.io.Serializable {
     }
 
     public void putGameInHistory(String opponentName, boolean didWin) {
-        MatchHistory matchHistory = new MatchHistory();
-        matchHistory.setDidWin(didWin);
-        matchHistory.setOpponentName(opponentName);
-        Date date = new Date();
-        matchHistory.setDate(date);
+        MatchHistory matchHistory = new MatchHistory(opponentName, didWin, new Date());
+        history.add(matchHistory);
     }
 
     //***

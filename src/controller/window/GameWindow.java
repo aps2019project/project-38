@@ -2,7 +2,6 @@ package controller.window;
 
 import model.*;
 import model.cards.Card;
-import model.cards.Description;
 import model.cards.Spell;
 import model.gamemoods.CarryingFlag;
 import model.gamemoods.CollectingFlag;
@@ -18,14 +17,14 @@ import java.util.regex.Pattern;
 
 public class GameWindow extends Window {
     private Game game;
-    private MoodData moodData = new MoodData();//todo
+    private MoodData moodData = new MoodData();//todo badana
 
     @Override
     public void main() {
         if (!initialiseGame()) {
             return;
         }
-        while (game.getGameMood().getWinner() == null) {
+        while (game.getGameMood().winner == null) {
             Message.GameWindow.insideGame.showMainView(game);
             if (game.getActivePlayer() instanceof HumanPlayer) {
                 getPlayerAction();
@@ -37,10 +36,10 @@ public class GameWindow extends Window {
     }
 
     private void endGame(Game game) {
-        Player winner = game.getGameMood().getWinner();
-        if (winner instanceof HumanPlayer) {
-            ((HumanPlayer)winner).getAccount().derrick += game.prise;
-        }
+        Player winner = game.getGameMood().winner;
+        Player loser = game.getOtherPlayer(winner);
+        updatePlayerMatchHistory(game, winner, loser, true);
+        updatePlayerMatchHistory(game, loser, winner, false);
         while (true) {
             Message.GameWindow.AfterGame.showWinner(winner);
             String request = Request.getNextRequest();
@@ -50,6 +49,17 @@ public class GameWindow extends Window {
         }
         this.closeWindow();
         new MainMenu().openWindow();
+    }
+
+    private static void updatePlayerMatchHistory(Game game, Player player, Player enemy, boolean isWinner) {
+        if (player instanceof HumanPlayer) {
+            HumanPlayer humanPlayer =(HumanPlayer)player;
+            if (isWinner) {
+                humanPlayer.getAccount().derrick += game.prise;
+            }
+            String opponentName = enemy instanceof AIPlayer ? "AI" : ((HumanPlayer)enemy).getAccount().getUsername();
+            humanPlayer.getAccount().putGameInHistory(opponentName, isWinner);
+        }
     }
 
     private void getPlayerAction() {
@@ -90,13 +100,26 @@ public class GameWindow extends Window {
             showNextCard();
         } else if (request.equals("Enter graveyard")) {
             graveyardMenu();
+        } else if (request.equals("exit")) {
+            exit();
         } else {
             Message.GameWindow.failMessage.invalidCommand();
         }
     }
 
-    private void showNextCard() {
+    private void exit() {
+        game.getGameMood().winner = game.getOtherPlayer(game.getActivePlayer());
+    }
 
+    private void showNextCard() {
+        Card card = game.getActivePlayer().getNextCard();
+        while (true) {
+            System.out.printf("Name: %s ID: %d Required Mana: %d", card.getName(), card.getID(), card.getRequiredMana());
+            String request = Request.getNextRequest();
+            if (request.equals("exit")) {
+                return;
+            }
+        }
     }
 
     private void useCollectibleItem(String request) {
@@ -113,10 +136,16 @@ public class GameWindow extends Window {
     }
 
     private void showCollectibleItemInfo() {
-        if (game.getSelectedThings().collectibleItem != null) {
-            Spell item = game.getSelectedThings().collectibleItem;
-            System.out.println("Description Of Card Ability: " + item.description.descriptionOfCardSpecialAbility);
-            System.out.println("Target Type: " + item.description.targetType);
+        Spell item = game.getSelectedThings().collectibleItem;
+        if (item != null) {
+            while (true) {
+                Message.GameWindow.insideGame.showCardDescription(item);
+                String request = Request.getNextRequest();
+                if (request.equals("exit")) {
+                    return;
+                }
+            }
+
         } else {
             System.out.println("no selected collectible item");
         }
@@ -128,10 +157,13 @@ public class GameWindow extends Window {
         matcher.find();
         int cardID = Integer.parseInt(matcher.group(1));
         if (Card.getAllCards().containsKey(cardID)) {
-            Description description = Card.getAllCards().get(cardID).description;
-            System.out.println("Description Of Card Ability: " + description.descriptionOfCardSpecialAbility);
-            System.out.println("Target Type: " + description.targetType);
-
+            while (true) {
+                Message.GameWindow.insideGame.showCardDescription(Card.getAllCards().get(cardID));
+                request = Request.getNextRequest();
+                if (request.equals("exit")) {
+                    return;
+                }
+            }
         } else {
             System.out.println("no card matched");
         }
@@ -457,8 +489,8 @@ public class GameWindow extends Window {
             String request = Request.getNextRequest();
             if (request.matches("Select user \\w+")) {
                 String userName = request.replaceFirst("Select user ", "");
-                if (Account.getUsernameToAccountObject().keySet().contains(userName)) {
-                    Account account = Account.getUsernameToAccountObject().get(userName);
+                Account account = Account.getUsernameToAccountObject().get(userName);
+                if (account != null && account != Account.getActiveAccount()) {
                     if (account.getCollection().getMainDeck() != null) {
                         moodData.secondAccount = Account.getUsernameToAccountObject().get(userName);
                         return true;

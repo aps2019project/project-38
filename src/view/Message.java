@@ -309,7 +309,9 @@ public interface Message {
             static void accountMenu(HashMap<String, Account> accounts) {
                 System.out.println("Select a ready account\nfor example: Select user [user name]");
                 for (Map.Entry<String, Account> entry : accounts.entrySet()) {
-                    System.out.println(entry.getKey());
+                    if (entry.getValue() != Account.getActiveAccount()) {
+                        System.out.println(entry.getKey());
+                    }
                 }
             }
 
@@ -536,6 +538,11 @@ public interface Message {
                             card.getRequiredMana() + " Card ID:" + card.getID());
                     //todo badana.
                 }
+            }
+
+            static void showCardDescription(Card card) {
+                System.out.printf("Description Of Card Ability: %s\n",card.description.descriptionOfCardSpecialAbility);
+                System.out.printf("Target Type: %s\n", card.description.targetType);
             }
         }
 

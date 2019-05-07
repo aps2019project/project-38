@@ -14,11 +14,10 @@ import model.player.HumanPlayer;
 import model.player.Player;
 import model.triggers.Trigger;
 
-import java.io.Serializable;
 import java.util.*;
 
 
-public class Game implements Serializable {
+public class Game {
     GameMood gameMood;
     public int turn;
     Player[] players = new Player[2];
@@ -37,7 +36,6 @@ public class Game implements Serializable {
         int randomIndex = (new Random(System.currentTimeMillis())).nextInt(2);
         this.players[randomIndex] = new HumanPlayer(accountOne, accountOne.getCollection().getMainDeck());
         this.players[(randomIndex + 1) % 2] = new HumanPlayer(accountTwo, accountTwo.getCollection().getMainDeck());
-        this.prise = prise;
         initialiseGameFields();
     }
 
@@ -46,7 +44,6 @@ public class Game implements Serializable {
         int randomIndex = (new Random(System.currentTimeMillis())).nextInt(2);
         players[randomIndex] = new HumanPlayer(account, account.getCollection().getMainDeck());
         players[(randomIndex + 1) % 2] = new AIPlayer(aIDeck);
-        this.prise = prise;
         initialiseGameFields();
     }
 

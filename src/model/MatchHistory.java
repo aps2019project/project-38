@@ -7,25 +7,19 @@ public class MatchHistory {
     private boolean didWin;
     private Date date;
 
+    public MatchHistory(String opponentName, boolean didWin, Date date) {
+        this.opponentName = opponentName;
+        this.didWin = didWin;
+        this.date = date;
+    }
+
     //***
     public boolean getDidWin() {
         return didWin;
     }
 
-    public void setDidWin(boolean didWin) {
-        this.didWin = didWin;
-    }
-
     public String getOpponentName() {
         return opponentName;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public void setOpponentName(String opponentName) {
-        this.opponentName = opponentName;
     }
 
     public Date getDate() {

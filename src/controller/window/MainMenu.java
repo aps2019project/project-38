@@ -25,11 +25,10 @@ public class MainMenu extends Window {
                     new ShopWindow().openWindow();
                     break tag1;
                 case 3:
-                    this.closeWindow();
                     new GameWindow().openWindow();
                     break tag1;
                 case 0:
-                    Window.closeWindow(this);
+                    this.closeWindow();
                     Account.saveAccounts();
                     break tag1;
                 default:

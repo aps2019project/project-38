@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public abstract class GameMood implements Serializable {
     static ArrayList<Game> steps = new ArrayList<>();
-    Player winner;
+    public Player winner;
 
     static {
         //todo
@@ -21,11 +21,6 @@ public abstract class GameMood implements Serializable {
     public abstract boolean checkGameEnd(Game game);
 
     public abstract void applyTriggerToBoard(Game game);
-
-    public Player getWinner() {
-        //if winner is null it means game isn't finished.
-        return winner;
-    }
 
     int getNumberOFPlayerFlags(Player player) {
         int result = 0;
