@@ -13,7 +13,7 @@ import java.util.Random;
 
 public abstract class Player {
     public int mana;
-    protected Deck mainDeck = Deck.getAllDecks().get("level2");
+    protected Deck mainDeck;
     protected HashMap<Integer, Card> hand = new HashMap<>();
     protected ArrayList<Warrior> warriors = new ArrayList<>();
     protected ArrayList<Card> usedCards = new ArrayList<>();

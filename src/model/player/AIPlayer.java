@@ -2,9 +2,6 @@ package model.player;
 
 
 import model.*;
-import model.actions.EndTurn;
-import model.actions.Move;
-import model.actions.UseCard;
 import model.cards.Card;
 import model.cards.Warrior;
 
@@ -19,27 +16,23 @@ public class AIPlayer extends Player {
 
     public void doSomething() {
         Collections.shuffle(warriors);
-        outer1:
         for (Warrior warrior : warriors) {
             for (Cell cell : getBoardCells()) {
-                if(Move.doIt(warrior.getCell(),cell)){
-                    continue outer1;
-                }
+                getGame().move(warrior.getCell(),cell);
             }
         }
 
-        outer2:
-        for (Map.Entry<Integer, Card> cardEntry : hand.entrySet()) {
+        ArrayList<Map.Entry<Integer,Card>> es= new ArrayList<>(hand.entrySet());
+        Collections.shuffle(es);
+        for (Map.Entry<Integer, Card> cardEntry : es) {
             if(cardEntry.getValue()!=null){
                 for (Cell cell : getBoardCells()) {
-                    if(UseCard.useCard(cardEntry.getKey(),cell)){
-                        continue outer2;
-                    }
+                    getGame().useCard(cardEntry.getKey(),cell);
                 }
             }
         }
 
-        EndTurn.doIt(getGame());
+        getGame().endTurn();
     }
 
     private ArrayList<Cell> getBoardCells(){
