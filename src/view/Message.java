@@ -371,9 +371,9 @@ public interface Message {
                         " Cool Down:" + specialPower.coolDownRemaining + " CardID:" + specialPower.getID());
             }
 
-            static void showSelecteds(Game game) {
+            static void showSelecteds(Game game) {//todo else if badana
                 System.out.print("Selecteds:");
-                if (game.getSelecteds().getWarriorsCell().size() != 0) {//todo else if badana
+                if (game.getSelecteds().getWarriorsCell().size() != 0) {
                     System.out.println("Warriors: ");
                     for (Cell cell : game.getSelecteds().getWarriorsCell()) {
                         System.out.println("Card Id: " + cell.getWarrior().getID() +
@@ -382,13 +382,19 @@ public interface Message {
                     }
                 }
                 if (game.getSelecteds().collectableItem != null) {
-                    System.out.println();//todo
+                    Spell item = game.getSelecteds().collectableItem;
+                    System.out.printf("Collectible Item: Name: %s ID: %d Required Mana: %d",
+                            item.getName(), item.getID(), item.getRequiredMana());
                 }
                 if (game.getSelecteds().cardHandIndex != null) {
-                    // TODO: 5/7/19  
+                    Card card = game.getActivePlayer().getHand().get(game.getSelecteds().cardHandIndex);
+                    System.out.printf("Name: %s ID: %d Required Mana: %d",
+                            card.getName(), card.getID(), card.getRequiredMana());
                 }
                 if (game.getSelecteds().specialPowerIsSelected) {
-                    // TODO: 5/7/19  
+                    Card specialPower = game.getActivePlayer().getPlayerHero().getPower();
+                    System.out.printf("Special Power: Name: %s ID: %d Required Mana: %d",
+                            specialPower.getName(), specialPower.getID(), specialPower.getRequiredMana());
                 }
             }
 
