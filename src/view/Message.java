@@ -366,9 +366,10 @@ public interface Message {
                 System.out.println("SpecialPower: Name" + specialPower.getName() +
                         " Required Mana:" + specialPower.getRequiredMana() +
                         " Cool Down:" + specialPower.coolDownRemaining + " CardID:" + specialPower.getID());
+                showSelectedItems(game);
             }
 
-            static void showSelecteds(Game game) {//todo else if badana
+            static void showSelectedItems(Game game) {//todo else if badana
                 System.out.print("Selecteds:");
                 if (game.getSelecteds().getWarriorsCell().size() != 0) {
                     System.out.println("Warriors: ");
@@ -396,6 +397,7 @@ public interface Message {
             }
 
             static void showBoard(Game game) {
+                System.out.print(" ");
                 for (int i = 0; i < Constant.GameConstants.boardColumn * 5; i++) {
                     System.out.print(i % 5 == 2 ? i / 5 : " ");
                 }
