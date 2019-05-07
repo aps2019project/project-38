@@ -38,6 +38,7 @@ public class Warrior extends Card {
     public boolean apply(Cell cell) {
         cell.setWarrior(this);
         this.cell=cell;
+        cell.getBoard().getGame().getActivePlayer().getWarriors().add(this);
         return true;
     }
 

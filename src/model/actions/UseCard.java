@@ -23,8 +23,9 @@ public class UseCard {
             useSpellState.pending = false;
             gameState = useSpellState;
         } else {
+            Warrior warrior = (Warrior)card;
             if (cell.getWarrior() != null) return false;
-            gameState = new PutMinionState((Warrior) card);
+            gameState = new PutMinionState(warrior);
         }
         if (game.getActivePlayer().mana >= card.getRequiredMana()) {
             if (card.apply(cell)) {
@@ -33,7 +34,7 @@ public class UseCard {
                 game.getActivePlayer().getUsedCards().add(card);
                 game.iterateAllTriggersCheck(gameState);
                 didSth = true;
-                System.err.println(card.getName()+" "+cell.getRow()+" "+cell.getColumn());
+                System.err.println(card.getName()+" ("+cell.getRow()+","+cell.getColumn()+")");
             }
         }
         return didSth;

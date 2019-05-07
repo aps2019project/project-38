@@ -16,7 +16,7 @@ public interface TriggerTarget extends Serializable {
             public ArrayList<? extends QualityHaver> getTarget(QualityHaver triggerOwner, GameState gameState) {
                 ArrayList targets = new ArrayList<>();
                 try {
-                    targets.addAll(this.getTarget(triggerOwner, gameState));
+                    targets.addAll(TriggerTarget.this.getTarget(triggerOwner, gameState));
                     targets.addAll(other.getTarget(triggerOwner, gameState));
                 }catch (Exception e){
                     System.err.println("Trying to add different types of targets to each other.");

@@ -424,7 +424,7 @@ public interface Message {
             }
 
             static void horizontalBoardLine() {
-                System.out.print("+");
+                System.out.print(" +");
                 for (int i = 0; i < Constant.GameConstants.boardColumn; i++) {
                     System.out.print("----+");
                 }
