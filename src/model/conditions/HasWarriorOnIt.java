@@ -8,6 +8,10 @@ import model.triggers.Trigger;
 public class HasWarriorOnIt implements Condition {
     @Override
     public boolean check(GameState gameState, Trigger trigger, QualityHaver triggerOwner) {
-        return ((Cell)triggerOwner).getWarrior() != null;
+        if(triggerOwner instanceof Cell) {
+            return ((Cell) triggerOwner).getWarrior() != null;
+        }else {
+            return false;
+        }
     }
 }

@@ -21,7 +21,7 @@ public class Applier implements AutoAction {
             getGameFromQualityHaver(target).iterateAllTriggersCheck(state);
             if (!state.canceled) {
 //                target.getTriggers().add(trigger);
-                getGameFromQualityHaver(target).triggBuffer.put(trigger,target);
+                getGameFromQualityHaver(target).triggAddBuffer.put(trigger,target);
 
                 state.pending = false;
                 getGameFromQualityHaver(target).iterateAllTriggersCheck(state);

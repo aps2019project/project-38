@@ -28,8 +28,9 @@ public class Game {
     private Selectable selectedThings = new Selectable();
     public int prize;
 
-    public HashMap<Trigger,QualityHaver> triggBuffer = new HashMap<>();
+    public HashMap<Trigger,QualityHaver> triggAddBuffer = new HashMap<>();
     public HashMap<Effect,QualityHaver> effBuffer = new HashMap<>();
+    public HashMap<Trigger,QualityHaver> triggRemoveBuffer = new HashMap<>();
     private boolean killMod=false;
 
     public Game(GameMood gameMood, Account accountOne, Account accountTwo) {
@@ -88,13 +89,16 @@ public class Game {
     }
 
     private void flushBuffer(){
-        for (Map.Entry<Trigger, QualityHaver> entry : triggBuffer.entrySet()) {
+        for (Map.Entry<Trigger, QualityHaver> entry : triggAddBuffer.entrySet()) {
             entry.getValue().getTriggers().add(entry.getKey());
         }
         for (Map.Entry<Effect, QualityHaver> entry : effBuffer.entrySet()) {
             entry.getValue().getEffects().add(entry.getKey());
         }
-        triggBuffer = new HashMap<>();
+        for (Map.Entry<Trigger, QualityHaver> entry : triggRemoveBuffer.entrySet()) {
+            entry.getValue().getTriggers().remove(entry.getKey());
+        }
+        triggAddBuffer = new HashMap<>();
         effBuffer = new HashMap<>();
     }
 
