@@ -557,7 +557,7 @@ public class GameWindow extends Window {
                 int numberOfFlags = Integer.parseInt
                         (request.replaceFirst("Start multiplayer game CollectingFlag ", ""));
                 game = new Game(new CollectingFlag(numberOfFlags), Account.getActiveAccount(), moodData.secondAccount);
-
+                return true;
             } else if (request.matches("Start multiplayer game (KillingEnemyHero|CarryingFlag)")) {
                 String gameMood = request.replaceFirst("Start multiplayer game ", "");
                 if (gameMood.equals("KillingEnemyHero")) {

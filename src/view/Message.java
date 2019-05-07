@@ -374,7 +374,7 @@ public interface Message {
             }
 
             static void showSelectedItems(Game game) {//todo else if badana
-                System.out.print("Selecteds:");
+                System.out.print("Selecteds: ");
                 if (game.getSelectedThings().getWarriorsCell().size() != 0) {
                     System.out.println("Warriors: ");
                     for (Cell cell : game.getSelectedThings().getWarriorsCell()) {
@@ -398,7 +398,7 @@ public interface Message {
                     System.out.printf("Special Power: Required Mana: %d", specialPower.getRequiredMana());
                 }
                 else {
-                    System.out.println("empty");
+                    System.out.print("empty");
                 }
                 System.out.println();
             }
