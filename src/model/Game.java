@@ -4,6 +4,7 @@ package model;
 import model.actions.*;
 import model.actions.Killer;
 import model.cards.Card;
+import model.cards.HeroPower;
 import model.cards.Spell;
 import model.cards.Warrior;
 import model.effects.Effect;
@@ -151,6 +152,13 @@ public class Game {
 
     public ArrayList<Spell> getCollectibleItems() {
         return collectibleItems;
+    }
+
+    public void decreasSpecialPowerCoolDown() {
+        HeroPower heroPower = getActivePlayer().getPlayerHero().getPower();
+        if (heroPower.coolDownRemaining > 0) {
+            heroPower.coolDownRemaining --;
+        }
     }
 
     public void iterateAllTriggersCheck(GameState gameState) {
