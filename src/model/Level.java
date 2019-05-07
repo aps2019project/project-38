@@ -46,7 +46,9 @@ public class Level {
     }
 
     public Game getLevelGame(Account account) {
-        return new Game(gameMood, account, deck, prise);
+        Game game = new Game(gameMood, account, deck);
+        game.prise = prise;
+        return game;
     }
 
     public int getPrise() {
