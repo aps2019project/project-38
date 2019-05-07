@@ -4,9 +4,10 @@ import model.cards.Warrior;
 import model.effects.Effect;
 import model.triggers.Trigger;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class QualityHaver {
+public abstract class QualityHaver implements Serializable {
     protected ArrayList<Effect> effects = new ArrayList<>();
     protected ArrayList<Trigger> triggers = new ArrayList<>();
 

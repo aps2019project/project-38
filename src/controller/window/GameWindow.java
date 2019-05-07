@@ -1,9 +1,7 @@
 package controller.window;
 
 import model.*;
-import model.cards.Card;
-import model.cards.Description;
-import model.cards.Spell;
+import model.cards.*;
 import model.gamemoods.CarryingFlag;
 import model.gamemoods.CollectingFlag;
 import model.gamemoods.KillingEnemyHero;
@@ -90,13 +88,23 @@ public class GameWindow extends Window {
             showNextCard();
         } else if (request.equals("Enter graveyard")) {
             graveyardMenu();
+        } else if (request.equals("Peek")) {
+
         } else {
             Message.GameWindow.failMessage.invalidCommand();
         }
     }
 
-    private void showNextCard() {
+    private void peekCard(){
+        if(game.getSelectedThings().getWarriorsCell().size()>0){
+            System.out.println(game.getSelectedThings().getWarriorsCell().get(0).getTriggers());
+            System.out.println(game.getSelectedThings().getWarriorsCell().get(0).getEffects());
 
+        }
+    }
+
+    private void showNextCard() {
+        //todo
     }
 
     private void useCollectibleItem(String request) {
@@ -128,9 +136,17 @@ public class GameWindow extends Window {
         matcher.find();
         int cardID = Integer.parseInt(matcher.group(1));
         if (Card.getAllCards().containsKey(cardID)) {
-            Description description = Card.getAllCards().get(cardID).description;
-            System.out.println("Description Of Card Ability: " + description.descriptionOfCardSpecialAbility);
-            System.out.println("Target Type: " + description.targetType);
+            Card card = Card.getAllCards().get(cardID);
+            System.out.println("Name: "+card.getName());
+            if(card instanceof Warrior){
+                System.out.println("AP: "+((Warrior)card).getAp()+" HP: "+((Warrior)card).getHp());
+                if(card.description.descriptionOfCardSpecialAbility!=null){
+                    System.out.println("Description Of Card Ability: " + card.description.descriptionOfCardSpecialAbility);
+                }
+            }else if(card instanceof Spell){
+                System.out.println("Description Of Card Ability: " + card.description.descriptionOfCardSpecialAbility);
+                System.out.println("Target Type: " + card.description.targetType);
+            }
 
         } else {
             System.out.println("no card matched");

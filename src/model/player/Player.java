@@ -7,12 +7,13 @@ import model.cards.Card;
 import model.cards.Hero;
 import model.cards.Warrior;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
 
-public abstract class Player {
+public abstract class Player implements Serializable {
     public int mana;
     protected Deck mainDeck;
     protected HashMap<Integer, Card> hand = new HashMap<>();

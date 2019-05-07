@@ -270,7 +270,7 @@ public class Game implements Serializable {
 
     public void attack(Cell attackerCell, Cell defenderCell) {
         ArrayList<Warrior> activePlayerWarriors = getActivePlayer().getWarriors();
-        if (activePlayerWarriors.contains(attackerCell.getWarrior()) &&
+        if (defenderCell.getWarrior() != null && activePlayerWarriors.contains(attackerCell.getWarrior()) &&
                 !activePlayerWarriors.contains(defenderCell.getWarrior())) {
 
             Attack.doIt(attackerCell, defenderCell);

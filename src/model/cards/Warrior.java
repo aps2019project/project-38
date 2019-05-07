@@ -51,9 +51,10 @@ public class Warrior extends Card {
             oos.flush();
             ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
             ObjectInputStream ois = new ObjectInputStream(bis);
-            return (Warrior) ois.readObject();
+            Warrior copied = (Warrior) ois.readObject();
+            return copied;
         }catch (IOException | ClassNotFoundException e){
-            System.err.println("could deep copy in Warrior");
+            System.err.println("could not deep copy in Warrior: "+this.name);
             e.printStackTrace();
         }
         return this;
