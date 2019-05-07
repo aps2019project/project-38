@@ -70,6 +70,7 @@ public class Account implements Comparable<Account>, java.io.Serializable {
             allAccounts.add(getUsernameToAccountObject().get(username));
         }
         Collections.sort(allAccounts);
+        Collections.reverse(allAccounts);
         return allAccounts;
     }
 

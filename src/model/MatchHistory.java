@@ -1,8 +1,9 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class MatchHistory {
+public class MatchHistory implements Serializable {
     private String opponentName;
     private boolean didWin;
     private Date date;
