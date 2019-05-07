@@ -28,8 +28,8 @@ public class MainMenu extends Window {
                     new GameWindow().openWindow();
                     break tag1;
                 case 0:
-                    this.closeWindow();
                     Account.saveAccounts();
+                    this.closeWindow();
                     break tag1;
                 default:
                     Message.invalidInput();
