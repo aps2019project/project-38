@@ -1,10 +1,7 @@
 package model.player;
 
 
-import model.Cell;
-import model.Constant;
-import model.Deck;
-import model.Game;
+import model.*;
 import model.actions.EndTurn;
 import model.actions.Move;
 import model.actions.UseCard;
@@ -21,6 +18,7 @@ public class AIPlayer extends Player {
     }
 
     public void doSomething() {
+        Collections.shuffle(warriors);
         outer1:
         for (Warrior warrior : warriors) {
             for (Cell cell : getBoardCells()) {

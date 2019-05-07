@@ -18,6 +18,8 @@ public class Collection implements Serializable {
     private Deck mainDeck = null;
     {//todo danger for test
         mainDeck = Deck.getAllDecks().get("level3");
+        decks.add("level3");
+        allDecks.put("level3",Deck.getAllDecks().get("level3"));
         decks.add("level2");
         allDecks.put("level2",Deck.getAllDecks().get("level2"));
     }

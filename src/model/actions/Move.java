@@ -26,6 +26,7 @@ public class Move {
                 moveState.pending = false;
                 game.iterateAllTriggersCheck(moveState);
                 didSth = true;
+                System.err.println("("+originCell.getRow()+","+originCell.getColumn()+")("+targetCell.getRow()+","+targetCell.getColumn()+")");
             }
         }
         return didSth;
