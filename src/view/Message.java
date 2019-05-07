@@ -289,7 +289,7 @@ public interface Message {
             }
 
             static void StoryOrCustomMenu() {
-                System.out.println("1. Level");
+                System.out.println("1. Levels");
                 System.out.println("2. Custom game");
             }
 
@@ -347,6 +347,7 @@ public interface Message {
                 int activePlayerNumber = game.getActivePlayer() == game.getPlayers()[0] ? 0 : 1;
                 String completeName = game.getActivePlayer() instanceof AIPlayer ? "AI" : "Human User Name:" +
                         ((HumanPlayer) game.getActivePlayer()).getAccount().getUsername();
+                System.out.println("-----------------------------------------------------------");
                 System.out.println("Game Mood: " + game.getGameMood().getClass().getSimpleName());
                 System.out.println(activePlayerNumber + ": " + completeName);
                 System.out.println("Mana: " + game.getActivePlayer().mana);
@@ -367,11 +368,8 @@ public interface Message {
                 System.out.printf("Next Turn Card: Name: %s ID: %d Required Mana: %d\n",
                         nextCard.getName(), nextCard.getID(), nextCard.getRequiredMana());
                 HeroPower specialPower = game.getActivePlayer().getPlayerHero().getPower();
-                System.out.printf("SpecialPower: Name: %s Cool Down Remaining: %d Required Mana: %d \n",
-                        specialPower.getName(), specialPower.coolDownRemaining, specialPower.getRequiredMana());
-                System.out.println("SpecialPower: Name" + specialPower.getName() +
-                        " Required Mana:" + specialPower.getRequiredMana() +
-                        " Cool Down:" + specialPower.coolDownRemaining + " CardID:" + specialPower.getID());
+                System.out.printf("SpecialPower: Cool Down Remaining: %d Required Mana: %d \n",
+                        specialPower.coolDownRemaining, specialPower.getRequiredMana());
                 showSelectedItems(game);
             }
 
@@ -397,8 +395,7 @@ public interface Message {
                 }
                 if (game.getSelectedThings().specialPowerIsSelected) {
                     Card specialPower = game.getActivePlayer().getPlayerHero().getPower();
-                    System.out.printf("Special Power: Name: %s ID: %d Required Mana: %d\n",
-                            specialPower.getName(), specialPower.getID(), specialPower.getRequiredMana());
+                    System.out.printf("Special Power: Required Mana: %d\n", specialPower.getRequiredMana());
                 }
             }
 
@@ -505,6 +502,7 @@ public interface Message {
                 System.out.println("Deselect Warriors: Deselect warriors");
                 System.out.println("(if you selected just one warrior you can attack to an enemy warrior): Attack [row] [column]");
                 System.out.println("(if you selected just one warrior you can move it): Move [row] [column]");
+                System.out.println("(if you selected just one warrior you can see all its effects and triggers): Peek");
                 System.out.println("(if you selected more than one warrior you can combo attack to an enemy warrior): Attack combo [row] [column]");
                 System.out.println("(if you selected a card you can put it on board): Insert in [row] [column]");
                 System.out.println("(if you selected a card you can replace it(once in each turn)): Replace");

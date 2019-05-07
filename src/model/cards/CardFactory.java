@@ -590,7 +590,7 @@ public class CardFactory {
             spell.description.descriptionOfCardSpecialAbility = "Gives a weakness buff -6 HP but also gives 2 holy buffs for 3 turns";
             allBuiltSpells.add(spell);
         }
-        {
+        {//
             Spell spell = new Spell(114, "GhazaBokhorJoonBegiri", 2, 2500, false);
 
             spell.getActions().put(new Applier(), new RectGetter(1, 1, false, false, true, false, true));
@@ -723,9 +723,7 @@ public class CardFactory {
         {
             Hero hero = new Hero(36, "Kaveh", 8000, 50, 4, -1);
 
-            Trigger holyCell = new Trigger(3, Dispelablity.GOOD);
-            holyCell.getConditions().add(new HasWarriorOnIt());
-            holyCell.getActions().put(new Applier(), new OnCellGetter());
+            Trigger holyCell = new Mine(3, Dispelablity.GOOD);
             holyCell.getTriggers().add(new HolyBuff(1, Dispelablity.GOOD, 1));
             HeroPower spell = new HeroPower(0, "", 1, 0, false,3);
             spell.getActions().put(new Applier(), new RectGetter(1, 1, true, false, false, false, false));

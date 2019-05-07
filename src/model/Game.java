@@ -272,7 +272,7 @@ public class Game {
     public boolean attack(Cell attackerCell, Cell defenderCell) {
         boolean isDone = false;
         ArrayList<Warrior> activePlayerWarriors = getActivePlayer().getWarriors();
-        if (activePlayerWarriors.contains(attackerCell.getWarrior()) &&
+        if (defenderCell.getWarrior() != null && activePlayerWarriors.contains(attackerCell.getWarrior()) &&
                 !activePlayerWarriors.contains(defenderCell.getWarrior())) {
             isDone = Attack.doIt(attackerCell, defenderCell);
             checkGameEndAndThenKillAllDiedWarriors();

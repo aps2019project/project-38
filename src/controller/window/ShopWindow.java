@@ -116,16 +116,18 @@ public class ShopWindow extends Window {
 
     public static void showInfoOfItems(ArrayList<Card> items, int kind) {
         Message.printSomeThing("_Item:");
-        for (int i = 0; i < items.size(); i++) {
+        for (int i = 0, k = 1; i < items.size(); i++) {
+            if (items.get(i).getPrice() == 0) continue;
             if (kind == 1) {
-                Message.showInfoOfItemPlusPrice((Spell) items.get(i), i + 1, "Sell");
+                Message.showInfoOfItemPlusPrice((Spell) items.get(i), k, "Sell");
             }
             if (kind == 2) {
-                Message.showInfoOfItemPlusPrice((Spell) items.get(i), i + 1, "Buy");
+                Message.showInfoOfItemPlusPrice((Spell) items.get(i), k, "Buy");
             }
             if (kind == 3) {
-                Message.showInfoOfItemMinusPrice((Spell) items.get(i), i + 1);
+                Message.showInfoOfItemMinusPrice((Spell) items.get(i), k);
             }
+            k++;
         }
     }
 

@@ -3,6 +3,7 @@ package controller.window;
 import model.*;
 import model.cards.Card;
 import model.cards.Spell;
+import model.cards.*;
 import model.gamemoods.CarryingFlag;
 import model.gamemoods.CollectingFlag;
 import model.gamemoods.KillingEnemyHero;
@@ -102,6 +103,8 @@ public class GameWindow extends Window {
             graveyardMenu();
         } else if (request.equals("exit")) {
             exit();
+        } else if (request.equals("Peek")) {
+
         } else {
             Message.GameWindow.failMessage.invalidCommand();
         }
@@ -109,6 +112,14 @@ public class GameWindow extends Window {
 
     private void exit() {
         game.getGameMood().winner = game.getOtherPlayer(game.getActivePlayer());
+    }
+
+    private void peekCard(){
+        if(game.getSelectedThings().getWarriorsCell().size()>0){
+            System.out.println(game.getSelectedThings().getWarriorsCell().get(0).getTriggers());
+            System.out.println(game.getSelectedThings().getWarriorsCell().get(0).getEffects());
+
+        }
     }
 
     private void showNextCard() {
@@ -163,7 +174,19 @@ public class GameWindow extends Window {
         int cardID = Integer.parseInt(matcher.group(1));
         if (Card.getAllCards().containsKey(cardID)) {
             while (true) {
+                Message.GameWindow.insideGame.betweenTwoPage();
                 Message.GameWindow.insideGame.showCardDescription(Card.getAllCards().get(cardID));
+                Card card = Card.getAllCards().get(cardID);
+                System.out.println("Name: "+card.getName());
+                if(card instanceof Warrior){
+                    System.out.println("AP: "+((Warrior)card).getAp()+" HP: "+((Warrior)card).getHp());
+                    if(card.description.descriptionOfCardSpecialAbility!=null){
+                        System.out.println("Description Of Card Ability: " + card.description.descriptionOfCardSpecialAbility);
+                    }
+                }else if(card instanceof Spell){
+                    System.out.println("Description Of Card Ability: " + card.description.descriptionOfCardSpecialAbility);
+                    System.out.println("Target Type: " + card.description.targetType);
+                }
                 request = Request.getNextRequest();
                 if (request.equals("exit")) {
                     return;
@@ -567,6 +590,5 @@ public class GameWindow extends Window {
 class MoodData {
     boolean singlePlayer;
     boolean story;
-    Deck aIDeck;
     Account secondAccount;
 }

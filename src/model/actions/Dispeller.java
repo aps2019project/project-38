@@ -10,6 +10,8 @@ import model.gamestate.DispelState;
 import model.player.Player;
 import model.triggers.Trigger;
 
+import java.util.Iterator;
+
 public class Dispeller implements AutoAction{
 
     @Override
@@ -35,14 +37,16 @@ public class Dispeller implements AutoAction{
         }
     }
 
-    public static void dispel(QualityHaver qualityHaver,Dispelablity dispelType){
+    private static void dispel(QualityHaver qualityHaver, Dispelablity dispelType){
         qualityHaver.getEffects().removeIf(effect -> effect.getDispelablity().equals(dispelType));
 
-        for (Trigger trigger : qualityHaver.getTriggers()) {
+        Iterator iterator = qualityHaver.getTriggers().iterator();
+        while (iterator.hasNext()){
+            Trigger trigger =(Trigger) iterator.next();
             if(trigger.getDispelablity().equals(dispelType)) {
                 DispelState state = new DispelState(trigger);
                 QualityHaver.getGameFromQualityHaver(qualityHaver).iterateAllTriggersCheck(state);
-                qualityHaver.getTriggers().remove(trigger);
+                iterator.remove();
             }
         }
     }

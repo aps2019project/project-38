@@ -4,7 +4,9 @@ import model.QualityHaver;
 import model.gamestate.GameState;
 import model.triggers.Trigger;
 
-public interface Condition {
+import java.io.Serializable;
+
+public interface Condition extends Serializable {
     boolean check(GameState gameState, Trigger trigger, QualityHaver triggerOwner);
 
     default Condition or(Condition other) {
