@@ -289,7 +289,7 @@ public interface Message {
             }
 
             static void StoryOrCustomMenu() {
-                System.out.println("1. Level");
+                System.out.println("1. Levels");
                 System.out.println("2. Custom game");
             }
 

@@ -70,10 +70,6 @@ public class Deck implements Serializable {
         }
     }
 
-    public static HashMap<String, String> getLowerCaseNamesToOriginalName() {
-        return lowerCaseNamesToOriginalName;
-    }
-
     public void setItem(Spell item) {
         this.item = item;
     }
