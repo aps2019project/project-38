@@ -7,9 +7,6 @@ import model.cards.Card;
 import model.cards.Spell;
 import model.cards.Warrior;
 import model.effects.Effect;
-import model.gamemoods.CarryingFlag;
-import model.gamemoods.CollectingFlag;
-import model.gamemoods.KillingEnemyHero;
 import model.gamestate.*;
 import model.gamemoods.GameMood;
 import model.player.AIPlayer;
@@ -26,23 +23,48 @@ public class Game {
     Player[] players = new Player[2];
     private Board board = new Board(this);
 //    public Timer timer = new Timer(Constant.GameConstants.turnTime, ignored -> endTurn());
-    private ArrayList<Spell> colletableItems = new ArrayList<>();
-    private Selectable selecteds = new Selectable();
+    private ArrayList<Spell> collectibleItems = new ArrayList<>();
+    private Selectable selectedThings = new Selectable();
+    private int prise;
 
-    public Game(GameMood gameMood, Account accountOne, Account accountTwo) {
+    public Game(GameMood gameMood, Account accountOne, Account accountTwo, int prise) {
         this.gameMood = gameMood;
         int randomIndex = (new Random(System.currentTimeMillis())).nextInt(2);
         this.players[randomIndex] = new HumanPlayer(accountOne, accountOne.getCollection().getMainDeck());
         this.players[(randomIndex + 1) % 2] = new HumanPlayer(accountTwo, accountTwo.getCollection().getMainDeck());
+        this.prise = prise;
         initialiseGameFields();
     }
 
-    public Game(GameMood gameMood, Account account, Deck aIDeck) {
+    public Game(GameMood gameMood, Account account, Deck aIDeck, int prise) {
         this.gameMood = gameMood;
         int randomIndex = (new Random(System.currentTimeMillis())).nextInt(2);
         players[randomIndex] = new HumanPlayer(account, account.getCollection().getMainDeck());
         players[(randomIndex + 1) % 2] = new AIPlayer(aIDeck);
+        this.prise = prise;
         initialiseGameFields();
+    }
+
+    public Game(GameMood gameMood, Account account, Deck aIDeck) {
+        Game game = new Game(gameMood, account, aIDeck, Constant.GameConstants.defaultPrise);
+        this.gameMood = game.gameMood;
+        this.turn = game.turn;
+        this.players = game.players;
+        this.board = game.board;
+        this.collectibleItems = game.collectibleItems;
+        this.selectedThings = game.selectedThings;
+        this.prise = game.prise;
+    }
+
+    public Game(GameMood gameMood, Account accountOne, Account accountTwo) {
+        Game game = new Game(gameMood, accountOne, accountTwo, Constant.GameConstants.defaultPrise);
+        this.gameMood = game.gameMood;
+        this.turn = game.turn;
+        this.players = game.players;
+        this.board = game.board;
+        this.collectibleItems = game.collectibleItems;
+        this.selectedThings = game.selectedThings;
+        this.prise = game.prise;
     }
 
     private void initialiseGameFields() {
@@ -101,6 +123,14 @@ public class Game {
         return players[turn % 2];
     }
 
+    public int getPlayerNumber(Player player) {
+        return player == players[0] ? 0 : 1;
+    }
+
+    public int getPrise() {
+        return prise;
+    }
+
     public Player getWarriorsPlayer(Warrior warrior) {
         if (players[0].getWarriors().contains(warrior)) {
             return players[0];
@@ -128,12 +158,12 @@ public class Game {
         return gameMood;
     }
 
-    public Selectable getSelecteds() {
-        return selecteds;
+    public Selectable getSelectedThings() {
+        return selectedThings;
     }
 
     public ArrayList<Spell> getCollectibleItems() {
-        return colletableItems;
+        return collectibleItems;
     }
 
     public void iterateAllTriggersCheck(GameState gameState) {
@@ -266,6 +296,13 @@ public class Game {
     public void useCard(int handMapKey, Cell cell) {
         if (getActivePlayer().getHand().get(handMapKey) != null) {
             UseCard.useCard(handMapKey, cell);
+            checkGameEndAndThenKillAllDiedWarriors();
+        }
+    }
+
+    public void useSpecialPower(Cell cell) {
+        if(getActivePlayer().getPlayerHero().getPower().coolDownRemaining == 0) {
+            UseCard.useHeroPower(getActivePlayer().getPlayerHero().getPower(), cell);
             checkGameEndAndThenKillAllDiedWarriors();
         }
     }

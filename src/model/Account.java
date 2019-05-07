@@ -13,7 +13,7 @@ public class Account implements Comparable<Account>, java.io.Serializable {
     private static ArrayList<String> userNames = new ArrayList<>();
     private static HashMap<String, Account> usernameToAccountObject = new HashMap<>();
     //***
-    private int money = 15000;
+    public int derrick = 15000; //todo you can remove getter and setter and make it public
     private ArrayList<MatchHistory> history = new ArrayList<>();
     private Collection collection = new Collection();
     private String username;
@@ -125,12 +125,12 @@ public class Account implements Comparable<Account>, java.io.Serializable {
         return usernameToAccountObject;
     }
 
-    public void setMoney(int money) {
-        this.money = money;
+    public void setDerrick(int derrick) {
+        this.derrick = derrick;
     }
 
-    public int getMoney() {
-        return money;
+    public int getDerrick() {
+        return derrick;
     }
 
     public ArrayList<MatchHistory> getHistory() {

@@ -56,7 +56,7 @@ public class IntroWindow extends Window {
         Message.interPassword();
         String password = getNextRequest();
         if (Account.login(userName, password)) { // :(
-            Window.openWindow(new MainMenu());
+            new MainMenu().openWindow();
             return true;
         }
         return false;

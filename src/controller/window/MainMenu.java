@@ -19,13 +19,14 @@ public class MainMenu extends Window {
             int indexOfSelectedSubMenu = Integer.parseInt(input);
             switch (indexOfSelectedSubMenu) {
                 case 1:
-                    Window.openWindow(new CollectionWindow());
+                    new CollectionWindow().openWindow();
                     break tag1;
                 case 2:
-                    Window.openWindow(new ShopWindow());
+                    new ShopWindow().openWindow();
                     break tag1;
                 case 3:
-                    Window.openWindow(new GameWindow());
+                    this.closeWindow();
+                    new GameWindow().openWindow();
                     break tag1;
                 case 0:
                     Window.closeWindow(this);

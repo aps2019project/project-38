@@ -4,6 +4,7 @@ import model.*;
 import model.cards.*;
 import model.player.AIPlayer;
 import model.player.HumanPlayer;
+import model.player.Player;
 import model.triggers.BurningCell;
 import model.triggers.Flag;
 import model.triggers.HolyBuff;
@@ -292,7 +293,7 @@ public interface Message {
             }
 
             static void StoryOrCustomMenu() {
-                System.out.println("1. Story");
+                System.out.println("1. Level");
                 System.out.println("2. Custom game");
             }
 
@@ -317,8 +318,10 @@ public interface Message {
             }
 
             static void showLevelsForStoryMode() {
-                for (Map.Entry<String, Deck> entry : Deck.getAllDecks().entrySet()) {
-                    System.out.println(entry.getKey() + ": Hero Name:" + entry.getValue().getHero().getName() + " Mode:");//todo hashMap Name and Mode.
+                for (Map.Entry<String, Level> entry : Level.getAvailableLevels().entrySet()) {
+                    System.out.printf("%s: Hero Name: %s Mood: %s Prise: %s\n", entry.getKey(),
+                            entry.getValue().getDeck().getHero().getName(),
+                            entry.getValue().getGameMood().getClass().getSimpleName(), entry.getValue().getPrise());
                 }
             }
 
@@ -376,25 +379,25 @@ public interface Message {
 
             static void showSelectedItems(Game game) {//todo else if badana
                 System.out.print("Selecteds:");
-                if (game.getSelecteds().getWarriorsCell().size() != 0) {
+                if (game.getSelectedThings().getWarriorsCell().size() != 0) {
                     System.out.println("Warriors: ");
-                    for (Cell cell : game.getSelecteds().getWarriorsCell()) {
+                    for (Cell cell : game.getSelectedThings().getWarriorsCell()) {
                         Warrior warrior = cell.getWarrior();
                         System.out.printf("Name: %s ID: %d Row:%dColumn:%d\n",
                                 warrior.getName(), warrior.getID(), cell.getRow(), cell.getColumn());
                     }
                 }
-                if (game.getSelecteds().collectableItem != null) {
-                    Spell item = game.getSelecteds().collectableItem;
+                if (game.getSelectedThings().collectibleItem != null) {
+                    Spell item = game.getSelectedThings().collectibleItem;
                     System.out.printf("Collectible Item: Name: %s ID: %d Required Mana: %d\n",
                             item.getName(), item.getID(), item.getRequiredMana());
                 }
-                if (game.getSelecteds().cardHandIndex != null) {
-                    Card card = game.getActivePlayer().getHand().get(game.getSelecteds().cardHandIndex);
+                if (game.getSelectedThings().cardHandIndex != null) {
+                    Card card = game.getActivePlayer().getHand().get(game.getSelectedThings().cardHandIndex);
                     System.out.printf("Name: %s ID: %d Required Mana: %d\n",
                             card.getName(), card.getID(), card.getRequiredMana());
                 }
-                if (game.getSelecteds().specialPowerIsSelected) {
+                if (game.getSelectedThings().specialPowerIsSelected) {
                     Card specialPower = game.getActivePlayer().getPlayerHero().getPower();
                     System.out.printf("Special Power: Name: %s ID: %d Required Mana: %d\n",
                             specialPower.getName(), specialPower.getID(), specialPower.getRequiredMana());
@@ -554,7 +557,12 @@ public interface Message {
             }
         }
 
-
+        interface AfterGame {
+            static void showWinner(Player winner) {
+                System.out.printf("Winner: %s Player %s\n", winner.getClass().getSimpleName(), winner instanceof HumanPlayer
+                        ? ((HumanPlayer)winner).getAccount().getUsername() : "");
+            }
+        }
     }
 
     static void notEnoughCardNumber() {

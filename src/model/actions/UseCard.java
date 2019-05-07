@@ -11,7 +11,7 @@ import model.gamestate.PutMinionState;
 import model.gamestate.UseSpellState;
 
 public class UseCard {
-    public static boolean useCard(int handMapKey, Cell cell) {
+    public static boolean useCard(int handMapKey, Cell cell) {//todo babana
         boolean didSth = false;
         Game game = cell.getBoard().getGame();
         Card card = game.getActivePlayer().getHand().get(handMapKey);
@@ -49,6 +49,7 @@ public class UseCard {
         if (game.getActivePlayer().mana >= heroPower.getRequiredMana()) {
             if (heroPower.apply(cell)) {
                 game.getActivePlayer().mana -= heroPower.getRequiredMana();
+//todo                heroPower.coolDownRemaining = heroPower
                 game.iterateAllTriggersCheck(useSpellState);
             }
         }
