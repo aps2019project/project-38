@@ -58,10 +58,8 @@ public class Game {
                 Constant.GameConstants.boardColumn - 1), players[1].getWarriors().get(0));
         initialisePlayerHand(players[0]);
         initialisePlayerHand(players[1]);
-
         useUsableItem(players[0].getMainDeck().getItem());
         useUsableItem(players[1].getMainDeck().getItem());
-
         startTurn();
 //        timer.start();
     }
@@ -79,7 +77,8 @@ public class Game {
     private void initialisePlayerHand(Player player) {
         Random random = new Random(System.currentTimeMillis());
         for (Map.Entry<Integer, Card> entry : player.getHand().entrySet()) {
-            entry.setValue(Card.getAllCards().get(player.getMainDeck().getCardIDs().get(random.nextInt(player.getMainDeck().getCardIDs().size()))));
+            entry.setValue(Card.getAllCards().get(player.getMainDeck().getCardIDs()
+                    .get(random.nextInt(player.getMainDeck().getCardIDs().size()))));
         }
     }
 
@@ -182,11 +181,11 @@ public class Game {
         }
     }
 
-    public void addNewCardToPlayerHand(Player player){
+    public void addNextCardToPlayerHand(Player player){
         for (Map.Entry<Integer, Card> entry: player.getHand().entrySet()) {
             if (entry.getValue() == null) {
-                int randomIndex = (new Random(System.currentTimeMillis()).nextInt(player.getMainDeck().getCardIDs().size()));
-                entry.setValue(Card.getAllCards().get(player.getMainDeck().getCardIDs().get(randomIndex)).deepCopy());
+                entry.setValue(player.getNextCard());
+                player.initializeNextCard();
                 break;
             }
         }
