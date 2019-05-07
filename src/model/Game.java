@@ -307,7 +307,7 @@ public class Game {
         }
     }
 
-    public void useCollectable(Spell spell, Cell cell) {
+    public void useCollectible(Spell spell, Cell cell) {
         UseCard.useCollectible(spell,cell);
         checkGameEndAndThenKillAllDiedWarriors();
     }

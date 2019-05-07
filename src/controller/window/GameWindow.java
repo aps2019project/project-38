@@ -75,54 +75,75 @@ public class GameWindow extends Window {
         } else if (request.equals("Replace")) {
             replaceCard();
         } else if (request.matches("Use special power \\d \\d")) {
-            game.getSelectedThings().deselectAll();
-            Cell cell = getCellByMessage(request);
-            if (cell == null) {
-                return;
-            }
-            game.useSpecialPower(cell);
+            useSpecialPower(request);
         } else if (request.matches("Show card info \\d{2,3}")) {
-            Pattern pattern = Pattern.compile("(\\d{2,3})");
-            Matcher matcher = pattern.matcher(request);
-            matcher.find();
-            int cardID = Integer.parseInt(matcher.group(1));
-            if (Card.getAllCards().containsKey(cardID)) {
-                Description description = Card.getAllCards().get(cardID).description;
-                System.out.println("Description Of Card Ability: " + description.descriptionOfCardSpecialAbility);
-                System.out.println("Target Type: " + description.targetType);
-
-            } else {
-                System.out.println("no card matched");
-            }
+            showCardInfo(request);
         } else if (request.equals("End turn")) {
             game.endTurn();
-        } else if (request.equals("Show collectables")) {
+        } else if (request.equals("Show collectibles")) {
             collectibleItemsMenu();
-        } else if (request.equals("Show collectable item info")) {
-            if (game.getSelectedThings().collectibleItem != null) {
-                Spell item = game.getSelectedThings().collectibleItem;
-                System.out.println("Description Of Card Ability: " + item.description.descriptionOfCardSpecialAbility);
-                System.out.println("Target Type: " + item.description.targetType);
-            } else {
-                System.out.println("no selected collectable item");
-            }
-        } else if (request.matches("Use collectable item \\d \\d")) {
-            Cell cell = getCellByMessage(request);
-            if (cell == null) {
-                return;
-            }
-            if (game.getSelectedThings().collectibleItem != null) {
-                game.useCollectable(game.getSelectedThings().collectibleItem, cell);
-            } else {
-                System.out.println("no collectable item selected");
-            }
+        } else if (request.equals("Show collectible item info")) {
+            showCollectibleItemInfo();
+        } else if (request.matches("Use collectible item \\d \\d")) {
+            useCollectibleItem(request);
         } else if (request.equals("Show next card")) {
-            System.out.printf("");
+            showNextCard();
         } else if (request.equals("Enter graveyard")) {
             graveyardMenu();
         } else {
-            System.out.println("wrong command");
+            Message.GameWindow.failMessage.invalidCommand();
         }
+    }
+
+    private void showNextCard() {
+
+    }
+
+    private void useCollectibleItem(String request) {
+        Cell cell = getCellByMessage(request);
+        if (cell == null) {
+            return;
+        }
+        if (game.getSelectedThings().collectibleItem != null) {
+            game.useCollectible(game.getSelectedThings().collectibleItem, cell);
+        } else {
+            System.out.println("no collectible item selected");
+        }
+        game.getSelectedThings().deselectAll();
+    }
+
+    private void showCollectibleItemInfo() {
+        if (game.getSelectedThings().collectibleItem != null) {
+            Spell item = game.getSelectedThings().collectibleItem;
+            System.out.println("Description Of Card Ability: " + item.description.descriptionOfCardSpecialAbility);
+            System.out.println("Target Type: " + item.description.targetType);
+        } else {
+            System.out.println("no selected collectible item");
+        }
+    }
+
+    private void showCardInfo(String request) {
+        Pattern pattern = Pattern.compile("(\\d{2,3})");
+        Matcher matcher = pattern.matcher(request);
+        matcher.find();
+        int cardID = Integer.parseInt(matcher.group(1));
+        if (Card.getAllCards().containsKey(cardID)) {
+            Description description = Card.getAllCards().get(cardID).description;
+            System.out.println("Description Of Card Ability: " + description.descriptionOfCardSpecialAbility);
+            System.out.println("Target Type: " + description.targetType);
+
+        } else {
+            System.out.println("no card matched");
+        }
+    }
+
+    private void useSpecialPower(String request) {
+        Cell cell = getCellByMessage(request);
+        if (cell == null) {
+            return;
+        }
+        game.useSpecialPower(cell);
+        game.getSelectedThings().deselectAll();
     }
 
     private void replaceCard() {
@@ -131,6 +152,7 @@ public class GameWindow extends Window {
         }else {
             System.out.println("no selected card");
         }
+        game.getSelectedThings().deselectAll();
     }
 
     private void insertCardinGame(String request) {
@@ -143,6 +165,7 @@ public class GameWindow extends Window {
         } else {
             System.out.println("no card selected");
         }
+        game.getSelectedThings().deselectAll();
     }
 
     private void comboAttack(String request) {
@@ -154,11 +177,12 @@ public class GameWindow extends Window {
             if (cell.getWarrior() != null && game.getActivePlayer() == game.getWarriorsPlayer(cell.getWarrior())) {
                 game.comboAttack(game.getSelectedThings().getWarriorsCell(), cell);
             } else {
-                Message.GameWindow.insideGame.failMessage.thereIsNoEnemyWarriorInThisCell();
+                Message.GameWindow.failMessage.thereIsNoEnemyWarriorInThisCell();
             }
         } else {
             System.out.println("you should select more than one warrior for attack");
         }
+        game.getSelectedThings().deselectAll();
     }
 
     private void move(String request) {
@@ -175,6 +199,7 @@ public class GameWindow extends Window {
         } else {
             System.out.println("you should select just one warrior for attack");
         }
+        game.getSelectedThings().deselectAll();
     }
 
     private void attack(String request) {
@@ -186,11 +211,12 @@ public class GameWindow extends Window {
             if (cell.getWarrior() != null && game.getActivePlayer() == game.getWarriorsPlayer(cell.getWarrior())) {
                 game.attack(game.getSelectedThings().getWarriorsCell().get(0), cell);
             } else {
-                Message.GameWindow.insideGame.failMessage.thereIsNoEnemyWarriorInThisCell();
+                Message.GameWindow.failMessage.thereIsNoEnemyWarriorInThisCell();
             }
         } else {
             System.out.println("you should select just one warrior for attack");
         }
+        game.getSelectedThings().deselectAll();
     }
 
     private void selectCard(String request) {
@@ -216,7 +242,7 @@ public class GameWindow extends Window {
         if (row < Constant.GameConstants.boardRow && column < Constant.GameConstants.boardColumn) {
             return game.getBoard().getCell(row, column);
         }
-        Message.GameWindow.insideGame.failMessage.indexOutOfBoard();
+        Message.GameWindow.failMessage.indexOutOfBoard();
         return null;
     }
 
@@ -274,7 +300,7 @@ public class GameWindow extends Window {
                 game.getActivePlayer() == game.getWarriorsPlayer(cell.getWarrior())) {
             game.getSelectedThings().seletWarrior(game.getBoard().getCell(cell.getRow(), cell.getColumn()));
         } else {
-            Message.GameWindow.insideGame.failMessage.youHaveNoOwnWarriorInThisCell();
+            Message.GameWindow.failMessage.youHaveNoOwnWarriorInThisCell();
         }
     }
 

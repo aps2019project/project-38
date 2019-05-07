@@ -383,7 +383,7 @@ public interface Message {
                     System.out.println("Warriors: ");
                     for (Cell cell : game.getSelectedThings().getWarriorsCell()) {
                         Warrior warrior = cell.getWarrior();
-                        System.out.printf("Name: %s ID: %d Row:%dColumn:%d\n",
+                        System.out.printf("Name: %s ID: %d Position: (%d,%d)\n",
                                 warrior.getName(), warrior.getID(), cell.getRow(), cell.getColumn());
                     }
                 }
@@ -513,11 +513,11 @@ public interface Message {
                 System.out.println("Use Special Power: Use special power [row] [column]");
                 System.out.println("Show Card Info: Show card info [cardID]");
                 System.out.println("End Turn: End turn");
-                System.out.println("Show Collectable Items: Show collectables");
-                System.out.println("(if you are in collectable items window you can select colectable item): Select [item index]");
+                System.out.println("Show Collectible Items: Show collectibles");
+                System.out.println("(if you are in collectible items window you can select collectible item): Select [item index]");
                 System.out.println("(get out of above window): Exit");
-                System.out.println("(if you selected an collectable item in board window you can see item info): Show collectable item info");
-                System.out.println("(if you selected an collectable item in board window you can use it): Use collectable item [row] [column]");
+                System.out.println("(if you selected an collectible item in board window you can see item info): Show collectible item info");
+                System.out.println("(if you selected an collectible item in board window you can use it): Use collectible item [row] [column]");
                 System.out.println("Show Next Card Info: Show next card");
                 System.out.println("Show Graveyard: Enter graveyard");
                 System.out.println("(get out of above window): exit");
@@ -525,10 +525,10 @@ public interface Message {
             }
 
             static void collectiblesWindow(Game game) {
-                System.out.println("Collectable Items:");
+                System.out.println("Collectible Items:");
                 for (int i = 0; i < game.getCollectibleItems().size(); i++) {
                     Spell item = game.getCollectibleItems().get(i);
-                    System.out.println(i + ": Name: " + item.getName() + " Requird Mana: " +
+                    System.out.println(i + ": Name: " + item.getName() + " Required Mana: " +
                             item.getRequiredMana() + " Card ID:" + item.getID());
                 }
             }
@@ -541,26 +541,30 @@ public interface Message {
                     //todo badana.
                 }
             }
-
-            interface failMessage {
-                static void indexOutOfBoard() {
-                    System.out.println("index out of board");
-                }
-
-                static void youHaveNoOwnWarriorInThisCell() {
-                    System.out.println("you have no own warrior in that cell");
-                }
-
-                static void thereIsNoEnemyWarriorInThisCell() {
-                    System.out.println("there is no enemy warrior in that cell");
-                }
-            }
         }
 
         interface AfterGame {
             static void showWinner(Player winner) {
                 System.out.printf("Winner: %s Player %s\n", winner.getClass().getSimpleName(), winner instanceof HumanPlayer
                         ? ((HumanPlayer)winner).getAccount().getUsername() : "");
+            }
+        }
+
+        interface failMessage {
+            static void indexOutOfBoard() {
+                System.out.println("index out of board");
+            }
+
+            static void youHaveNoOwnWarriorInThisCell() {
+                System.out.println("you have no own warrior in that cell");
+            }
+
+            static void thereIsNoEnemyWarriorInThisCell() {
+                System.out.println("there is no enemy warrior in that cell");
+            }
+
+            static void invalidCommand() {
+                System.out.println("invalid command");
             }
         }
     }
