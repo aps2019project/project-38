@@ -1,6 +1,7 @@
 package model;
 
 import model.cards.Card;
+import model.cards.CardFactory;
 import model.cards.Hero;
 import model.cards.Spell;
 import view.Message;
@@ -14,17 +15,39 @@ public class Collection implements Serializable {
     private ArrayList<String> decks = new ArrayList<>();
     private HashMap<String, Deck> allDecks = new HashMap<>();
     private HashMap<String, Integer> howManyCard = new HashMap<>();
-    private Deck mainDeck = null ;
+    private Deck mainDeck = null;
+
+    {// set a default deck
+        Deck deck = new Deck();
+        deck.setName("DefaultDeck");
+
+        deck.setHero((Hero) CardFactory.getAllBuiltHeroes().get(2));
+        deck.setItem((Spell) CardFactory.getAllBuiltItems().get(13));
+        int[] spellIndex = {1, 5, 5, 7, 9, 10, 19};
+        for (int i = 0; i < 7; i++) {
+            deck.getCardIDs().add(CardFactory.getAllBuiltSpells().get(spellIndex[i] - 1).getID());
+        }
+        int[] minionIndex = {1, 2, 4, 8, 21, 22, 25, 25, 28, 29, 31, 33, 40};
+        for (int i = 0; i < 13; i++) {
+            deck.getCardIDs().add(CardFactory.getAllBuiltMinions().get(minionIndex[i] - 1).getID());
+        }
+
+        this.getDecks().add("DefaultDeck");
+        this.getAllDecks().put("DefaultDeck", deck);
+        this.getCardIDs().addAll(deck.getCardIDs());
+        this.getCardIDs().add(deck.getHero().getID());
+        this.getCardIDs().add(deck.getItem().getID());
+    }
 
     {//todo danger for test
         mainDeck = Deck.getAllDecks().get("level3");
         this.decks.add("level3");
-        allDecks.put("level3", Deck.getAllDecks().get("level3"));
+        this.allDecks.put("level3", Deck.getAllDecks().get("level3"));
         this.getCardIDs().addAll(Deck.getAllDecks().get("level3").getCardIDs());
         this.getCardIDs().add(Deck.getAllDecks().get("level3").getHero().getID());
         this.getCardIDs().add(Deck.getAllDecks().get("level3").getItem().getID());
         this.decks.add("level2");
-        allDecks.put("level2", Deck.getAllDecks().get("level2"));
+        this.allDecks.put("level2", Deck.getAllDecks().get("level2"));
         this.getCardIDs().addAll(Deck.getAllDecks().get("level2").getCardIDs());
         this.getCardIDs().add(Deck.getAllDecks().get("level2").getHero().getID());
         this.getCardIDs().add(Deck.getAllDecks().get("level2").getItem().getID());
@@ -58,7 +81,7 @@ public class Collection implements Serializable {
             return;
         }
         Deck deck = Account.getActiveAccount().getCollection().getAllDecks().get(deckName);
-        if(this.getMainDeck().equals(deck)){
+        if (this.getMainDeck().equals(deck)) {
             this.setMainDeck(null);
         }
         getDecks().remove(deckName);
