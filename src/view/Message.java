@@ -352,10 +352,12 @@ public interface Message {
                 System.out.println("Hand:");
                 for (Map.Entry<Integer, Card> entry : game.getActivePlayer().getHand().entrySet()) {
                     if (entry.getValue() == null) {
-                        continue;
+                        System.out.println(entry.getKey() + ": Empty");
                     }
-                    System.out.println(entry.getKey() + " Name: " + entry.getValue().getName() + " Required Mana: " +
-                            entry.getValue().getRequiredMana() + " CardID: " + entry.getValue().getID());
+                    else {
+                        System.out.println(entry.getKey() + ": Name" + entry.getValue().getName() + " Required Mana: " +
+                                entry.getValue().getRequiredMana() + " CardID:" + entry.getValue().getID());
+                    }
                 }
                 HeroPower specialPower = game.getActivePlayer().getPlayerHero().getPower();
                 System.out.println("SpecialPower: Name" + specialPower.getName() +
@@ -477,8 +479,8 @@ public interface Message {
 
             static void colletableWindow(Game game) {
                 System.out.println("Collectable Items:");
-                for (int i = 0; i < game.getColletableItems().size(); i++) {
-                    Spell item = game.getColletableItems().get(i);
+                for (int i = 0; i < game.getCollectibleItems().size(); i++) {
+                    Spell item = game.getCollectibleItems().get(i);
                     System.out.println(i + ": Name: " + item.getName() + " Requird Mana: " +
                             item.getRequiredMana() + " Card ID:" + item.getID());
                 }

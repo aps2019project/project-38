@@ -85,7 +85,7 @@ public class Board {
     }
 
     public ArrayList<Cell> getCellWithinDistance(Cell cell,int maxDistance){
-        //this function doesn't returns the origin cell.
+        /*this function doesn't returns the origin cell.*/
         ArrayList<Cell> cells = new ArrayList<>();
         ArrayList<Cell> layerCells = new ArrayList<>();
         layerCells.add(cell);
@@ -107,7 +107,7 @@ public class Board {
     }
 
     public int getManhattanDistance(Cell originCell, Cell targetCell) {
-            ArrayList<Cell> checkedCells = new ArrayList<>();
+        ArrayList<Cell> checkedCells = new ArrayList<>();
         ArrayList<Cell> layerCells = new ArrayList<>();
         layerCells.add(originCell);
         for (int i = 0; true; i++) {
@@ -134,22 +134,22 @@ public class Board {
     }
 
     private void updateListOneByListTwo (ArrayList<Cell> listOne, ArrayList<Cell> listTwo) {
-        listTwo.addAll(listOne);
+        listOne.addAll(listTwo);//todo check with amir
     }
 
     private ArrayList<Cell> getNextCells (Cell cell) {
         ArrayList<Cell> nextCells = new ArrayList<>();
         if (cell.getRow() + 1 < Constant.GameConstants.boardRow) {
-            nextCells.add(table.get(cell.getRow() + 1).get(cell.getColumn()));
+            nextCells.add(this.getCell(cell.getRow() + 1, cell.getColumn()));
         }
         if (cell.getColumn() + 1 < Constant.GameConstants.boardColumn) {
-            nextCells.add(table.get(cell.getRow()).get(cell.getColumn() + 1));
+            nextCells.add(this.getCell(cell.getRow(), cell.getColumn() + 1));
         }
         if (cell.getRow() - 1 >= 0) {
-            nextCells.add(table.get(cell.getRow() - 1).get(cell.getColumn()));
+            nextCells.add(this.getCell(cell.getRow() - 1, cell.getColumn()));
         }
         if (cell.getColumn() - 1 >= 0) {
-            nextCells.add(table.get(cell.getRow()).get(cell.getColumn() - 1));
+            nextCells.add(this.getCell(cell.getRow(), cell.getColumn() - 1));
         }
         return nextCells;
     }

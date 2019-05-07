@@ -25,6 +25,12 @@ public abstract class Player {
         for (int i = 0; i < Constant.GameConstants.handSize; i++) {
             hand.put(i, null);
         }
+        initializeNextCard();
+    }
+
+    public void initializeNextCard() {
+        int randomIndex = (new Random(System.currentTimeMillis()).nextInt(this.getMainDeck().getCardIDs().size()));
+        nextCard = Card.getAllCards().get(this.getMainDeck().getCardIDs().get(randomIndex)).deepCopy();
     }
 
     public ArrayList<Card> getUsedCards() {
@@ -45,5 +51,9 @@ public abstract class Player {
 
     public Deck getMainDeck() {
         return mainDeck;
+    }
+
+    public Card getNextCard() {
+        return nextCard;
     }
 }
