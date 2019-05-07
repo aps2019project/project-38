@@ -11,6 +11,10 @@ public interface Constant {
         int carryingFlagMoodWinScore = 6;
         int defaultPrise = 3;
 
+        int winnerPriceForLevel1 = 500;
+        int winnerPriceForLevel2 = 1000;
+        int winnerPriceForLevel3 = 1500;
+
         static int getTurnMana(int turn) {
             int mana = (turn + 5) / 2;
             return mana > 9 ? 9 : mana;

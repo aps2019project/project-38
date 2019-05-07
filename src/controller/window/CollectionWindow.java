@@ -94,10 +94,10 @@ public class CollectionWindow extends Window {
             return;
         }
         ArrayList<Card> oneHero = new ArrayList<>();
-        oneHero.add(deck.getHero());
+        if (deck.getHero() != null) oneHero.add(deck.getHero());
         ShopWindow.showInfoOfHeroes(oneHero, 3);
         ArrayList<Card> oneItem = new ArrayList<>();
-        oneItem.add(deck.getItem());
+        if (deck.getItem() != null) oneItem.add(deck.getItem());
         ShopWindow.showInfoOfItems(oneItem, 3);
         ArrayList<Card> otherCards = new ArrayList<>();
         for (int ID : deck.getCardIDs()) {

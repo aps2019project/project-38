@@ -87,7 +87,7 @@ public class ShopWindow extends Window {
     }
 
     public static void showInfoOfHeroes(ArrayList<Card> heroes, int kind) {
-        Message.showAWordAsTitle("_-Hero-_");
+        Message.printSomeThing("_Hero:");
         for (int i = 0; i < heroes.size(); i++) {
             int template = 0;
             String kindOfAttackArea = "Hybrid"; // byDefault
@@ -115,7 +115,7 @@ public class ShopWindow extends Window {
     }
 
     public static void showInfoOfItems(ArrayList<Card> items, int kind) {
-        Message.showAWordAsTitle("_-Item-_");
+        Message.printSomeThing("_Item:");
         for (int i = 0; i < items.size(); i++) {
             if (kind == 1) {
                 Message.showInfoOfItemPlusPrice((Spell) items.get(i), i + 1, "Sell");
@@ -130,7 +130,7 @@ public class ShopWindow extends Window {
     }
 
     public static void showInfoOfOtherCards(ArrayList<Card> others, int kind) {
-        Message.showAWordAsTitle("_-Cards-_");
+        Message.printSomeThing("_Cards:");
         for (int i = 0; i < others.size(); i++) {
             String type;
             if (others.get(i) instanceof Spell) type = "Spell";
