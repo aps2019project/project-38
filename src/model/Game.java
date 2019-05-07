@@ -14,10 +14,11 @@ import model.player.HumanPlayer;
 import model.player.Player;
 import model.triggers.Trigger;
 
+import java.io.Serializable;
 import java.util.*;
 
 
-public class Game {
+public class Game implements Serializable {
     GameMood gameMood;
     public int turn;
     Player[] players = new Player[2];
