@@ -4,6 +4,7 @@ package model;
 import model.actions.*;
 import model.actions.Killer;
 import model.cards.Card;
+import model.cards.HeroPower;
 import model.cards.Spell;
 import model.cards.Warrior;
 import model.effects.Effect;
@@ -25,7 +26,7 @@ public class Game {
 //    public Timer timer = new Timer(Constant.GameConstants.turnTime, ignored -> endTurn());
     private ArrayList<Spell> collectibleItems = new ArrayList<>();
     private Selectable selectedThings = new Selectable();
-    public int prise;
+    public int prize;
 
     public HashMap<Trigger,QualityHaver> triggBuffer = new HashMap<>();
     public HashMap<Effect,QualityHaver> effBuffer = new HashMap<>();
@@ -151,6 +152,13 @@ public class Game {
 
     public ArrayList<Spell> getCollectibleItems() {
         return collectibleItems;
+    }
+
+    public void decreasSpecialPowerCoolDown() {
+        HeroPower heroPower = getActivePlayer().getPlayerHero().getPower();
+        if (heroPower.coolDownRemaining > 0) {
+            heroPower.coolDownRemaining --;
+        }
     }
 
     public void iterateAllTriggersCheck(GameState gameState) {

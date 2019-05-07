@@ -278,7 +278,7 @@ public interface Message {
     //******************************************************
 
     interface GameWindow {
-        interface beforeGame {
+        interface BeforeGame {
             static void invalidDeckForPlayerOne() {
                 System.out.println("selected deck is invalid");
             }
@@ -317,9 +317,9 @@ public interface Message {
 
             static void showLevelsForStoryMode() {
                 for (Map.Entry<String, Level> entry : Level.getAvailableLevels().entrySet()) {
-                    System.out.printf("%s: Hero Name: %s Mood: %s Prise: %s\n", entry.getKey(),
+                    System.out.printf("%s: Hero Name: %s Mood: %s Prize: %s\n", entry.getKey(),
                             entry.getValue().getDeck().getHero().getName(),
-                            entry.getValue().getGameMood().getClass().getSimpleName(), entry.getValue().getPrise());
+                            entry.getValue().getGameMood().getClass().getSimpleName(), entry.getValue().getPrize());
                 }
             }
 
@@ -336,7 +336,7 @@ public interface Message {
             }
         }
 
-        interface insideGame {
+        interface InsideGame {
             static void showMainView(Game game) {
                 showBoardAbove(game);
                 showBoard(game);
@@ -347,7 +347,7 @@ public interface Message {
                 int activePlayerNumber = game.getActivePlayer() == game.getPlayers()[0] ? 0 : 1;
                 String completeName = game.getActivePlayer() instanceof AIPlayer ? "AI" : "Human User Name:" +
                         ((HumanPlayer) game.getActivePlayer()).getAccount().getUsername();
-                System.out.println("-----------------------------------------------------------");
+                InsideGame.betweenTwoPage();
                 System.out.println("Game Mood: " + game.getGameMood().getClass().getSimpleName());
                 System.out.println(activePlayerNumber + ": " + completeName);
                 System.out.println("Mana: " + game.getActivePlayer().mana);
@@ -374,29 +374,33 @@ public interface Message {
             }
 
             static void showSelectedItems(Game game) {//todo else if badana
-                System.out.print("Selecteds:");
+                System.out.print("Selecteds: ");
                 if (game.getSelectedThings().getWarriorsCell().size() != 0) {
                     System.out.println("Warriors: ");
                     for (Cell cell : game.getSelectedThings().getWarriorsCell()) {
                         Warrior warrior = cell.getWarrior();
-                        System.out.printf("Name: %s ID: %d Position: (%d,%d)\n",
+                        System.out.printf("Name: %s ID: %d Position: (%d,%d)",
                                 warrior.getName(), warrior.getID(), cell.getRow(), cell.getColumn());
                     }
                 }
-                if (game.getSelectedThings().collectibleItem != null) {
+                else if (game.getSelectedThings().collectibleItem != null) {
                     Spell item = game.getSelectedThings().collectibleItem;
-                    System.out.printf("Collectible Item: Name: %s ID: %d Required Mana: %d\n",
+                    System.out.printf("Collectible Item: Name: %s ID: %d Required Mana: %d",
                             item.getName(), item.getID(), item.getRequiredMana());
                 }
-                if (game.getSelectedThings().cardHandIndex != null) {
+                else if (game.getSelectedThings().cardHandIndex != null) {
                     Card card = game.getActivePlayer().getHand().get(game.getSelectedThings().cardHandIndex);
-                    System.out.printf("Name: %s ID: %d Required Mana: %d\n",
+                    System.out.printf("Name: %s ID: %d Required Mana: %d",
                             card.getName(), card.getID(), card.getRequiredMana());
                 }
-                if (game.getSelectedThings().specialPowerIsSelected) {
+                else if (game.getSelectedThings().specialPowerIsSelected) {
                     Card specialPower = game.getActivePlayer().getPlayerHero().getPower();
-                    System.out.printf("Special Power: Required Mana: %d\n", specialPower.getRequiredMana());
+                    System.out.printf("Special Power: Required Mana: %d", specialPower.getRequiredMana());
                 }
+                else {
+                    System.out.print("empty");
+                }
+                System.out.println();
             }
 
             static void showBoard(Game game) {
@@ -508,16 +512,16 @@ public interface Message {
                 System.out.println("(if you selected a card you can replace it(once in each turn)): Replace");
                 System.out.println("Use Special Power: Use special power [row] [column]");
                 System.out.println("Show Card Info: Show card info [cardID]");
+                System.out.println("(get out of above window): exit");
                 System.out.println("End Turn: End turn");
                 System.out.println("Show Collectible Items: Show collectibles");
+                System.out.println("(get out of above window): exit");
                 System.out.println("(if you are in collectible items window you can select collectible item): Select [item index]");
-                System.out.println("(get out of above window): Exit");
+                System.out.println("(get out of above window): exit");
                 System.out.println("(if you selected an collectible item in board window you can see item info): Show collectible item info");
                 System.out.println("(if you selected an collectible item in board window you can use it): Use collectible item [row] [column]");
-                System.out.println("Show Next Card Info: Show next card");
                 System.out.println("Show Graveyard: Enter graveyard");
                 System.out.println("(get out of above window): exit");
-//                System.out.println("(you can see info of above cards): Show card info [cardID]");
             }
 
             static void collectiblesWindow(Game game) {
@@ -555,7 +559,7 @@ public interface Message {
             }
         }
 
-        interface failMessage {
+        interface FailMessage {
             static void notEnoughNecessaryCondition() {
                 System.out.println("not enough necessary condition");
             }
