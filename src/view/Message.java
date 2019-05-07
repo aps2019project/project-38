@@ -343,7 +343,7 @@ public interface Message {
                 int activePlayerNumber = game.getActivePlayer() == game.getPlayers()[0] ? 0 : 1;
                 String completeName = game.getActivePlayer() instanceof AIPlayer ? "AI" : "Human User Name:" +
                         ((HumanPlayer) game.getActivePlayer()).getAccount().getUsername();
-                System.out.println("Game Mood: " + game.getGameMood().getClass());
+                System.out.println("Game Mood: " + game.getGameMood().getClass().getSimpleName());
                 System.out.println(activePlayerNumber + ": " + completeName);
                 System.out.println("Mana: " + game.getActivePlayer().mana);
             }
@@ -402,7 +402,7 @@ public interface Message {
             static void cellFirstLine(Cell cell) {
                 Game game = cell.getBoard().getGame();
                 if (cell.getWarrior() != null) {
-                    int playerNumber = game.getWarriorsPlayer(cell.getWarrior()) == game.getPlayers()[0] ? 1 : 2;
+                    int playerNumber = game.getWarriorsPlayer(cell.getWarrior()) == game.getPlayers()[0] ? 0 : 1;
                     System.out.print(playerNumber + String.format("%3d", cell.getWarrior().getID()));
                 } else {
                     System.out.print("    ");
@@ -473,9 +473,8 @@ public interface Message {
                 System.out.println("(if you selected an collectable item in board window you can use it): Use collectable item [row] [column]");
                 System.out.println("Show Next Card Info: Show next card");
                 System.out.println("Show Graveyard: Enter graveyard");
-                System.out.println("(get out of above window): Exit");
+                System.out.println("(get out of above window): exit");
 //                System.out.println("(you can see info of above cards): Show card info [cardID]");
-                System.out.println("(get out of above window): Exit");
             }
 
             static void colletableWindow(Game game) {
