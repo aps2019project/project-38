@@ -4,11 +4,12 @@ import model.effects.Effect;
 import model.gamestate.GameState;
 import model.triggers.Trigger;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 
-public class Board {
+public class Board implements Serializable {
     private ArrayList<ArrayList<Cell>> table = new ArrayList<>();
     private Game game;
 
