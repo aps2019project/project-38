@@ -461,6 +461,7 @@ public interface Message {
                 System.out.println("Select Special Power: Select SPP");
                 System.out.println("Deselect Warriors: Deselect warriors");
                 System.out.println("(if you selected just one warrior you can attack to an enemy warrior): Attack [row] [column]");
+                System.out.println("(if you selected just one warrior you can move it): Move [row] [column]");
                 System.out.println("(if you selected more than one warrior you can combo attack to an enemy warrior): Attack combo [row] [column]");
                 System.out.println("(if you selected a card you can put it on board): Insert in [row] [column]");
                 System.out.println("Use Special Power: Use special power [row] [column]");
