@@ -50,9 +50,7 @@ public class Game {
         this.gameMood = game.gameMood;
         this.turn = game.turn;
         this.players = game.players;
-        this.board = game.board;
-        this.collectibleItems = game.collectibleItems;
-        this.selectedThings = game.selectedThings;
+        this.board = new Board(this);
         this.prise = game.prise;
     }
 
@@ -61,9 +59,7 @@ public class Game {
         this.gameMood = game.gameMood;
         this.turn = game.turn;
         this.players = game.players;
-        this.board = game.board;
-        this.collectibleItems = game.collectibleItems;
-        this.selectedThings = game.selectedThings;
+        this.board = new Board(this);
         this.prise = game.prise;
     }
 
