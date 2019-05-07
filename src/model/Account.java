@@ -10,10 +10,10 @@ import java.util.Collections;
 public class Account implements Comparable<Account>, java.io.Serializable {
 
     private static Account activeAccount = new Account();
-    private static ArrayList<String> userNames = new ArrayList<>();//todo in chiye?
+    private static ArrayList<String> userNames = new ArrayList<>();
     private static HashMap<String, Account> usernameToAccountObject = new HashMap<>();
     //***
-    private int money=15000;
+    private int money = 15000;
     private ArrayList<MatchHistory> history = new ArrayList<>();
     private Collection collection = new Collection();
     private String username;
@@ -21,7 +21,7 @@ public class Account implements Comparable<Account>, java.io.Serializable {
 
     //***
     public static void createAccount(String username, String password, String againPassword) {
-        if (Account.getusernames().contains(username)) {
+        if (Account.getUsernames().contains(username)) {
             Message.thereIsAnAccountWithThisName();
             return;
         }
@@ -38,7 +38,7 @@ public class Account implements Comparable<Account>, java.io.Serializable {
     }
 
     public static boolean login(String username, String password) {
-        if (!Account.getusernames().contains(username)) {
+        if (!Account.getUsernames().contains(username)) {
             Message.thereIsNoAccountWithThisName();
             return false;
         }
@@ -66,8 +66,8 @@ public class Account implements Comparable<Account>, java.io.Serializable {
 
     public static ArrayList<Account> sortAccounts() {
         ArrayList<Account> allAccounts = new ArrayList<>();
-        for (String username : getusernames()) {
-            allAccounts.add(getusernameToAccountObject().get(username));
+        for (String username : getUsernames()) {
+            allAccounts.add(getUsernameToAccountObject().get(username));
         }
         Collections.sort(allAccounts);
         return allAccounts;
@@ -117,11 +117,11 @@ public class Account implements Comparable<Account>, java.io.Serializable {
         return activeAccount;
     }
 
-    public static ArrayList<String> getusernames() {
+    public static ArrayList<String> getUsernames() {
         return userNames;
     }
 
-    public static HashMap<String, Account> getusernameToAccountObject() {
+    public static HashMap<String, Account> getUsernameToAccountObject() {
         return usernameToAccountObject;
     }
 

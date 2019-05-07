@@ -1,10 +1,8 @@
 package controller.window;
 
-import model.Account;
-import model.Collection;
-import model.MatchHistory;
-import model.cards.CardFactory;
 import view.Message;
+import model.Account;
+import model.MatchHistory;
 
 import java.util.ArrayList;
 

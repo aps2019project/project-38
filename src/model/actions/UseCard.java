@@ -25,7 +25,6 @@ public class UseCard {
         } else {
             if (cell.getWarrior() != null) return false;
             gameState = new PutMinionState((Warrior) card);
-            cell.setWarrior((Warrior) card);
         }
         if (game.getActivePlayer().mana >= card.getRequiredMana()) {
             if (card.apply(cell)) {

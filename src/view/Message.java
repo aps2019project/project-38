@@ -277,6 +277,9 @@ public interface Message {
         System.out.println("There is no deck :(");
     }
 
+    static void thereIsAnItemInThisDeck() {
+        System.out.println("There is an item in this deck");
+    }
 
     //******************************************************
 
@@ -300,7 +303,7 @@ public interface Message {
                 System.out.println("Select mood and enemy deck\nfor example: " +
                         "Start game [deck name] [mood name] [number of flags]*");
                 System.out.println("Decks:");
-                for (Map.Entry<String, Deck> entry : Account.getActiveAccount().getCollection().getDecks()) {
+                for (Map.Entry<String, Deck> entry : Account.getActiveAccount().getCollection().getAllDecks().entrySet()) {
                     System.out.println(entry.getKey());
                 }
                 System.out.println("Moods:");
@@ -348,8 +351,13 @@ public interface Message {
             static void showBoardBottom(Game game) {
                 System.out.println("Hand:");
                 for (Map.Entry<Integer, Card> entry : game.getActivePlayer().getHand().entrySet()) {
-                    System.out.println(entry.getKey() + ": Name" + entry.getValue().getName() + " Required Mana: " +
-                            entry.getValue().getRequiredMana() + " CardID:" + entry.getValue().getID());
+                    if (entry.getValue() == null) {
+                        System.out.println(entry.getKey() + ": Empty");
+                    }
+                    else {
+                        System.out.println(entry.getKey() + ": Name" + entry.getValue().getName() + " Required Mana: " +
+                                entry.getValue().getRequiredMana() + " CardID:" + entry.getValue().getID());
+                    }
                 }
                 HeroPower specialPower = game.getActivePlayer().getPlayerHero().getPower();
                 System.out.println("SpecialPower: Name" + specialPower.getName() +
@@ -395,7 +403,7 @@ public interface Message {
                 Game game = cell.getBoard().getGame();
                 if (cell.getWarrior() != null) {
                     int playerNumber = game.getWarriorsPlayer(cell.getWarrior()) == game.getPlayers()[0] ? 1 : 2;
-                    System.out.print(playerNumber + String.format("%3d",cell.getWarrior().getID()));
+                    System.out.print(playerNumber + String.format("%3d", cell.getWarrior().getID()));
                 } else {
                     System.out.print("    ");
                 }
@@ -403,7 +411,7 @@ public interface Message {
 
             static void cellSecondLine(Cell cell) {
                 if (cell.getWarrior() != null) {
-                    System.out.print(String.format("%2d%2d",cell.getWarrior().getAp(),cell.getWarrior().getHp()));
+                    System.out.print(String.format("%2d%2d", cell.getWarrior().getAp(), cell.getWarrior().getHp()));
                 } else {
                     System.out.print("    ");
                 }
@@ -441,7 +449,7 @@ public interface Message {
                 //todo --> B
                 if (cell.getTriggers().stream().anyMatch(trigger -> trigger instanceof BurningCell)) {
                     System.out.print("B");
-                }else {
+                } else {
                     System.out.print(" ");
                 }
             }
@@ -492,9 +500,11 @@ public interface Message {
                 static void indexOutOfBoard() {
                     System.out.println("index out of board");
                 }
+
                 static void youHaveNoOwnWarriorInThisCell() {
                     System.out.println("you have no own warrior in that cell");
                 }
+
                 static void thereIsNoEnemyWarriorInThisCell() {
                     System.out.println("there is no enemy warrior in that cell");
                 }
