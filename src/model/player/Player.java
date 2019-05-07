@@ -19,7 +19,7 @@ public abstract class Player {
     protected ArrayList<Warrior> warriors = new ArrayList<>();
     protected ArrayList<Card> usedCards = new ArrayList<>();
     public boolean ableToReplaceCard;
-    Card nextCard;
+    private Card nextCard;
 
     public Player(Deck deck) {
         this.mainDeck = deck;

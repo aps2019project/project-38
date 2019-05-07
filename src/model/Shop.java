@@ -52,7 +52,7 @@ public class Shop {
             return;
         }
 
-        if (account.getMoney() >= card.getPrice()) {
+        if (account.getDerrick() >= card.getPrice()) {
             if (Spell.checkIsItem(card)) {
                 int numberOfItems = 0;
                 for (int ID : account.getCollection().getCardIDs()) {
@@ -64,7 +64,7 @@ public class Shop {
                     return;
                 }
             }
-            account.setMoney(account.getMoney() - card.getPrice());
+            account.setDerrick(account.getDerrick() - card.getPrice());
 //            shop.getCardIDs().remove(card.getID());
             account.getCollection().getCardIDs().add(card.getID());
 
@@ -94,7 +94,7 @@ public class Shop {
             Message.haveNotThisCardInYourCollection();
             return;
         }
-        account.setMoney(account.getMoney() + card.getPrice());
+        account.setDerrick(account.getDerrick() + card.getPrice());
         shop.getCardIDs().add(card.getID());
         account.getCollection().getCardIDs().remove((Integer) card.getID());
         for (String deckName : account.getCollection().getDecks()) {

@@ -1,12 +1,10 @@
 package view;
 
 import model.*;
-import model.cards.Card;
-import model.cards.Hero;
-import model.cards.HeroPower;
-import model.cards.Spell;
+import model.cards.*;
 import model.player.AIPlayer;
 import model.player.HumanPlayer;
+import model.player.Player;
 import model.triggers.BurningCell;
 import model.triggers.Flag;
 import model.triggers.HolyBuff;
@@ -295,7 +293,7 @@ public interface Message {
             }
 
             static void StoryOrCustomMenu() {
-                System.out.println("1. Story");
+                System.out.println("1. Level");
                 System.out.println("2. Custom game");
             }
 
@@ -320,8 +318,10 @@ public interface Message {
             }
 
             static void showLevelsForStoryMode() {
-                for (Map.Entry<String, Deck> entry : Deck.getAllDecks().entrySet()) {
-                    System.out.println(entry.getKey() + ": Hero Name:" + entry.getValue().getHero().getName() + " Mode:");//todo hashMap Name and Mode.
+                for (Map.Entry<String, Level> entry : Level.getAvailableLevels().entrySet()) {
+                    System.out.printf("%s: Hero Name: %s Mood: %s Prise: %s\n", entry.getKey(),
+                            entry.getValue().getDeck().getHero().getName(),
+                            entry.getValue().getGameMood().getClass().getSimpleName(), entry.getValue().getPrise());
                 }
             }
 
@@ -365,34 +365,47 @@ public interface Message {
                                 entry.getValue().getRequiredMana() + " CardID:" + entry.getValue().getID());
                     }
                 }
+                Card nextCard = game.getActivePlayer().getNextCard();
+                System.out.printf("Next Turn Card: Name: %s ID: %d Required Mana: %d\n",
+                        nextCard.getName(), nextCard.getID(), nextCard.getRequiredMana());
                 HeroPower specialPower = game.getActivePlayer().getPlayerHero().getPower();
+                System.out.printf("SpecialPower: Name: %s Cool Down Remaining: %d Required Mana: %d \n",
+                        specialPower.getName(), specialPower.coolDownRemaining, specialPower.getRequiredMana());
                 System.out.println("SpecialPower: Name" + specialPower.getName() +
                         " Required Mana:" + specialPower.getRequiredMana() +
                         " Cool Down:" + specialPower.coolDownRemaining + " CardID:" + specialPower.getID());
+                showSelectedItems(game);
             }
 
-            static void showSelecteds(Game game) {
+            static void showSelectedItems(Game game) {//todo else if badana
                 System.out.print("Selecteds:");
-                if (game.getSelecteds().getWarriorsCell().size() != 0) {//todo else if badana
+                if (game.getSelectedThings().getWarriorsCell().size() != 0) {
                     System.out.println("Warriors: ");
-                    for (Cell cell : game.getSelecteds().getWarriorsCell()) {
-                        System.out.println("Card Id: " + cell.getWarrior().getID() +
-                                " Row:" + cell.getRow() + "Column:" + cell.getColumn() +
-                                " Name: " + cell.getWarrior().getName() + "-");
+                    for (Cell cell : game.getSelectedThings().getWarriorsCell()) {
+                        Warrior warrior = cell.getWarrior();
+                        System.out.printf("Name: %s ID: %d Position: (%d,%d)\n",
+                                warrior.getName(), warrior.getID(), cell.getRow(), cell.getColumn());
                     }
                 }
-                if (game.getSelecteds().collectableItem != null) {
-                    System.out.println();//todo
+                if (game.getSelectedThings().collectibleItem != null) {
+                    Spell item = game.getSelectedThings().collectibleItem;
+                    System.out.printf("Collectible Item: Name: %s ID: %d Required Mana: %d\n",
+                            item.getName(), item.getID(), item.getRequiredMana());
                 }
-                if (game.getSelecteds().cardHandIndex != null) {
-                    // TODO: 5/7/19  
+                if (game.getSelectedThings().cardHandIndex != null) {
+                    Card card = game.getActivePlayer().getHand().get(game.getSelectedThings().cardHandIndex);
+                    System.out.printf("Name: %s ID: %d Required Mana: %d\n",
+                            card.getName(), card.getID(), card.getRequiredMana());
                 }
-                if (game.getSelecteds().specialPowerIsSelected) {
-                    // TODO: 5/7/19  
+                if (game.getSelectedThings().specialPowerIsSelected) {
+                    Card specialPower = game.getActivePlayer().getPlayerHero().getPower();
+                    System.out.printf("Special Power: Name: %s ID: %d Required Mana: %d\n",
+                            specialPower.getName(), specialPower.getID(), specialPower.getRequiredMana());
                 }
             }
 
             static void showBoard(Game game) {
+                System.out.print(" ");
                 for (int i = 0; i < Constant.GameConstants.boardColumn * 5; i++) {
                     System.out.print(i % 5 == 2 ? i / 5 : " ");
                 }
@@ -496,25 +509,26 @@ public interface Message {
                 System.out.println("(if you selected just one warrior you can move it): Move [row] [column]");
                 System.out.println("(if you selected more than one warrior you can combo attack to an enemy warrior): Attack combo [row] [column]");
                 System.out.println("(if you selected a card you can put it on board): Insert in [row] [column]");
+                System.out.println("(if you selected a card you can replace it(once in each turn)): Replace");
                 System.out.println("Use Special Power: Use special power [row] [column]");
                 System.out.println("Show Card Info: Show card info [cardID]");
                 System.out.println("End Turn: End turn");
-                System.out.println("Show Collectable Items: Show collectables");
-                System.out.println("(if you are in collectable items window you can select colectable item): Select [item index]");
+                System.out.println("Show Collectible Items: Show collectibles");
+                System.out.println("(if you are in collectible items window you can select collectible item): Select [item index]");
                 System.out.println("(get out of above window): Exit");
-                System.out.println("(if you selected an collectable item in board window you can see item info): Show collectable item info");
-                System.out.println("(if you selected an collectable item in board window you can use it): Use collectable item [row] [column]");
+                System.out.println("(if you selected an collectible item in board window you can see item info): Show collectible item info");
+                System.out.println("(if you selected an collectible item in board window you can use it): Use collectible item [row] [column]");
                 System.out.println("Show Next Card Info: Show next card");
                 System.out.println("Show Graveyard: Enter graveyard");
                 System.out.println("(get out of above window): exit");
 //                System.out.println("(you can see info of above cards): Show card info [cardID]");
             }
 
-            static void colletableWindow(Game game) {
-                System.out.println("Collectable Items:");
+            static void collectiblesWindow(Game game) {
+                System.out.println("Collectible Items:");
                 for (int i = 0; i < game.getCollectibleItems().size(); i++) {
                     Spell item = game.getCollectibleItems().get(i);
-                    System.out.println(i + ": Name: " + item.getName() + " Requird Mana: " +
+                    System.out.println(i + ": Name: " + item.getName() + " Required Mana: " +
                             item.getRequiredMana() + " Card ID:" + item.getID());
                 }
             }
@@ -527,23 +541,32 @@ public interface Message {
                     //todo badana.
                 }
             }
+        }
 
-            interface failCommand {
-                static void indexOutOfBoard() {
-                    System.out.println("index out of board");
-                }
-
-                static void youHaveNoOwnWarriorInThisCell() {
-                    System.out.println("you have no own warrior in that cell");
-                }
-
-                static void thereIsNoEnemyWarriorInThisCell() {
-                    System.out.println("there is no enemy warrior in that cell");
-                }
+        interface AfterGame {
+            static void showWinner(Player winner) {
+                System.out.printf("Winner: %s Player %s\n", winner.getClass().getSimpleName(), winner instanceof HumanPlayer
+                        ? ((HumanPlayer)winner).getAccount().getUsername() : "");
             }
         }
 
+        interface failMessage {
+            static void indexOutOfBoard() {
+                System.out.println("index out of board");
+            }
 
+            static void youHaveNoOwnWarriorInThisCell() {
+                System.out.println("you have no own warrior in that cell");
+            }
+
+            static void thereIsNoEnemyWarriorInThisCell() {
+                System.out.println("there is no enemy warrior in that cell");
+            }
+
+            static void invalidCommand() {
+                System.out.println("invalid command");
+            }
+        }
     }
 
     static void notEnoughCardNumber() {

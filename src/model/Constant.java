@@ -9,6 +9,7 @@ public interface Constant {
         int boardColumn = 9;
         int collectingFlagMoodFlags = 7;
         int carryingFlagMoodWinScore = 6;
+        int defaultPrise = 3;
 
         static int getTurnMana(int turn) {
             int mana = (turn + 5) / 2;

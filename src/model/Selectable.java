@@ -5,10 +5,10 @@ import model.cards.Spell;
 import java.util.ArrayList;
 
 public class Selectable {
-    private ArrayList<Cell> warriorsCell = new ArrayList<>();
+    private ArrayList<Cell  > warriorsCell = new ArrayList<>();
     public Integer cardHandIndex;
     public boolean specialPowerIsSelected;
-    public Spell collectableItem;
+    public Spell collectibleItem;
 
     public ArrayList<Cell> getWarriorsCell() {
         return warriorsCell;
@@ -19,7 +19,7 @@ public class Selectable {
         if (game.getActivePlayer().getWarriors().contains(cell.getWarrior())) {
             cardHandIndex = null;
             specialPowerIsSelected = false;
-            collectableItem = null;
+            collectibleItem = null;
             warriorsCell.add(cell);
         }
         else {
@@ -31,7 +31,7 @@ public class Selectable {
         if (game.getActivePlayer().getHand().get(cardHandIndex) != null) {
             warriorsCell = new ArrayList<>();
             specialPowerIsSelected = false;
-            collectableItem = null;
+            collectibleItem = null;
             this.cardHandIndex = cardHandIndex;
         }
         else {
@@ -42,18 +42,18 @@ public class Selectable {
     public void selectSpecialPower(Game game) {
         warriorsCell = new ArrayList<>();
         cardHandIndex = null;
-        collectableItem = null;
+        collectibleItem = null;
         specialPowerIsSelected = true;
     }
 
     public void selectColletableItem(Spell collectableItem) {
-        this.collectableItem = collectableItem;
+        this.collectibleItem = collectableItem;
     }
 
     public void deselectAll() {
         warriorsCell = new ArrayList<>();
         cardHandIndex = null;
         specialPowerIsSelected =  false;
-        collectableItem = null;
+        collectibleItem = null;
     }
 }
