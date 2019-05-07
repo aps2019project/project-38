@@ -54,7 +54,7 @@ public class ShopWindow extends Window {
                     Shop.getShop().sell(cardName);
                     continue;
                 case 0:
-                    Window.closeWindow(this);
+                    this.closeWindow();
                     break tag1;
                 default:
                     Message.invalidInput();

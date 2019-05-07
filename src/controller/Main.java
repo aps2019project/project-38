@@ -5,7 +5,7 @@ import controller.window.Window;
 
 public class Main {
     public static void main(String[] args) {
-        Window.openWindow(new LoadWindow());
+        new LoadWindow().openWindow();
         while (true) {
             if (!Window.runLastOpenWindow()) {
                 break;

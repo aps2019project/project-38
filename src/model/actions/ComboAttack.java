@@ -15,7 +15,7 @@ import java.util.Arrays;
 import static model.actions.Attack.checkWarriorsEffectsForAttack;
 
 public class ComboAttack {
-    public static void doIt(ArrayList<Cell> attackersCell, Cell defenderCell) {
+    public static boolean doIt(ArrayList<Cell> attackersCell, Cell defenderCell) {
         Game game = attackersCell.get(0).getBoard().getGame();
         Warrior defender = defenderCell.getWarrior();
         AttackState attackState = new AttackState(attackersCell.get(0).getWarrior(), defender, 0);
@@ -35,6 +35,7 @@ public class ComboAttack {
             attackState.pending = false;
             game.iterateAllTriggersCheck(attackState);
         }
+        return !attackState.canceled;
     }
 
     private static boolean checkWarriorHasComboEffect(Warrior warrior) {

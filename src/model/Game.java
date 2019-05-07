@@ -14,11 +14,10 @@ import model.player.HumanPlayer;
 import model.player.Player;
 import model.triggers.Trigger;
 
-import java.io.Serializable;
 import java.util.*;
 
 
-public class Game implements Serializable {
+public class Game {
     GameMood gameMood;
     public int turn;
     Player[] players = new Player[2];
@@ -37,7 +36,6 @@ public class Game implements Serializable {
         int randomIndex = (new Random(System.currentTimeMillis())).nextInt(2);
         this.players[randomIndex] = new HumanPlayer(accountOne, accountOne.getCollection().getMainDeck());
         this.players[(randomIndex + 1) % 2] = new HumanPlayer(accountTwo, accountTwo.getCollection().getMainDeck());
-        this.prise = prise;
         initialiseGameFields();
     }
 
@@ -46,7 +44,6 @@ public class Game implements Serializable {
         int randomIndex = (new Random(System.currentTimeMillis())).nextInt(2);
         players[randomIndex] = new HumanPlayer(account, account.getCollection().getMainDeck());
         players[(randomIndex + 1) % 2] = new AIPlayer(aIDeck);
-        this.prise = prise;
         initialiseGameFields();
     }
 
@@ -240,68 +237,81 @@ public class Game implements Serializable {
         }
     }
 
-    public void move(Cell originCell, Cell targetCell) {
+    public boolean move(Cell originCell, Cell targetCell) {
+        boolean isDone = false;
         if (getActivePlayer().getWarriors().contains(originCell.getWarrior()) &&
                 targetCell.getWarrior() == null) {
-            Move.doIt(originCell, targetCell);
+            isDone = Move.doIt(originCell, targetCell);
             checkGameEndAndThenKillAllDiedWarriors();
         }
+        return isDone;
     }
 
-    public void comboAttack(ArrayList<Cell> attackersCell, Cell defenderCell) {
-        if (defenderCell.getWarrior() == null) return;
+    public boolean comboAttack(ArrayList<Cell> attackersCell, Cell defenderCell) {
+        boolean isDone;
+        if (defenderCell.getWarrior() == null) return false;
         for (Cell cell : attackersCell) {
             if (cell.getWarrior() == null) {
-                return;
+                return false;
             }
         }
         for (int i = 0; i < attackersCell.size() - 1; i++) {
             if (getWarriorsPlayer(attackersCell.get(i).getWarrior()) !=
                     getWarriorsPlayer(attackersCell.get(i + 1).getWarrior())) {
-                return;
+                return false;
             }
         }
         if (defenderCell.getWarrior() == attackersCell.get(0).getWarrior()) {
-            return;
+            return false;
         }
-        ComboAttack.doIt(attackersCell, defenderCell);
+        isDone = ComboAttack.doIt(attackersCell, defenderCell);
         checkGameEndAndThenKillAllDiedWarriors();
+        return isDone;
     }
 
-    public void attack(Cell attackerCell, Cell defenderCell) {
+    public boolean attack(Cell attackerCell, Cell defenderCell) {
+        boolean isDone = false;
         ArrayList<Warrior> activePlayerWarriors = getActivePlayer().getWarriors();
         if (defenderCell.getWarrior() != null && activePlayerWarriors.contains(attackerCell.getWarrior()) &&
                 !activePlayerWarriors.contains(defenderCell.getWarrior())) {
-
-            Attack.doIt(attackerCell, defenderCell);
+            isDone = Attack.doIt(attackerCell, defenderCell);
             checkGameEndAndThenKillAllDiedWarriors();
         }
+        return isDone;
     }
 
-    public void replaceCard(int handMapKey) {
+    public boolean replaceCard(int handMapKey) {
+        boolean isDone = false;
         if (getActivePlayer().getHand().get(handMapKey) != null) {
-            ReplaceCard.doIt(this, handMapKey);
+            isDone = ReplaceCard.doIt(this, handMapKey);
             checkGameEndAndThenKillAllDiedWarriors();
         }
+        return isDone;
     }
 
-    public void useCard(int handMapKey, Cell cell) {
+    public boolean useCard(int handMapKey, Cell cell) {
+        boolean isDone = false;
         if (getActivePlayer().getHand().get(handMapKey) != null) {
-            UseCard.useCard(handMapKey, cell);
+            isDone = UseCard.useCard(handMapKey, cell);
             checkGameEndAndThenKillAllDiedWarriors();
         }
+        return isDone;
     }
 
-    public void useSpecialPower(Cell cell) {
+    public boolean useSpecialPower(Cell cell) {
+        boolean isDone = false;
         if(getActivePlayer().getPlayerHero().getPower().coolDownRemaining == 0) {
-            UseCard.useHeroPower(getActivePlayer().getPlayerHero().getPower(), cell);
+            isDone = UseCard.useHeroPower(getActivePlayer().getPlayerHero().getPower(), cell);
             checkGameEndAndThenKillAllDiedWarriors();
         }
+        return isDone;
     }
 
-    public void useCollectible(Spell spell, Cell cell) {
-        UseCard.useCollectible(spell,cell);
+    public boolean useCollectible(Spell spell, Cell cell) {
+        boolean isDone;
+        isDone = UseCard.useCollectible(spell,cell);
         checkGameEndAndThenKillAllDiedWarriors();
+        return isDone;
     }
 
     public void endTurn () {

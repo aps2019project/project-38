@@ -1,6 +1,8 @@
 package controller.window;
 
 import model.*;
+import model.cards.Card;
+import model.cards.Spell;
 import model.cards.*;
 import model.gamemoods.CarryingFlag;
 import model.gamemoods.CollectingFlag;
@@ -16,14 +18,14 @@ import java.util.regex.Pattern;
 
 public class GameWindow extends Window {
     private Game game;
-    private MoodData moodData = new MoodData();//todo
+    private MoodData moodData = new MoodData();//todo badana
 
     @Override
     public void main() {
         if (!initialiseGame()) {
             return;
         }
-        while (game.getGameMood().getWinner() == null) {
+        while (game.getGameMood().winner == null) {
             Message.GameWindow.insideGame.showMainView(game);
             if (game.getActivePlayer() instanceof HumanPlayer) {
                 getPlayerAction();
@@ -35,10 +37,10 @@ public class GameWindow extends Window {
     }
 
     private void endGame(Game game) {
-        Player winner = game.getGameMood().getWinner();
-        if (winner instanceof HumanPlayer) {
-            ((HumanPlayer)winner).getAccount().derrick += game.prise;
-        }
+        Player winner = game.getGameMood().winner;
+        Player loser = game.getOtherPlayer(winner);
+        updatePlayerMatchHistory(game, winner, loser, true);
+        updatePlayerMatchHistory(game, loser, winner, false);
         while (true) {
             Message.GameWindow.AfterGame.showWinner(winner);
             String request = Request.getNextRequest();
@@ -48,6 +50,17 @@ public class GameWindow extends Window {
         }
         this.closeWindow();
         new MainMenu().openWindow();
+    }
+
+    private static void updatePlayerMatchHistory(Game game, Player player, Player enemy, boolean isWinner) {
+        if (player instanceof HumanPlayer) {
+            HumanPlayer humanPlayer =(HumanPlayer)player;
+            if (isWinner) {
+                humanPlayer.getAccount().derrick += game.prise;
+            }
+            String opponentName = enemy instanceof AIPlayer ? "AI" : ((HumanPlayer)enemy).getAccount().getUsername();
+            humanPlayer.getAccount().putGameInHistory(opponentName, isWinner);
+        }
     }
 
     private void getPlayerAction() {
@@ -88,11 +101,17 @@ public class GameWindow extends Window {
             showNextCard();
         } else if (request.equals("Enter graveyard")) {
             graveyardMenu();
-//        } else if (request.equals("Peek")) {
+//        } else if (request.equals("exit")) {
+            exit();
+        } else if (request.equals("Peek")) {
 //            peekCard();
         } else {
             Message.GameWindow.failMessage.invalidCommand();
         }
+    }
+
+    private void exit() {
+        game.getGameMood().winner = game.getOtherPlayer(game.getActivePlayer());
     }
 
 //    private void peekCard(){
@@ -104,7 +123,14 @@ public class GameWindow extends Window {
 //    }
 
     private void showNextCard() {
-        //todo
+        Card card = game.getActivePlayer().getNextCard();
+        while (true) {
+            System.out.printf("Name: %s ID: %d Required Mana: %d", card.getName(), card.getID(), card.getRequiredMana());
+            String request = Request.getNextRequest();
+            if (request.equals("exit")) {
+                return;
+            }
+        }
     }
 
     private void useCollectibleItem(String request) {
@@ -113,7 +139,12 @@ public class GameWindow extends Window {
             return;
         }
         if (game.getSelectedThings().collectibleItem != null) {
-            game.useCollectible(game.getSelectedThings().collectibleItem, cell);
+            if (game.useCollectible(game.getSelectedThings().collectibleItem, cell)) {
+                System.out.println("using item is done");
+            }
+            else {
+                Message.GameWindow.failMessage.notEnoughNecessaryCondition();
+            }
         } else {
             Message.GameWindow.failMessage.noSelectedCollectibleItem();
         }
@@ -121,10 +152,16 @@ public class GameWindow extends Window {
     }
 
     private void showCollectibleItemInfo() {
-        if (game.getSelectedThings().collectibleItem != null) {
-            Spell item = game.getSelectedThings().collectibleItem;
-            System.out.println("Description Of Card Ability: " + item.description.descriptionOfCardSpecialAbility);
-            System.out.println("Target Type: " + item.description.targetType);
+        Spell item = game.getSelectedThings().collectibleItem;
+        if (item != null) {
+            while (true) {
+                Message.GameWindow.insideGame.showCardDescription(item);
+                String request = Request.getNextRequest();
+                if (request.equals("exit")) {
+                    return;
+                }
+            }
+
         } else {
             System.out.println("no selected collectible item");
         }
@@ -136,18 +173,25 @@ public class GameWindow extends Window {
         matcher.find();
         int cardID = Integer.parseInt(matcher.group(1));
         if (Card.getAllCards().containsKey(cardID)) {
-            Card card = Card.getAllCards().get(cardID);
-            System.out.println("Name: "+card.getName());
-            if(card instanceof Warrior){
-                System.out.println("AP: "+((Warrior)card).getAp()+" HP: "+((Warrior)card).getHp());
-                if(card.description.descriptionOfCardSpecialAbility!=null){
+            while (true) {
+                Message.GameWindow.insideGame.betweenTwoPage();
+                Message.GameWindow.insideGame.showCardDescription(Card.getAllCards().get(cardID));
+                Card card = Card.getAllCards().get(cardID);
+                System.out.println("Name: "+card.getName());
+                if(card instanceof Warrior){
+                    System.out.println("AP: "+((Warrior)card).getAp()+" HP: "+((Warrior)card).getHp());
+                    if(card.description.descriptionOfCardSpecialAbility!=null){
+                        System.out.println("Description Of Card Ability: " + card.description.descriptionOfCardSpecialAbility);
+                    }
+                }else if(card instanceof Spell){
                     System.out.println("Description Of Card Ability: " + card.description.descriptionOfCardSpecialAbility);
+                    System.out.println("Target Type: " + card.description.targetType);
                 }
-            }else if(card instanceof Spell){
-                System.out.println("Description Of Card Ability: " + card.description.descriptionOfCardSpecialAbility);
-                System.out.println("Target Type: " + card.description.targetType);
+                request = Request.getNextRequest();
+                if (request.equals("exit")) {
+                    return;
+                }
             }
-
         } else {
             System.out.println("no card matched");
         }
@@ -158,13 +202,22 @@ public class GameWindow extends Window {
         if (cell == null) {
             return;
         }
-        game.useSpecialPower(cell);
+        if (game.useSpecialPower(cell)) {
+            System.out.println("using special power is done");
+        }else {
+            Message.GameWindow.failMessage.notEnoughNecessaryCondition();
+        }
         game.getSelectedThings().deselectAll();
     }
 
     private void replaceCard() {
         if (game.getSelectedThings().cardHandIndex != null) {
-            game.replaceCard(game.getSelectedThings().cardHandIndex);
+            if(game.replaceCard(game.getSelectedThings().cardHandIndex)) {
+                System.out.println("replace card is done");
+            }
+            else {
+                Message.GameWindow.failMessage.notEnoughNecessaryCondition();
+            }
         }else {
             System.out.println("no selected card");
         }
@@ -177,7 +230,12 @@ public class GameWindow extends Window {
             return;
         }
         if (game.getSelectedThings().cardHandIndex != null) {
-            game.useCard(game.getSelectedThings().cardHandIndex, cell);
+            if (game.useCard(game.getSelectedThings().cardHandIndex, cell)) {
+                System.out.println("use card is done");
+            }
+            else {
+                Message.GameWindow.failMessage.notEnoughNecessaryCondition();
+            }
         } else {
             System.out.println("no card selected");
         }
@@ -191,7 +249,11 @@ public class GameWindow extends Window {
         }
         if (game.getSelectedThings().getWarriorsCell().size() > 1) {
             if (cell.getWarrior() != null && game.getActivePlayer() == game.getWarriorsPlayer(cell.getWarrior())) {
-                game.comboAttack(game.getSelectedThings().getWarriorsCell(), cell);
+                if (game.comboAttack(game.getSelectedThings().getWarriorsCell(), cell)) {
+                    System.out.println("combo attack is done");
+                } else  {
+                    Message.GameWindow.failMessage.notEnoughNecessaryCondition();
+                }
             } else {
                 Message.GameWindow.failMessage.thereIsNoEnemyWarriorInThisCell();
             }
@@ -208,7 +270,11 @@ public class GameWindow extends Window {
         }
         if (game.getSelectedThings().getWarriorsCell().size() == 1) {
             if (cell.getWarrior() == null) {
-                game.move(game.getSelectedThings().getWarriorsCell().get(0), cell);
+                if (game.move(game.getSelectedThings().getWarriorsCell().get(0), cell)) {
+                    System.out.println("move is done");
+                }else {
+                    Message.GameWindow.failMessage.notEnoughNecessaryCondition();
+                }
             } else {
                 System.out.println("target cell is filled");
             }
@@ -224,8 +290,12 @@ public class GameWindow extends Window {
             return;
         }
         if (game.getSelectedThings().getWarriorsCell().size() == 1) {
-            if (cell.getWarrior() != null && game.getActivePlayer() == game.getWarriorsPlayer(cell.getWarrior())) {
-                game.attack(game.getSelectedThings().getWarriorsCell().get(0), cell);
+            if (cell.getWarrior() != null && game.getActivePlayer() != game.getWarriorsPlayer(cell.getWarrior())) {
+                if (game.attack(game.getSelectedThings().getWarriorsCell().get(0), cell)) {
+                    System.out.println("attack done");
+                }else {
+                    Message.GameWindow.failMessage.notEnoughNecessaryCondition();
+                }
             } else {
                 Message.GameWindow.failMessage.thereIsNoEnemyWarriorInThisCell();
             }
@@ -240,6 +310,7 @@ public class GameWindow extends Window {
         if (index < Constant.GameConstants.handSize) {
             if (game.getActivePlayer().getHand().get(index) != null) {
                 game.getSelectedThings().selectCard(game, index);
+                System.out.println("select card done");
             } else {
                 System.out.println("you selected null cart");
             }
@@ -275,8 +346,8 @@ public class GameWindow extends Window {
     }
 
     private void collectibleItemsMenu() {
-        game.getSelectedThings().deselectAll();
         while (true) {
+            Message.GameWindow.insideGame.betweenTwoPage();
             Message.GameWindow.insideGame.collectiblesWindow(game);
             String request = Request.getNextRequest();
             if (request.equals("exit")) {
@@ -285,6 +356,7 @@ public class GameWindow extends Window {
                 int index = Integer.parseInt(request.replace("Select ", ""));
                 if (index < game.getCollectibleItems().size()) {
                     game.getSelectedThings().selectColletableItem(game.getCollectibleItems().get(index));
+                    System.out.println("item selecting done");
                 } else {
                     System.out.println("index is too big");
                 }
@@ -297,6 +369,7 @@ public class GameWindow extends Window {
 
     private void help() {
         while (true) {
+            Message.GameWindow.insideGame.betweenTwoPage();
             Message.GameWindow.insideGame.help();
             String input = Request.getNextRequest();
             if (input.matches("exit")) {
@@ -315,6 +388,7 @@ public class GameWindow extends Window {
         if (!game.getSelectedThings().getWarriorsCell().contains(cell) && cell.getWarrior() != null &&
                 game.getActivePlayer() == game.getWarriorsPlayer(cell.getWarrior())) {
             game.getSelectedThings().seletWarrior(game.getBoard().getCell(cell.getRow(), cell.getColumn()));
+            System.out.println("warrior selecting done");
         } else {
             Message.GameWindow.failMessage.youHaveNoOwnWarriorInThisCell();
         }
@@ -473,8 +547,8 @@ public class GameWindow extends Window {
             String request = Request.getNextRequest();
             if (request.matches("Select user \\w+")) {
                 String userName = request.replaceFirst("Select user ", "");
-                if (Account.getUsernameToAccountObject().keySet().contains(userName)) {
-                    Account account = Account.getUsernameToAccountObject().get(userName);
+                Account account = Account.getUsernameToAccountObject().get(userName);
+                if (account != null && account != Account.getActiveAccount()) {
                     if (account.getCollection().getMainDeck() != null) {
                         moodData.secondAccount = Account.getUsernameToAccountObject().get(userName);
                         return true;
@@ -516,6 +590,5 @@ public class GameWindow extends Window {
 class MoodData {
     boolean singlePlayer;
     boolean story;
-    Deck aIDeck;
     Account secondAccount;
 }

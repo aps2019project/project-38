@@ -40,30 +40,33 @@ public class UseCard {
         return didSth;
     }
 
-    public static void useHeroPower(HeroPower heroPower, Cell cell) {
+    public static boolean useHeroPower(HeroPower heroPower, Cell cell) {
         Game game = cell.getBoard().getGame();
         UseSpellState useSpellState = new UseSpellState(cell, heroPower);
         game.iterateAllTriggersCheck(useSpellState);
-        if (useSpellState.canceled) return;
+        if (useSpellState.canceled) return false;
         useSpellState.pending = false;
         if (game.getActivePlayer().mana >= heroPower.getRequiredMana()) {
             if (heroPower.apply(cell)) {
                 game.getActivePlayer().mana -= heroPower.getRequiredMana();
-//todo                heroPower.coolDownRemaining = heroPower
                 game.iterateAllTriggersCheck(useSpellState);
+                return true;
             }
         }
+        return false;
     }
 
-    public static void useCollectible(Spell spell, Cell cell) {
+    public static boolean useCollectible(Spell spell, Cell cell) {
         Game game = cell.getBoard().getGame();
         UseSpellState useSpellState = new UseSpellState(cell, spell);
         game.iterateAllTriggersCheck(useSpellState);
-        if (useSpellState.canceled) return;
+        if (useSpellState.canceled) return false;
         useSpellState.pending = false;
         if (spell.apply(cell)) {
             game.getCollectibleItems().remove(spell);
             game.iterateAllTriggersCheck(useSpellState);
+            return true;
         }
+        return false;
     }
 }

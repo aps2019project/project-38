@@ -12,6 +12,6 @@ public class LoadWindow extends Window {
         CardFactory.main();
         Deck.deckLevelBuilder();
         Account.loadAccounts();
-        Window.openWindow(new IntroWindow());
+        new IntroWindow().openWindow();
     }
 }

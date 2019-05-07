@@ -33,16 +33,22 @@ public class CollectingFlag extends GameMood {
 
     @Override
     public void applyTriggerToBoard(Game game) {
-        if (game.turn % 4 != 0 && gameFlags < gameMaxFlags && new Random().nextBoolean()) {
-            int randomNumberOfTurnFlags = (new Random(System.currentTimeMillis())).nextInt(gameMaxFlags / 3);
-            for (int i = 0; i < randomNumberOfTurnFlags; i++) {
-                for (int j = 0; j < 100; j++) {
-                    int row = new Random(System.currentTimeMillis()).nextInt(Constant.GameConstants.boardRow);
-                    int column = new Random(System.currentTimeMillis()).nextInt(Constant.GameConstants.boardColumn);
-                    Cell cell = game.getBoard().getCell(row, column);
-                    if(!cell.getTriggers().stream().anyMatch(trigger -> trigger instanceof Flag) && cell.getWarrior() == null) {
-                        game.getBoard().getCell(row, column).getTriggers().add(new Flag());
-                        gameFlags++;
+        if (game.turn == 0) {
+            Random random = new Random(System.currentTimeMillis());
+            for (int i = 0; i < gameMaxFlags; i++) {
+                while (true) {
+                    int randomRow = random.nextInt(Constant.GameConstants.boardRow);
+                    int randomColumn;
+                    if (i % 2 == 0) {
+                        randomColumn = random.nextInt(4) + 5;
+                    }
+                    else {
+                        randomColumn = random.nextInt(5);
+                    }
+                    Cell cell = game.getBoard().getCell(randomRow, randomColumn);
+                    if (cell.getWarrior() == null) {
+                        cell.getTriggers().add(new Flag());
+                        break;
                     }
                 }
             }

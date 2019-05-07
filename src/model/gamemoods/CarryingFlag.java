@@ -43,6 +43,7 @@ public class CarryingFlag extends GameMood {
             int randomRow = new Random(System.currentTimeMillis()).nextInt(Constant.GameConstants.boardRow);
             game.getBoard().getCell(randomRow, Constant.GameConstants.boardColumn / 2 + 1)
                     .getTriggers().add(new Flag());
+            gameHasFlag = true;
         }
     }
 }
