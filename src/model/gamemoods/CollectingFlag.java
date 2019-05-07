@@ -10,20 +10,19 @@ import java.util.Random;
 
 public class CollectingFlag extends GameMood {
     private int gameMaxFlags;
-    private int gameFlags = 0;
 
     public CollectingFlag(int gameMaxFlags) {
         if (6 < gameMaxFlags && gameMaxFlags < 20) {
             this.gameMaxFlags = gameMaxFlags;
         }else {
-            gameMaxFlags = Constant.GameConstants.collectingFlagMoodFlags;
+            this.gameMaxFlags = Constant.GameConstants.collectingFlagMoodFlags;
         }
     }
 
     @Override
     public boolean checkGameEnd(Game game) {
         for (Player player : game.getPlayers()) {
-            if (getNumberOFPlayerFlags(player) > gameFlags / 2) {
+            if (getNumberOFPlayerFlags(player) > gameMaxFlags / 2) {
                 winner = player;
                 return true;
             }
