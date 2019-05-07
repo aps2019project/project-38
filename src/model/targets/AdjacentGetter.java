@@ -8,6 +8,7 @@ import model.gamestate.GameState;
 import model.player.Player;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class AdjacentGetter implements TriggerTarget , SpellTarget {
@@ -32,7 +33,7 @@ public class AdjacentGetter implements TriggerTarget , SpellTarget {
 
         Warrior warrior = (Warrior) triggerOwner;
         return (warrior.getCell().getBoard().getGame().getBoard().getEightAdjacent(warrior.getCell()).
-                stream().map(Cell::getWarrior).filter(warrior1 -> warrior.getCell().getBoard().getGame()
+                stream().map(Cell::getWarrior).filter(Objects::nonNull).filter(warrior1 -> warrior.getCell().getBoard().getGame()
                 .getWarriorsPlayer(warrior).getWarriors().contains(warrior1) == friendMod)
                 .filter(warrior1 -> !(warrior instanceof Hero) || heroToo).collect(Collectors.toCollection(ArrayList::new)));
     }
