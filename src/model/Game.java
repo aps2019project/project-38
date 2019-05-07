@@ -26,7 +26,7 @@ public class Game {
 //    public Timer timer = new Timer(Constant.GameConstants.turnTime, ignored -> endTurn());
     private ArrayList<Spell> collectibleItems = new ArrayList<>();
     private Selectable selectedThings = new Selectable();
-    public int prise;
+    public int prize;
 
     public HashMap<Trigger,QualityHaver> triggBuffer = new HashMap<>();
     public HashMap<Effect,QualityHaver> effBuffer = new HashMap<>();

@@ -317,9 +317,9 @@ public interface Message {
 
             static void showLevelsForStoryMode() {
                 for (Map.Entry<String, Level> entry : Level.getAvailableLevels().entrySet()) {
-                    System.out.printf("%s: Hero Name: %s Mood: %s Prise: %s\n", entry.getKey(),
+                    System.out.printf("%s: Hero Name: %s Mood: %s Prize: %s\n", entry.getKey(),
                             entry.getValue().getDeck().getHero().getName(),
-                            entry.getValue().getGameMood().getClass().getSimpleName(), entry.getValue().getPrise());
+                            entry.getValue().getGameMood().getClass().getSimpleName(), entry.getValue().getPrize());
                 }
             }
 

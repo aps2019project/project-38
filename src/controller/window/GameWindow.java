@@ -56,7 +56,7 @@ public class GameWindow extends Window {
         if (player instanceof HumanPlayer) {
             HumanPlayer humanPlayer =(HumanPlayer)player;
             if (isWinner) {
-                humanPlayer.getAccount().derrick += game.prise;
+                humanPlayer.getAccount().derrick += game.prize;
             }
             String opponentName = enemy instanceof AIPlayer ? "AI" : ((HumanPlayer)enemy).getAccount().getUsername();
             humanPlayer.getAccount().putGameInHistory(opponentName, isWinner);
@@ -99,10 +99,8 @@ public class GameWindow extends Window {
             useCollectibleItem(request);
         } else if (request.equals("Enter graveyard")) {
             graveyardMenu();
-//        } else if (request.equals("exit")) {
+        } else if (request.equals("exit")) {
             exit();
-        } else if (request.equals("Peek")) {
-//            peekCard();
         } else {
             Message.GameWindow.FailMessage.invalidCommand();
         }
@@ -111,14 +109,6 @@ public class GameWindow extends Window {
     private void exit() {
         game.getGameMood().winner = game.getOtherPlayer(game.getActivePlayer());
     }
-
-//    private void peekCard(){
-//        if(game.getSelectedThings().getWarriorsCell().size()>0){
-//            System.out.println(game.getSelectedThings().getWarriorsCell().get(0).getTriggers());
-//            System.out.println(game.getSelectedThings().getWarriorsCell().get(0).getEffects());
-//
-//        }
-//    }
 
     private void useCollectibleItem(String request) {
         Cell cell = getCellByMessage(request);

@@ -12,13 +12,13 @@ public class Level {
     private static HashMap<String, Level> levels = new HashMap<>();
     private Deck deck;
     private GameMood gameMood;
-    private int prise;
+    private int prize;
     private boolean available = true; //todo badana
 
-    public Level(Deck deck, GameMood gameMood, int prise) {
+    public Level(Deck deck, GameMood gameMood, int prize) {
         this.deck = deck;
         this.gameMood = gameMood;
-        this.prise = prise;
+        this.prize = prize;
     }
 
     static {
@@ -47,12 +47,12 @@ public class Level {
 
     public Game getLevelGame(Account account) {
         Game game = new Game(gameMood, account, deck);
-        game.prise = prise;
+        game.prize = prize;
         return game;
     }
 
-    public int getPrise() {
-        return prise;
+    public int getPrize() {
+        return prize;
     }
 
     public static HashMap<String, Level> getAvailableLevels() {
