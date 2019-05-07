@@ -22,7 +22,6 @@ public class GameWindow extends Window {
     @Override
     public void main() {
         if (!initialiseGame()) {
-            System.out.println("you have no main deck");
             return;
         }
         while (true) {
@@ -245,6 +244,7 @@ public class GameWindow extends Window {
     private boolean initialiseGame() {
 //        MoodData moodData = new MoodData();//todo
         if (!checkDeck()) {
+            System.out.println("you have no main deck");
             this.closeWindow();
             return false;
         }
