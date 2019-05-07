@@ -120,7 +120,7 @@ public class CardFactory {
             trigger.getActions().put(new Applier(), new AttackedGetter());
             trigger.getTriggers().add(new Disarm(1, Dispelablity.BAD));
             trigger.getTriggers().add(new Poisoned(4, Dispelablity.BAD));
-
+            warrior.getTriggers().add(trigger);
 
             warrior.description.descriptionOfCardSpecialAbility = "disarm enemy for one turn and poison enemy for 4 turns";
             allBuiltMinions.add(warrior);
