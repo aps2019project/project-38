@@ -68,10 +68,10 @@ public class GameWindow extends Window {
                     if (cell.getWarrior() != null && game.getActivePlayer() == game.getWarriorsPlayer(cell.getWarrior())) {
                         game.attack(game.getSelecteds().getWarriorsCell().get(0), cell);
                     } else {
-                        Message.GameWindow.insideGame.failCommand.thereIsNoEnemyWarriorInThisCell();
+                        Message.GameWindow.insideGame.failMessage.thereIsNoEnemyWarriorInThisCell();
                     }
                 } else {
-                    Message.GameWindow.insideGame.failCommand.indexOutOfBoard();
+                    Message.GameWindow.insideGame.failMessage.indexOutOfBoard();
                 }
             } else {
                 System.out.println("you should select just one warrior for attack");
@@ -92,7 +92,7 @@ public class GameWindow extends Window {
                         System.out.println("target cell is filled");
                     }
                 } else {
-                    Message.GameWindow.insideGame.failCommand.indexOutOfBoard();
+                    Message.GameWindow.insideGame.failMessage.indexOutOfBoard();
                 }
             } else {
                 System.out.println("you should select just one warrior for attack");
@@ -110,10 +110,10 @@ public class GameWindow extends Window {
                     if (cell.getWarrior() != null && game.getActivePlayer() == game.getWarriorsPlayer(cell.getWarrior())) {
                         game.comboAttack(game.getSelecteds().getWarriorsCell(), cell);
                     } else {
-                        Message.GameWindow.insideGame.failCommand.thereIsNoEnemyWarriorInThisCell();
+                        Message.GameWindow.insideGame.failMessage.thereIsNoEnemyWarriorInThisCell();
                     }
                 } else {
-                    Message.GameWindow.insideGame.failCommand.indexOutOfBoard();
+                    Message.GameWindow.insideGame.failMessage.indexOutOfBoard();
                 }
             } else {
                 System.out.println("you should select more than one warrior for attack");
@@ -130,7 +130,7 @@ public class GameWindow extends Window {
                     Cell cell = game.getBoard().getCell(row, column);
                     game.useCard(game.getSelecteds().cardHandIndex, cell);
                 } else {
-                    Message.GameWindow.insideGame.failCommand.indexOutOfBoard();
+                    Message.GameWindow.insideGame.failMessage.indexOutOfBoard();
                 }
             } else {
                 System.out.println("no card selected");
@@ -147,7 +147,7 @@ public class GameWindow extends Window {
                 Cell cell = game.getBoard().getCell(row, column);
                 //todo use special power
             } else {
-                Message.GameWindow.insideGame.failCommand.indexOutOfBoard();
+                Message.GameWindow.insideGame.failMessage.indexOutOfBoard();
             }
         } else if (request.matches("Show card info \\d{2,3}")) {
             Pattern pattern = Pattern.compile("(\\d{2,3})");
@@ -175,27 +175,34 @@ public class GameWindow extends Window {
                 System.out.println("no selected collectable item");
             }
         } else if (request.matches("Use collectable item \\d \\d")) {
-            Pattern pattern = Pattern.compile("(\\d)");
-            Matcher matcher = pattern.matcher(request);
-            matcher.find();
-            int row = Integer.parseInt(matcher.group(1));
-            matcher.find();
-            int column = Integer.parseInt(matcher.group());
+            Cell cell = getCellByMessage(request, game);
+            if (cell == null) {
+                return;
+            }
             if (game.getSelecteds().collectableItem != null) {
-                if (row < Constant.GameConstants.boardRow && column < Constant.GameConstants.boardColumn) {
-                    Cell cell = game.getBoard().getCell(row, column);
-                    game.useCollectable(game.getSelecteds().collectableItem, cell);
-                } else {
-                    Message.GameWindow.insideGame.failCommand.indexOutOfBoard();
-                }
+                game.useCollectable(game.getSelecteds().collectableItem, cell);
             } else {
                 System.out.println("no collectable item selected");
             }
         } else if (request.equals("Show next card")) {
-            //todo in game
+            System.out.printf("");
         } else if (request.equals("Enter graveyard")) {
             graveyardMenu();
         }
+    }
+
+    private Cell getCellByMessage(String request, Game game) {
+        Pattern pattern = Pattern.compile("(\\d)");
+        Matcher matcher = pattern.matcher(request);
+        matcher.find();
+        int row = Integer.parseInt(matcher.group(1));
+        matcher.find();
+        int column = Integer.parseInt(matcher.group());
+        if (row < Constant.GameConstants.boardRow && column < Constant.GameConstants.boardColumn) {
+            return game.getBoard().getCell(row, column);
+        }
+        Message.GameWindow.insideGame.failMessage.indexOutOfBoard();
+        return null;
     }
 
     private void graveyardMenu() {
@@ -256,10 +263,10 @@ public class GameWindow extends Window {
                     game.getActivePlayer() == game.getWarriorsPlayer(cell.getWarrior())) {
                 game.getSelecteds().seletWarrior(game.getBoard().getCell(row, column));
             } else {
-                Message.GameWindow.insideGame.failCommand.youHaveNoOwnWarriorInThisCell();
+                Message.GameWindow.insideGame.failMessage.youHaveNoOwnWarriorInThisCell();
             }
         } else {
-            Message.GameWindow.insideGame.failCommand.indexOutOfBoard();
+            Message.GameWindow.insideGame.failMessage.indexOutOfBoard();
         }
     }
 

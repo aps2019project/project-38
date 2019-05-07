@@ -1,10 +1,7 @@
 package view;
 
 import model.*;
-import model.cards.Card;
-import model.cards.Hero;
-import model.cards.HeroPower;
-import model.cards.Spell;
+import model.cards.*;
 import model.player.AIPlayer;
 import model.player.HumanPlayer;
 import model.triggers.BurningCell;
@@ -376,24 +373,24 @@ public interface Message {
                 if (game.getSelecteds().getWarriorsCell().size() != 0) {
                     System.out.println("Warriors: ");
                     for (Cell cell : game.getSelecteds().getWarriorsCell()) {
-                        System.out.println("Card Id: " + cell.getWarrior().getID() +
-                                " Row:" + cell.getRow() + "Column:" + cell.getColumn() +
-                                " Name: " + cell.getWarrior().getName() + "-");
+                        Warrior warrior = cell.getWarrior();
+                        System.out.printf("Name: %s ID: %d Row:%dColumn:%d\n",
+                                warrior.getName(), warrior.getID(), cell.getRow(), cell.getColumn());
                     }
                 }
                 if (game.getSelecteds().collectableItem != null) {
                     Spell item = game.getSelecteds().collectableItem;
-                    System.out.printf("Collectible Item: Name: %s ID: %d Required Mana: %d",
+                    System.out.printf("Collectible Item: Name: %s ID: %d Required Mana: %d\n",
                             item.getName(), item.getID(), item.getRequiredMana());
                 }
                 if (game.getSelecteds().cardHandIndex != null) {
                     Card card = game.getActivePlayer().getHand().get(game.getSelecteds().cardHandIndex);
-                    System.out.printf("Name: %s ID: %d Required Mana: %d",
+                    System.out.printf("Name: %s ID: %d Required Mana: %d\n",
                             card.getName(), card.getID(), card.getRequiredMana());
                 }
                 if (game.getSelecteds().specialPowerIsSelected) {
                     Card specialPower = game.getActivePlayer().getPlayerHero().getPower();
-                    System.out.printf("Special Power: Name: %s ID: %d Required Mana: %d",
+                    System.out.printf("Special Power: Name: %s ID: %d Required Mana: %d\n",
                             specialPower.getName(), specialPower.getID(), specialPower.getRequiredMana());
                 }
             }
@@ -534,7 +531,7 @@ public interface Message {
                 }
             }
 
-            interface failCommand {
+            interface failMessage {
                 static void indexOutOfBoard() {
                     System.out.println("index out of board");
                 }
