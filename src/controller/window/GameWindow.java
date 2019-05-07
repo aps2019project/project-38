@@ -49,7 +49,6 @@ public class GameWindow extends Window {
             }
         }
         this.closeWindow();
-        new MainMenu().openWindow();
     }
 
     private static void updatePlayerMatchHistory(Game game, Player player, Player enemy, boolean isWinner) {

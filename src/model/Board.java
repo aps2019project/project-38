@@ -7,6 +7,7 @@ import model.triggers.Trigger;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.stream.Collectors;
 
 
 public class Board implements Serializable {
@@ -79,10 +80,9 @@ public class Board implements Serializable {
         eightAdjacentPartOne.forEach
                 (theCell -> updateListOneByListTwo(eightAdjacentPartTwo, getNextCells(theCell)));
         updateListOneByListTwo(eightAdjacentPartOne, eightAdjacentPartTwo);
-        eightAdjacentPartOne.stream().distinct().filter(theCell -> theCell!=cell).
+        return eightAdjacentPartOne.stream().distinct().filter(theCell -> theCell!=cell).
                 filter(theCell -> 1 == Math.abs(theCell.getRow() - cell.getRow())).
-                filter(theCell -> 1 == Math.abs(theCell.getColumn() - cell.getColumn()));
-        return eightAdjacentPartOne;
+                filter(theCell -> 1 == Math.abs(theCell.getColumn() - cell.getColumn())).collect(Collectors.toCollection(ArrayList::new));
     }
 
     public ArrayList<Cell> getCellWithinDistance(Cell cell,int maxDistance){
@@ -135,7 +135,7 @@ public class Board implements Serializable {
     }
 
     private void updateListOneByListTwo (ArrayList<Cell> listOne, ArrayList<Cell> listTwo) {
-        listOne.addAll(listTwo);//todo check with amir
+        listOne.addAll(listTwo);
     }
 
     private ArrayList<Cell> getNextCells (Cell cell) {
