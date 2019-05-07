@@ -319,6 +319,12 @@ public interface Message {
                 }
             }
 
+            static void showLevelsForStoryMode() {
+                for (Map.Entry<String, Deck> entry : Deck.getAllDecks().entrySet()) {
+                    System.out.println(entry.getKey() + ": Hero Name:" + entry.getValue().getHero().getName() + " Mode:");//todo hashMap Name and Mode.
+                }
+            }
+
             static void invalidDeckForPlayerTwo() {
                 System.out.println("selected deck for second player is invalid");
             }
@@ -365,11 +371,37 @@ public interface Message {
                         " Cool Down:" + specialPower.coolDownRemaining + " CardID:" + specialPower.getID());
             }
 
+            static void showSelecteds(Game game) {
+                System.out.print("Selecteds:");
+                if (game.getSelecteds().getWarriorsCell().size() != 0) {//todo else if badana
+                    System.out.println("Warriors: ");
+                    for (Cell cell : game.getSelecteds().getWarriorsCell()) {
+                        System.out.println("Card Id: " + cell.getWarrior().getID() +
+                                " Row:" + cell.getRow() + "Column:" + cell.getColumn() +
+                                " Name: " + cell.getWarrior().getName() + "-");
+                    }
+                }
+                if (game.getSelecteds().collectableItem != null) {
+                    System.out.println();//todo
+                }
+                if (game.getSelecteds().cardHandIndex != null) {
+                    // TODO: 5/7/19  
+                }
+                if (game.getSelecteds().specialPowerIsSelected) {
+                    // TODO: 5/7/19  
+                }
+            }
+
             static void showBoard(Game game) {
+                for (int i = 0; i < Constant.GameConstants.boardColumn * 5; i++) {
+                    System.out.print(i % 5 == 2 ? i / 5 : " ");
+                }
+                System.out.println();
                 horizontalBoardLine();
                 for (int i = 0; i < Constant.GameConstants.boardRow; i++) {
                     for (int j = 0; j < 3; j++) {
                         for (int k = 0; k < Constant.GameConstants.boardColumn; k++) {
+                            if (k == 0) System.out.print(j == 1 ? i : " ");
                             switch (j) {
                                 case 0:
                                     System.out.print("|");

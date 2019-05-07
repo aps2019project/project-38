@@ -252,7 +252,8 @@ public class GameWindow extends Window {
         int column = Integer.parseInt(matcher.group());
         if (row < Constant.GameConstants.boardRow && column < Constant.GameConstants.boardColumn) {
             Cell cell = game.getBoard().getCell(row, column);
-            if (cell.getWarrior() != null && game.getActivePlayer() == game.getWarriorsPlayer(cell.getWarrior())) {
+            if (!game.getSelecteds().getWarriorsCell().contains(cell) && cell.getWarrior() != null &&
+                    game.getActivePlayer() == game.getWarriorsPlayer(cell.getWarrior())) {
                 game.getSelecteds().seletWarrior(game.getBoard().getCell(row, column));
             } else {
                 Message.GameWindow.insideGame.failCommand.youHaveNoOwnWarriorInThisCell();
@@ -361,7 +362,10 @@ public class GameWindow extends Window {
     }
 
     private boolean chooseLevel() {
-        return false;//todo
+        while (true) {
+
+            return false;//todo kekekekekekekekeke
+        }
     }
 
     private boolean chooseMoodAndEnemyDeck() {
@@ -433,8 +437,10 @@ public class GameWindow extends Window {
                 String gameMood = request.replaceFirst("Start multiplayer game ", "");
                 if (gameMood.equals("KillingEnemyHero")) {
                     game = new Game(new KillingEnemyHero(), Account.getActiveAccount(), moodData.secondAccount);
+                    return true;
                 } else {
                     game = new Game(new CarryingFlag(), Account.getActiveAccount(), moodData.secondAccount);
+                    return true;
                 }
             } else if (request.equals("exit")) {
                 return false;

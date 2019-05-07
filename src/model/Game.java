@@ -21,7 +21,6 @@ import java.util.*;
 
 
 public class Game {
-    private static HashMap<String, Game> levels = new HashMap<>();
     GameMood gameMood;
     public int turn;
     Player[] players = new Player[2];
@@ -29,14 +28,6 @@ public class Game {
 //    public Timer timer = new Timer(Constant.GameConstants.turnTime, ignored -> endTurn());
     private ArrayList<Spell> colletableItems = new ArrayList<>();
     private Selectable selecteds = new Selectable();
-
-    static {
-        levels.put("level1", new Game(new KillingEnemyHero(),null , Deck.getAllDecks().get("level1")));
-        levels.put("level2", new Game(new CarryingFlag(), null, Deck.getAllDecks().get("level2")));
-        levels.put("level3", new Game(new CollectingFlag(Constant.GameConstants.collectingFlagMoodFlags)
-                , null, Deck.getAllDecks().get("level3")));
-    }
-
 
     public Game(GameMood gameMood, Account accountOne, Account accountTwo) {
         this.gameMood = gameMood;
