@@ -88,20 +88,20 @@ public class GameWindow extends Window {
             showNextCard();
         } else if (request.equals("Enter graveyard")) {
             graveyardMenu();
-        } else if (request.equals("Peek")) {
-
+//        } else if (request.equals("Peek")) {
+//            peekCard();
         } else {
             Message.GameWindow.failMessage.invalidCommand();
         }
     }
 
-    private void peekCard(){
-        if(game.getSelectedThings().getWarriorsCell().size()>0){
-            System.out.println(game.getSelectedThings().getWarriorsCell().get(0).getTriggers());
-            System.out.println(game.getSelectedThings().getWarriorsCell().get(0).getEffects());
-
-        }
-    }
+//    private void peekCard(){
+//        if(game.getSelectedThings().getWarriorsCell().size()>0){
+//            System.out.println(game.getSelectedThings().getWarriorsCell().get(0).getTriggers());
+//            System.out.println(game.getSelectedThings().getWarriorsCell().get(0).getEffects());
+//
+//        }
+//    }
 
     private void showNextCard() {
         //todo
@@ -213,7 +213,7 @@ public class GameWindow extends Window {
                 System.out.println("target cell is filled");
             }
         } else {
-            System.out.println("you should select just one warrior for attack");
+            System.out.println("you should select one warrior for attack");
         }
         game.getSelectedThings().deselectAll();
     }

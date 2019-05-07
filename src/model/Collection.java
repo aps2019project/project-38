@@ -27,10 +27,11 @@ public class Collection implements Serializable {
         for (int i = 0; i < 7; i++) {
             deck.getCardIDs().add(CardFactory.getAllBuiltSpells().get(spellIndex[i] - 1).getID());
         }
-        int[] minionIndex = {1, 2, 4, 8, 21, 22, 25, 25, 28, 29, 31, 33, 40};
+        int[] minionIndex = {25, 25, 25, 25, 25, 25, 25, 10, 10, 10, 10, 10, 10};
         for (int i = 0; i < 13; i++) {
             deck.getCardIDs().add(CardFactory.getAllBuiltMinions().get(minionIndex[i] - 1).getID());
         }
+        mainDeck = deck;
 
         this.getDecks().add("DefaultDeck");
         this.getAllDecks().put("DefaultDeck", deck);
@@ -40,7 +41,6 @@ public class Collection implements Serializable {
     }
 
     {//todo danger for test
-        mainDeck = Deck.getAllDecks().get("level3");
         this.decks.add("level3");
         this.allDecks.put("level3", Deck.getAllDecks().get("level3"));
         this.getCardIDs().addAll(Deck.getAllDecks().get("level3").getCardIDs());
