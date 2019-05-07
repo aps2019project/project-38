@@ -2,9 +2,10 @@ package model;
 
 import model.cards.Spell;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Selectable {
+public class Selectable implements Serializable {
     private ArrayList<Cell  > warriorsCell = new ArrayList<>();
     public Integer cardHandIndex;
     public boolean specialPowerIsSelected;

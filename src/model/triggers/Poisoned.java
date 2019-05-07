@@ -2,7 +2,6 @@ package model.triggers;
 
 import model.Constant;
 import model.QualityHaver;
-import model.actions.Applier;
 import model.conditions.HasTurnEnded;
 import model.effects.Dispelablity;
 import model.effects.HP;
@@ -20,6 +19,6 @@ public class Poisoned extends Trigger{
 
     @Override
     protected void executeActions(GameState gameState, QualityHaver owner) {
-        new Applier().execute(this,owner);
+        owner.getEffects().addAll(effects);
     }
 }

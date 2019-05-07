@@ -99,10 +99,10 @@ public class GameWindow extends Window {
             useCollectibleItem(request);
         } else if (request.equals("Enter graveyard")) {
             graveyardMenu();
-        } else if (request.equals("exit")) {
+//        } else if (request.equals("exit")) {
             exit();
         } else if (request.equals("Peek")) {
-
+//            peekCard();
         } else {
             Message.GameWindow.FailMessage.invalidCommand();
         }
@@ -112,13 +112,13 @@ public class GameWindow extends Window {
         game.getGameMood().winner = game.getOtherPlayer(game.getActivePlayer());
     }
 
-    private void peekCard(){
-        if(game.getSelectedThings().getWarriorsCell().size()>0){
-            System.out.println(game.getSelectedThings().getWarriorsCell().get(0).getTriggers());
-            System.out.println(game.getSelectedThings().getWarriorsCell().get(0).getEffects());
-
-        }
-    }
+//    private void peekCard(){
+//        if(game.getSelectedThings().getWarriorsCell().size()>0){
+//            System.out.println(game.getSelectedThings().getWarriorsCell().get(0).getTriggers());
+//            System.out.println(game.getSelectedThings().getWarriorsCell().get(0).getEffects());
+//
+//        }
+//    }
 
     private void useCollectibleItem(String request) {
         Cell cell = getCellByMessage(request);
@@ -266,7 +266,7 @@ public class GameWindow extends Window {
                 System.out.println("target cell is filled");
             }
         } else {
-            System.out.println("you should select just one warrior for attack");
+            System.out.println("you should select one warrior for attack");
         }
         game.getSelectedThings().deselectAll();
     }
