@@ -13,6 +13,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 //in getTarget method i mix cells and warrior it may cause trouble. change cellsToo to cellMod to solve the issue.
 public class RectGetter implements SpellTarget {
+    private boolean rowMod;
+    private boolean colMod;
     private int rowLen;
     private int colLen;
     private boolean cellsToo;
@@ -31,11 +33,28 @@ public class RectGetter implements SpellTarget {
         this.friendHero = friendHero;
     }
 
+    public RectGetter(boolean rowMod, boolean colMod, boolean cellsToo, boolean enemies, boolean friends, boolean enemyHero, boolean friendHero) {
+        this.rowMod = rowMod;
+        this.colMod = colMod;
+        this.cellsToo = cellsToo;
+        this.enemies = enemies;
+        this.friends = friends;
+        this.enemyHero = enemyHero;
+        this.friendHero = friendHero;
+    }
+
     @Override
     public ArrayList<? extends QualityHaver> getTarget(Player spellOwner, Cell cell) {
         Game game = cell.getBoard().getGame();
         ArrayList<Cell> cells = new ArrayList<>();
-        addCells(cell, cells);
+
+        if(rowMod){
+            addRow(cell,cells);
+        }else if(colMod){
+            addColl(cell,cells);
+        }else {
+            addCells(cell, cells);
+        }
 
         ArrayList<QualityHaver> targets = new ArrayList<>();
         if (cellsToo) {
@@ -56,6 +75,18 @@ public class RectGetter implements SpellTarget {
             for (int j = cell.getRow(); j < Math.min(cell.getRow() + rowLen, Constant.GameConstants.boardRow); j++) {
                 cells.add(cell.getBoard().getCell(j, i));
             }
+        }
+    }
+
+    private void addColl(Cell cell,ArrayList<Cell> cells){
+        for (int i = 0; i < Constant.GameConstants.boardRow; i++) {
+            cells.add(cell.getBoard().getCell(i,cell.getColumn()));
+        }
+    }
+
+    private void addRow(Cell cell,ArrayList<Cell> cells){
+        for (int i = 0; i < Constant.GameConstants.boardColumn; i++) {
+            cells.add(cell.getBoard().getCell(cell.getRow(),i));
         }
     }
 }
