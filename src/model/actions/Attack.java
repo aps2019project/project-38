@@ -22,6 +22,7 @@ public class Attack {
                 defender.getEffects().add(new HP(-1, Dispelablity.UNDISPELLABLE, -1 * attackState.ap));
                 attackState.pending = false;
                 game.iterateAllTriggersCheck(attackState);
+                System.err.println("Attacked: ("+attackerCell.getRow()+","+attackerCell.getColumn()+" ("+defenderCell.getRow()+","+defenderCell.getColumn()+")");
             }
             return !attackState.canceled;
         }
