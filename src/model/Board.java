@@ -81,8 +81,8 @@ public class Board implements Serializable {
                 (theCell -> updateListOneByListTwo(eightAdjacentPartTwo, getNextCells(theCell)));
         updateListOneByListTwo(eightAdjacentPartOne, eightAdjacentPartTwo);
         return eightAdjacentPartOne.stream().distinct().filter(theCell -> theCell!=cell).
-                filter(theCell -> 1 == Math.abs(theCell.getRow() - cell.getRow())).
-                filter(theCell -> 1 == Math.abs(theCell.getColumn() - cell.getColumn())).collect(Collectors.toCollection(ArrayList::new));
+                filter(theCell -> 1 >= Math.abs(theCell.getRow() - cell.getRow())).
+                filter(theCell -> 1 >= Math.abs(theCell.getColumn() - cell.getColumn())).collect(Collectors.toCollection(ArrayList::new));
     }
 
     public ArrayList<Cell> getCellWithinDistance(Cell cell,int maxDistance){

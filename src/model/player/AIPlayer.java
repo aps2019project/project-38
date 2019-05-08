@@ -18,8 +18,8 @@ public class AIPlayer extends Player {
         Collections.shuffle(warriors);
         for (Warrior warrior : warriors) {
             for (Cell cell : getBoardCells()) {
-                getGame().move(warrior.getCell(),cell);
                 getGame().attack(warrior.getCell(),cell);
+                getGame().move(warrior.getCell(),cell);
             }
         }
 
