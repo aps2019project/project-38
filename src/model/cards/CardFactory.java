@@ -1,6 +1,5 @@
 package model.cards;
 
-import model.Cell;
 import model.Constant;
 import model.Game;
 import model.QualityHaver;
@@ -14,13 +13,10 @@ import model.gamestate.AttackState;
 import model.gamestate.DeathState;
 import model.gamestate.GameState;
 import model.gamestate.PutMinionState;
-import model.player.Player;
 import model.targets.*;
 import model.triggers.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.PrimitiveIterator;
 
 public class CardFactory {
     private static ArrayList<Card> allBuiltMinions = new ArrayList<>();
@@ -1079,13 +1075,25 @@ public class CardFactory {
 
     public static void main() {
         makeAllMinions();
-        cardAdder(allBuiltMinions);
         makeAllSpells();
-        cardAdder(allBuiltSpells);
         makeAllHeroes();
-        cardAdder(allBuiltHeroes);
         makeAllItems();
+
+        addCounterAttack();
+
+        cardAdder(allBuiltMinions);
+        cardAdder(allBuiltSpells);
+        cardAdder(allBuiltHeroes);
         cardAdder(allBuiltItems);
+    }
+
+    private static void addCounterAttack(){
+        for (Card hero : allBuiltHeroes) {
+            hero.getTriggers().add(new CounterAttack(-1,Dispelablity.UNDISPELLABLE));
+        }
+        for (Card minion : allBuiltMinions) {
+            minion.getTriggers().add(new CounterAttack(-1,Dispelablity.UNDISPELLABLE));
+        }
     }
 
     private static void cardAdder(ArrayList<Card> allBuiltCards) {
