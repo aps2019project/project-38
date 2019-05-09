@@ -1,6 +1,7 @@
 package model.triggers;
 
 import model.QualityHaver;
+import model.actions.Attack;
 import model.cards.Warrior;
 import model.conditions.HasBeenAttacked;
 import model.effects.Attacked;
@@ -26,7 +27,7 @@ public class CounterAttack extends Trigger {
     protected void executeActions(GameState gameState, QualityHaver owner) {
         AttackState attackState =(AttackState)gameState;
         Warrior warrior = (Warrior)owner;
-        warrior.getCell().getBoard().getGame().attack(attackState.getAttacked().getCell(),
+        Attack.doIt(attackState.getAttacked().getCell(),
                 attackState.getAttacker().getCell());
         warrior.getEffects().removeAll(warrior.getEffects().stream().filter(effect -> effect instanceof Attacked).collect(Collectors.toCollection(ArrayList::new)));
     }

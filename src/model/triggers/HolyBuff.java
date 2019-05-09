@@ -25,8 +25,6 @@ public class HolyBuff extends Trigger {
     protected void executeActions(GameState gameState, QualityHaver owner) {
         AttackState attackState = (AttackState) gameState;
 
-        if(attackState.ap-reducedDamage>=0) {
-            attackState.ap-=reducedDamage;
-        }
+        attackState.ap = Math.max(attackState.ap-reducedDamage,0);
     }
 }
