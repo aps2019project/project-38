@@ -279,7 +279,11 @@ public interface Message {
 
     interface GameWindow {
         static void betweenTwoPageLine() {
-            System.out.println("*******************************************************************");
+            System.out.println("*************************************************************************************");
+        }
+
+        static void betweenTwoLineLine() {
+            System.out.println(".....................................................................................");
         }
 
         interface BeforeGame {
@@ -345,8 +349,8 @@ public interface Message {
 
             static void showBoardAbove(Game game) {
                 int activePlayerNumber = game.getActivePlayer() == game.getPlayers()[0] ? 0 : 1;
-                String completeName = game.getActivePlayer() instanceof AIPlayer ? "AI" : "Human User Name:" +
-                        ((HumanPlayer) game.getActivePlayer()).getAccount().getUsername();
+                String completeName = game.getActivePlayer() instanceof AIPlayer ? "[AI]" : String.format
+                        ("[Human] [User Name: %s]", ((HumanPlayer) game.getActivePlayer()).getAccount().getUsername());
                 betweenTwoPageLine();
                 System.out.println("Game Mood: " + game.getGameMood().getClass().getSimpleName());
                 System.out.println(activePlayerNumber + ": " + completeName);
@@ -360,20 +364,26 @@ public interface Message {
                         System.out.println(entry.getKey() + ": Empty");
                     }
                     else {
+                        System.out.print(entry.getKey() + ". ");
                         CardView.showCard(entry.getValue());
                     }
                 }
+                betweenTwoLineLine();
                 Card nextCard = game.getActivePlayer().getNextCard();
-                System.out.printf("Next Turn Card: [Type: %s] %s", nextCard instanceof Spell ? "Spell" : "Minion");
+                System.out.printf("Next Turn Card: [Type: %s] %s\n",
+                        nextCard instanceof Spell ? "Spell" : "Minion", CardView.cardDetail(nextCard));
+                betweenTwoLineLine();
                 HeroPower heroPower = game.getActivePlayer().getPlayerHero().getPower();
                 CardView.ShowSpecialPower(heroPower);
+                betweenTwoLineLine();
                 showSelectedThings(game);
+                betweenTwoLineLine();
             }
 
             static void showSelectedThings(Game game) {
                 System.out.print("SelectedCards: ");
                 if (game.getSelectedThings().getWarriorsCell().size() != 0) {
-                    System.out.printf("{Warrior%s\n}", game.getSelectedThings().getWarriorsCell().size() > 1 ? "s" : "");
+                    System.out.printf("{Warrior%s}\n", game.getSelectedThings().getWarriorsCell().size() > 1 ? "s" : "");
                     for (Cell cell : game.getSelectedThings().getWarriorsCell()) {
                         CardView.showCard(cell.getWarrior());
                     }
@@ -538,11 +548,11 @@ public interface Message {
 
             static void showCardDescription(Card card) {
                 CardView.showCard(card);
-                CardView.cardDetail(card);
+                CardView.showCardDescriptionAndTarget(card);
             }
 
             interface CardView {
-                static void showCardDisciptionAndTarget(Card card) {
+                static void showCardDescriptionAndTarget(Card card) {
                     if (card.description != null) {
                         System.out.println("Description Of Card Ability: " +
                                 card.description.descriptionOfCardSpecialAbility);
