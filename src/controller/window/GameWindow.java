@@ -37,6 +37,7 @@ public class GameWindow extends Window {
     }
 
     private void endGame(Game game) {
+        Message.GameWindow.InsideGame.showMainView(game);
         Player winner = game.getGameMood().winner;
         Player loser = game.getOtherPlayer(winner);
         updatePlayerMatchHistory(game, winner, loser, true);
