@@ -11,7 +11,7 @@ import model.gamestate.PutMinionState;
 import model.gamestate.UseSpellState;
 
 public class UseCard {
-    public static boolean useCard(int handMapKey, Cell cell) {//todo babana
+    public static boolean useCard(int handMapKey, Cell cell) {//todo badana
         boolean didSth = false;
         Game game = cell.getBoard().getGame();
         Card card = game.getActivePlayer().getHand().get(handMapKey);

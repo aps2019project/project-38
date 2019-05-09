@@ -32,6 +32,7 @@ public class Attack {
     static boolean checkWarriorsEffectsForAttack
             (Game game, Cell attackerCell, Cell defenderCell, int JumperManhattanDistance) {
         Warrior attacker = attackerCell.getWarrior();
+        if(attacker.getEffects().stream().anyMatch(effect -> effect instanceof Attacked)) return false;
         if (game.getBoard().getEightAdjacent(attackerCell).contains(defenderCell)) {
             if (attacker.getEffects().stream().anyMatch(effect -> effect instanceof Melee)) {
                 return true;
@@ -39,7 +40,7 @@ public class Attack {
         }
         else if (attacker.getEffects().stream().anyMatch(effect -> effect instanceof Ranged)) {
             return attacker.getEffects().stream().filter(effect -> effect instanceof Ranged)
-                    .anyMatch( effect -> ((Ranged)effect).getRange() <= JumperManhattanDistance);
+                    .anyMatch( effect -> ((Ranged)effect).getRange() >= JumperManhattanDistance);
         }
         return false;
     }

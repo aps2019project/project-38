@@ -30,7 +30,8 @@ public class Game implements Serializable {
     public int prize;
 
     public HashMap<Trigger,QualityHaver> triggAddBuffer = new HashMap<>();
-    public HashMap<Effect,QualityHaver> effBuffer = new HashMap<>();
+    public HashMap<Effect,QualityHaver> effAddBuffer = new HashMap<>();
+    public HashMap<Effect,QualityHaver> effRemoveBuffer = new HashMap<>();
     public HashMap<Trigger,QualityHaver> triggRemoveBuffer = new HashMap<>();
     private boolean killMod=false;
 
@@ -89,18 +90,23 @@ public class Game implements Serializable {
         }
     }
 
-    private void flushBuffer(){
+    private void flushBuffers(){
         for (Map.Entry<Trigger, QualityHaver> entry : triggAddBuffer.entrySet()) {
             entry.getValue().getTriggers().add(entry.getKey());
         }
-        for (Map.Entry<Effect, QualityHaver> entry : effBuffer.entrySet()) {
+        for (Map.Entry<Effect, QualityHaver> entry : effAddBuffer.entrySet()) {
             entry.getValue().getEffects().add(entry.getKey());
         }
         for (Map.Entry<Trigger, QualityHaver> entry : triggRemoveBuffer.entrySet()) {
             entry.getValue().getTriggers().remove(entry.getKey());
         }
+        for (Map.Entry<Effect, QualityHaver> entry : effRemoveBuffer.entrySet()) {
+            entry.getValue().getEffects().remove(entry.getKey());
+        }
         triggAddBuffer = new HashMap<>();
-        effBuffer = new HashMap<>();
+        effAddBuffer = new HashMap<>();
+        triggRemoveBuffer = new HashMap<>();
+        effRemoveBuffer = new HashMap<>();
     }
 
     private void initialisePlayerHand(Player player) {
@@ -161,8 +167,10 @@ public class Game implements Serializable {
 
     public void decreasSpecialPowerCoolDown() {
         HeroPower heroPower = getActivePlayer().getPlayerHero().getPower();
-        if (heroPower.coolDownRemaining > 0) {
-            heroPower.coolDownRemaining --;
+        if(heroPower != null) {
+            if (heroPower.coolDownRemaining > 0) {
+                heroPower.coolDownRemaining--;
+            }
         }
     }
 
@@ -171,7 +179,7 @@ public class Game implements Serializable {
         iteratePlayerTriggers(players[0], gameState);
         iteratePlayerTriggers(players[1], gameState);
         if(!killMod){
-            flushBuffer();
+            flushBuffers();
         }
     }
 
@@ -239,7 +247,7 @@ public class Game implements Serializable {
         killPlayerDiedWarriors(players[0]);
         killPlayerDiedWarriors(players[1]);
         killMod = false;
-        flushBuffer();
+        flushBuffers();
     }
 
     private void killPlayerDiedWarriors(Player player) {

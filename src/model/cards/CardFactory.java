@@ -960,6 +960,8 @@ public class CardFactory {
                 }
             };
             manaRegen.getConditions().add(new HasTurnStarted());
+            item.getActions().put(new Applier(),new RectGetter(1,1,false,false,false,false,true));
+            item.getTriggers().add(manaRegen);
 
             item.description.descriptionOfCardSpecialAbility = "Take one mana in each turn and killed enemy hero after 15 turn";
             allBuiltItems.add(item);

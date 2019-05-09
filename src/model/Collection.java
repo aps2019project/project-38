@@ -21,7 +21,7 @@ public class Collection implements Serializable {
         Deck deck = new Deck();
         deck.setName("DefaultDeck");
 
-        deck.setHero((Hero) CardFactory.getAllBuiltHeroes().get(6));
+        deck.setHero((Hero) CardFactory.getAllBuiltHeroes().get(8));
         deck.setItem((Spell) CardFactory.getAllBuiltItems().get(13));
         int[] spellIndex = {1, 5, 5, 7, 9, 10, 19};
         for (int i = 0; i < 7; i++) {

@@ -30,6 +30,7 @@ public class AIPlayer extends Player {
             for (Cell cell : getBoardCells()) {
                 getGame().attack(warrior.getCell(),cell);
                 getGame().move(warrior.getCell(),cell);
+                getGame().attack(warrior.getCell(),cell);
             }
         }
 
