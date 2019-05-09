@@ -1,23 +1,150 @@
 package controller.window;
 
+import controller.window.normalwindow.ChoosingWindow;
+import controller.window.normalwindow.OperatingWindow;
 import model.*;
 import model.cards.Card;
 import model.cards.Spell;
 import model.gamemoods.CarryingFlag;
 import model.gamemoods.CollectingFlag;
+import model.gamemoods.GameMood;
 import model.gamemoods.KillingEnemyHero;
 import model.player.AIPlayer;
 import model.player.HumanPlayer;
 import model.player.Player;
 import view.Message;
 import view.Request;
+import view.windowgraphics.WindowGraphic;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class GameWindow extends Window {
     private Game game;
     private MoodData moodData = new MoodData();//todo badana
+
+    private void initializeAndRunBeforeGameWindows() {
+        ChoosingWindow battle = new ChoosingWindow
+                (null, "Battle", "singe or multi");
+        ChoosingWindow single = new ChoosingWindow
+                (battle, "Single Player", "story or custom");
+        ChoosingWindow multi = new ChoosingWindow
+                (battle, "Select Account", "Multi Player", "select account");
+        battle.getSubWindows().add(single);
+        battle.getSubWindows().add(multi);
+        ChoosingWindow story = new ChoosingWindow
+                (single, "Story", "#final#");
+        ChoosingWindow custom = new ChoosingWindow
+                (single, "Choosing Deck", "Custom", "Choosing Deck");
+        single.getSubWindows().add(story);
+        single.getSubWindows().add(custom);
+        initializeStoryWindow(story);
+        initializeCustomWindow(custom);
+        initializeMultiWindow(multi);
+        battle.openWindow();
+    }
+
+    private void initializeStoryWindow(ChoosingWindow story) {
+        GameWindow thisGameWindow = this;
+        for (Map.Entry<String, Level> entry : Level.getAvailableLevels().entrySet()) {
+            story.getSubWindows().add(new OperatingWindow(story,
+                    String.format("[Level Name: %s] [Hero Name: %s] [Mood: %s] [Prize: %d]",
+                            entry.getKey(), entry.getValue().getDeck().getHero().getName(),
+                            entry.getValue().getGameMood().getClass().getSimpleName(), entry.getValue().getPrize())) {
+                @Override
+                public void main() {
+                    game = entry.getValue().getLevelGame(Account.getActiveAccount());
+                    this.closeWindow();
+                    thisGameWindow.openWindow();
+                }
+            });
+        }
+    }
+
+    private void initializeCustomWindow(ChoosingWindow custom) {
+        for (Map.Entry<String, Deck> entry : Account.getActiveAccount().getCollection().getAllDecks().entrySet()) {
+            ChoosingWindow mood = new ChoosingWindow(custom,
+                    "Choosing Mood",
+                    String.format("[Deck Name: %s] [Hero: %s]",
+                            entry.getValue().getName(), entry.getValue().getHero().getName()),
+                    "Choosing Mood");
+            custom.getSubWindows().add(mood);
+            initializeKillingEnemyHeroAndCarryingFlagWindows(mood, entry);
+            initializeCollectingFlagWindow(mood, entry);
+        }
+    }
+
+    private void initializeKillingEnemyHeroAndCarryingFlagWindows(ChoosingWindow mood, Map.Entry<String, Deck> entry) {
+        ArrayList<String> titles = (ArrayList<String>)Arrays.asList("Killing Enemy Hero", "Carrying Flag");
+        for (String title : titles) {
+            mood.getSubWindows().add(new OperatingWindow(mood, title) {
+                @Override
+                public void main() {
+                    GameMood gameMood;
+                    if (title.equals("Killing Enemy Hero")) {
+                        gameMood = new KillingEnemyHero();
+                    }
+                    else {
+                        gameMood = new CarryingFlag();
+                    }
+                    game = new Game(gameMood, Account.getActiveAccount(), entry.getValue());
+                }
+            });
+        }
+    }
+
+    private void initializeCollectingFlagWindow(ChoosingWindow mood, Map.Entry<String, Deck> entry) {
+        GameWindow thisGameWindow = this;
+        ChoosingWindow numberOfFlags = new ChoosingWindow
+                (mood, "Choose Number Of Flags", "Carrying Flag", "#final#") {
+            @Override
+            public void main() {
+                while (true) {
+                    WindowGraphic.getRandomWindowGraphics().showWindowBody(this);
+                    String request = Request.getNextRequest();
+                    Pattern pattern = Pattern.compile("(\\d+)[\t ]*");
+                    Matcher matcher = pattern.matcher(request);
+                    if (matcher.matches()) {
+                        if (handleRequest(Integer.parseInt(matcher.group(1)))) {
+                            break;
+                        }
+                    }
+                    else {
+                        Message.GameWindow.FailMessage.invalidCommand();
+                    }
+                }
+            }
+
+            private boolean handleRequest(int request) {
+                if (request == 0) {
+                    this.closeWindow();
+                    this.getSuperWindow().openWindow();
+                    return true;
+                }
+                else {
+                    this.closeWindow();
+                    thisGameWindow.openWindow();
+                    game = new Game(new CollectingFlag(request), Account.getActiveAccount(), entry.getValue());
+                    return true;
+                }
+            }
+        };
+    }
+
+    private void initializeMultiWindow(ChoosingWindow multi) {
+        for (Map.Entry<String, Account> entry : Account.getUsernameToAccountObject().entrySet()) {
+            if (entry.getValue() != Account.getActiveAccount() && entry.getValue().getCollection().getMainDeck() != null) {
+                ChoosingWindow
+            }
+        }
+    }
+
+    public GameWindow() {
+        initializeAndRunBeforeGameWindows();
+    }
 
     @Override
     public void main() {

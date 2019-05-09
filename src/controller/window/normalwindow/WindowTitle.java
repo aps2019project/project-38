@@ -11,10 +11,10 @@ public class WindowTitle {
         this.titleInSub = titleInSub;
     }
 
-    public WindowTitle(String titleAndTitleInSuper, String titleInSub) {
-        this.title = titleAndTitleInSuper;
-        this.titleInSuper = titleAndTitleInSuper;
-        this.titleInSub = titleInSub;
+    public WindowTitle(String titleAndTitleInSub, String titleInSuper) {
+        this.title = titleAndTitleInSub;
+        this.titleInSuper = titleInSuper;
+        this.titleInSub = titleAndTitleInSub;
     }
 
     public WindowTitle(String titleInSuper) {

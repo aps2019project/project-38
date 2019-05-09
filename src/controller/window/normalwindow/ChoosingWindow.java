@@ -1,5 +1,6 @@
 package controller.window.normalwindow;
 
+import controller.window.Window;
 import view.Request;
 import view.windowgraphics.WindowGraphic;
 
@@ -9,22 +10,30 @@ import java.util.regex.Pattern;
 
 public class ChoosingWindow extends NormalWindow {
     private ArrayList<NormalWindow> subWindows = new ArrayList<>();
-    private WindowGraphic graphic;
+//    private WindowGraphic graphic;
 
-    public ChoosingWindow() {//todo
-        super(new ChoosingWindow(), new WindowTitle(""));
+    public ChoosingWindow(Window superWindow, String title, String titleInSuper, String titleInSub) {
+        super(superWindow, new WindowTitle(title, titleInSuper, titleInSub));
+    }
+
+    public ChoosingWindow(Window superWindow, String titleAndTitleInSuper, String titleInSub) {
+        super(superWindow, new WindowTitle(titleAndTitleInSuper, titleAndTitleInSuper, titleInSub));
+    }
+
+    public ChoosingWindow(Window superWindow, String allTitles) {
+        super(superWindow, new WindowTitle(allTitles, allTitles));
     }
 
     @Override
     public void main() {
         while (true) {
-            if (graphic == null) {
+//            if (graphic == null) {
                 WindowGraphic.getRandomWindowGraphics().showWindowBody(this);
-            }else {
-                graphic.showWindowBody(this);
-            }
+//            }else {
+//                graphic.showWindowBody(this);
+//            }
             String request = Request.getNextRequest();
-            Pattern pattern = Pattern.compile("(\\d+)[\t ]*");
+            Pattern pattern = Pattern.compile("(\\d+)([\t ]*)");
             Matcher matcher = pattern.matcher(request);
             if (matcher.matches()) {
                 if (handleRequest(Integer.parseInt(matcher.group(1)))) {
@@ -37,10 +46,12 @@ public class ChoosingWindow extends NormalWindow {
         }
     }
 
-    public boolean handleRequest(int request) {
+    private boolean handleRequest(int request) {
         if (request == 0) {
             this.closeWindow();
-            this.superWindow.openWindow();
+            if (this.superWindow != null) {
+                this.superWindow.openWindow();
+            }
             return true;
         }
         else if (1 <= request && request <= subWindows.size()) {
