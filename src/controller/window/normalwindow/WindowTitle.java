@@ -17,6 +17,10 @@ public class WindowTitle {
         this.titleInSub = titleInSub;
     }
 
+    public WindowTitle(String titleInSuper) {
+        this.titleInSuper = titleInSuper;
+    }
+
     public String getTitle() {
         return title;
     }
