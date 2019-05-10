@@ -1,4 +1,4 @@
-package model.gamemoods;
+package model.gamemodes;
 
 import model.Cell;
 import model.Constant;
@@ -8,14 +8,14 @@ import model.triggers.Flag;
 
 import java.util.Random;
 
-public class CollectingFlag extends GameMood {
+public class CollectingFlag extends GameMode {
     private int gameMaxFlags;
 
     public CollectingFlag(int gameMaxFlags) {
         if (6 < gameMaxFlags && gameMaxFlags < 20) {
             this.gameMaxFlags = gameMaxFlags;
         }else {
-            this.gameMaxFlags = Constant.GameConstants.collectingFlagMoodFlags;
+            this.gameMaxFlags = Constant.GameConstants.collectingFlagModeFlags;
         }
     }
 

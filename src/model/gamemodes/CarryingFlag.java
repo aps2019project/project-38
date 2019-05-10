@@ -1,14 +1,13 @@
-package model.gamemoods;
+package model.gamemodes;
 
 import model.Constant;
 import model.Game;
-import model.cards.Card;
 import model.cards.Warrior;
 import model.triggers.Flag;
 
 import java.util.Random;
 
-public class CarryingFlag extends GameMood {
+public class CarryingFlag extends GameMode {
     private int[] playersScore = {0, 0};
     private int previousTurn = 0;
     private  boolean gameHasFlag = false;
@@ -17,7 +16,7 @@ public class CarryingFlag extends GameMood {
     public boolean checkGameEnd(Game game) {
         updateScores(game);
         for (int i = 0; i < 2; i++) {
-            if (playersScore[i] > Constant.GameConstants.carryingFlagMoodWinScore) {
+            if (playersScore[i] > Constant.GameConstants.carryingFlagModeWinScore) {
                 winner = game.getPlayers()[i];
                 return true;
             }
@@ -45,5 +44,9 @@ public class CarryingFlag extends GameMood {
                     .getTriggers().add(new Flag());
             gameHasFlag = true;
         }
+    }
+
+    public int[] getPlayersScore() {
+        return playersScore;
     }
 }

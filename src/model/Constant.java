@@ -7,8 +7,8 @@ public interface Constant {
         int handSize = 5;
         int boardRow = 5;
         int boardColumn = 9;
-        int collectingFlagMoodFlags = 7;
-        int carryingFlagMoodWinScore = 6;
+        int collectingFlagModeFlags = 7;
+        int carryingFlagModeWinScore = 6;
         int defaultPrize = 1000;
 
         int winnerPriceForLevel1 = 500;

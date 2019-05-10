@@ -7,6 +7,6 @@ public class StartTurn {
     public static void doIt(Game game) {
         TurnStartState turnStartState = new TurnStartState();
         game.iterateAllTriggersCheck(turnStartState);
-        game.getGameMood().applyTriggerToBoard(game);//todo
+        game.getGameMode().applyTriggerToBoard(game);//todo
     }
 }
