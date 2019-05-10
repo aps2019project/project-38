@@ -22,7 +22,7 @@ public class Move {
                 originCell.setWarrior(null);
                 targetCell.setWarrior(warrior);
                 warrior.setCell(targetCell);
-                warrior.getEffects().add(new Moved());
+                warrior.addEffect(new Moved());
                 moveState.pending = false;
                 game.iterateAllTriggersCheck(moveState);
                 didSth = true;

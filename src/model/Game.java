@@ -24,16 +24,16 @@ public class Game implements Serializable {
     public int turn;
     Player[] players = new Player[2];
     private Board board = new Board(this);
-//    public Timer timer = new Timer(Constant.GameConstants.turnTime, ignored -> endTurn());
+    //    public Timer timer = new Timer(Constant.GameConstants.turnTime, ignored -> endTurn());
     private ArrayList<Spell> collectibleItems = new ArrayList<>();
     private Selectable selectedThings = new Selectable();
     public int prize;
 
-    public HashMap<Trigger,QualityHaver> triggAddBuffer = new HashMap<>();
-    public HashMap<Effect,QualityHaver> effAddBuffer = new HashMap<>();
-    public HashMap<Effect,QualityHaver> effRemoveBuffer = new HashMap<>();
-    public HashMap<Trigger,QualityHaver> triggRemoveBuffer = new HashMap<>();
-    private boolean killMod=false;
+//    public HashMap<Trigger,QualityHaver> triggAddBuffer = new HashMap<>();
+//    public HashMap<Effect,QualityHaver> effAddBuffer = new HashMap<>();
+//    public HashMap<Effect,QualityHaver> effRemoveBuffer = new HashMap<>();
+//    public HashMap<Trigger,QualityHaver> triggRemoveBuffer = new HashMap<>();
+//    private boolean killMod=false;
 
     public Game(GameMood gameMood, Account accountOne, Account accountTwo) {
         this.gameMood = gameMood;
@@ -70,44 +70,44 @@ public class Game implements Serializable {
             initialisePlayerHand(players[1]);
         }
         {
-            turn=0;
+            turn = 0;
             useUsableItem(players[0].getMainDeck().getItem());
-            turn=1;
+            turn = 1;
             useUsableItem(players[1].getMainDeck().getItem());
-            turn=0;
+            turn = 0;
         }
         startTurn();
 //        timer.start();
     }
 
-    private void useUsableItem(Spell spell){
+    private void useUsableItem(Spell spell) {
         for (int i = 0; i < Constant.GameConstants.boardRow; i++) {
             for (int j = 0; j < Constant.GameConstants.boardColumn; j++) {
-                if(spell.apply(board.getCell(i,j))) {
+                if (spell.apply(board.getCell(i, j))) {
                     return;
                 }
             }
         }
     }
 
-    private void flushBuffers(){
-        for (Map.Entry<Trigger, QualityHaver> entry : triggAddBuffer.entrySet()) {
-            entry.getValue().getTriggers().add(entry.getKey());
-        }
-        for (Map.Entry<Effect, QualityHaver> entry : effAddBuffer.entrySet()) {
-            entry.getValue().getEffects().add(entry.getKey());
-        }
-        for (Map.Entry<Trigger, QualityHaver> entry : triggRemoveBuffer.entrySet()) {
-            entry.getValue().getTriggers().remove(entry.getKey());
-        }
-        for (Map.Entry<Effect, QualityHaver> entry : effRemoveBuffer.entrySet()) {
-            entry.getValue().getEffects().remove(entry.getKey());
-        }
-        triggAddBuffer = new HashMap<>();
-        effAddBuffer = new HashMap<>();
-        triggRemoveBuffer = new HashMap<>();
-        effRemoveBuffer = new HashMap<>();
-    }
+//    private void flushBuffers(){
+//        for (Map.Entry<Trigger, QualityHaver> entry : triggAddBuffer.entrySet()) {
+//            entry.getValue().getTriggers().add(entry.getKey());
+//        }
+//        for (Map.Entry<Effect, QualityHaver> entry : effAddBuffer.entrySet()) {
+//            entry.getValue().getEffects().add(entry.getKey());
+//        }
+//        for (Map.Entry<Trigger, QualityHaver> entry : triggRemoveBuffer.entrySet()) {
+//            entry.getValue().getTriggers().remove(entry.getKey());
+//        }
+//        for (Map.Entry<Effect, QualityHaver> entry : effRemoveBuffer.entrySet()) {
+//            entry.getValue().getEffects().remove(entry.getKey());
+//        }
+//        triggAddBuffer = new HashMap<>();
+//        effAddBuffer = new HashMap<>();
+//        triggRemoveBuffer = new HashMap<>();
+//        effRemoveBuffer = new HashMap<>();
+//    }
 
     private void initialisePlayerHand(Player player) {
         Random random = new Random(System.currentTimeMillis());
@@ -167,7 +167,7 @@ public class Game implements Serializable {
 
     public void decreasSpecialPowerCoolDown() {
         HeroPower heroPower = getActivePlayer().getPlayerHero().getPower();
-        if(heroPower != null) {
+        if (heroPower != null) {
             if (heroPower.coolDownRemaining > 0) {
                 heroPower.coolDownRemaining--;
             }
@@ -178,16 +178,19 @@ public class Game implements Serializable {
         board.iterateBoardTriggers(gameState);
         iteratePlayerTriggers(players[0], gameState);
         iteratePlayerTriggers(players[1], gameState);
-        if(!killMod){
-            flushBuffers();
-        }
+//        if(!killMod){
+//            flushBuffers();
+//        }
     }
 
     private void iteratePlayerTriggers(Player player, GameState gameState) {
         for (Warrior warrior : player.getWarriors()) {
+            UUID id = UUID.randomUUID();
+            warrior.setLock(id+"pti",true);
             for (Trigger trigger : warrior.getTriggers()) {
                 trigger.check(gameState, warrior);
             }
+            warrior.setLock(id+"pti",false);
         }
     }
 
@@ -199,15 +202,26 @@ public class Game implements Serializable {
 
     private void iterateAndExpirePlayerTriggers(Player player) {
         for (Warrior warrior : player.getWarriors()) {
-            for (Iterator<Trigger> iterator = warrior.getTriggers().iterator(); iterator.hasNext(); ) {
-                Trigger trigger = iterator.next();
-                if (trigger.duration > 0) {
+//            for (Iterator<Trigger> iterator = warrior.getTriggers().iterator(); iterator.hasNext(); ) {
+//                Trigger trigger = iterator.next();
+//                if (trigger.duration > 0) {
+//                    trigger.duration--;
+//                    if (trigger.duration == 0) {
+//                        iterator.remove();
+//                    }
+//                }
+//            }
+            UUID id = UUID.randomUUID();
+            warrior.setLock(id+"pte",true);
+            for (Trigger trigger : warrior.getTriggers()) {
+                if(trigger.duration > 0){
                     trigger.duration--;
-                    if (trigger.duration == 0) {
-                        iterator.remove();
+                    if(trigger.duration==0){
+                        warrior.removeTrigger(trigger);
                     }
                 }
             }
+            warrior.setLock(id+"pte",false);
         }
     }
 
@@ -219,20 +233,31 @@ public class Game implements Serializable {
 
     private void iterateAndExpirePlayerEffects(Player player) {
         for (Warrior warrior : player.getWarriors()) {
-            for (Iterator<Effect> iterator = warrior.getEffects().iterator(); iterator.hasNext(); ) {
-                Effect effect = iterator.next();
-                if (effect.duration > 0) {
+//            for (Iterator<Effect> iterator = warrior.getEffects().iterator(); iterator.hasNext(); ) {
+//                Effect effect = iterator.next();
+//                if (effect.duration > 0) {
+//                    effect.duration--;
+//                    if (effect.duration == 0) {
+//                        iterator.remove();
+//                    }
+//                }
+//            }
+            UUID id = UUID.randomUUID();
+            warrior.setLock(id+"pee",true);
+            for (Effect effect : warrior.getEffects()) {
+                if(effect.duration>0){
                     effect.duration--;
-                    if (effect.duration == 0) {
-                        iterator.remove();
+                    if(effect.duration==0){
+                        warrior.removeEffect(effect);
                     }
                 }
             }
+            warrior.setLock(id+"pee",false);
         }
     }
 
-    public void addNextCardToPlayerHand(Player player){
-        for (Map.Entry<Integer, Card> entry: player.getHand().entrySet()) {
+    public void addNextCardToPlayerHand(Player player) {
+        for (Map.Entry<Integer, Card> entry : player.getHand().entrySet()) {
             if (entry.getValue() == null) {
                 entry.setValue(player.getNextCard());
                 player.initializeNextCard();
@@ -242,12 +267,12 @@ public class Game implements Serializable {
     }
 
     private void checkGameEndAndThenKillAllDiedWarriors() {
-        killMod = true;
+//        killMod = true;
         gameMood.checkGameEnd(this);//todo
         killPlayerDiedWarriors(players[0]);
         killPlayerDiedWarriors(players[1]);
-        killMod = false;
-        flushBuffers();
+//        killMod = false;
+//        flushBuffers();
     }
 
     private void killPlayerDiedWarriors(Player player) {
@@ -321,7 +346,7 @@ public class Game implements Serializable {
 
     public boolean useSpecialPower(Cell cell) {
         boolean isDone = false;
-        if(getActivePlayer().getPlayerHero().getPower().coolDownRemaining == 0) {
+        if (getActivePlayer().getPlayerHero().getPower().coolDownRemaining == 0) {
             isDone = UseCard.useHeroPower(getActivePlayer().getPlayerHero().getPower(), cell);
             checkGameEndAndThenKillAllDiedWarriors();
         }
@@ -330,12 +355,12 @@ public class Game implements Serializable {
 
     public boolean useCollectible(Spell spell, Cell cell) {
         boolean isDone;
-        isDone = UseCard.useCollectible(spell,cell);
+        isDone = UseCard.useCollectible(spell, cell);
         checkGameEndAndThenKillAllDiedWarriors();
         return isDone;
     }
 
-    public void endTurn () {
+    public void endTurn() {
         EndTurn.doIt(this);
         checkGameEndAndThenKillAllDiedWarriors();
         startTurn();

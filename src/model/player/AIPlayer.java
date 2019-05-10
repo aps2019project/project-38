@@ -26,7 +26,8 @@ public class AIPlayer extends Player {
         }
 
         Collections.shuffle(warriors);
-        for (Warrior warrior : warriors) {
+        ArrayList<Warrior> tempWarrior = new ArrayList<>(warriors);
+        for (Warrior warrior : tempWarrior) {
             for (Cell cell : getBoardCells()) {
                 getGame().attack(warrior.getCell(),cell);
                 getGame().move(warrior.getCell(),cell);

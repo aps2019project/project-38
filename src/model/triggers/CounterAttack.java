@@ -6,6 +6,7 @@ import model.cards.Warrior;
 import model.conditions.HasBeenAttacked;
 import model.effects.Attacked;
 import model.effects.Dispelablity;
+import model.effects.Effect;
 import model.gamestate.AttackState;
 import model.gamestate.GameState;
 
@@ -29,6 +30,6 @@ public class CounterAttack extends Trigger {
         Warrior warrior = (Warrior)owner;
         Attack.doIt(attackState.getAttacked().getCell(),
                 attackState.getAttacker().getCell());
-        warrior.getEffects().removeAll(warrior.getEffects().stream().filter(effect -> effect instanceof Attacked).collect(Collectors.toCollection(ArrayList::new)));
+        warrior.removeEffect((ArrayList<Effect>) warrior.getEffects().stream().filter(effect -> effect instanceof Attacked).collect(Collectors.toCollection(ArrayList::new)));
     }
 }
