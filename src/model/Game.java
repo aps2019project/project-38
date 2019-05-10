@@ -9,7 +9,7 @@ import model.cards.Spell;
 import model.cards.Warrior;
 import model.effects.Effect;
 import model.gamestate.*;
-import model.gamemoods.GameMood;
+import model.gamemodes.GameMode;
 import model.player.AIPlayer;
 import model.player.HumanPlayer;
 import model.player.Player;
@@ -19,7 +19,7 @@ import java.util.*;
 
 
 public class Game {
-    GameMood gameMood;
+    GameMode gameMode;
     public int turn;
     Player[] players = new Player[2];
     private Board board = new Board(this);
@@ -33,16 +33,16 @@ public class Game {
     public HashMap<Trigger,QualityHaver> triggRemoveBuffer = new HashMap<>();
     private boolean killMod=false;
 
-    public Game(GameMood gameMood, Account accountOne, Account accountTwo) {
-        this.gameMood = gameMood;
+    public Game(GameMode gameMode, Account accountOne, Account accountTwo) {
+        this.gameMode = gameMode;
         int randomIndex = (new Random(System.currentTimeMillis())).nextInt(2);
         this.players[randomIndex] = new HumanPlayer(accountOne, accountOne.getCollection().getMainDeck());
         this.players[(randomIndex + 1) % 2] = new HumanPlayer(accountTwo, accountTwo.getCollection().getMainDeck());
         initialiseGameFields();
     }
 
-    public Game(GameMood gameMood, Account account, Deck aIDeck) {
-        this.gameMood = gameMood;
+    public Game(GameMode gameMode, Account account, Deck aIDeck) {
+        this.gameMode = gameMode;
         int randomIndex = (new Random(System.currentTimeMillis())).nextInt(2);
         players[randomIndex] = new HumanPlayer(account, account.getCollection().getMainDeck());
         players[(randomIndex + 1) % 2] = new AIPlayer(aIDeck);
@@ -146,8 +146,8 @@ public class Game {
         return players;
     }
 
-    public GameMood getGameMood() {
-        return gameMood;
+    public GameMode getGameMode() {
+        return gameMode;
     }
 
     public Selectable getSelectedThings() {
@@ -158,7 +158,7 @@ public class Game {
         return collectibleItems;
     }
 
-    public void decreasSpecialPowerCoolDown() {
+    public void decreaseSpecialPowerCoolDown() {
         HeroPower heroPower = getActivePlayer().getPlayerHero().getPower();
         if (heroPower.coolDownRemaining > 0) {
             heroPower.coolDownRemaining --;
@@ -234,7 +234,7 @@ public class Game {
 
     private void checkGameEndAndThenKillAllDiedWarriors() {
         killMod = true;
-        gameMood.checkGameEnd(this);//todo
+        gameMode.checkGameEnd(this);//todo
         killPlayerDiedWarriors(players[0]);
         killPlayerDiedWarriors(players[1]);
         killMod = false;

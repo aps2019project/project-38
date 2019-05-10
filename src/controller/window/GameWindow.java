@@ -5,10 +5,10 @@ import controller.window.normalwindow.OperatingWindow;
 import model.*;
 import model.cards.Card;
 import model.cards.Spell;
-import model.gamemoods.CarryingFlag;
-import model.gamemoods.CollectingFlag;
-import model.gamemoods.GameMood;
-import model.gamemoods.KillingEnemyHero;
+import model.gamemodes.CarryingFlag;
+import model.gamemodes.CollectingFlag;
+import model.gamemodes.GameMode;
+import model.gamemodes.KillingEnemyHero;
 import model.player.AIPlayer;
 import model.player.HumanPlayer;
 import model.player.Player;
@@ -17,22 +17,21 @@ import view.Request;
 import view.windowgraphics.WindowGraphic;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class GameWindow extends Window {
     private Game game;
-    private MoodData moodData = new MoodData();//todo badana
+//    private ModeData modeData = new ModeData();//todo badana
 
     private void initializeAndRunBeforeGameWindows() {
         ChoosingWindow battle = new ChoosingWindow
-                (null, "Battle", "singe or multi");
+                (null, "Battle", "Single Or Multi");
         ChoosingWindow single = new ChoosingWindow
-                (battle, "Single Player", "story or custom");
+                (battle, "Single Player", "Story Or Custom");
         ChoosingWindow multi = new ChoosingWindow
-                (battle, "Select Account", "Multi Player", "select account");
+                (battle, "Select Account", "Multi Player", "Select Account");
         battle.getSubWindows().add(single);
         battle.getSubWindows().add(multi);
         ChoosingWindow story = new ChoosingWindow
@@ -51,9 +50,9 @@ public class GameWindow extends Window {
         GameWindow thisGameWindow = this;
         for (Map.Entry<String, Level> entry : Level.getAvailableLevels().entrySet()) {
             story.getSubWindows().add(new OperatingWindow(story,
-                    String.format("[Level Name: %s] [Hero Name: %s] [Mood: %s] [Prize: %d]",
+                    String.format("[Level Name: %s] [Hero Name: %s] [Mode: %s] [Prize: %d]",
                             entry.getKey(), entry.getValue().getDeck().getHero().getName(),
-                            entry.getValue().getGameMood().getClass().getSimpleName(), entry.getValue().getPrize())) {
+                            entry.getValue().getGameMode().getClass().getSimpleName(), entry.getValue().getPrize())) {
                 @Override
                 public void main() {
                     game = entry.getValue().getLevelGame(Account.getActiveAccount());
@@ -66,40 +65,50 @@ public class GameWindow extends Window {
 
     private void initializeCustomWindow(ChoosingWindow custom) {
         for (Map.Entry<String, Deck> entry : Account.getActiveAccount().getCollection().getAllDecks().entrySet()) {
-            ChoosingWindow mood = new ChoosingWindow(custom,
-                    "Choosing Mood",
+            ChoosingWindow mode = new ChoosingWindow(custom,
+                    "Choosing Mode",
                     String.format("[Deck Name: %s] [Hero: %s]",
                             entry.getValue().getName(), entry.getValue().getHero().getName()),
-                    "Choosing Mood");
-            custom.getSubWindows().add(mood);
-            initializeKillingEnemyHeroAndCarryingFlagWindows(mood, entry);
-            initializeCollectingFlagWindow(mood, entry);
+                    "Choosing Mode");
+            custom.getSubWindows().add(mode);
+            initializeKillingEnemyHeroAndCarryingFlagWindows(mode, entry);
+            initializeCollectingFlagWindow(mode, entry);
         }
     }
 
-    private void initializeKillingEnemyHeroAndCarryingFlagWindows(ChoosingWindow mood, Map.Entry<String, Deck> entry) {
-        ArrayList<String> titles = (ArrayList<String>)Arrays.asList("Killing Enemy Hero", "Carrying Flag");
+    private <T> void initializeKillingEnemyHeroAndCarryingFlagWindows(ChoosingWindow mode, Map.Entry<String, T> entry) {
+        GameWindow thisGameWindow = this;
+        ArrayList<String> titles = new ArrayList<>();
+        titles.add("Killing Enemy Hero");
+        titles.add("Carrying Flag");
         for (String title : titles) {
-            mood.getSubWindows().add(new OperatingWindow(mood, title) {
+            mode.getSubWindows().add(new OperatingWindow(mode, title) {
                 @Override
                 public void main() {
-                    GameMood gameMood;
+                    GameMode gameMode;
                     if (title.equals("Killing Enemy Hero")) {
-                        gameMood = new KillingEnemyHero();
+                        gameMode = new KillingEnemyHero();
                     }
                     else {
-                        gameMood = new CarryingFlag();
+                        gameMode = new CarryingFlag();
                     }
-                    game = new Game(gameMood, Account.getActiveAccount(), entry.getValue());
+                    if (entry.getValue() instanceof Account) {
+                        game = new Game(gameMode, Account.getActiveAccount(), (Account) entry.getValue());
+                    }
+                    else {
+                        game = new Game(gameMode, Account.getActiveAccount(), (Deck)entry.getValue());
+                    }
+                    this.closeWindow();
+                    thisGameWindow.openWindow();
                 }
             });
         }
     }
 
-    private void initializeCollectingFlagWindow(ChoosingWindow mood, Map.Entry<String, Deck> entry) {
+    private <T> void initializeCollectingFlagWindow(ChoosingWindow mode, Map.Entry<String, T> entry) {
         GameWindow thisGameWindow = this;
         ChoosingWindow numberOfFlags = new ChoosingWindow
-                (mood, "Choose Number Of Flags", "Carrying Flag", "#final#") {
+                (mode, "Choose Number Of Flags", "Collecting Flag", "#final#") {
             @Override
             public void main() {
                 while (true) {
@@ -126,18 +135,29 @@ public class GameWindow extends Window {
                 }
                 else {
                     this.closeWindow();
+                    if (entry.getValue() instanceof Account) {
+                        game = new Game(new CollectingFlag(request), Account.getActiveAccount(), (Account) entry.getValue());
+                    }
+                    else {
+                        game = new Game(new CollectingFlag(request), Account.getActiveAccount(), (Deck)entry.getValue());
+                    }
                     thisGameWindow.openWindow();
-                    game = new Game(new CollectingFlag(request), Account.getActiveAccount(), entry.getValue());
+                    this.closeWindow();
                     return true;
                 }
             }
         };
+        mode.getSubWindows().add(numberOfFlags);
     }
 
     private void initializeMultiWindow(ChoosingWindow multi) {
         for (Map.Entry<String, Account> entry : Account.getUsernameToAccountObject().entrySet()) {
             if (entry.getValue() != Account.getActiveAccount() && entry.getValue().getCollection().getMainDeck() != null) {
-                ChoosingWindow
+                ChoosingWindow mode = new ChoosingWindow
+                        (multi, "Choosing Mode", String.format("[User Name: %s]", entry.getKey()), "Choosing Mode");
+                multi.getSubWindows().add(mode);
+                initializeKillingEnemyHeroAndCarryingFlagWindows(mode, entry);
+                initializeCollectingFlagWindow(mode, entry);
             }
         }
     }
@@ -148,10 +168,10 @@ public class GameWindow extends Window {
 
     @Override
     public void main() {
-        if (!initialiseGame()) {
-            return;
-        }
-        while (game.getGameMood().winner == null) {
+//        if (!initialiseGame()) {
+//            return;
+//        }
+        while (game.getGameMode().winner == null) {
             Message.GameWindow.InsideGame.showMainView(game);
             if (game.getActivePlayer() instanceof HumanPlayer) {
                 getPlayerAction();
@@ -164,7 +184,7 @@ public class GameWindow extends Window {
 
     private void endGame(Game game) {
         Message.GameWindow.InsideGame.showMainView(game);
-        Player winner = game.getGameMood().winner;
+        Player winner = game.getGameMode().winner;
         Player loser = game.getOtherPlayer(winner);
         updatePlayerMatchHistory(game, winner, loser, true);
         updatePlayerMatchHistory(game, loser, winner, false);
@@ -233,7 +253,7 @@ public class GameWindow extends Window {
     }
 
     private void exit() {
-        game.getGameMood().winner = game.getOtherPlayer(game.getActivePlayer());
+        game.getGameMode().winner = game.getOtherPlayer(game.getActivePlayer());
     }
 
     private void useCollectibleItem(String request) {
@@ -487,209 +507,209 @@ public class GameWindow extends Window {
         }
     }
 
-    private boolean initialiseGame() {
-//        MoodData moodData = new MoodData();//todo
-        if (!checkDeck()) {
-            Message.GameWindow.BeforeGame.invalidMainDeck();
-            this.closeWindow();
-            return false;
-        }
-        if (!chooseSingleOrMulti()) {
-            this.closeWindow();
-            return false;
-        }
-        if (moodData.singlePlayer) { //single player
-            if (!initializeSinglePlayer()) {
-                this.closeWindow();
-                return false;
-            }
-        } else { //multi player
-            if (!initializeMultiPlayer()) {
-                this.closeWindow();
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean initializeSinglePlayer() {
-        if (!chooseStoryOrCustom()) {
-            this.closeWindow();
-            return false;
-        }
-        if (moodData.story) { // story mood
-            if (!chooseLevel()) {
-                this.closeWindow();
-                return false;
-            }
-        } else { // custom mood
-            if (!chooseMoodAndEnemyDeck()) {
-                this.closeWindow();
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean initializeMultiPlayer() {
-        if (!chooseOtherAccount()) {
-            this.closeWindow();
-            return false;
-        }
-        if (!chooseMood()) {
-            this.closeWindow();
-            return false;
-        }
-        return true;
-    }
-
-    private boolean checkDeck() {
-        if (Account.getActiveAccount().getCollection().getMainDeck() == null) {
-            Message.GameWindow.BeforeGame.invalidMainDeck();
-            return false;
-        }
-        return true;
-    }
-
-    private boolean chooseSingleOrMulti() {
-        while (true) {
-            Message.GameWindow.betweenTwoPageLine();
-            Message.GameWindow.BeforeGame.singleOrMultiMenu();
-            String request = Request.getNextRequest();
-            switch (request) {
-                case "1":
-                    moodData.singlePlayer = true;
-                    return true;
-                case "2":
-                    moodData.singlePlayer = false;
-                    return true;
-                case "exit":
-                    return false;
-            }
-        }
-    }
-
-    private boolean chooseStoryOrCustom() {
-        while (true) {
-            Message.GameWindow.betweenTwoPageLine();
-            Message.GameWindow.BeforeGame.StoryOrCustomMenu();
-            String request = Request.getNextRequest();
-            switch (request) {
-                case "1":
-                    moodData.story = true;
-                    return true;
-                case "2":
-                    moodData.story = false;
-                    return true;
-                case "exit":
-                    return false;
-            }
-        }
-    }
-
-    private boolean chooseLevel() {
-        while (true) {
-            Message.GameWindow.betweenTwoPageLine();
-            Message.GameWindow.BeforeGame.showLevelsForStoryMode();
-            String request = Request.getNextRequest();
-            if (Level.getAvailableLevels().containsKey(request)) {
-                Level level = Level.getAvailableLevels().get(request);
-                game = level.getLevelGame(Account.getActiveAccount());
-                return true;
-            } else if (request.equals("exit")) {
-                return false;
-            }
-        }
-    }
-
-    private boolean chooseMoodAndEnemyDeck() {
-        while (true) {
-            Message.GameWindow.betweenTwoPageLine();
-            Message.GameWindow.BeforeGame.moodAndDeckMenu();
-            String request = Request.getNextRequest();
-            if (request.matches("Start game \\w+ CollectingFlag \\d+")) {
-                String deckName = request.replaceFirst("Start game ", "")
-                        .replaceFirst(" CollectingFlag \\d+", "");
-                int numberOfFlags = Integer.parseInt
-                        (request.replaceFirst("Start game \\w+ CollectingFlag ", ""));
-                if (Account.getActiveAccount().getCollection().getAllDecks().containsKey(deckName)) {
-                    game = new Game(new CollectingFlag(numberOfFlags),
-                            Account.getActiveAccount(), Account.getActiveAccount().getCollection().getAllDecks().get(deckName));
-                    return true;
-                }
-            } else if (request.matches("Start game \\w+ (KillingEnemyHero|CarryingFlag)")) {
-                Pattern pattern = Pattern.compile("(\\w+) (KillingEnemyHero|CarryingFlag)");
-                Matcher matcher = pattern.matcher(request);
-                matcher.find();
-                String mood = matcher.group(2);
-                String deckName = matcher.group(1);
-                if (Account.getActiveAccount().getCollection().getAllDecks().containsKey(deckName)) {
-                    if (mood.equals("KillingEnemyHero")) {
-                        game = new Game(new KillingEnemyHero(), Account.getActiveAccount(),
-                                Account.getActiveAccount().getCollection().getAllDecks().get(deckName));
-                        return true;
-                    } else {
-                        game = new Game(new CarryingFlag(), Account.getActiveAccount(),
-                                Account.getActiveAccount().getCollection().getAllDecks().get(deckName));
-                        return true;
-                    }
-                }
-            } else if (request.equals("exit")) {
-                return false;
-            }
-        }
-    }
-
-    private boolean chooseOtherAccount() {
-        while (true) {
-            Message.GameWindow.betweenTwoPageLine();
-            Message.GameWindow.BeforeGame.accountMenu(Account.getUsernameToAccountObject());
-            String request = Request.getNextRequest();
-            if (request.matches("Select user \\w+")) {
-                String userName = request.replaceFirst("Select user ", "");
-                Account account = Account.getUsernameToAccountObject().get(userName);
-                if (account != null && account != Account.getActiveAccount()) {
-                    if (account.getCollection().getMainDeck() != null) {
-                        moodData.secondAccount = Account.getUsernameToAccountObject().get(userName);
-                        return true;
-                    } else {
-                        Message.GameWindow.BeforeGame.invalidMainDeck();
-                    }
-                }
-            } else if (request.matches("exit")) {
-                return false;
-            }
-        }
-    }
-
-    private boolean chooseMood() {
-        while (true) {
-            Message.GameWindow.betweenTwoPageLine();
-            Message.GameWindow.BeforeGame.moodMenu();
-            String request = Request.getNextRequest();
-            if (request.matches("Start multiplayer game CollectingFlag \\d+")) {
-                int numberOfFlags = Integer.parseInt
-                        (request.replaceFirst("Start multiplayer game CollectingFlag ", ""));
-                game = new Game(new CollectingFlag(numberOfFlags), Account.getActiveAccount(), moodData.secondAccount);
-                return true;
-            } else if (request.matches("Start multiplayer game (KillingEnemyHero|CarryingFlag)")) {
-                String gameMood = request.replaceFirst("Start multiplayer game ", "");
-                if (gameMood.equals("KillingEnemyHero")) {
-                    game = new Game(new KillingEnemyHero(), Account.getActiveAccount(), moodData.secondAccount);
-                    return true;
-                } else {
-                    game = new Game(new CarryingFlag(), Account.getActiveAccount(), moodData.secondAccount);
-                    return true;
-                }
-            } else if (request.equals("exit")) {
-                return false;
-            }
-        }
-    }
+//    private boolean initialiseGame() {
+////        ModeData modeData = new ModeData();//todo
+//        if (!checkDeck()) {
+//            Message.GameWindow.BeforeGame.invalidMainDeck();
+//            this.closeWindow();
+//            return false;
+//        }
+//        if (!chooseSingleOrMulti()) {
+//            this.closeWindow();
+//            return false;
+//        }
+//        if (modeData.singlePlayer) { //single player
+//            if (!initializeSinglePlayer()) {
+//                this.closeWindow();
+//                return false;
+//            }
+//        } else { //multi player
+//            if (!initializeMultiPlayer()) {
+//                this.closeWindow();
+//                return false;
+//            }
+//        }
+//        return true;
+//    }
+//
+//    private boolean initializeSinglePlayer() {
+//        if (!chooseStoryOrCustom()) {
+//            this.closeWindow();
+//            return false;
+//        }
+//        if (modeData.story) { // story mode
+//            if (!chooseLevel()) {
+//                this.closeWindow();
+//                return false;
+//            }
+//        } else { // custom mode
+//            if (!chooseModeAndEnemyDeck()) {
+//                this.closeWindow();
+//                return false;
+//            }
+//        }
+//        return true;
+//    }
+//
+//    private boolean initializeMultiPlayer() {
+//        if (!chooseOtherAccount()) {
+//            this.closeWindow();
+//            return false;
+//        }
+//        if (!chooseMode()) {
+//            this.closeWindow();
+//            return false;
+//        }
+//        return true;
+//    }
+//
+//    private boolean checkDeck() {
+//        if (Account.getActiveAccount().getCollection().getMainDeck() == null) {
+//            Message.GameWindow.BeforeGame.invalidMainDeck();
+//            return false;
+//        }
+//        return true;
+//    }
+//
+//    private boolean chooseSingleOrMulti() {
+//        while (true) {
+//            Message.GameWindow.betweenTwoPageLine();
+//            Message.GameWindow.BeforeGame.singleOrMultiMenu();
+//            String request = Request.getNextRequest();
+//            switch (request) {
+//                case "1":
+//                    modeData.singlePlayer = true;
+//                    return true;
+//                case "2":
+//                    modeData.singlePlayer = false;
+//                    return true;
+//                case "exit":
+//                    return false;
+//            }
+//        }
+//    }
+//
+//    private boolean chooseStoryOrCustom() {
+//        while (true) {
+//            Message.GameWindow.betweenTwoPageLine();
+//            Message.GameWindow.BeforeGame.StoryOrCustomMenu();
+//            String request = Request.getNextRequest();
+//            switch (request) {
+//                case "1":
+//                    modeData.story = true;
+//                    return true;
+//                case "2":
+//                    modeData.story = false;
+//                    return true;
+//                case "exit":
+//                    return false;
+//            }
+//        }
+//    }
+//
+//    private boolean chooseLevel() {
+//        while (true) {
+//            Message.GameWindow.betweenTwoPageLine();
+//            Message.GameWindow.BeforeGame.showLevelsForStoryMode();
+//            String request = Request.getNextRequest();
+//            if (Level.getAvailableLevels().containsKey(request)) {
+//                Level level = Level.getAvailableLevels().get(request);
+//                game = level.getLevelGame(Account.getActiveAccount());
+//                return true;
+//            } else if (request.equals("exit")) {
+//                return false;
+//            }
+//        }
+//    }
+//
+//    private boolean chooseModeAndEnemyDeck() {
+//        while (true) {
+//            Message.GameWindow.betweenTwoPageLine();
+//            Message.GameWindow.BeforeGame.modeAndDeckMenu();
+//            String request = Request.getNextRequest();
+//            if (request.matches("Start game \\w+ CollectingFlag \\d+")) {
+//                String deckName = request.replaceFirst("Start game ", "")
+//                        .replaceFirst(" CollectingFlag \\d+", "");
+//                int numberOfFlags = Integer.parseInt
+//                        (request.replaceFirst("Start game \\w+ CollectingFlag ", ""));
+//                if (Account.getActiveAccount().getCollection().getAllDecks().containsKey(deckName)) {
+//                    game = new Game(new CollectingFlag(numberOfFlags),
+//                            Account.getActiveAccount(), Account.getActiveAccount().getCollection().getAllDecks().get(deckName));
+//                    return true;
+//                }
+//            } else if (request.matches("Start game \\w+ (KillingEnemyHero|CarryingFlag)")) {
+//                Pattern pattern = Pattern.compile("(\\w+) (KillingEnemyHero|CarryingFlag)");
+//                Matcher matcher = pattern.matcher(request);
+//                matcher.find();
+//                String mode = matcher.group(2);
+//                String deckName = matcher.group(1);
+//                if (Account.getActiveAccount().getCollection().getAllDecks().containsKey(deckName)) {
+//                    if (mode.equals("KillingEnemyHero")) {
+//                        game = new Game(new KillingEnemyHero(), Account.getActiveAccount(),
+//                                Account.getActiveAccount().getCollection().getAllDecks().get(deckName));
+//                        return true;
+//                    } else {
+//                        game = new Game(new CarryingFlag(), Account.getActiveAccount(),
+//                                Account.getActiveAccount().getCollection().getAllDecks().get(deckName));
+//                        return true;
+//                    }
+//                }
+//            } else if (request.equals("exit")) {
+//                return false;
+//            }
+//        }
+//    }
+//
+//    private boolean chooseOtherAccount() {
+//        while (true) {
+//            Message.GameWindow.betweenTwoPageLine();
+//            Message.GameWindow.BeforeGame.accountMenu(Account.getUsernameToAccountObject());
+//            String request = Request.getNextRequest();
+//            if (request.matches("Select user \\w+")) {
+//                String userName = request.replaceFirst("Select user ", "");
+//                Account account = Account.getUsernameToAccountObject().get(userName);
+//                if (account != null && account != Account.getActiveAccount()) {
+//                    if (account.getCollection().getMainDeck() != null) {
+//                        modeData.secondAccount = Account.getUsernameToAccountObject().get(userName);
+//                        return true;
+//                    } else {
+//                        Message.GameWindow.BeforeGame.invalidMainDeck();
+//                    }
+//                }
+//            } else if (request.matches("exit")) {
+//                return false;
+//            }
+//        }
+//    }
+//
+//    private boolean chooseMode() {
+//        while (true) {
+//            Message.GameWindow.betweenTwoPageLine();
+//            Message.GameWindow.BeforeGame.modeMenu();
+//            String request = Request.getNextRequest();
+//            if (request.matches("Start multiplayer game CollectingFlag \\d+")) {
+//                int numberOfFlags = Integer.parseInt
+//                        (request.replaceFirst("Start multiplayer game CollectingFlag ", ""));
+//                game = new Game(new CollectingFlag(numberOfFlags), Account.getActiveAccount(), modeData.secondAccount);
+//                return true;
+//            } else if (request.matches("Start multiplayer game (KillingEnemyHero|CarryingFlag)")) {
+//                String gameMode = request.replaceFirst("Start multiplayer game ", "");
+//                if (gameMode.equals("KillingEnemyHero")) {
+//                    game = new Game(new KillingEnemyHero(), Account.getActiveAccount(), modeData.secondAccount);
+//                    return true;
+//                } else {
+//                    game = new Game(new CarryingFlag(), Account.getActiveAccount(), modeData.secondAccount);
+//                    return true;
+//                }
+//            } else if (request.equals("exit")) {
+//                return false;
+//            }
+//        }
+//    }
 }
 
-class MoodData {
-    boolean singlePlayer;
-    boolean story;
-    Account secondAccount;
-}
+//class ModeData {
+//    boolean singlePlayer;
+//    boolean story;
+//    Account secondAccount;
+//}

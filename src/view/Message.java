@@ -2,6 +2,8 @@ package view;
 
 import model.*;
 import model.cards.*;
+import model.gamemodes.CarryingFlag;
+import model.gamemodes.CollectingFlag;
 import model.player.AIPlayer;
 import model.player.HumanPlayer;
 import model.player.Player;
@@ -301,14 +303,14 @@ public interface Message {
                 System.out.println("2. Custom game");
             }
 
-            static void moodAndDeckMenu() {
-                System.out.println("Select mood and enemy deck\nfor example: " +
-                        "Start game [deck name] [mood name] [number of flags]*");
+            static void modeAndDeckMenu() {
+                System.out.println("Select mode and enemy deck\nfor example: " +
+                        "Start game [deck name] [mode name] [number of flags]*");
                 System.out.println("Decks:");
                 for (Map.Entry<String, Deck> entry : Account.getActiveAccount().getCollection().getAllDecks().entrySet()) {
                     System.out.println(entry.getKey());
                 }
-                System.out.println("Moods:");
+                System.out.println("Modes:");
                 System.out.println("KillingEnemyHero");
                 System.out.println("CarryingFlag");
                 System.out.println("CollectingFlag");
@@ -325,15 +327,15 @@ public interface Message {
 
             static void showLevelsForStoryMode() {
                 for (Map.Entry<String, Level> entry : Level.getAvailableLevels().entrySet()) {
-                    System.out.printf("%s: Hero Name: %s Mood: %s Prize: %s\n", entry.getKey(),
+                    System.out.printf("%s: Hero Name: %s Mode: %s Prize: %s\n", entry.getKey(),
                             entry.getValue().getDeck().getHero().getName(),
-                            entry.getValue().getGameMood().getClass().getSimpleName(), entry.getValue().getPrize());
+                            entry.getValue().getGameMode().getClass().getSimpleName(), entry.getValue().getPrize());
                 }
             }
 
-            static void moodMenu() {
-                System.out.println("Choose mood\nfor example: Start multiplayer game [mood name] [number of flags]*");
-                System.out.println("Moods:");
+            static void modeMenu() {
+                System.out.println("Choose mode\nfor example: Start multiplayer game [mode name] [number of flags]*");
+                System.out.println("Modes:");
                 System.out.println("KillingEnemyHero");
                 System.out.println("CarryingFlag");
                 System.out.println("CollectingFlag");
@@ -352,7 +354,17 @@ public interface Message {
                 String completeName = game.getActivePlayer() instanceof AIPlayer ? "[AI]" : String.format
                         ("[Human] [User Name: %s]", ((HumanPlayer) game.getActivePlayer()).getAccount().getUsername());
                 betweenTwoPageLine();
-                System.out.println("Game Mood: " + game.getGameMood().getClass().getSimpleName());
+                System.out.printf("Game Mode: %s ", game.getGameMode().getClass().getSimpleName());
+                if (game.getGameMode() instanceof CarryingFlag) {
+                    CarryingFlag mode = (CarryingFlag) game.getGameMode();
+                    System.out.printf("[Player 0 Score: %d] [Player 1 Score: %d]\n", mode.getPlayersScore()[0], mode.getPlayersScore()[1]);
+                }
+                else if (game.getGameMode() instanceof CollectingFlag) {
+                    CollectingFlag mode = (CollectingFlag) game.getGameMode();
+                    System.out.printf("[Player 0 Flags: %d] [Player 1 Flags: %d]\n",
+                            game.getGameMode().getNumberOFPlayerFlags(game.getPlayers()[0]),
+                            game.getGameMode().getNumberOFPlayerFlags(game.getPlayers()[0]));
+                }
                 System.out.println(activePlayerNumber + ": " + completeName);
                 System.out.println("Mana: " + game.getActivePlayer().mana);
             }

@@ -25,7 +25,7 @@ public class MainMenu extends Window {
                     new ShopWindow().openWindow();
                     break tag1;
                 case 3:
-                    new GameWindow().openWindow();
+                    new GameWindow();
                     break tag1;
                 case 0:
                     Account.saveAccounts();

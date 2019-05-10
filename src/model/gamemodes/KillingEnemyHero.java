@@ -1,11 +1,11 @@
-package model.gamemoods;
+package model.gamemodes;
 
 
 import model.Game;
 import model.cards.Hero;
 import model.player.Player;
 
-public class KillingEnemyHero extends GameMood {
+public class KillingEnemyHero extends GameMode {
     @Override
     public boolean checkGameEnd(Game game) {
         for (Player player : game.getPlayers()) {
