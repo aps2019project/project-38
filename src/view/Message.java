@@ -593,8 +593,13 @@ public interface Message {
 
                 static void ShowSpecialPower(HeroPower heroPower) {
                     //todo we should keep a card in HeroPower instead of extending Spell
-                    System.out.printf("Special Power: [Type: Spell] %s [Cool Down Remaining: %d]\n",
-                            cardDetail(heroPower), heroPower.coolDownRemaining);
+                    if (heroPower == null) {
+                        System.out.println("Special Power: Empty");
+                    }
+                    else {
+                        System.out.printf("Special Power: [Type: Spell] %s [Cool Down Remaining: %d]\n",
+                                cardDetail(heroPower), heroPower.coolDownRemaining);
+                    }
                 }
 
                 static void showItem(Card card) {
@@ -603,6 +608,10 @@ public interface Message {
                 }
 
                 static String cardDetail(Card card) { //private
+                    if (card instanceof Hero) {
+                        return String.format("[Name: %s] [ID: %d]",
+                                card.getName(), card.getID());
+                    }
                     return String.format("[Name: %s] [ID: %d] [Required Mana: %d]",
                             card.getName(), card.getID(), card.getRequiredMana());
                 }
