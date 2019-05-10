@@ -1,8 +1,10 @@
 package model.triggers;
 
+import model.Game;
 import model.QualityHaver;
 import model.conditions.*;
 import model.effects.Dispelablity;
+import model.effects.Effect;
 import model.gamestate.*;
 import model.targets.TriggerTarget;
 
@@ -43,16 +45,30 @@ public class Aura extends Trigger {
     }
 
     private void addEffectsAndTriggers(QualityHaver owner,GameState gameState){
+        Game game = getGameFromQualityHaver(owner);
         triggerTarget.getTarget(owner,gameState).forEach(warrior -> {
-            warrior.getEffects().addAll(effects);
-            warrior.getTriggers().addAll(triggers);
+            for (Trigger trigger : triggers) {
+                game.triggAddBuffer.put(trigger,warrior);
+            }
+            for (Effect effect : effects) {
+                game.effAddBuffer.put(effect,warrior);
+            }
+//            warrior.getEffects().addAll(effects);
+//            warrior.getTriggers().addAll(triggers);
         });
     }
 
     private void removeEffectsAndTriggers(QualityHaver owner,GameState gameState){
+        Game game = getGameFromQualityHaver(owner);
         triggerTarget.getTarget(owner,gameState).forEach(warrior -> {
-            warrior.getEffects().removeAll(effects);
-            warrior.getTriggers().removeAll(triggers);
+            for (Effect effect : effects) {
+                game.effRemoveBuffer.put(effect,warrior);
+            }
+            for (Trigger trigger : triggers) {
+                game.triggRemoveBuffer.put(trigger,warrior);
+            }
+//            warrior.getEffects().removeAll(effects);
+//            warrior.getTriggers().removeAll(triggers);
         });
     }
 }

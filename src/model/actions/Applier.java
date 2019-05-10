@@ -3,10 +3,7 @@ package model.actions;
 import model.QualityHaver;
 import model.effects.Effect;
 import model.gamestate.EffTriggApplyState;
-import model.player.Player;
 import model.triggers.Trigger;
-
-import java.io.Serializable;
 
 import static model.QualityHaver.getGameFromQualityHaver;
 
@@ -20,7 +17,6 @@ public class Applier implements AutoAction {
             EffTriggApplyState state = new EffTriggApplyState(target, trigger);
             getGameFromQualityHaver(target).iterateAllTriggersCheck(state);
             if (!state.canceled) {
-//                target.getTriggers().add(trigger);
                 getGameFromQualityHaver(target).triggAddBuffer.put(trigger,target);
 
                 state.pending = false;
@@ -32,8 +28,7 @@ public class Applier implements AutoAction {
             EffTriggApplyState state = new EffTriggApplyState(target, effect);
             getGameFromQualityHaver(target).iterateAllTriggersCheck(state);
             if (!state.canceled) {
-//                target.getEffects().add(effect);
-                getGameFromQualityHaver(target).effBuffer.put(effect,target);
+                getGameFromQualityHaver(target).effAddBuffer.put(effect,target);
 
                 state.pending = false;
                 getGameFromQualityHaver(target).iterateAllTriggersCheck(state);

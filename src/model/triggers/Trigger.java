@@ -36,10 +36,6 @@ public class Trigger extends QualityHaver implements Serializable {
         return actions;
     }
 
-    public void putInActions(AutoAction autoAction, TriggerTarget triggerTarget){
-        actions.put(autoAction,triggerTarget);
-    }
-
     public void check(GameState gameState, QualityHaver owner) {
         for (Condition condition : conditions) {
             if (!condition.check(gameState, this,owner)) {

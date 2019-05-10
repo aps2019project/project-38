@@ -1,6 +1,5 @@
 package model.cards;
 
-import model.Cell;
 import model.Constant;
 import model.Game;
 import model.QualityHaver;
@@ -14,13 +13,10 @@ import model.gamestate.AttackState;
 import model.gamestate.DeathState;
 import model.gamestate.GameState;
 import model.gamestate.PutMinionState;
-import model.player.Player;
 import model.targets.*;
 import model.triggers.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.PrimitiveIterator;
 
 public class CardFactory {
     private static ArrayList<Card> allBuiltMinions = new ArrayList<>();
@@ -672,6 +668,8 @@ public class CardFactory {
             aura.getEffects().add(new AP(1, Dispelablity.GOOD, 4));
             hero.getTriggers().add(aura);
 
+            hero.getEffects().add(new Melee(-1,Dispelablity.UNDISPELLABLE));
+
             hero.description.descriptionOfCardSpecialAbility = "Apply power buff with 4 point additional attack damage on himself";
             allBuiltHeroes.add(hero);
         }
@@ -682,6 +680,8 @@ public class CardFactory {
             spell.getActions().put(new Applier(), new AllWarriorsGetter(false, true));
             spell.getTriggers().add(new Stun(1, Dispelablity.BAD));
             hero.power = spell;
+
+            hero.getEffects().add(new Melee(-1,Dispelablity.UNDISPELLABLE));
 
             hero.description.descriptionOfCardSpecialAbility = "Make 8 cell around firable and apply holy buff on himself for 2 round";
             allBuiltHeroes.add(hero);
@@ -694,6 +694,8 @@ public class CardFactory {
             spell.getTriggers().add(new Disarm(1, Dispelablity.BAD));
             hero.power = spell;
 
+            hero.getEffects().add(new Melee(-1,Dispelablity.UNDISPELLABLE));
+
             hero.description.descriptionOfCardSpecialAbility = "Disarm one person";
             allBuiltHeroes.add(hero);
         }
@@ -704,6 +706,8 @@ public class CardFactory {
             spell.getActions().put(new Applier(), new RectGetter(1, 1, false, true, false, true, false));
             spell.getTriggers().add(new Stun(1, Dispelablity.BAD));
             hero.power = spell;
+
+            hero.getEffects().add(new Melee(-1,Dispelablity.UNDISPELLABLE));
 
             hero.description.descriptionOfCardSpecialAbility = "Stun one enemy for 1 round";
             allBuiltHeroes.add(hero);
@@ -716,6 +720,8 @@ public class CardFactory {
             trigger.getActions().put(new Applier(), new AttackedGetter());
             trigger.getTriggers().add(new Poisoned(3, Dispelablity.BAD));
             hero.getTriggers().add(trigger);
+
+            hero.getEffects().add(new Melee(-1,Dispelablity.UNDISPELLABLE));
 
             hero.description.descriptionOfCardSpecialAbility = "Add 2 snakes with 1/1 randomly around himself";
             allBuiltHeroes.add(hero);
@@ -730,6 +736,8 @@ public class CardFactory {
             spell.getTriggers().add(holyCell);
             hero.power = spell;
 
+            hero.getEffects().add(new Melee(-1,Dispelablity.UNDISPELLABLE));
+
             hero.description.descriptionOfCardSpecialAbility = "Make one cell saint for 3 turns";
             allBuiltHeroes.add(hero);
         }
@@ -737,9 +745,11 @@ public class CardFactory {
             Hero hero = new Hero(37, "Arash", 10000, 30, 2, -1);
 
             HeroPower spell = new HeroPower(0, "", 2, 0, false,2);
-            spell.getActions().put(new Applier(), new RectGetter(1, Constant.GameConstants.boardColumn, false, true, false, true, false));
+            spell.getActions().put(new Applier(), new RectGetter(true,false, false, true, false, true, false));
             spell.getEffects().add(new HP(-1, Dispelablity.UNDISPELLABLE, -4));
             hero.power = spell;
+
+            hero.getEffects().add(new Ranged(-1,Dispelablity.UNDISPELLABLE,6));
 
             hero.description.descriptionOfCardSpecialAbility = "Add 4 point to all minions in hero's row";
             allBuiltHeroes.add(hero);
@@ -751,6 +761,8 @@ public class CardFactory {
             spell.getActions().put(new Dispeller(), new RectGetter(1, 1, false, true, false, true, false));
             hero.power = spell;
 
+            hero.getEffects().add(new Ranged(-1,Dispelablity.UNDISPELLABLE,3));
+
             hero.description.descriptionOfCardSpecialAbility = "Dispel one enemy";
             allBuiltHeroes.add(hero);
         }
@@ -761,11 +773,17 @@ public class CardFactory {
             aura.getTriggers().add(new HolyBuff(1, Dispelablity.GOOD, 3));
             hero.getTriggers().add(aura);
 
+            hero.getEffects().add(new Melee(-1,Dispelablity.UNDISPELLABLE));
+            hero.getEffects().add(new Ranged(-1,Dispelablity.UNDISPELLABLE,3));
+
             hero.description.descriptionOfCardSpecialAbility = "Have 3 passive holy buff";
             allBuiltHeroes.add(hero);
         }
         {
             Hero hero = new Hero(310, "Rostam", 8000, 55, 7, -1);
+
+            hero.getEffects().add(new Melee(-1,Dispelablity.UNDISPELLABLE));
+            hero.getEffects().add(new Ranged(-1,Dispelablity.UNDISPELLABLE,4));
 
             hero.description.descriptionOfCardSpecialAbility = "None";
             allBuiltHeroes.add(hero);
@@ -942,6 +960,8 @@ public class CardFactory {
                 }
             };
             manaRegen.getConditions().add(new HasTurnStarted());
+            item.getActions().put(new Applier(),new RectGetter(1,1,false,false,false,false,true));
+            item.getTriggers().add(manaRegen);
 
             item.description.descriptionOfCardSpecialAbility = "Take one mana in each turn and killed enemy hero after 15 turn";
             allBuiltItems.add(item);
@@ -1057,13 +1077,25 @@ public class CardFactory {
 
     public static void main() {
         makeAllMinions();
-        cardAdder(allBuiltMinions);
         makeAllSpells();
-        cardAdder(allBuiltSpells);
         makeAllHeroes();
-        cardAdder(allBuiltHeroes);
         makeAllItems();
+
+        addCounterAttack();
+
+        cardAdder(allBuiltMinions);
+        cardAdder(allBuiltSpells);
+        cardAdder(allBuiltHeroes);
         cardAdder(allBuiltItems);
+    }
+
+    private static void addCounterAttack(){
+        for (Card hero : allBuiltHeroes) {
+            hero.getTriggers().add(new CounterAttack(-1,Dispelablity.UNDISPELLABLE));
+        }
+        for (Card minion : allBuiltMinions) {
+            minion.getTriggers().add(new CounterAttack(-1,Dispelablity.UNDISPELLABLE));
+        }
     }
 
     private static void cardAdder(ArrayList<Card> allBuiltCards) {

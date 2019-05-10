@@ -1,6 +1,7 @@
 package model.triggers;
 
 import model.Cell;
+import model.Game;
 import model.QualityHaver;
 import model.cards.Warrior;
 import model.conditions.HasDied;
@@ -19,11 +20,14 @@ public class Flag extends Trigger {
 
     @Override
     protected void executeActions(GameState gameState, QualityHaver owner) {
-        QualityHaver.getGameFromQualityHaver(owner).triggRemoveBuffer.put(this,owner);
+        Game game =getGameFromQualityHaver(owner);
+        game.triggRemoveBuffer.put(this,owner);
         if(owner instanceof Cell){
-            new OnCellGetter().getTarget(owner,gameState).get(0).getTriggers().add(this);
+            game.triggAddBuffer.put(this,((Cell)owner).getWarrior());
+//            new OnCellGetter().getTarget(owner,gameState).get(0).getTriggers().add(this);
         }else {
-            ((Warrior)owner).getCell().getTriggers().add(this);
+            game.triggAddBuffer.put(this,((Warrior)owner).getCell());
+//            ((Warrior)owner).getCell().getTriggers().add(this);
         }
     }
 }

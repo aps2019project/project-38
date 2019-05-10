@@ -26,10 +26,6 @@ public class Cell extends QualityHaver implements Serializable {
         this.warrior = warrior;
     }
 
-    public ArrayList<Trigger> getTriggers() {
-        return triggers;
-    }
-
     public int getRow() {
         return row;
     }

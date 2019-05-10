@@ -15,14 +15,6 @@ public class AIPlayer extends Player {
     }
 
     public void doSomething() {
-        Collections.shuffle(warriors);
-        for (Warrior warrior : warriors) {
-            for (Cell cell : getBoardCells()) {
-                getGame().move(warrior.getCell(),cell);
-                getGame().attack(warrior.getCell(),cell);
-            }
-        }
-
         ArrayList<Map.Entry<Integer,Card>> es= new ArrayList<>(hand.entrySet());
         Collections.shuffle(es);
         for (Map.Entry<Integer, Card> cardEntry : es) {
@@ -30,6 +22,15 @@ public class AIPlayer extends Player {
                 for (Cell cell : getBoardCells()) {
                     getGame().useCard(cardEntry.getKey(),cell);
                 }
+            }
+        }
+
+        Collections.shuffle(warriors);
+        for (Warrior warrior : warriors) {
+            for (Cell cell : getBoardCells()) {
+                getGame().attack(warrior.getCell(),cell);
+                getGame().move(warrior.getCell(),cell);
+                getGame().attack(warrior.getCell(),cell);
             }
         }
 

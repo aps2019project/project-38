@@ -22,6 +22,7 @@ public class Attack {
                 defender.getEffects().add(new HP(-1, Dispelablity.UNDISPELLABLE, -1 * attackState.ap));
                 attackState.pending = false;
                 game.iterateAllTriggersCheck(attackState);
+                System.err.println("Attacked: ("+attackerCell.getRow()+","+attackerCell.getColumn()+") ("+defenderCell.getRow()+","+defenderCell.getColumn()+")");
             }
             return !attackState.canceled;
         }
@@ -31,6 +32,7 @@ public class Attack {
     static boolean checkWarriorsEffectsForAttack
             (Game game, Cell attackerCell, Cell defenderCell, int JumperManhattanDistance) {
         Warrior attacker = attackerCell.getWarrior();
+        if(attacker.getEffects().stream().anyMatch(effect -> effect instanceof Attacked)) return false;
         if (game.getBoard().getEightAdjacent(attackerCell).contains(defenderCell)) {
             if (attacker.getEffects().stream().anyMatch(effect -> effect instanceof Melee)) {
                 return true;
@@ -38,7 +40,7 @@ public class Attack {
         }
         else if (attacker.getEffects().stream().anyMatch(effect -> effect instanceof Ranged)) {
             return attacker.getEffects().stream().filter(effect -> effect instanceof Ranged)
-                    .anyMatch( effect -> ((Ranged)effect).getRange() <= JumperManhattanDistance);
+                    .anyMatch( effect -> ((Ranged)effect).getRange() >= JumperManhattanDistance);
         }
         return false;
     }
