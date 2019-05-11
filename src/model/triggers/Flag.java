@@ -20,7 +20,7 @@ public class Flag extends Trigger {
 
     @Override
     protected void executeActions(GameState gameState, QualityHaver owner) {
-        Game game = getGameFromQualityHaver(owner);
+//        Game game = getGameFromQualityHaver(owner);
         owner.removeTrigger(this);
 //        game.triggRemoveBuffer.put(this, owner);
         if (owner instanceof Cell) {

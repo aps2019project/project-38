@@ -22,9 +22,10 @@ public class Aura extends Trigger {
     {
         Condition anyMove = (Condition) (gameState, trigger, triggerOwner) -> gameState instanceof MoveState;
         Condition anySpawn = (Condition) (gameState, trigger, triggerOwner) -> gameState instanceof PutMinionState;
+        Condition anyCard = (Condition) (gameState, trigger, triggerOwner) -> gameState instanceof UseSpellState;
 
         conditions.add(anySpawn.or(new HasDied()).or(new HasTurnStarted()).or(anyMove)
-                .or(new IsBeingDispelled()));
+                .or(new IsBeingDispelled()).or(anyCard));
     }
 
     public Aura(int duration, Dispelablity dispelablity, TriggerTarget triggerTarget) {
@@ -48,7 +49,7 @@ public class Aura extends Trigger {
             }
         }
 
-        if(gameState instanceof PutMinionState || gameState instanceof TurnStartState){
+        if(gameState instanceof PutMinionState || gameState instanceof TurnStartState || gameState instanceof UseSpellState){
             removeEffectsAndTriggers(owner,gameState);
             addEffectsAndTriggers(owner,gameState);
         }

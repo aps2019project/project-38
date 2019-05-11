@@ -444,12 +444,16 @@ public interface Message {
                 if (cell.getTriggers().stream().anyMatch(trigger -> trigger.getTriggers().stream().anyMatch
                         (insideTrigger -> insideTrigger instanceof HolyBuff))) {
                     System.out.print("H");
+                }else if(cell.getWarrior()!=null && cell.getWarrior().getTriggers().stream().anyMatch(trigger -> trigger instanceof HolyBuff)){
+                    System.out.print("H");
                 } else {
                     System.out.print(" ");
                 }
                 //Poison --> P
                 if (cell.getTriggers().stream().anyMatch(trigger -> trigger.getTriggers().stream().anyMatch
                         (insideTrigger -> insideTrigger instanceof Poisoned))) {
+                    System.out.print("P");
+                }else if(cell.getWarrior()!=null && cell.getWarrior().getTriggers().stream().anyMatch(trigger -> trigger instanceof Poisoned)){
                     System.out.print("P");
                 } else {
                     System.out.print(" ");
