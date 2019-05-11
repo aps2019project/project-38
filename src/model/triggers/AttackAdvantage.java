@@ -11,7 +11,7 @@ import model.gamestate.GameState;
 //this trigger causes a special warrior to do more damage against a special warrior.
 public class AttackAdvantage extends Trigger {
     private int additionalDamage;
-    private Warrior warriorAgainst;
+    Warrior warriorAgainst;
 
     {
         conditions.add(new IsAttacking());
