@@ -21,13 +21,13 @@ public class Collection implements Serializable {
         Deck deck = new Deck();
         deck.setName("DefaultDeck");
 
-        deck.setHero((Hero) CardFactory.getAllBuiltHeroes().get(5));
-        deck.setItem((Spell) CardFactory.getAllBuiltItems().get(13));
-        int[] spellIndex = {15, 8, 15, 8, 15, 12, 12};
+        deck.setHero((Hero) CardFactory.getAllBuiltHeroes().get(6));
+        deck.setItem((Spell) CardFactory.getAllBuiltItems().get(11));
+        int[] spellIndex = {16, 16, 16, 16, 4, 11, 1};
         for (int i = 0; i < 7; i++) {
             deck.getCardIDs().add(CardFactory.getAllBuiltSpells().get(spellIndex[i] - 1).getID());
         }
-        int[] minionIndex = {27, 27, 18, 18, 20, 20, 20, 29, 29, 29, 10, 10, 10};
+        int[] minionIndex = {28, 35, 28, 28, 35, 35, 30, 30, 30, 28, 35, 30, 28};
         for (int i = 0; i < 13; i++) {
             deck.getCardIDs().add(CardFactory.getAllBuiltMinions().get(minionIndex[i] - 1).getID());
         }

@@ -49,7 +49,7 @@ public class Aura extends Trigger {
             }
         }
 
-        if(gameState instanceof PutMinionState || gameState instanceof TurnStartState){
+        if(gameState instanceof PutMinionState || gameState instanceof TurnStartState || gameState instanceof UseSpellState){
             removeEffectsAndTriggers(owner,gameState);
             addEffectsAndTriggers(owner,gameState);
         }
