@@ -484,7 +484,7 @@ public class CardFactory {
             spell.description.descriptionOfCardSpecialAbility = "increase hit power of one person 2 units";
             allBuiltSpells.add(spell);
         }
-        {
+        {//
             Spell spell = new Spell(14, "Fireball", 1, 400, false);
 
             spell.getEffects().add(new HP(-1, Dispelablity.UNDISPELLABLE, -4));
@@ -576,7 +576,7 @@ public class CardFactory {
             spell.description.descriptionOfCardSpecialAbility = "it delete enemy's positive buffs and our negative buffs";
             allBuiltSpells.add(spell);
         }
-        {
+        {//
             Spell spell = new Spell(113, "HealthWithProfit", 0, 2250, false);
 
             spell.getActions().put(new Applier(), new RectGetter(1, 1, false, false, true, false, true));

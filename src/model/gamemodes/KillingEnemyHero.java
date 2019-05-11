@@ -19,5 +19,7 @@ public class KillingEnemyHero extends GameMode {
     }
 
     @Override
-    public void applyTriggerToBoard(Game game) {}
+    public void applyTriggerToBoard(Game game) {
+        //todo add any collectible you want here.
+    }
 }
