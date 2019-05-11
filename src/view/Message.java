@@ -281,65 +281,11 @@ public interface Message {
 
     interface GameWindow {
         static void betweenTwoPageLine() {
-            System.out.println("*************************************************************************************");
+            System.out.println("/////////////////////////////////////////////////////////////////////////////////////");
         }
 
         static void betweenTwoLineLine() {
             System.out.println(".....................................................................................");
-        }
-
-        interface BeforeGame {
-            static void invalidMainDeck() {
-                System.out.println("mainDeck is invalid");
-            }
-
-            static void singleOrMultiMenu() {
-                System.out.println("1. Single player");
-                System.out.println("2. Multi player");
-            }
-
-            static void StoryOrCustomMenu() {
-                System.out.println("1. Levels");
-                System.out.println("2. Custom game");
-            }
-
-            static void modeAndDeckMenu() {
-                System.out.println("Select mode and enemy deck\nfor example: " +
-                        "Start game [deck name] [mode name] [number of flags]*");
-                System.out.println("Decks:");
-                for (Map.Entry<String, Deck> entry : Account.getActiveAccount().getCollection().getAllDecks().entrySet()) {
-                    System.out.println(entry.getKey());
-                }
-                System.out.println("Modes:");
-                System.out.println("KillingEnemyHero");
-                System.out.println("CarryingFlag");
-                System.out.println("CollectingFlag");
-            }
-
-            static void accountMenu(HashMap<String, Account> accounts) {
-                System.out.println("Select a ready account\nfor example: Select user [user name]");
-                for (Map.Entry<String, Account> entry : accounts.entrySet()) {
-                    if (entry.getValue() != Account.getActiveAccount()) {
-                        System.out.println(entry.getKey());
-                    }
-                }
-            }
-
-            static void showLevelsForStoryMode() {
-                for (Map.Entry<String, Level> entry : Level.getAvailableLevels().entrySet()) {
-                    System.out.printf("%s: Hero Name: %s Mode: %s Prize: %s\n", entry.getKey(),
-                            entry.getValue().getDeck().getHero().getName(),
-                            entry.getValue().getGameMode().getClass().getSimpleName(), entry.getValue().getPrize());
-                }
-            }
-
-            static void modeMenu() {
-                System.out.println("Choose mode\nfor example: Start multiplayer game [mode name] [number of flags]*");
-                System.out.println("Modes:");
-                System.out.println("KillingEnemyHero");
-                System.out.println("CarryingFlag");
-                System.out.println("CollectingFlag");
-            }
         }
 
         interface InsideGame {
@@ -519,11 +465,10 @@ public interface Message {
                 System.out.println("Select Warrior: Select [row] [column]");
                 System.out.println("(you can select multi warriors for combo by using above command repeatedly)");
                 System.out.println("Select Card From Hand: Select [hand index]");
-                System.out.println("Select Special Power: Select SPP");
+                System.out.println("Select Special Power: Select SSP");
                 System.out.println("Deselect Warriors: Deselect warriors");
                 System.out.println("(if you selected just one warrior you can attack to an enemy warrior): Attack [row] [column]");
                 System.out.println("(if you selected just one warrior you can move it): move [row] [column]");
-//                System.out.println("(if you selected just one warrior you can see all its effects and triggers): Peek");
                 System.out.println("(if you selected more than one warrior you can combo attack to an enemy warrior): Attack combo [row] [column]");
                 System.out.println("(if you selected a card you can put it on board): Insert in [row] [column]");
                 System.out.println("(if you selected a card you can replace it(once in each turn)): Replace");
@@ -587,8 +532,8 @@ public interface Message {
                 }
 
                 static void showWarrior(Warrior warrior) {//private
-                    System.out.printf("%s: %s [AP: %d] [HP: %d]\n",warrior instanceof Hero ? "Hero" : "Minion",
-                            cardDetail(warrior), warrior.getAp(), warrior.getHp());
+                    System.out.printf("%s: [Type: %s] %s [AP: %d] [HP: %d]\n",warrior instanceof Hero ? "Hero" : "Minion",
+                            warrior.getWrriorType(), cardDetail(warrior), warrior.getAp(), warrior.getHp());
                 }
 
                 static void ShowSpecialPower(HeroPower heroPower) {

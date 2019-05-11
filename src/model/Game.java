@@ -1,6 +1,5 @@
 package model;
 
-
 import model.actions.*;
 import model.actions.Killer;
 import model.cards.Card;

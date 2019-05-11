@@ -23,7 +23,6 @@ import java.util.regex.Pattern;
 
 public class GameWindow extends Window {
     private Game game;
-//    private ModeData modeData = new ModeData();//todo badana
 
     private void initializeAndRunBeforeGameWindows() {
         ChoosingWindow battle = new ChoosingWindow
@@ -31,13 +30,13 @@ public class GameWindow extends Window {
         ChoosingWindow single = new ChoosingWindow
                 (battle, "Single Player", "Story Or Custom");
         ChoosingWindow multi = new ChoosingWindow
-                (battle, "Select Account", "Multi Player", "Select Account");
+                (battle, "Select Other Account", "Multi Player", "Select Other Account");
         battle.getSubWindows().add(single);
         battle.getSubWindows().add(multi);
         ChoosingWindow story = new ChoosingWindow
                 (single, "Story", "#final#");
         ChoosingWindow custom = new ChoosingWindow
-                (single, "Choosing Deck", "Custom", "Choosing Deck");
+                (single, "Choosing Enemy Deck", "Custom", "Choosing Enemy Deck");
         single.getSubWindows().add(story);
         single.getSubWindows().add(custom);
         initializeStoryWindow(story);
@@ -88,15 +87,13 @@ public class GameWindow extends Window {
                     GameMode gameMode;
                     if (title.equals("Killing Enemy Hero")) {
                         gameMode = new KillingEnemyHero();
-                    }
-                    else {
+                    } else {
                         gameMode = new CarryingFlag();
                     }
                     if (entry.getValue() instanceof Account) {
                         game = new Game(gameMode, Account.getActiveAccount(), (Account) entry.getValue());
-                    }
-                    else {
-                        game = new Game(gameMode, Account.getActiveAccount(), (Deck)entry.getValue());
+                    } else {
+                        game = new Game(gameMode, Account.getActiveAccount(), (Deck) entry.getValue());
                     }
                     this.closeWindow();
                     thisGameWindow.openWindow();
@@ -120,8 +117,7 @@ public class GameWindow extends Window {
                         if (handleRequest(Integer.parseInt(matcher.group(1)))) {
                             break;
                         }
-                    }
-                    else {
+                    } else {
                         Message.GameWindow.FailMessage.invalidCommand();
                     }
                 }
@@ -132,14 +128,12 @@ public class GameWindow extends Window {
                     this.closeWindow();
                     this.getSuperWindow().openWindow();
                     return true;
-                }
-                else {
+                } else {
                     this.closeWindow();
                     if (entry.getValue() instanceof Account) {
                         game = new Game(new CollectingFlag(request), Account.getActiveAccount(), (Account) entry.getValue());
-                    }
-                    else {
-                        game = new Game(new CollectingFlag(request), Account.getActiveAccount(), (Deck)entry.getValue());
+                    } else {
+                        game = new Game(new CollectingFlag(request), Account.getActiveAccount(), (Deck) entry.getValue());
                     }
                     thisGameWindow.openWindow();
                     this.closeWindow();
@@ -168,9 +162,6 @@ public class GameWindow extends Window {
 
     @Override
     public void main() {
-//        if (!initialiseGame()) {
-//            return;
-//        }
         while (game.getGameMode().winner == null) {
             Message.GameWindow.InsideGame.showMainView(game);
             if (game.getActivePlayer() instanceof HumanPlayer) {
@@ -179,10 +170,10 @@ public class GameWindow extends Window {
                 ((AIPlayer) game.getActivePlayer()).doSomething();
             }
         }
-        endGame(game);
+        endGame();
     }
 
-    private void endGame(Game game) {
+    private void endGame() {
         Message.GameWindow.InsideGame.showMainView(game);
         Player winner = game.getGameMode().winner;
         Player loser = game.getOtherPlayer(winner);
@@ -200,11 +191,11 @@ public class GameWindow extends Window {
 
     private static void updatePlayerMatchHistory(Game game, Player player, Player enemy, boolean isWinner) {
         if (player instanceof HumanPlayer) {
-            HumanPlayer humanPlayer =(HumanPlayer)player;
+            HumanPlayer humanPlayer = (HumanPlayer) player;
             if (isWinner) {
                 humanPlayer.getAccount().derrick += game.prize;
             }
-            String opponentName = enemy instanceof AIPlayer ? "AI" : ((HumanPlayer)enemy).getAccount().getUsername();
+            String opponentName = enemy instanceof AIPlayer ? "AI" : ((HumanPlayer) enemy).getAccount().getUsername();
             humanPlayer.getAccount().putGameInHistory(opponentName, isWinner);
         }
     }
@@ -217,8 +208,8 @@ public class GameWindow extends Window {
             selectWarrior(request);
         } else if (request.matches("Select \\d")) {
             selectCard(request);
-        } else if (request.equals("Select SPP")) {
-            game.getSelectedThings().selectSpecialPower(game);
+        } else if (request.equals("Select SSP")) {
+            selectSpecialPower();
         } else if (request.equals("Deselect warriors")) {
             game.getSelectedThings().deselectAll();
         } else if (request.matches("Attack \\d \\d")) {
@@ -252,6 +243,14 @@ public class GameWindow extends Window {
         }
     }
 
+    private void selectSpecialPower() {
+        if (game.getActivePlayer().getPlayerHero().getPower() != null) {
+            game.getSelectedThings().selectSpecialPower(game);
+        } else {
+            Message.GameWindow.FailMessage.emptyCard();
+        }
+    }
+
     private void exit() {
         game.getGameMode().winner = game.getOtherPlayer(game.getActivePlayer());
     }
@@ -264,8 +263,7 @@ public class GameWindow extends Window {
         if (game.getSelectedThings().collectibleItem != null) {
             if (game.useCollectible(game.getSelectedThings().collectibleItem, cell)) {
                 Message.GameWindow.InsideGame.DoneMessages.usingItem();
-            }
-            else {
+            } else {
                 Message.GameWindow.FailMessage.notEnoughNecessaryCondition();
             }
         } else {
@@ -317,7 +315,7 @@ public class GameWindow extends Window {
         }
         if (game.useSpecialPower(cell)) {
             Message.GameWindow.InsideGame.DoneMessages.useSpecialPower();
-        }else {
+        } else {
             Message.GameWindow.FailMessage.notEnoughNecessaryCondition();
         }
         game.getSelectedThings().deselectAll();
@@ -325,13 +323,12 @@ public class GameWindow extends Window {
 
     private void replaceCard() {
         if (game.getSelectedThings().cardHandIndex != null) {
-            if(game.replaceCard(game.getSelectedThings().cardHandIndex)) {
+            if (game.replaceCard(game.getSelectedThings().cardHandIndex)) {
                 Message.GameWindow.InsideGame.DoneMessages.replaceCard();
-            }
-            else {
+            } else {
                 Message.GameWindow.FailMessage.notEnoughNecessaryCondition();
             }
-        }else {
+        } else {
             Message.GameWindow.FailMessage.noSelectedCard();
         }
         game.getSelectedThings().deselectAll();
@@ -345,8 +342,7 @@ public class GameWindow extends Window {
         if (game.getSelectedThings().cardHandIndex != null) {
             if (game.useCard(game.getSelectedThings().cardHandIndex, cell)) {
                 Message.GameWindow.InsideGame.DoneMessages.useCard();
-            }
-            else {
+            } else {
                 Message.GameWindow.FailMessage.notEnoughNecessaryCondition();
             }
         } else {
@@ -361,10 +357,10 @@ public class GameWindow extends Window {
             return;
         }
         if (game.getSelectedThings().getWarriorsCell().size() > 1) {
-            if (cell.getWarrior() != null && game.getActivePlayer() == game.getWarriorsPlayer(cell.getWarrior())) {
+            if (cell.getWarrior() != null && game.getActivePlayer() != game.getWarriorsPlayer(cell.getWarrior())) {
                 if (game.comboAttack(game.getSelectedThings().getWarriorsCell(), cell)) {
                     Message.GameWindow.InsideGame.DoneMessages.comboAttack();
-                } else  {
+                } else {
                     Message.GameWindow.FailMessage.notEnoughNecessaryCondition();
                 }
             } else {
@@ -385,7 +381,7 @@ public class GameWindow extends Window {
             if (cell.getWarrior() == null) {
                 if (game.move(game.getSelectedThings().getWarriorsCell().get(0), cell)) {
                     Message.GameWindow.InsideGame.DoneMessages.move();
-                }else {
+                } else {
                     Message.GameWindow.FailMessage.notEnoughNecessaryCondition();
                 }
             } else {
@@ -406,7 +402,7 @@ public class GameWindow extends Window {
             if (cell.getWarrior() != null && game.getActivePlayer() != game.getWarriorsPlayer(cell.getWarrior())) {
                 if (game.attack(game.getSelectedThings().getWarriorsCell().get(0), cell)) {
                     Message.GameWindow.InsideGame.DoneMessages.attack();
-                }else {
+                } else {
                     Message.GameWindow.FailMessage.notEnoughNecessaryCondition();
                 }
             } else {
@@ -479,7 +475,6 @@ public class GameWindow extends Window {
         }
     }
 
-
     private void help() {
         while (true) {
             Message.GameWindow.betweenTwoPageLine();
@@ -495,7 +490,7 @@ public class GameWindow extends Window {
 
     private void selectWarrior(String request) {
         Cell cell = getCellByMessage(request);
-        if(cell == null) {
+        if (cell == null) {
             return;
         }
         if (!game.getSelectedThings().getWarriorsCell().contains(cell) && cell.getWarrior() != null &&
@@ -506,210 +501,4 @@ public class GameWindow extends Window {
             Message.GameWindow.FailMessage.youHaveNoOwnWarriorInThisCell();
         }
     }
-
-//    private boolean initialiseGame() {
-////        ModeData modeData = new ModeData();//todo
-//        if (!checkDeck()) {
-//            Message.GameWindow.BeforeGame.invalidMainDeck();
-//            this.closeWindow();
-//            return false;
-//        }
-//        if (!chooseSingleOrMulti()) {
-//            this.closeWindow();
-//            return false;
-//        }
-//        if (modeData.singlePlayer) { //single player
-//            if (!initializeSinglePlayer()) {
-//                this.closeWindow();
-//                return false;
-//            }
-//        } else { //multi player
-//            if (!initializeMultiPlayer()) {
-//                this.closeWindow();
-//                return false;
-//            }
-//        }
-//        return true;
-//    }
-//
-//    private boolean initializeSinglePlayer() {
-//        if (!chooseStoryOrCustom()) {
-//            this.closeWindow();
-//            return false;
-//        }
-//        if (modeData.story) { // story mode
-//            if (!chooseLevel()) {
-//                this.closeWindow();
-//                return false;
-//            }
-//        } else { // custom mode
-//            if (!chooseModeAndEnemyDeck()) {
-//                this.closeWindow();
-//                return false;
-//            }
-//        }
-//        return true;
-//    }
-//
-//    private boolean initializeMultiPlayer() {
-//        if (!chooseOtherAccount()) {
-//            this.closeWindow();
-//            return false;
-//        }
-//        if (!chooseMode()) {
-//            this.closeWindow();
-//            return false;
-//        }
-//        return true;
-//    }
-//
-//    private boolean checkDeck() {
-//        if (Account.getActiveAccount().getCollection().getMainDeck() == null) {
-//            Message.GameWindow.BeforeGame.invalidMainDeck();
-//            return false;
-//        }
-//        return true;
-//    }
-//
-//    private boolean chooseSingleOrMulti() {
-//        while (true) {
-//            Message.GameWindow.betweenTwoPageLine();
-//            Message.GameWindow.BeforeGame.singleOrMultiMenu();
-//            String request = Request.getNextRequest();
-//            switch (request) {
-//                case "1":
-//                    modeData.singlePlayer = true;
-//                    return true;
-//                case "2":
-//                    modeData.singlePlayer = false;
-//                    return true;
-//                case "exit":
-//                    return false;
-//            }
-//        }
-//    }
-//
-//    private boolean chooseStoryOrCustom() {
-//        while (true) {
-//            Message.GameWindow.betweenTwoPageLine();
-//            Message.GameWindow.BeforeGame.StoryOrCustomMenu();
-//            String request = Request.getNextRequest();
-//            switch (request) {
-//                case "1":
-//                    modeData.story = true;
-//                    return true;
-//                case "2":
-//                    modeData.story = false;
-//                    return true;
-//                case "exit":
-//                    return false;
-//            }
-//        }
-//    }
-//
-//    private boolean chooseLevel() {
-//        while (true) {
-//            Message.GameWindow.betweenTwoPageLine();
-//            Message.GameWindow.BeforeGame.showLevelsForStoryMode();
-//            String request = Request.getNextRequest();
-//            if (Level.getAvailableLevels().containsKey(request)) {
-//                Level level = Level.getAvailableLevels().get(request);
-//                game = level.getLevelGame(Account.getActiveAccount());
-//                return true;
-//            } else if (request.equals("exit")) {
-//                return false;
-//            }
-//        }
-//    }
-//
-//    private boolean chooseModeAndEnemyDeck() {
-//        while (true) {
-//            Message.GameWindow.betweenTwoPageLine();
-//            Message.GameWindow.BeforeGame.modeAndDeckMenu();
-//            String request = Request.getNextRequest();
-//            if (request.matches("Start game \\w+ CollectingFlag \\d+")) {
-//                String deckName = request.replaceFirst("Start game ", "")
-//                        .replaceFirst(" CollectingFlag \\d+", "");
-//                int numberOfFlags = Integer.parseInt
-//                        (request.replaceFirst("Start game \\w+ CollectingFlag ", ""));
-//                if (Account.getActiveAccount().getCollection().getAllDecks().containsKey(deckName)) {
-//                    game = new Game(new CollectingFlag(numberOfFlags),
-//                            Account.getActiveAccount(), Account.getActiveAccount().getCollection().getAllDecks().get(deckName));
-//                    return true;
-//                }
-//            } else if (request.matches("Start game \\w+ (KillingEnemyHero|CarryingFlag)")) {
-//                Pattern pattern = Pattern.compile("(\\w+) (KillingEnemyHero|CarryingFlag)");
-//                Matcher matcher = pattern.matcher(request);
-//                matcher.find();
-//                String mode = matcher.group(2);
-//                String deckName = matcher.group(1);
-//                if (Account.getActiveAccount().getCollection().getAllDecks().containsKey(deckName)) {
-//                    if (mode.equals("KillingEnemyHero")) {
-//                        game = new Game(new KillingEnemyHero(), Account.getActiveAccount(),
-//                                Account.getActiveAccount().getCollection().getAllDecks().get(deckName));
-//                        return true;
-//                    } else {
-//                        game = new Game(new CarryingFlag(), Account.getActiveAccount(),
-//                                Account.getActiveAccount().getCollection().getAllDecks().get(deckName));
-//                        return true;
-//                    }
-//                }
-//            } else if (request.equals("exit")) {
-//                return false;
-//            }
-//        }
-//    }
-//
-//    private boolean chooseOtherAccount() {
-//        while (true) {
-//            Message.GameWindow.betweenTwoPageLine();
-//            Message.GameWindow.BeforeGame.accountMenu(Account.getUsernameToAccountObject());
-//            String request = Request.getNextRequest();
-//            if (request.matches("Select user \\w+")) {
-//                String userName = request.replaceFirst("Select user ", "");
-//                Account account = Account.getUsernameToAccountObject().get(userName);
-//                if (account != null && account != Account.getActiveAccount()) {
-//                    if (account.getCollection().getMainDeck() != null) {
-//                        modeData.secondAccount = Account.getUsernameToAccountObject().get(userName);
-//                        return true;
-//                    } else {
-//                        Message.GameWindow.BeforeGame.invalidMainDeck();
-//                    }
-//                }
-//            } else if (request.matches("exit")) {
-//                return false;
-//            }
-//        }
-//    }
-//
-//    private boolean chooseMode() {
-//        while (true) {
-//            Message.GameWindow.betweenTwoPageLine();
-//            Message.GameWindow.BeforeGame.modeMenu();
-//            String request = Request.getNextRequest();
-//            if (request.matches("Start multiplayer game CollectingFlag \\d+")) {
-//                int numberOfFlags = Integer.parseInt
-//                        (request.replaceFirst("Start multiplayer game CollectingFlag ", ""));
-//                game = new Game(new CollectingFlag(numberOfFlags), Account.getActiveAccount(), modeData.secondAccount);
-//                return true;
-//            } else if (request.matches("Start multiplayer game (KillingEnemyHero|CarryingFlag)")) {
-//                String gameMode = request.replaceFirst("Start multiplayer game ", "");
-//                if (gameMode.equals("KillingEnemyHero")) {
-//                    game = new Game(new KillingEnemyHero(), Account.getActiveAccount(), modeData.secondAccount);
-//                    return true;
-//                } else {
-//                    game = new Game(new CarryingFlag(), Account.getActiveAccount(), modeData.secondAccount);
-//                    return true;
-//                }
-//            } else if (request.equals("exit")) {
-//                return false;
-//            }
-//        }
-//    }
 }
-
-//class ModeData {
-//    boolean singlePlayer;
-//    boolean story;
-//    Account secondAccount;
-//}

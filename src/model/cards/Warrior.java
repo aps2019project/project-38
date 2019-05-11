@@ -3,6 +3,8 @@ package model.cards;
 import model.Cell;
 import model.effects.AP;
 import model.effects.HP;
+import model.effects.Melee;
+import model.effects.Ranged;
 import model.player.Player;
 
 import java.io.*;
@@ -32,6 +34,18 @@ public class Warrior extends Card {
 
     public int getAp() {
         return ap + effects.stream().filter(effect -> effect instanceof AP).mapToInt(effect -> ((AP)effect).getAp()).sum();
+    }
+
+    public String getWrriorType() {
+        if(this.getEffects().stream().anyMatch(effect -> effect instanceof Melee)) {
+            if (this.getEffects().stream().anyMatch(effect -> effect instanceof Ranged)) {
+                return "Hybrid";
+            }
+            else {
+                return "Melee";
+            }
+        }
+        return "Ranged";
     }
 
     @Override

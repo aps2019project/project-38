@@ -40,7 +40,7 @@ public class Attack {
         }
         else if (attacker.getEffects().stream().anyMatch(effect -> effect instanceof Ranged)) {
             return attacker.getEffects().stream().filter(effect -> effect instanceof Ranged)
-                    .anyMatch( effect -> ((Ranged)effect).getRange() >= JumperManhattanDistance);
+                    .anyMatch(effect -> ((Ranged)effect).getRange() >= JumperManhattanDistance);
         }
         return false;
     }
