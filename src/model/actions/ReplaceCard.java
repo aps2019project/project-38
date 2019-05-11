@@ -16,7 +16,7 @@ public class ReplaceCard {
                 int randomIndex = random.nextInt(game.getActivePlayer().getMainDeck().getCardIDs().size());
                 int cardID = game.getActivePlayer().getMainDeck().getCardIDs().get(randomIndex);
                 if (cardID != card.getID()) {
-                    newCard = Card.getAllCards().get(cardID);
+                    newCard = Card.getAllCards().get(cardID).deepCopy();
                     break;
                 }
             }
