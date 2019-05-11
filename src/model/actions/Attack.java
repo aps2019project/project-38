@@ -35,6 +35,7 @@ public class Attack {
             (Game game, Cell attackerCell, Cell defenderCell, int JumperManhattanDistance) {
         Warrior attacker = attackerCell.getWarrior();
         if(attacker.getEffects().stream().anyMatch(effect -> effect instanceof Attacked)) return false;
+        if(attacker.getEffectsBuffer().stream().anyMatch(effect -> effect instanceof Attacked)) return false;
         if (game.getBoard().getEightAdjacent(attackerCell).contains(defenderCell)) {
             if (attacker.getEffects().stream().anyMatch(effect -> effect instanceof Melee)) {
                 return true;
