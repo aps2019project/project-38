@@ -270,7 +270,7 @@ public class Game implements Serializable{
         ArrayList<Warrior> activePlayerWarriors = getActivePlayer().getWarriors();
         if (defenderCell.getWarrior() != null && activePlayerWarriors.contains(attackerCell.getWarrior()) &&
                 !activePlayerWarriors.contains(defenderCell.getWarrior())) {
-            isDone = Attack.doIt(attackerCell, defenderCell);
+            isDone = Attack.doIt(attackerCell, defenderCell,false);
             checkGameEndAndThenKillAllDiedWarriors();
         }
         return isDone;

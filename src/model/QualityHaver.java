@@ -77,6 +77,7 @@ public abstract class QualityHaver implements Serializable {
     public void removeEffect(Effect effect) {
         if (lock) {
             effectsRMBuffer.add(effect);
+            effectsBuffer.remove(effect);
         } else {
             effects.remove(effect);
         }
@@ -84,6 +85,7 @@ public abstract class QualityHaver implements Serializable {
     public void removeEffect(ArrayList<Effect> effect) {
         if (lock) {
             effectsRMBuffer.addAll(effect);
+            effectsBuffer.removeAll(effect);
         } else {
             effects.removeAll(effect);
         }
@@ -91,6 +93,7 @@ public abstract class QualityHaver implements Serializable {
     public void removeTrigger(Trigger trigger) {
         if (lock) {
             triggerRMBuffer.add(trigger);
+            triggerBuffer.remove(trigger);
         } else {
             triggers.remove(trigger);
         }
@@ -98,6 +101,7 @@ public abstract class QualityHaver implements Serializable {
     public void removeTrigger(ArrayList<Trigger> trigger) {
         if (lock) {
             triggerRMBuffer.addAll(trigger);
+            triggerBuffer.removeAll(trigger);
         } else {
             triggers.removeAll(trigger);
         }
@@ -119,5 +123,9 @@ public abstract class QualityHaver implements Serializable {
             effectsRMBuffer.clear();
             triggerRMBuffer.clear();
         }
+    }
+
+    public ArrayList<Effect> getEffectsBuffer() {
+        return effectsBuffer;
     }
 }

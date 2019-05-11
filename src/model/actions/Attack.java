@@ -9,7 +9,7 @@ import model.gamestate.AttackState;
 import java.util.stream.Stream;
 
 public class Attack {
-    public static boolean doIt(Cell attackerCell, Cell defenderCell) {
+    public static boolean doIt(Cell attackerCell, Cell defenderCell,boolean counterAttack) {
         Game game = attackerCell.getBoard().getGame();
         Warrior attacker = attackerCell.getWarrior();
         Warrior defender = defenderCell.getWarrior();
@@ -19,7 +19,9 @@ public class Attack {
             game.iterateAllTriggersCheck(attackState);
             if (!attackState.canceled) {
                 System.err.println("Attacked: ("+attackerCell.getRow()+","+attackerCell.getColumn()+") ("+defenderCell.getRow()+","+defenderCell.getColumn()+")");
-                attacker.addEffect(new Attacked());
+                if(!counterAttack) {
+                    attacker.addEffect(new Attacked());
+                }
                 defender.addEffect(new HP(-1, Dispelablity.UNDISPELLABLE, -1 * attackState.ap));
                 attackState.pending = false;
                 game.iterateAllTriggersCheck(attackState);
