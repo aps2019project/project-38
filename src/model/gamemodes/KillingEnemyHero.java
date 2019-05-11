@@ -20,4 +20,11 @@ public class KillingEnemyHero extends GameMode {
 
     @Override
     public void applyTriggerToBoard(Game game) {}
+
+    @Override
+    public GameMode deepCopy() {
+        return new KillingEnemyHero();
+    }
+
+
 }

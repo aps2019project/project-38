@@ -6,7 +6,6 @@ import model.triggers.Trigger;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -37,7 +36,7 @@ public class Board implements Serializable {
         for (ArrayList<Cell> row : table) {
             for (Cell cell : row) {
                 UUID id = UUID.randomUUID();
-                cell.setLock(id+" bti",true);
+                cell.setLock(id+"bti",true);
                 for (Trigger trigger : cell.getTriggers()) {
                     trigger.check(gameState,cell);
                 }
@@ -49,15 +48,6 @@ public class Board implements Serializable {
     public void iterateAndExpireBoardTriggers() {
         for (ArrayList<Cell> row : table) {
             for (Cell cell : row) {
-//                for (Iterator<Trigger> iterator = cell.triggers.iterator(); iterator.hasNext();) {
-//                    Trigger trigger = iterator.next();
-//                    if (trigger.duration > 0) {
-//                        trigger.duration --;
-//                        if (trigger.duration == 0) {
-//                            iterator.remove();
-//                        }
-//                    }
-//                }
                 UUID id = UUID.randomUUID();
                 cell.setLock(id+"bte",true);
                 for (Trigger trigger : cell.getTriggers()) {
@@ -76,15 +66,6 @@ public class Board implements Serializable {
     public  void iterateAndExpireBoardEffects() {
         for (ArrayList<Cell> row : table) {
             for (Cell cell : row) {
-//                for (Iterator<Effect> iterator = cell.effects.iterator(); iterator.hasNext();) {
-//                    Effect effect = iterator.next();
-//                    if (effect.duration > 0) {
-//                        effect.duration --;
-//                        if (effect.duration == 0) {
-//                            iterator.remove();
-//                        }
-//                    }
-//                }
                 UUID id = UUID.randomUUID();
                 cell.setLock(id+"bee",true);
                 for (Effect effect : cell.getEffects()) {

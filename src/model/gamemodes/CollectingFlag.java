@@ -3,6 +3,7 @@ package model.gamemodes;
 import model.Cell;
 import model.Constant;
 import model.Game;
+import model.cards.Warrior;
 import model.player.Player;
 import model.triggers.Flag;
 
@@ -17,6 +18,14 @@ public class CollectingFlag extends GameMode {
         }else {
             this.gameMaxFlags = Constant.GameConstants.collectingFlagModeFlags;
         }
+    }
+
+    public int getNumberOFPlayerFlags(Player player) {
+        int result = 0;
+        for (Warrior warrior : player.getWarriors()) {
+            result += warrior.getTriggers().stream().filter(trigger -> trigger instanceof Flag).count();
+        }
+        return result;
     }
 
     @Override
@@ -52,5 +61,10 @@ public class CollectingFlag extends GameMode {
                 }
             }
         }
+    }
+
+    @Override
+    public GameMode deepCopy() {
+        return new CollectingFlag(this.gameMaxFlags);
     }
 }

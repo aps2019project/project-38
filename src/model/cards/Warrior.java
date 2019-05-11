@@ -36,7 +36,7 @@ public class Warrior extends Card {
         return ap + effects.stream().filter(effect -> effect instanceof AP).mapToInt(effect -> ((AP)effect).getAp()).sum();
     }
 
-    public String getWrriorType() {
+    public String getWarriorType() {
         if(this.getEffects().stream().anyMatch(effect -> effect instanceof Melee)) {
             if (this.getEffects().stream().anyMatch(effect -> effect instanceof Ranged)) {
                 return "Hybrid";

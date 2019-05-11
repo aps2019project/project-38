@@ -28,11 +28,11 @@ public class ComboAttack {
                 attackState.ap += attacker.getAp();
                 int priviesAP = attackState.ap;
                 attackState.setAttacker(attacker);
+                game.iterateAllTriggersCheck(attackState);
                 if (attacker != attackersCell.get(0).getWarrior()) {
                     attackState.ap = priviesAP + attacker.getAp() > attackState.ap ?
                             priviesAP + attacker.getAp() : attackState.ap;
                 }
-                game.iterateAllTriggersCheck(attackState);
             }
             else {
                 return false;
