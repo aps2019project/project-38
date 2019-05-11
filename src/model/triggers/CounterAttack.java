@@ -27,9 +27,7 @@ public class CounterAttack extends Trigger {
     @Override
     protected void executeActions(GameState gameState, QualityHaver owner) {
         AttackState attackState =(AttackState)gameState;
-        Warrior warrior = (Warrior)owner;
         Attack.doIt(attackState.getAttacked().getCell(),
-                attackState.getAttacker().getCell());
-        warrior.removeEffect((ArrayList<Effect>) warrior.getEffects().stream().filter(effect -> effect instanceof Attacked).collect(Collectors.toCollection(ArrayList::new)));
+                attackState.getAttacker().getCell(),true);
     }
 }

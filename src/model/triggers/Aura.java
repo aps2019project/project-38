@@ -81,8 +81,8 @@ public class Aura extends Trigger {
 //            warrior.addTrigger(triggers);
             warrior.removeTrigger(addedTriggers);
             warrior.removeEffect(addedEffects);
-            addedTriggers.clear();
-            addedEffects.clear();
         });
+        addedTriggers.clear();
+        addedEffects.clear();
     }
 }

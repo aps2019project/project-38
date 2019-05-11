@@ -25,10 +25,10 @@ public class Flag extends Trigger {
 //        game.triggRemoveBuffer.put(this, owner);
         if (owner instanceof Cell) {
 //            game.triggAddBuffer.put(this, ((Cell) owner).getWarrior());
-            owner.addTrigger(this);
+            ((Cell)owner).getWarrior().addTrigger(this);
         } else {
 //            game.triggAddBuffer.put(this, ((Warrior) owner).getCell());
-            owner.addTrigger(this);
+            ((Warrior)owner).getCell().addTrigger(this);
         }
     }
 }
