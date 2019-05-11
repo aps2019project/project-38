@@ -51,6 +51,11 @@ public class Collection implements Serializable {
         this.getCardIDs().addAll(Deck.getAllDecks().get("level2").getCardIDs());
         this.getCardIDs().add(Deck.getAllDecks().get("level2").getHero().getID());
         this.getCardIDs().add(Deck.getAllDecks().get("level2").getItem().getID());
+        this.decks.add("allCombo");
+        this.allDecks.put("allCombo", Deck.getAllDecks().get("allCombo"));
+        this.getCardIDs().addAll(Deck.getAllDecks().get("allCombo").getCardIDs());
+        this.getCardIDs().add(Deck.getAllDecks().get("allCombo").getHero().getID());
+        this.getCardIDs().add(Deck.getAllDecks().get("allCombo").getItem().getID());
     }
 
     //***

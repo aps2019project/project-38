@@ -18,7 +18,7 @@ public class ComboAttack {
     public static boolean doIt(ArrayList<Cell> attackersCell, Cell defenderCell) {
         Game game = attackersCell.get(0).getBoard().getGame();
         Warrior defender = defenderCell.getWarrior();
-        AttackState attackState = new AttackState(attackersCell.get(0).getWarrior(), defender, 0);
+        AttackState attackState = new AttackState(null, defender, 0);
         for (Cell attackerCell : attackersCell) {
             Warrior attacker = attackerCell.getWarrior();
             int jumperManhattanDistance = game.getBoard().getJumperManhattanDistance(attackerCell, defenderCell);
@@ -28,11 +28,15 @@ public class ComboAttack {
                 attackState.setAttacker(attacker);
                 game.iterateAllTriggersCheck(attackState);
             }
+            else {
+                return false;
+            }
         }
         if (!attackState.canceled) {
             attackersCell.forEach(cell -> cell.getWarrior().getEffects().add(new Attacked()));
             defender.getEffects().add(new HP(-1, Dispelablity.UNDISPELLABLE, -1 * attackState.ap));
             attackState.pending = false;
+            attackState.setAttacker(attackersCell.get(0).getWarrior());
             game.iterateAllTriggersCheck(attackState);
         }
         return !attackState.canceled;

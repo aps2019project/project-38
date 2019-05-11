@@ -68,6 +68,18 @@ public class Deck implements Serializable {
             }
             allDecks.put("level3", deck3);
         }
+        {
+            Deck allCombo = new Deck();
+            allCombo.name = "allCombo";
+            allCombo.setHero((Hero) CardFactory.getAllBuiltHeroes().get(8));
+            allCombo.setItem((Spell) CardFactory.getAllBuiltItems().get(13));
+            //***
+            int[] minionIndex = {6, 12, 39, 40, 6, 12, 39, 40, 6, 12, 39, 40, 6, 12, 39, 40, 6, 12, 39, 40};
+            for (int i = 0; i < 20; i++) {
+                allCombo.getCardIDs().add(CardFactory.getAllBuiltMinions().get(minionIndex[i] - 1).getID());
+            }
+            allDecks.put("allCombo", allCombo);
+        }
     }
 
     public void setItem(Spell item) {
