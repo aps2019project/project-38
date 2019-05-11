@@ -87,7 +87,7 @@ public class Game implements Serializable{
         Random random = new Random(System.currentTimeMillis());
         for (Map.Entry<Integer, Card> entry : player.getHand().entrySet()) {
             entry.setValue(Card.getAllCards().get(player.getMainDeck().getCardIDs()
-                    .get(random.nextInt(player.getMainDeck().getCardIDs().size())))).deepCopy();
+                    .get(random.nextInt(player.getMainDeck().getCardIDs().size()))).deepCopy());
         }
     }
 

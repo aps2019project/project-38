@@ -33,7 +33,7 @@ public class CardFactory {
             warrior.description.descriptionOfCardSpecialAbility = "None";
             allBuiltMinions.add(warrior);
         }
-        {
+        {//
             Warrior warrior = new Warrior(22, "Shamshirzan-E-Fars", 400, 2, 6, 4);
             warrior.getEffects().add(new Melee(-1, Dispelablity.UNDISPELLABLE));
             Trigger trigger = new Trigger(-1, Dispelablity.UNDISPELLABLE);
@@ -43,7 +43,7 @@ public class CardFactory {
             warrior.getTriggers().add(trigger);
 
 
-            warrior.description.descriptionOfCardSpecialAbility = "Stun Enemy for next round";
+            warrior.description.descriptionOfCardSpecialAbility = "Stun Enemy for this round";
             allBuiltMinions.add(warrior);
         }
         {
@@ -63,7 +63,7 @@ public class CardFactory {
             warrior.description.descriptionOfCardSpecialAbility = "None";
             allBuiltMinions.add(warrior);
         }
-        {
+        {//
             Warrior warrior = new Warrior(25, "Pahlevan-E-Fars", 600, 9, 24, 6);
             warrior.getEffects().add(new Melee(-1, Dispelablity.UNDISPELLABLE));
 
@@ -229,7 +229,7 @@ public class CardFactory {
             warrior.description.descriptionOfCardSpecialAbility = "Minions in 2 spaces distance take 1 more damage when attacked (permanently)";
             allBuiltMinions.add(warrior);
         }
-        {
+        {//
             Warrior warrior = new Warrior(222, "Goorg-E-Sefid", 400, 5, 8, 2);
             warrior.getEffects().add(new Melee(-1, Dispelablity.UNDISPELLABLE));
             Trigger trigger = new Trigger(-1, Dispelablity.UNDISPELLABLE);
@@ -247,7 +247,7 @@ public class CardFactory {
             warrior.description.descriptionOfCardSpecialAbility = "When attack a minion the minion loses 6 health in next turn and 4 health in turn after that";
             allBuiltMinions.add(warrior);
         }
-        {
+        {//
             Warrior warrior = new Warrior(223, "Palang", 400, 4, 6, 2);
             warrior.getEffects().add(new Melee(-1, Dispelablity.UNDISPELLABLE));
             Trigger trigger = new Trigger(-1, Dispelablity.UNDISPELLABLE);
@@ -262,7 +262,7 @@ public class CardFactory {
             warrior.description.descriptionOfCardSpecialAbility = "When attack a minion the minion loses 8 health in next round";
             allBuiltMinions.add(warrior);
         }
-        {
+        {//
             Warrior warrior = new Warrior(224, "Gorg", 400, 3, 6, 1);
             warrior.getEffects().add(new Melee(-1, Dispelablity.UNDISPELLABLE));
             Trigger trigger = new Trigger(-1, Dispelablity.UNDISPELLABLE);
@@ -277,7 +277,7 @@ public class CardFactory {
             warrior.description.descriptionOfCardSpecialAbility = "When attack a minion the minion loses 6 health in next turn";
             allBuiltMinions.add(warrior);
         }
-        {
+        {//
             Warrior warrior = new Warrior(225, "Jadoogar", 550, 4, 5, 4);
             warrior.getEffects().add(new Ranged(-1, Dispelablity.UNDISPELLABLE, 3));
             Aura aura = new Aura(-1, Dispelablity.UNDISPELLABLE
@@ -290,7 +290,7 @@ public class CardFactory {
             warrior.description.descriptionOfCardSpecialAbility = "Gives a Power buff with +2 AP and a Weakness buff with -1 HP to itself and every friendly minion in 8 adjacent spaces";
             allBuiltMinions.add(warrior);
         }
-        {
+        {//
             Warrior warrior = new Warrior(226, "Jadoogar-E-Aazam", 550, 6, 6, 6);
             warrior.getEffects().add(new Ranged(-1, Dispelablity.UNDISPELLABLE, 5));
             Aura aura = new Aura(-1, Dispelablity.UNDISPELLABLE, new AdjacentGetter(true, false)
@@ -420,7 +420,7 @@ public class CardFactory {
             warrior.description.descriptionOfCardSpecialAbility = "Turn itself to a random enemy minion";
             allBuiltMinions.add(warrior);
         }
-        {
+        {//
             Warrior warrior = new Warrior(238, "Siavash", 350, 4, 8, 5);
             warrior.getEffects().add(new Melee(-1, Dispelablity.UNDISPELLABLE));
             Trigger trigger = new Trigger(-1, Dispelablity.UNDISPELLABLE);
@@ -455,7 +455,7 @@ public class CardFactory {
     }
 
     private static void makeAllSpells() {
-        {
+        {//
             Spell spell = new Spell(11, "TotalDisarm", 0, 1000, false);
 
             spell.getTriggers().add(new Disarm(-1, Dispelablity.BAD));
@@ -494,7 +494,7 @@ public class CardFactory {
             spell.description.descriptionOfCardSpecialAbility = "hit 4 unit to one enemy";
             allBuiltSpells.add(spell);
         }
-        {
+        {//
             Spell spell = new Spell(15, "GodStrength", 2, 450, false);
 
             spell.getEffects().add(new AP(-1, Dispelablity.GOOD, 4));
@@ -504,7 +504,7 @@ public class CardFactory {
             spell.description.descriptionOfCardSpecialAbility = "increase hit power of one hero 4 units";
             allBuiltSpells.add(spell);
         }
-        {
+        {//
             Spell spell = new Spell(16, "HellFire", 3, 600, false);
 
             spell.getTriggers().add(new BurningCell(2,Dispelablity.BAD));
@@ -514,7 +514,7 @@ public class CardFactory {
             spell.description.descriptionOfCardSpecialAbility = "make fiery effect in 2 cells for 2 turns";
             allBuiltSpells.add(spell);
         }
-        {
+        {//
             Spell spell = new Spell(17, "LightingBolt", 2, 1250, false);
 
             spell.getEffects().add(new HP(-1, Dispelablity.UNDISPELLABLE, -8));
@@ -536,7 +536,7 @@ public class CardFactory {
             spell.description.descriptionOfCardSpecialAbility = "make poisoned 8 cells for one turn";
             allBuiltSpells.add(spell);
         }
-        {
+        {//
             Spell spell = new Spell(19, "Madness", 0, 650, false);
 
             spell.getActions().put(new Applier(), new RectGetter(1, 1, false, false, true, false, true));
@@ -547,7 +547,7 @@ public class CardFactory {
             spell.description.descriptionOfCardSpecialAbility = "increase hit power of one person 4 units for 3 turns but it disarm";
             allBuiltSpells.add(spell);
         }
-        {
+        {//
             Spell spell = new Spell(110, "AllDisarm", 9, 2000, false);
 
             spell.getActions().put(new Applier(), new AllWarriorsGetter(false, true));
@@ -629,7 +629,7 @@ public class CardFactory {
             spell.description.descriptionOfCardSpecialAbility = "Gives weakness buff -4 AP";
             allBuiltSpells.add(spell);
         }
-        {
+        {//
             Spell spell = new Spell(118, "Sacrifice", 3, 1600, false);
 
             spell.getActions().put(new Applier(), new RectGetter(1, 1, false, false, true, false, false));
@@ -640,7 +640,7 @@ public class CardFactory {
             spell.description.descriptionOfCardSpecialAbility = "Gives weakness buff -6 HP and power buff +8 AP";
             allBuiltSpells.add(spell);
         }
-        {
+        {//
             Spell spell = new Spell(119, "KingsGaurd", 3, 1750, false);
 
             spell.getActions().put(new Killer(), new RandomGetter((SpellTarget) new AdjacentGetter(new RectGetter(1,1,false,false,false,false,true))));
@@ -649,7 +649,7 @@ public class CardFactory {
             spell.description.descriptionOfCardSpecialAbility = "killes enemy";
             allBuiltSpells.add(spell);
         }
-        {
+        {//
             Spell spell = new Spell(120, "Shock", 1, 1200, false);
 
             spell.getActions().put(new Applier(), new RectGetter(1, 1, false, true, false, true, false));

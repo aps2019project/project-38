@@ -37,7 +37,7 @@ public class Board implements Serializable {
         for (ArrayList<Cell> row : table) {
             for (Cell cell : row) {
                 UUID id = UUID.randomUUID();
-                cell.setLock(id+" bti",true);
+                cell.setLock(id+"bti",true);
                 for (Trigger trigger : cell.getTriggers()) {
                     trigger.check(gameState,cell);
                 }
