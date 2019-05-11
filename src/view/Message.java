@@ -296,7 +296,7 @@ public interface Message {
             }
 
             static void showBoardAbove(Game game) {
-                int activePlayerNumber = game.getActivePlayer() == game.getPlayers()[0] ? 0 : 1;
+                int activePlayerNumber = game.getPlayerNumber(game.getActivePlayer());
                 String completeName = game.getActivePlayer() instanceof AIPlayer ? "[AI]" : String.format
                         ("[Human] [User Name: %s]", ((HumanPlayer) game.getActivePlayer()).getAccount().getUsername());
                 betweenTwoPageLine();
@@ -409,7 +409,7 @@ public interface Message {
             static void cellFirstLine(Cell cell) {
                 Game game = cell.getBoard().getGame();
                 if (cell.getWarrior() != null) {
-                    int playerNumber = game.getWarriorsPlayer(cell.getWarrior()) == game.getPlayers()[0] ? 0 : 1;
+                    int playerNumber = game.getPlayerNumber(game.getWarriorsPlayer(cell.getWarrior()));
                     System.out.print(playerNumber + String.format("%3d", cell.getWarrior().getID()));
                 } else {
                     System.out.print("    ");

@@ -28,12 +28,6 @@ public class Game implements Serializable{
     private Selectable selectedThings = new Selectable();
     public int prize;
 
-//    public HashMap<Trigger,QualityHaver> triggAddBuffer = new HashMap<>();
-//    public HashMap<Effect,QualityHaver> effAddBuffer = new HashMap<>();
-//    public HashMap<Effect,QualityHaver> effRemoveBuffer = new HashMap<>();
-//    public HashMap<Trigger,QualityHaver> triggRemoveBuffer = new HashMap<>();
-//    private boolean killMod=false;
-
     public Game(GameMode gameMode, Account accountOne, Account accountTwo) {
         this.gameMode = gameMode;
         int randomIndex = (new Random(System.currentTimeMillis())).nextInt(2);
@@ -88,25 +82,6 @@ public class Game implements Serializable{
             }
         }
     }
-
-//    private void flushBuffers(){
-//        for (Map.Entry<Trigger, QualityHaver> entry : triggAddBuffer.entrySet()) {
-//            entry.getValue().getTriggers().add(entry.getKey());
-//        }
-//        for (Map.Entry<Effect, QualityHaver> entry : effAddBuffer.entrySet()) {
-//            entry.getValue().getEffects().add(entry.getKey());
-//        }
-//        for (Map.Entry<Trigger, QualityHaver> entry : triggRemoveBuffer.entrySet()) {
-//            entry.getValue().getTriggers().remove(entry.getKey());
-//        }
-//        for (Map.Entry<Effect, QualityHaver> entry : effRemoveBuffer.entrySet()) {
-//            entry.getValue().getEffects().remove(entry.getKey());
-//        }
-//        triggAddBuffer = new HashMap<>();
-//        effAddBuffer = new HashMap<>();
-//        triggRemoveBuffer = new HashMap<>();
-//        effRemoveBuffer = new HashMap<>();
-//    }
 
     private void initialisePlayerHand(Player player) {
         Random random = new Random(System.currentTimeMillis());
@@ -177,9 +152,6 @@ public class Game implements Serializable{
         board.iterateBoardTriggers(gameState);
         iteratePlayerTriggers(players[0], gameState);
         iteratePlayerTriggers(players[1], gameState);
-//        if(!killMod){
-//            flushBuffers();
-//        }
     }
 
     private void iteratePlayerTriggers(Player player, GameState gameState) {
@@ -201,15 +173,6 @@ public class Game implements Serializable{
 
     private void iterateAndExpirePlayerTriggers(Player player) {
         for (Warrior warrior : player.getWarriors()) {
-//            for (Iterator<Trigger> iterator = warrior.getTriggers().iterator(); iterator.hasNext(); ) {
-//                Trigger trigger = iterator.next();
-//                if (trigger.duration > 0) {
-//                    trigger.duration--;
-//                    if (trigger.duration == 0) {
-//                        iterator.remove();
-//                    }
-//                }
-//            }
             UUID id = UUID.randomUUID();
             warrior.setLock(id+"pte",true);
             for (Trigger trigger : warrior.getTriggers()) {
@@ -232,15 +195,6 @@ public class Game implements Serializable{
 
     private void iterateAndExpirePlayerEffects(Player player) {
         for (Warrior warrior : player.getWarriors()) {
-//            for (Iterator<Effect> iterator = warrior.getEffects().iterator(); iterator.hasNext(); ) {
-//                Effect effect = iterator.next();
-//                if (effect.duration > 0) {
-//                    effect.duration--;
-//                    if (effect.duration == 0) {
-//                        iterator.remove();
-//                    }
-//                }
-//            }
             UUID id = UUID.randomUUID();
             warrior.setLock(id+"pee",true);
             for (Effect effect : warrior.getEffects()) {
@@ -266,12 +220,9 @@ public class Game implements Serializable{
     }
 
     private void checkGameEndAndThenKillAllDiedWarriors() {
-//        killMod = true;
-        gameMode.checkGameEnd(this);//todo
+        gameMode.checkGameEnd(this);
         killPlayerDiedWarriors(players[0]);
         killPlayerDiedWarriors(players[1]);
-//        killMod = false;
-//        flushBuffers();
     }
 
     private void killPlayerDiedWarriors(Player player) {

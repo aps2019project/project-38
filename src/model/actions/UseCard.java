@@ -26,11 +26,13 @@ public class UseCard {
         } else {
             Warrior warrior = (Warrior)card;
             if (cell.getWarrior() != null) return false;
-            warrior.getEffects().add(new Attacked());
             gameState = new PutMinionState(warrior);
         }
         if (game.getActivePlayer().mana >= card.getRequiredMana()) {
             if (card.apply(cell)) {
+                if (gameState instanceof PutMinionState) {
+                    ((PutMinionState) gameState).getWarrior().getEffects().add(new Attacked());
+                }
                 game.getActivePlayer().mana -= card.getRequiredMana();
                 game.getActivePlayer().getHand().put(handMapKey, null);
                 game.getActivePlayer().getUsedCards().add(card);
