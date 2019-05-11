@@ -18,11 +18,11 @@ public class Attack {
             AttackState attackState = new AttackState(attacker, defender, attacker.getAp());
             game.iterateAllTriggersCheck(attackState);
             if (!attackState.canceled) {
-                attacker.getEffects().add(new Attacked());
-                defender.getEffects().add(new HP(-1, Dispelablity.UNDISPELLABLE, -1 * attackState.ap));
+                System.err.println("Attacked: ("+attackerCell.getRow()+","+attackerCell.getColumn()+") ("+defenderCell.getRow()+","+defenderCell.getColumn()+")");
+                attacker.addEffect(new Attacked());
+                defender.addEffect(new HP(-1, Dispelablity.UNDISPELLABLE, -1 * attackState.ap));
                 attackState.pending = false;
                 game.iterateAllTriggersCheck(attackState);
-                System.err.println("Attacked: ("+attackerCell.getRow()+","+attackerCell.getColumn()+") ("+defenderCell.getRow()+","+defenderCell.getColumn()+")");
             }
             return !attackState.canceled;
         }

@@ -182,7 +182,7 @@ public class CardFactory {
             trigger.getConditions().add(new HasDied());
             trigger.getEffects().add(new HP(-1, Dispelablity.UNDISPELLABLE, -2));
             trigger.getActions().put(new Applier(), new AdjacentGetter(false, false));
-
+            warrior.getTriggers().add(trigger);
 
             warrior.description.descriptionOfCardSpecialAbility = "Deals 2 damage to every minion in 8 adjacent spaces on death";
             allBuiltMinions.add(warrior);
@@ -194,7 +194,7 @@ public class CardFactory {
             trigger.getTriggers().add(new Poisoned(4, Dispelablity.BAD));
             trigger.getConditions().add(new HasAttacked());
             trigger.getActions().put(new Applier(), new AttackedGetter());
-
+            warrior.getTriggers().add(trigger);
 
             warrior.description.descriptionOfCardSpecialAbility = "Poison enemy for 3 turns";
             allBuiltMinions.add(warrior);
@@ -224,7 +224,7 @@ public class CardFactory {
             trigger.getConditions().add(new HasSpawned());
             trigger.getTriggers().add(new HolyBuff(-1, Dispelablity.BAD, -1));
             trigger.getActions().put(new Applier(), new WithinDistanceGetter(false, 2, false));
-
+            warrior.getTriggers().add(trigger);
 
             warrior.description.descriptionOfCardSpecialAbility = "Minions in 2 spaces distance take 1 more damage when attacked (permanently)";
             allBuiltMinions.add(warrior);
@@ -241,6 +241,7 @@ public class CardFactory {
             teb2.getEffects().add(new HP(-1, Dispelablity.UNDISPELLABLE, -4));
             trigger.getTriggers().add(teb1);
             trigger.getTriggers().add(teb2);
+            warrior.getTriggers().add(trigger);
 
 
             warrior.description.descriptionOfCardSpecialAbility = "When attack a minion the minion loses 6 health in next turn and 4 health in turn after that";
@@ -426,7 +427,7 @@ public class CardFactory {
             trigger.getConditions().add(new HasDied());
             trigger.getActions().put(new Applier(), new HeroGetter(false));
             trigger.getEffects().add(new HP(-1, Dispelablity.UNDISPELLABLE, -6));
-
+            warrior.getTriggers().add(trigger);
 
             warrior.description.descriptionOfCardSpecialAbility = "Deals 6 damage to enemy Hero on death";
             allBuiltMinions.add(warrior);
@@ -618,7 +619,7 @@ public class CardFactory {
             spell.description.descriptionOfCardSpecialAbility = "hit all enemies 6 units";
             allBuiltSpells.add(spell);
         }
-        {//w
+        {//
             Spell spell = new Spell(117, "Weakening", 1, 1000, false);
 
             spell.getActions().put(new Applier(), new RectGetter(1, 1, false, true, false, false, false));

@@ -35,7 +35,7 @@ public class AdjacentGetter implements TriggerTarget , SpellTarget {
         return (warrior.getCell().getBoard().getGame().getBoard().getEightAdjacent(warrior.getCell()).
                 stream().map(Cell::getWarrior).filter(Objects::nonNull).filter(warrior1 -> warrior.getCell().getBoard().getGame()
                 .getWarriorsPlayer(warrior).getWarriors().contains(warrior1) == friendMod)
-                .filter(warrior1 -> !(warrior instanceof Hero) || heroToo).collect(Collectors.toCollection(ArrayList::new)));
+                .filter(warrior1 -> !(warrior1 instanceof Hero) || heroToo).collect(Collectors.toCollection(ArrayList::new)));
     }
 
     @Override

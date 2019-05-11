@@ -59,7 +59,7 @@ public class Spell extends Card {
             ObjectInputStream ois = new ObjectInputStream(bis);
             return (Spell) ois.readObject();
         }catch (IOException | ClassNotFoundException e){
-            System.err.println("could deep copy in spell:");
+            System.err.println("could not deep copy in spell:");
             e.printStackTrace();
         }
         return this;
