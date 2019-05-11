@@ -21,6 +21,10 @@ public class HolyBuff extends Trigger {
         this.reducedDamage=reducedDamage;
     }
 
+    public int getReducedDamage() {
+        return reducedDamage;
+    }
+
     @Override
     protected void executeActions(GameState gameState, QualityHaver owner) {
         AttackState attackState = (AttackState) gameState;

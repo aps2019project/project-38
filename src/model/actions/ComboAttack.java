@@ -8,6 +8,7 @@ import model.effects.Combo;
 import model.effects.Dispelablity;
 import model.effects.HP;
 import model.gamestate.AttackState;
+import model.triggers.HolyBuff;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,7 +26,12 @@ public class ComboAttack {
             if (checkWarriorsEffectsForAttack(game, attackerCell, defenderCell, jumperManhattanDistance) &&
                     checkWarriorHasComboEffect(attacker) && !attackState.canceled) {
                 attackState.ap += attacker.getAp();
+                int priviesAP = attackState.ap;
                 attackState.setAttacker(attacker);
+                if (attacker != attackersCell.get(0).getWarrior()) {
+                    attackState.ap = priviesAP + attacker.getAp() > attackState.ap ?
+                            priviesAP + attacker.getAp() : attackState.ap;
+                }
                 game.iterateAllTriggersCheck(attackState);
             }
             else {
