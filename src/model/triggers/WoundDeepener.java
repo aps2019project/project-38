@@ -24,7 +24,7 @@ public class WoundDeepener extends Trigger {
 
 //        game.triggAddBuffer.put(new AttackAdvantage(-1,Dispelablity.GOOD,
 //                Constant.EffectsTriggersConstants.WoundDeepener.additionalDamage, attackState.getAttacked()),owner);
-        owner.addTrigger(new AttackAdvantage(-1,Dispelablity.GOOD,
-                Constant.EffectsTriggersConstants.WoundDeepener.additionalDamage, attackState.getAttacked()));
+        ((AttackAdvantage)owner.addTrigger(new AttackAdvantage(-1,Dispelablity.GOOD,
+                Constant.EffectsTriggersConstants.WoundDeepener.additionalDamage,null))).warriorAgainst=attackState.getAttacked();
     }
 }
