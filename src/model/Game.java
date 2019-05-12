@@ -2,10 +2,7 @@ package model;
 
 import model.actions.*;
 import model.actions.Killer;
-import model.cards.Card;
-import model.cards.HeroPower;
-import model.cards.Spell;
-import model.cards.Warrior;
+import model.cards.*;
 import model.effects.Dispelablity;
 import model.effects.Effect;
 import model.gamestate.*;
@@ -14,6 +11,7 @@ import model.player.AIPlayer;
 import model.player.HumanPlayer;
 import model.player.Player;
 import model.targets.OnCellGetter;
+import model.triggers.CollectibleMine;
 import model.triggers.Mine;
 import model.triggers.Trigger;
 
@@ -72,13 +70,8 @@ public class Game implements Serializable{
             turn = 0;
         }
         {
-            Mine c1 = new Mine(-1, Dispelablity.UNDISPELLABLE);
-            c1.getActions().put(new AutoAction() {
-                @Override
-                public boolean execute(QualityHaver source, QualityHaver target) {
-                    return false;
-                }
-            },new OnCellGetter());
+            CollectibleMine c1 = new CollectibleMine(-1, Dispelablity.UNDISPELLABLE,(Spell)CardFactory.getAllBuiltItems().get(9).deepCopy());
+            board.getCell(2,2).addTrigger(c1);
         }
         startTurn();
 //        timer.start();

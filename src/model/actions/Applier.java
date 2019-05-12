@@ -1,8 +1,11 @@
 package model.actions;
 
 import model.QualityHaver;
+import model.cards.Warrior;
 import model.effects.Effect;
 import model.gamestate.EffTriggApplyState;
+import model.triggers.CollectibleMine;
+import model.triggers.Mine;
 import model.triggers.Trigger;
 
 import static model.QualityHaver.getGameFromQualityHaver;
@@ -37,6 +40,11 @@ public class Applier implements AutoAction {
                 state.pending = false;
                 getGameFromQualityHaver(target).iterateAllTriggersCheck(state);
             }
+        }
+
+        if(source instanceof CollectibleMine){
+            CollectibleMine cMine = (CollectibleMine)source;
+            QualityHaver.getGameFromQualityHaver(target).getWarriorsPlayer((Warrior) target).getCollectibleItems().add(cMine.getCollectible());
         }
 
         return didSth;
