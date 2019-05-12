@@ -314,7 +314,7 @@ public class CardFactory {
             warrior.description.descriptionOfCardSpecialAbility = "Gives all friendly minions a passive Power buff with +1 AP";
             allBuiltMinions.add(warrior);
         }
-        {
+        {//
             Warrior warrior = new Warrior(228, "Goraz-E-Vahshi", 500, 6, 10, 14);
             warrior.getEffects().add(new Melee(-1, Dispelablity.UNDISPELLABLE));
 
@@ -334,7 +334,7 @@ public class CardFactory {
             warrior.description.descriptionOfCardSpecialAbility = "can't be poisoned";
             allBuiltMinions.add(warrior);
         }
-        {
+        {//
             Warrior warrior = new Warrior(230, "Giv", 450, 4, 5, 7);
             warrior.getEffects().add(new Ranged(-1, Dispelablity.UNDISPELLABLE, 5));
 
@@ -384,7 +384,7 @@ public class CardFactory {
             warrior.description.descriptionOfCardSpecialAbility = "None";
             allBuiltMinions.add(warrior);
         }
-        {
+        {//
             Warrior warrior = new Warrior(235, "Ghool-E-Dosar", 550, 4, 10, 4);
             warrior.getEffects().add(new Melee(-1, Dispelablity.UNDISPELLABLE));
             Trigger trigger = new Trigger(-1, Dispelablity.UNDISPELLABLE);
@@ -609,7 +609,7 @@ public class CardFactory {
             spell.description.descriptionOfCardSpecialAbility = "Gives power buff +6 AP";
             allBuiltSpells.add(spell);
         }
-        {
+        {//
             Spell spell = new Spell(116, "AllAttack", 4, 1500, false);
 
             spell.getActions().put(new Applier(), new RectGetter(Constant.GameConstants.boardRow, 1, false, true, false, true, false));

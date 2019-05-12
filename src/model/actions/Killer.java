@@ -9,10 +9,11 @@ import model.player.Player;
 public class Killer implements AutoAction{
 
     @Override
-    public void execute(QualityHaver source, QualityHaver target) {
+    public boolean execute(QualityHaver source, QualityHaver target) {
         assert target instanceof Warrior;
 
         kill((Warrior)target);
+        return true;//todo: it always gets done right?
     }
 
     public static void kill(Warrior warrior) {

@@ -6,12 +6,15 @@ import model.cards.Card;
 import model.cards.HeroPower;
 import model.cards.Spell;
 import model.cards.Warrior;
+import model.effects.Dispelablity;
 import model.effects.Effect;
 import model.gamestate.*;
 import model.gamemodes.GameMode;
 import model.player.AIPlayer;
 import model.player.HumanPlayer;
 import model.player.Player;
+import model.targets.OnCellGetter;
+import model.triggers.Mine;
 import model.triggers.Trigger;
 
 import java.io.Serializable;
@@ -68,6 +71,15 @@ public class Game implements Serializable{
             turn = 1;
             useUsableItem(players[1].getMainDeck().getItem());
             turn = 0;
+        }
+        {
+            Mine c1 = new Mine(-1, Dispelablity.UNDISPELLABLE);
+            c1.getActions().put(new AutoAction() {
+                @Override
+                public boolean execute(QualityHaver source, QualityHaver target) {
+                    return false;
+                }
+            },new OnCellGetter());
         }
         startTurn();
 //        timer.start();

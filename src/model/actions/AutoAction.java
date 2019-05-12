@@ -9,5 +9,5 @@ import model.triggers.Trigger;
 import java.io.Serializable;
 
 public interface AutoAction extends Serializable {
-    void execute(QualityHaver source, QualityHaver target);
+    boolean execute(QualityHaver source, QualityHaver target);
 }

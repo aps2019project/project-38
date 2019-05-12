@@ -1,16 +1,17 @@
 package model.gamestate;
 
+import model.Cell;
 import model.QualityHaver;
 import model.cards.Spell;
 
 public class UseSpellState extends GameState {
     public boolean pending = true;
-    public QualityHaver target;
+    public Cell targetCell;
     public Spell spell;
     public boolean canceled = false;
 
-    public UseSpellState(QualityHaver target, Spell spell) {
-        this.target=target;
+    public UseSpellState(Cell target, Spell spell) {
+        this.targetCell=target;
         this.spell = spell;
     }
 }
