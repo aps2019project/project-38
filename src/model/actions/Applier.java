@@ -9,17 +9,19 @@ import static model.QualityHaver.getGameFromQualityHaver;
 
 public class Applier implements AutoAction {
     @Override
-    public void execute(QualityHaver source, QualityHaver target) {
+    public boolean execute(QualityHaver source, QualityHaver target) {
+        boolean didSth = false;
+
         if (target == null || source == null)
-            return;
+            return didSth;
 
         for (Trigger trigger : source.getTriggers()) {
             EffTriggApplyState state = new EffTriggApplyState(target, trigger);
             getGameFromQualityHaver(target).iterateAllTriggersCheck(state);
             if (!state.canceled) {
-//                getGameFromQualityHaver(target).triggAddBuffer.put(trigger.deepCopy(),target);
                 target.addTrigger(trigger);
 
+                didSth = true;
                 state.pending = false;
                 getGameFromQualityHaver(target).iterateAllTriggersCheck(state);
             }
@@ -29,12 +31,14 @@ public class Applier implements AutoAction {
             EffTriggApplyState state = new EffTriggApplyState(target, effect);
             getGameFromQualityHaver(target).iterateAllTriggersCheck(state);
             if (!state.canceled) {
-//                getGameFromQualityHaver(target).effAddBuffer.put(effect.deepCopy(),target);
                 target.addEffect(effect);
 
+                didSth = true;
                 state.pending = false;
                 getGameFromQualityHaver(target).iterateAllTriggersCheck(state);
             }
         }
+
+        return didSth;
     }
 }
