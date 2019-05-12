@@ -46,7 +46,7 @@ public class Level {
     }
 
     public Game getLevelGame(Account account) {
-        Game game = new Game(gameMode, account, deck);
+        Game game = new Game(gameMode.deepCopy(), account, deck);
         game.prize = prize;
         return game;
     }

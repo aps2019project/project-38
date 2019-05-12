@@ -27,10 +27,9 @@ public class CarryingFlag extends GameMode {
     private void updateScores(Game game) {
         if (game.turn > previousTurn) {
             for (int i = 0; i < 2; i++) {
-                for (Warrior warrior : game.getPlayers()[i].getWarriors()) {
-                    playersScore[i] += warrior.getTriggers().stream()
-                            .filter(trigger -> trigger instanceof Flag).count();
-                }
+                playersScore[i] += game.getPlayers()[i].getWarriors().stream().mapToInt
+                        (warrior -> (int) warrior.getTriggers().stream().filter
+                                (trigger -> trigger instanceof Flag).count()).sum();
             }
             previousTurn++;
         }
@@ -44,6 +43,11 @@ public class CarryingFlag extends GameMode {
                     .getTriggers().add(new Flag());
             gameHasFlag = true;
         }
+    }
+
+    @Override
+    public GameMode deepCopy() {
+        return new CarryingFlag();
     }
 
     public int[] getPlayersScore() {

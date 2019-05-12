@@ -12,7 +12,6 @@ import model.triggers.Flag;
 import model.triggers.HolyBuff;
 import model.triggers.Poisoned;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public interface Message {
@@ -308,8 +307,8 @@ public interface Message {
                 else if (game.getGameMode() instanceof CollectingFlag) {
                     CollectingFlag mode = (CollectingFlag) game.getGameMode();
                     System.out.printf("[Player 0 Flags: %d] [Player 1 Flags: %d]\n",
-                            game.getGameMode().getNumberOFPlayerFlags(game.getPlayers()[0]),
-                            game.getGameMode().getNumberOFPlayerFlags(game.getPlayers()[0]));
+                            mode.getNumberOFPlayerFlags(game.getPlayers()[0]),
+                            mode.getNumberOFPlayerFlags(game.getPlayers()[1]));
                 }
                 System.out.println(activePlayerNumber + ": " + completeName);
                 System.out.println("Mana: " + game.getActivePlayer().mana);
@@ -331,9 +330,11 @@ public interface Message {
                 System.out.printf("Next Turn Card: [Type: %s] %s\n",
                         nextCard instanceof Spell ? "Spell" : "Minion", CardView.cardDetail(nextCard));
                 betweenTwoLineLine();
-                HeroPower heroPower = game.getActivePlayer().getPlayerHero().getPower();
-                CardView.ShowSpecialPower(heroPower);
-                betweenTwoLineLine();
+                if (game.getActivePlayer().getPlayerHero() != null) {
+                    HeroPower heroPower = game.getActivePlayer().getPlayerHero().getPower();
+                    CardView.ShowSpecialPower(heroPower);
+                    betweenTwoLineLine();
+                }
                 showSelectedThings(game);
                 betweenTwoLineLine();
             }
@@ -537,7 +538,7 @@ public interface Message {
 
                 static void showWarrior(Warrior warrior) {//private
                     System.out.printf("%s: [Type: %s] %s [AP: %d] [HP: %d]\n",warrior instanceof Hero ? "Hero" : "Minion",
-                            warrior.getWrriorType(), cardDetail(warrior), warrior.getAp(), warrior.getHp());
+                            warrior.getWarriorType(), cardDetail(warrior), warrior.getAp(), warrior.getHp());
                 }
 
                 static void ShowSpecialPower(HeroPower heroPower) {
