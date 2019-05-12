@@ -28,10 +28,6 @@ public interface Message {
         System.out.println(someThing);
     }
 
-    static void INTER() {
-        System.out.println();
-    }
-
     // mainMenu messages
 
     static void showMainMenuHelp() {
