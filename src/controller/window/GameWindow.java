@@ -463,8 +463,8 @@ public class GameWindow extends Window {
                 return;
             } else if (request.matches("Select \\d+")) {
                 int index = Integer.parseInt(request.replace("Select ", ""));
-                if (index < game.getCollectibleItems().size()) {
-                    game.getSelectedThings().selectColletableItem(game.getCollectibleItems().get(index));
+                if (index < game.getActivePlayer().getCollectibleItems().size()) {
+                    game.getSelectedThings().selectColletableItem(game.getActivePlayer().getCollectibleItems().get(index));
                     Message.GameWindow.InsideGame.DoneMessages.selectItem();
                 } else {
                     Message.GameWindow.FailMessage.wrongIndex();

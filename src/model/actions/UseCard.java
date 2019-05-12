@@ -67,7 +67,7 @@ public class UseCard {
         if (useSpellState.canceled) return false;
         useSpellState.pending = false;
         if (spell.apply(cell)) {
-            game.getCollectibleItems().remove(spell);
+            game.getActivePlayer().getCollectibleItems().remove(spell);
             game.iterateAllTriggersCheck(useSpellState);
             return true;
         }
