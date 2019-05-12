@@ -492,12 +492,12 @@ public interface Message {
                         (insideTrigger -> insideTrigger instanceof Poisoned))) {
                     System.out.printf("Po%2d", getNumberOfTriggerSubHaverInCellOrWarrior(cell, new Poisoned(-1, Dispelablity.BAD)));
                 } else if (cell.getWarrior() != null && cell.getWarrior().getTriggers().stream().anyMatch(trigger -> trigger instanceof Poisoned)) {
-                    System.out.printf("Po%2d", getNumberOfTriggerSubInCellOrWarrior(cell.getWarrior(), new Poisoned(-1, Dispelablity.BAD)));
+                    System.out.printf("Po%2d", Constant.EffectsTriggersConstants.PoisonBuff.poisonBuffDamage * getNumberOfTriggerSubInCellOrWarrior(cell.getWarrior(), new Poisoned(-1, Dispelablity.BAD)));
                 } else {
                     System.out.print("    ");
                 }
                 /* BurningCell */
-                if (cell.getTriggers().stream().anyMatch(trigger -> trigger instanceof BurningCell)) {//todo how much
+                if (cell.getTriggers().stream().anyMatch(trigger -> trigger instanceof BurningCell)) {
                     System.out.printf("BC%2d", Constant.EffectsTriggersConstants.FiredCell.firedCellDamage * getNumberOfTriggerSubInCellOrWarrior(cell, new BurningCell(-1, Dispelablity.BAD)));
                 } else {
                     System.out.print("    ");
