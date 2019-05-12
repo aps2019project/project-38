@@ -97,10 +97,6 @@ public interface Message {
         System.out.println("There is no card with this name in collection cards :(");
     }
 
-    static void thereIsNoCardWithThisNameAtAll() {
-        System.out.println("There is no card with this name at all :(");
-    }
-
     static void haveNotThisCardInYourCollection() {
         System.out.println("You haven't this card in your collection. You can't sell it :(");
     }
