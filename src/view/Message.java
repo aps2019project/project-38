@@ -439,16 +439,10 @@ public interface Message {
                 if (cell.getWarrior() != null) {
                     int playerNumber = game.getPlayerNumber(game.getWarriorsPlayer(cell.getWarrior()));
                     System.out.printf("P%1d%s", playerNumber, cell.getWarrior() instanceof Hero ? "H": "M");
-                } else {
-                    System.out.print("   ");
-                }
-
-                if (cell.getWarrior() != null) {
                     System.out.printf("ID%3d", cell.getWarrior().getID());
-                } else if (false) {//todo
-                    System.out.print("It%3d");
-                } else {
-                    System.out.print("     ");
+                } else if (cell.getTriggers().stream().anyMatch(trigger -> trigger instanceof CollectibleMine)) {
+                    System.out.printf("Item:%3d", ((CollectibleMine)cell.getTriggers().stream().filter
+                            (trigger -> trigger instanceof CollectibleMine).findFirst().get()).getCollectible().getID());
                 }
             }
 
@@ -543,7 +537,6 @@ public interface Message {
                 System.out.println("Graveyard Cards: ");
                 for (Card card : game.getActivePlayer().getUsedCards()) {
                     CardView.showCard(card);
-                    //todo can Items be in grave yard?
                 }
             }
 
@@ -581,7 +574,6 @@ public interface Message {
                 }
 
                 static void ShowSpecialPower(HeroPower heroPower) {
-                    //todo we should keep a card in HeroPower instead of extending Spell
                     if (heroPower == null) {
                         System.out.println("Special Power: Empty");
                     }

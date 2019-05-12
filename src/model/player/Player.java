@@ -47,7 +47,7 @@ public abstract class Player implements Serializable {
     }
 
     public Hero getPlayerHero(){
-        Optional<Warrior> optional= warriors.stream().filter(warrior -> warrior instanceof Hero).findFirst();
+        Optional<Warrior> optional = warriors.stream().filter(warrior -> warrior instanceof Hero).findFirst();
         return (Hero) optional.orElse(null);
     }
 
