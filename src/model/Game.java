@@ -18,7 +18,6 @@ import model.triggers.Trigger;
 import java.io.Serializable;
 import java.util.*;
 
-
 public class Game implements Serializable{
     GameMode gameMode;
     public int turn;

@@ -89,10 +89,6 @@ public interface Message {
         System.out.println("Please Inter CardName:");
     }
 
-    static void printCardID(int cardID) {
-        System.out.printf("%d\n", cardID);
-    }
-
     static void thereIsNoCardWithThisNameInShop() {
         System.out.println("There is no card with this name in shop cards :(");
     }
