@@ -5,6 +5,7 @@ import model.Deck;
 import model.Game;
 import model.cards.Card;
 import model.cards.Hero;
+import model.cards.Spell;
 import model.cards.Warrior;
 
 import java.io.Serializable;
@@ -19,6 +20,7 @@ public abstract class Player implements Serializable {
     protected HashMap<Integer, Card> hand = new HashMap<>();
     protected ArrayList<Warrior> warriors = new ArrayList<>();
     protected ArrayList<Card> usedCards = new ArrayList<>();
+    private ArrayList<Spell> collectibleItems = new ArrayList<>();
     public boolean ableToReplaceCard;
     private Card nextCard;
 
@@ -53,6 +55,10 @@ public abstract class Player implements Serializable {
 
     public Deck getMainDeck() {
         return mainDeck;
+    }
+
+    public ArrayList<Spell> getCollectibleItems() {
+        return collectibleItems;
     }
 
     public Card getNextCard() {

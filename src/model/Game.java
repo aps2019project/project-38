@@ -27,7 +27,6 @@ public class Game implements Serializable{
     Player[] players = new Player[2];
     private Board board = new Board(this);
     //    public Timer timer = new Timer(Constant.GameConstants.turnTime, ignored -> endTurn());
-    private ArrayList<Spell> collectibleItems = new ArrayList<>();
     private Selectable selectedThings = new Selectable();
     public int prize;
 
@@ -145,10 +144,6 @@ public class Game implements Serializable{
 
     public Selectable getSelectedThings() {
         return selectedThings;
-    }
-
-    public ArrayList<Spell> getCollectibleItems() {
-        return collectibleItems;
     }
 
     public void decreaseSpecialPowerCoolDown() {

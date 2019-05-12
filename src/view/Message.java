@@ -532,8 +532,8 @@ public interface Message {
 
             static void collectiblesWindow(Game game) {
                 System.out.println("Collectible Items:");
-                for (int i = 0; i < game.getCollectibleItems().size(); i++) {
-                    Spell item = game.getCollectibleItems().get(i);
+                for (int i = 0; i < game.getActivePlayer().getCollectibleItems().size(); i++) {
+                    Spell item = game.getActivePlayer().getCollectibleItems().get(i);
                     CardView.showItem(item);
                 }
             }
