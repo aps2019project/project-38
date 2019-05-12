@@ -438,7 +438,7 @@ public interface Message {
                 Game game = cell.getBoard().getGame();
                 if (cell.getWarrior() != null) {
                     int playerNumber = game.getPlayerNumber(game.getWarriorsPlayer(cell.getWarrior()));
-                    System.out.printf("Pl%1d", playerNumber);
+                    System.out.printf("P%1d%s", playerNumber, cell.getWarrior() instanceof Hero ? "H": "M");
                 } else {
                     System.out.print("   ");
                 }
@@ -454,13 +454,13 @@ public interface Message {
 
             static void cellSecondLine(Cell cell) {
                 if (cell.getWarrior() != null) {
-                    System.out.printf("HP%2d", cell.getWarrior().getHp());
+                    System.out.printf("AP%2d", cell.getWarrior().getAp());
                 } else {
                     System.out.print("    ");
                 }
 
                 if (cell.getWarrior() != null) {
-                    System.out.printf("AP%2d", cell.getWarrior().getAp());
+                    System.out.printf("HP%2d", cell.getWarrior().getHp());
                 } else {
                     System.out.print("    ");
                 }
@@ -534,6 +534,7 @@ public interface Message {
                 System.out.println("Collectible Items:");
                 for (int i = 0; i < game.getActivePlayer().getCollectibleItems().size(); i++) {
                     Spell item = game.getActivePlayer().getCollectibleItems().get(i);
+                    System.out.print(i + ". ");
                     CardView.showItem(item);
                 }
             }
@@ -686,7 +687,7 @@ public interface Message {
             }
 
             static void noSelectedCard() {
-                System.out.println("ou have no selected card");
+                System.out.println("you have no selected card");
             }
 
             static void noSelectedWarriorsGroup() {
