@@ -2,15 +2,13 @@ package view;
 
 import model.*;
 import model.cards.*;
+import model.effects.Dispelablity;
 import model.gamemodes.CarryingFlag;
 import model.gamemodes.CollectingFlag;
 import model.player.AIPlayer;
 import model.player.HumanPlayer;
 import model.player.Player;
-import model.triggers.BurningCell;
-import model.triggers.Flag;
-import model.triggers.HolyBuff;
-import model.triggers.Poisoned;
+import model.triggers.*;
 
 import java.util.Map;
 
@@ -310,7 +308,7 @@ public interface Message {
                             mode.getNumberOFPlayerFlags(game.getPlayers()[0]),
                             mode.getNumberOFPlayerFlags(game.getPlayers()[1]));
                 }
-                System.out.println(activePlayerNumber + ": " + completeName);
+                System.out.printf("Player %d: %s\n", activePlayerNumber, completeName);
                 System.out.println("Mana: " + game.getActivePlayer().mana);
             }
 
@@ -368,16 +366,15 @@ public interface Message {
             }
 
             static void showBoard(Game game) {
-                System.out.print(" ");
-                for (int i = 0; i < Constant.GameConstants.boardColumn * 5; i++) {
-                    System.out.print(i % 5 == 2 ? i / 5 : " ");
+                for (int i = 0; i < Constant.GameConstants.boardColumn * 6; i++) {
+                    System.out.print(i % 6 == 3 ? i / 6 : " ");
                 }
                 System.out.println();
                 horizontalBoardLine();
                 for (int i = 0; i < Constant.GameConstants.boardRow; i++) {
-                    for (int j = 0; j < 3; j++) {
+                    for (int j = 0; j < 6; j++) {
                         for (int k = 0; k < Constant.GameConstants.boardColumn; k++) {
-                            if (k == 0) System.out.print(j == 1 ? i : " ");
+                            if (k == 0) System.out.print(j == 2 ? i : " ");
                             switch (j) {
                                 case 0:
                                     System.out.print("|");
@@ -391,6 +388,18 @@ public interface Message {
                                     System.out.print("|");
                                     cellThirdLine(game.getBoard().getCell(i, k));
                                     break;
+                                case 3:
+                                    System.out.print("|");
+                                    cellForthLine(game.getBoard().getCell(i, k));
+                                    break;
+                                case 4:
+                                    System.out.print("|");
+                                    cellFifthLine(game.getBoard().getCell(i, k));
+                                    break;
+                                case 5:
+                                    System.out.print("|");
+                                    cellSixLine(game.getBoard().getCell(i, k));
+                                    break;
                             }
                         }
                         System.out.println("|");
@@ -402,67 +411,108 @@ public interface Message {
             static void horizontalBoardLine() {
                 System.out.print(" +");
                 for (int i = 0; i < Constant.GameConstants.boardColumn; i++) {
-                    System.out.print("----+");
+                    System.out.print("-----+");
                 }
                 System.out.println();
+            }
+
+            static <CellOrWarrior extends QualityHaver, TriggerSub extends Trigger>
+            int getNumberOfTriggerSubInCellOrWarrior(CellOrWarrior cellOrWarrior, TriggerSub triggerSub) {
+                return (int) cellOrWarrior.getTriggers().stream().filter
+                        (trigger -> trigger.getClass() == triggerSub.getClass()).count();
+            }
+
+            static <CellOrWarrior extends QualityHaver, TriggerSub extends Trigger>
+            int getNumberOfTriggerSubHaverInCellOrWarrior(CellOrWarrior cellOrWarrior, TriggerSub triggerSub) {
+                return (int) cellOrWarrior.getTriggers().stream().filter(trigger -> trigger.getTriggers().stream()
+                                .anyMatch(insideTrigger -> insideTrigger.getClass() == triggerSub.getClass())).count();
+            }
+
+            static <CellOrWarrior extends QualityHaver>
+            int getSumOfHolyBuffDamageReduceValuesInCellTriggersOrWarrior(CellOrWarrior cellOrWarrior) {
+                if (cellOrWarrior instanceof Cell) {
+                    return cellOrWarrior.getTriggers().stream()
+                            .mapToInt(trigger -> trigger.getTriggers().stream()
+                                    .filter(insideTrigger -> insideTrigger instanceof HolyBuff).mapToInt
+                                            (insideTrigger -> ((HolyBuff)insideTrigger).getReducedDamage()).sum()).sum();
+                }
+                else {
+                    return cellOrWarrior.getTriggers().stream().filter(trigger -> trigger instanceof HolyBuff)
+                            .mapToInt(trigger -> ((HolyBuff)trigger).getReducedDamage()).sum();
+                }
             }
 
             static void cellFirstLine(Cell cell) {
                 Game game = cell.getBoard().getGame();
                 if (cell.getWarrior() != null) {
                     int playerNumber = game.getPlayerNumber(game.getWarriorsPlayer(cell.getWarrior()));
-                    System.out.print(playerNumber + String.format("%3d", cell.getWarrior().getID()));
+                    System.out.printf("PLAY%1d", playerNumber);
                 } else {
-                    System.out.print("    ");
+                    System.out.print("     ");
                 }
             }
 
             static void cellSecondLine(Cell cell) {
                 if (cell.getWarrior() != null) {
-                    System.out.print(String.format("%2d%2d", cell.getWarrior().getAp(), cell.getWarrior().getHp()));
+                    System.out.printf("ID%3d", cell.getWarrior().getID());
+                } else if (false){//todo
+                    System.out.print("     ");
                 } else {
-                    System.out.print("    ");
+                    System.out.print("     ");
                 }
             }
 
             static void cellThirdLine(Cell cell) {
-                //Flag --> F
                 if (cell.getWarrior() != null) {
-                    if (cell.getWarrior().getTriggers().stream().anyMatch(trigger -> trigger instanceof Flag)) {
-                        System.out.print("F");
-                    } else {
-                        System.out.print(" ");
-                    }
+                    System.out.printf("HP:%2d", cell.getWarrior().getHp());
                 } else {
-                    if (cell.getTriggers().stream().anyMatch(trigger -> trigger instanceof Flag)) {
-                        System.out.print("F");
-                    } else {
-                        System.out.print(" ");
-                    }
+                    System.out.print("     ");
                 }
-                //HolyBuff --> H
-                if (cell.getTriggers().stream().anyMatch(trigger -> trigger.getTriggers().stream().anyMatch
-                        (insideTrigger -> insideTrigger instanceof HolyBuff))) {
-                    System.out.print("H");
-                }else if(cell.getWarrior()!=null && cell.getWarrior().getTriggers().stream().anyMatch(trigger -> trigger instanceof HolyBuff)){
-                    System.out.print("H");
+            }
+
+            static void cellForthLine(Cell cell) {
+                if (cell.getWarrior() != null) {
+                    System.out.printf("AP:%2d", cell.getWarrior().getAp());
                 } else {
-                    System.out.print(" ");
+                    System.out.print("     ");
                 }
-                //Poison --> P
+            }
+
+            static void cellFifthLine(Cell cell) {
+                /* Flag */
+                if (cell.getTriggers().stream().anyMatch(trigger -> trigger instanceof Flag)) {
+                    System.out.printf("F%2d", getNumberOfTriggerSubInCellOrWarrior(cell, new Flag()));
+                } else if (cell.getWarrior() != null && cell.getWarrior().getTriggers().stream().anyMatch(trigger -> trigger instanceof Flag)) {
+                    System.out.printf("F%2d", getNumberOfTriggerSubInCellOrWarrior(cell.getWarrior(), new Flag()));
+                } else {
+                    System.out.print("   ");
+                }
+                /* Poisoned */
                 if (cell.getTriggers().stream().anyMatch(trigger -> trigger.getTriggers().stream().anyMatch
                         (insideTrigger -> insideTrigger instanceof Poisoned))) {
-                    System.out.print("P");
-                }else if(cell.getWarrior()!=null && cell.getWarrior().getTriggers().stream().anyMatch(trigger -> trigger instanceof Poisoned)){
-                    System.out.print("P");
+                    System.out.printf("P%1d", getNumberOfTriggerSubHaverInCellOrWarrior(cell, new Poisoned(-1, Dispelablity.BAD)));
+                } else if(cell.getWarrior()!=null && cell.getWarrior().getTriggers().stream().anyMatch(trigger -> trigger instanceof Poisoned)){
+                    System.out.printf("P%1d", getNumberOfTriggerSubInCellOrWarrior(cell.getWarrior(), new Poisoned(-1, Dispelablity.BAD)));
                 } else {
-                    System.out.print(" ");
+                    System.out.print("  ");
                 }
-                //todo --> B
-                if (cell.getTriggers().stream().anyMatch(trigger -> trigger instanceof BurningCell)) {
-                    System.out.print("B");
+            }
+
+            static void cellSixLine(Cell cell) {
+                /* HolyBuff */
+                if (cell.getTriggers().stream().anyMatch(trigger -> trigger.getTriggers().stream().anyMatch
+                        (insideTrigger -> insideTrigger instanceof HolyBuff))) {
+                    System.out.printf("H%2d", getSumOfHolyBuffDamageReduceValuesInCellTriggersOrWarrior(cell));
+                } else if(cell.getWarrior()!=null && cell.getWarrior().getTriggers().stream().anyMatch(trigger -> trigger instanceof HolyBuff)){
+                    System.out.printf("H%2d", getSumOfHolyBuffDamageReduceValuesInCellTriggersOrWarrior(cell.getWarrior()));
                 } else {
-                    System.out.print(" ");
+                    System.out.print("   ");
+                }
+                /* BurningCell */
+                if (cell.getTriggers().stream().anyMatch(trigger -> trigger instanceof BurningCell)) {
+                    System.out.printf("B%1d", getNumberOfTriggerSubInCellOrWarrior(cell, new BurningCell(-1, Dispelablity.BAD)));
+                } else {
+                    System.out.print("  ");
                 }
             }
 
@@ -562,8 +612,8 @@ public interface Message {
                         return String.format("[Name: %s] [ID: %d]",
                                 card.getName(), card.getID());
                     }
-                    return String.format("[Name: %s] [ID: %d] [Required Mana: %d]",
-                            card.getName(), card.getID(), card.getRequiredMana());
+                    return String.format("[Name: %s]%s[Required Mana: %d]",
+                            card.getName(), card instanceof HeroPower ? " " : String.format(" [ID: %d] ", card.getID()), card.getRequiredMana());
                 }
             }
 
@@ -665,6 +715,10 @@ public interface Message {
 
             static void emptyCard() {
                 System.out.println("you cant select empty cart");
+            }
+
+            static void thisWarriorIsSelected() {
+                System.out.println("this warrior is selected");
             }
         }
     }

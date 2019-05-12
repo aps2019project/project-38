@@ -14,6 +14,7 @@ public class HasAttackerAntiHolyBuff implements Condition {
         }
         AttackState attackState = (AttackState) gameState;
 
-        return attackState.getAttacker().getEffects().stream().anyMatch(effect -> effect instanceof AntiHolyBuff);
+        return attackState.getAttacker().getEffects().stream().anyMatch(effect -> effect instanceof AntiHolyBuff)
+                || attackState.getAttacker().getEffectsBuffer().stream().anyMatch(effect -> effect instanceof AntiHolyBuff);
     }
 }

@@ -493,12 +493,15 @@ public class GameWindow extends Window {
         if (cell == null) {
             return;
         }
-        if (!game.getSelectedThings().getWarriorsCell().contains(cell) && cell.getWarrior() != null &&
-                game.getActivePlayer() == game.getWarriorsPlayer(cell.getWarrior())) {
-            game.getSelectedThings().seletWarrior(game.getBoard().getCell(cell.getRow(), cell.getColumn()));
-            Message.GameWindow.InsideGame.DoneMessages.selectWarrior();
+        if (!game.getSelectedThings().getWarriorsCell().contains(cell)) {
+            if (cell.getWarrior() != null && game.getActivePlayer() == game.getWarriorsPlayer(cell.getWarrior())) {
+                game.getSelectedThings().seletWarrior(game.getBoard().getCell(cell.getRow(), cell.getColumn()));
+                Message.GameWindow.InsideGame.DoneMessages.selectWarrior();
+            } else {
+                Message.GameWindow.FailMessage.youHaveNoOwnWarriorInThisCell();
+            }
         } else {
-            Message.GameWindow.FailMessage.youHaveNoOwnWarriorInThisCell();
+            Message.GameWindow.FailMessage.thisWarriorIsSelected();
         }
     }
 }

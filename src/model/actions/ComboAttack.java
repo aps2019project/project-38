@@ -3,10 +3,7 @@ package model.actions;
 import model.Cell;
 import model.Game;
 import model.cards.Warrior;
-import model.effects.Attacked;
-import model.effects.Combo;
-import model.effects.Dispelablity;
-import model.effects.HP;
+import model.effects.*;
 import model.gamestate.AttackState;
 import model.triggers.HolyBuff;
 
@@ -26,12 +23,14 @@ public class ComboAttack {
             if (checkWarriorsEffectsForAttack(game, attackerCell, defenderCell, jumperManhattanDistance) &&
                     checkWarriorHasComboEffect(attacker) && !attackState.canceled) {
                 attackState.ap += attacker.getAp();
-                int priviesAP = attackState.ap;
                 attackState.setAttacker(attacker);
+                AntiHolyBuff antiHolyBuff = new AntiHolyBuff(-1, Dispelablity.UNDISPELLABLE);
+                if (attacker != attackersCell.get(0).getWarrior()) {
+                    attacker.addEffect(antiHolyBuff);
+                }
                 game.iterateAllTriggersCheck(attackState);
                 if (attacker != attackersCell.get(0).getWarrior()) {
-                    attackState.ap = priviesAP + attacker.getAp() > attackState.ap ?
-                            priviesAP + attacker.getAp() : attackState.ap;
+                    attacker.removeEffect(antiHolyBuff);
                 }
             }
             else {
