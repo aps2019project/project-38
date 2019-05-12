@@ -687,7 +687,7 @@ public interface Message {
             }
 
             static void noSelectedCard() {
-                System.out.println("ou have no selected card");
+                System.out.println("you have no selected card");
             }
 
             static void noSelectedWarriorsGroup() {
