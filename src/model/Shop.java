@@ -67,7 +67,6 @@ public class Shop {
                 }
             }
             account.setDerrick(account.getDerrick() - card.getPrice());
-//            shop.getCardIDs().remove(card.getID());
             account.getCollection().getCardIDs().add(card.getID());
 
             if (Collection.getCollection().getHowManyCard().containsKey(cardName)) {
@@ -102,7 +101,7 @@ public class Shop {
         for (String deckName : account.getCollection().getDecks()) {
             Deck deck = Account.getActiveAccount().getCollection().getAllDecks().get(deckName);
             if (deck.getCardIDs().contains(card.getID())) {
-                deck.getCardIDs().remove(card.getID());
+                deck.getCardIDs().remove((Integer)card.getID());
             }
         }
         account.getCollection().getCardIDs().remove((Integer) card.getID());

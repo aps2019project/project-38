@@ -15,9 +15,9 @@ public class Collection implements Serializable {
     private ArrayList<String> decks = new ArrayList<>();
     private HashMap<String, Deck> allDecks = new HashMap<>();
     private HashMap<String, Integer> howManyCard = new HashMap<>();
-    private Deck mainDeck = null;
+    private Deck mainDeck;
 
-    {// set a default deck
+    {// todo for test + danger + set a default deck
         Deck deck = new Deck();
         deck.setName("DefaultDeck");
 
@@ -40,7 +40,7 @@ public class Collection implements Serializable {
         this.getCardIDs().add(deck.getItem().getID());
     }
 
-    {//todo danger for test
+    {//todo for test + danger
         this.decks.add("level3");
         this.allDecks.put("level3", Deck.getAllDecks().get("level3"));
         this.getCardIDs().addAll(Deck.getAllDecks().get("level3").getCardIDs());
