@@ -86,7 +86,7 @@ public class Collection implements Serializable {
             return;
         }
         Deck deck = Account.getActiveAccount().getCollection().getAllDecks().get(deckName);
-        if (this.getMainDeck().equals(deck)) {
+        if (this.getMainDeck()!=null && this.getMainDeck().equals(deck)) {
             this.setMainDeck(null);
         }
         getDecks().remove(deckName);

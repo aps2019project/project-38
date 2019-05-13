@@ -21,7 +21,7 @@ public class Account implements Comparable<Account>, java.io.Serializable {
 
     //***
     public static void createAccount(String username, String password, String againPassword) {
-        if (Account.getUsernames().contains(username)) {
+        if (Account.getUserNames().contains(username)) {
             Message.thereIsAnAccountWithThisName();
             return;
         }
@@ -38,7 +38,7 @@ public class Account implements Comparable<Account>, java.io.Serializable {
     }
 
     public static boolean login(String username, String password) {
-        if (!Account.getUsernames().contains(username)) {
+        if (!Account.getUserNames().contains(username)) {
             Message.thereIsNoAccountWithThisName();
             return false;
         }
@@ -66,7 +66,7 @@ public class Account implements Comparable<Account>, java.io.Serializable {
 
     public static ArrayList<Account> sortAccounts() {
         ArrayList<Account> allAccounts = new ArrayList<>();
-        for (String username : getUsernames()) {
+        for (String username : getUserNames()) {
             allAccounts.add(getUsernameToAccountObject().get(username));
         }
         Collections.sort(allAccounts);
@@ -115,7 +115,7 @@ public class Account implements Comparable<Account>, java.io.Serializable {
         return activeAccount;
     }
 
-    public static ArrayList<String> getUsernames() {
+    public static ArrayList<String> getUserNames() {
         return userNames;
     }
 
