@@ -21,7 +21,7 @@ public class Shop {
             if (card.getName().toLowerCase().equals(cardName.toLowerCase())) {
 
                 Message.existACardWithThisNameInShop();
-                Message.printSomeThing("It's ID is "+ID);
+                Message.printSomeThing("It's ID is " + ID);
                 return;
             }
         }
@@ -54,7 +54,7 @@ public class Shop {
             return;
         }
 
-        if (account.getDerrick() >= card.getPrice()) {
+        if (account.derrick >= card.getPrice()) {
             if (Spell.checkIsItem(card)) {
                 int numberOfItems = 0;
                 for (int ID : account.getCollection().getCardIDs()) {
@@ -66,7 +66,7 @@ public class Shop {
                     return;
                 }
             }
-            account.setDerrick(account.getDerrick() - card.getPrice());
+            account.derrick = account.derrick - card.getPrice();
             account.getCollection().getCardIDs().add(card.getID());
 
             if (Collection.getCollection().getHowManyCard().containsKey(cardName)) {
@@ -95,13 +95,13 @@ public class Shop {
             Message.haveNotThisCardInYourCollection();
             return;
         }
-        account.setDerrick(account.getDerrick() + card.getPrice());
+        account.derrick = account.derrick + card.getPrice();
         shop.getCardIDs().add(card.getID());
         account.getCollection().getCardIDs().remove((Integer) card.getID());
         for (String deckName : account.getCollection().getDecks()) {
             Deck deck = Account.getActiveAccount().getCollection().getAllDecks().get(deckName);
             if (deck.getCardIDs().contains(card.getID())) {
-                deck.getCardIDs().remove((Integer)card.getID());
+                deck.getCardIDs().remove((Integer) card.getID());
             }
         }
         account.getCollection().getCardIDs().remove((Integer) card.getID());

@@ -5,6 +5,7 @@ import controller.window.Window;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import view.fxmlControllers.RegisterMenuController;
 import view.fxmls.LoadedPanes;
 import view.images.LoadedImages;
 
@@ -24,10 +25,10 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         mainStage = primaryStage;
+        primaryStage.setFullScreen(true);
         new LoadedImages();
         new LoadedPanes();
-        Scene scene = new Scene(LoadedPanes.registerMenu, 480, 270);
-        primaryStage.setScene(scene);
+        primaryStage.setScene(RegisterMenuController.getScene());
         primaryStage.show();
     }
 }
