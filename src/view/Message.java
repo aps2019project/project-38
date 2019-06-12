@@ -431,6 +431,8 @@ public interface Message {
                 } else if (cell.getTriggers().stream().anyMatch(trigger -> trigger instanceof CollectibleMine)) {
                     System.out.printf("Item:%3d", ((CollectibleMine)cell.getTriggers().stream().filter
                             (trigger -> trigger instanceof CollectibleMine).findFirst().get()).getCollectible().getID());
+                } else {
+                    System.out.print("        ");
                 }
             }
 

@@ -29,6 +29,7 @@ public class Main extends Application {
         new LoadedImages();
         new LoadedPanes();
         primaryStage.setScene(RegisterMenuController.getScene());
+        primaryStage.setScene(LoadedPanes.shop);
         primaryStage.show();
     }
 }
