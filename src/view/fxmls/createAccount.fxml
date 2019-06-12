@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -33,20 +34,23 @@
         <Image url="@../../view/images/buttonImages/button_primary_middle_glow@2x.png" />
     </ImageView>
     <TextField fx:id="again" alignment="CENTER" layoutX="156.0" layoutY="203.0" opacity="0.22" prefHeight="17.0" prefWidth="105.0" />
-    <ImageView fitHeight="25.0" fitWidth="56.0" layoutX="193.0" layoutY="236.0">
-        <Image url="@../images/registerMenu/button_cancel_glow.png" />
+    <ImageView fitHeight="25.0" fitWidth="56.0" layoutX="233.0" layoutY="238.0">
+        <Image url="@../images/createAccountMenu/create.png" />
+      <effect>
+         <DropShadow />
+      </effect>
     </ImageView>
-    <ImageView fitHeight="25.0" fitWidth="56.0" layoutX="249.0" layoutY="236.0">
-        <Image url="@../images/registerMenu/button_confirm.png" />
-    </ImageView>
-    <Text layoutX="195.0" layoutY="252.0" onMouseClicked="#cancel" strokeType="OUTSIDE" strokeWidth="0.0" text="Cancel" textAlignment="CENTER" wrappingWidth="52.552734375">
+    <Text layoutX="233.0" layoutY="254.0" onMouseClicked="#register" strokeType="OUTSIDE" strokeWidth="0.0" text="Create" textAlignment="CENTER" wrappingWidth="56.0">
         <font>
             <Font size="10.0" />
         </font>
     </Text>
-    <Text layoutX="249.0" layoutY="252.0" onMouseClicked="#register" strokeType="OUTSIDE" strokeWidth="0.0" text="Register" textAlignment="CENTER" wrappingWidth="56.0">
-        <font>
-            <Font size="10.0" />
-        </font>
-    </Text>
+   <ImageView fitHeight="50.0" fitWidth="50.0" layoutY="-1.0" onMouseClicked="#back">
+      <image>
+         <Image url="@../images/createAccountMenu/backButton.png" />
+      </image>
+      <effect>
+         <DropShadow />
+      </effect>
+   </ImageView>
 </AnchorPane>

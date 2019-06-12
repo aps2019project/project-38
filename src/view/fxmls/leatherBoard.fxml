@@ -1,14 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="view.fxmlControllers.LeatherBoardController"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane fx:id="mainPane" prefHeight="248.0" prefWidth="480.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.fxmlControllers.LeatherBoardController">
+   <children>
+      <ImageView fitHeight="289.0" fitWidth="504.0">
+         <image>
+            <Image url="@../images/leatherBoard/backGround.jpg" />
+         </image>
+      </ImageView>
 
+      <Label alignment="CENTER" layoutX="288.0" layoutY="194.0" opacity="0.85" prefHeight="45.0" prefWidth="120.0" style="-fx-background-color: #00aeff; -fx-background-radius: 10; " text="Ranking">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <ScrollPane layoutX="46.0" layoutY="39.0" opacity="0.76" prefHeight="200.0" prefWidth="160.0">
+         <content>
+            <HBox prefHeight="267.0" prefWidth="145.0">
+               <children>
+                  <VBox fx:id="rate" alignment="TOP_CENTER" prefHeight="267.0" prefWidth="27.0">
+                     <children>
+                        <Label fx:id="index" alignment="CENTER" prefHeight="17.0" prefWidth="61.0" text="#" textAlignment="CENTER" />
+                     </children>
+                  </VBox>
+                  <VBox fx:id="username" alignment="TOP_CENTER" prefHeight="267.0" prefWidth="79.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="103.0" text="Username" />
+                     </children>
+                  </VBox>
+                  <VBox fx:id="numOfWin" alignment="TOP_CENTER" prefHeight="267.0" prefWidth="43.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="64.0" text="no.Win" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </content>
+      </ScrollPane>
+      <ImageView fitHeight="50.0" fitWidth="50.0" onMouseClicked="#back">
+         <image>
+            <Image url="@../images/leatherBoard/backButton.png" />
+         </image>
+      </ImageView>
+   </children>
 </AnchorPane>

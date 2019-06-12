@@ -39,18 +39,17 @@ public class Account implements Comparable<Account>, java.io.Serializable {
         return "Account created successfully";
     }
 
-    public static boolean login(String username, String password) {
+    public static String login(String username, String password) {
         if (!Account.getUsernameToAccountObject().containsKey(username)) {
-            Message.thereIsNoAccountWithThisName();
-            return false;
+            return "There is no account with this name";
         }
         Account account = usernameToAccountObject.get(username);
         if (!account.password.equals(password)) {
             Message.incorrectPassword();
-            return false;
+            return "Your password is incorrect";
         }
         Account.activeAccount = account;
-        return true;
+        return "You logged in successfully";
     }
 
     @Override
