@@ -26,8 +26,7 @@ public class Main extends Application {
         mainStage = primaryStage;
         new LoadedImages();
         new LoadedPanes();
-        Scene scene = new Scene(LoadedPanes.registerMenu, 480, 270);
-        primaryStage.setScene(scene);
+        primaryStage.setScene(LoadedPanes.shop);
         primaryStage.show();
     }
 }

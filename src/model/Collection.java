@@ -17,46 +17,46 @@ public class Collection implements Serializable {
     private HashMap<String, Integer> howManyCard = new HashMap<>();
     private Deck mainDeck;
 
-    {// todo for test + danger + set a default deck
-        Deck deck = new Deck();
-        deck.setName("DefaultDeck");
+//    {// todo for test + danger + set a default deck
+//        Deck deck = new Deck();
+//        deck.setName("DefaultDeck");
+//
+//        deck.setHero((Hero) CardFactory.getAllBuiltHeroes().get(6));
+//        deck.setItem((Spell) CardFactory.getAllBuiltItems().get(11));
+//        int[] spellIndex = {8, 8, 8, 12, 12, 12, 12};
+//        for (int i = 0; i < 7; i++) {
+//            deck.getCardIDs().add(CardFactory.getAllBuiltSpells().get(spellIndex[i] - 1).getID());
+//        }
+//        int[] minionIndex = {12, 12, 12, 19, 19, 19, 23, 23, 23, 19, 29, 29, 29};
+//        for (int i = 0; i < 13; i++) {
+//            deck.getCardIDs().add(CardFactory.getAllBuiltMinions().get(minionIndex[i] - 1).getID());
+//        }
+//        mainDeck = deck;
+//
+//        this.getDecks().add("DefaultDeck");
+//        this.getAllDecks().put("DefaultDeck", deck);
+//        this.getCardIDs().addAll(deck.getCardIDs());
+//        this.getCardIDs().add(deck.getHero().getID());
+//        this.getCardIDs().add(deck.getItem().getID());
+//    }
 
-        deck.setHero((Hero) CardFactory.getAllBuiltHeroes().get(6));
-        deck.setItem((Spell) CardFactory.getAllBuiltItems().get(11));
-        int[] spellIndex = {17, 17, 17, 4, 4, 4, 4};
-        for (int i = 0; i < 7; i++) {
-            deck.getCardIDs().add(CardFactory.getAllBuiltSpells().get(spellIndex[i] - 1).getID());
-        }
-        int[] minionIndex = {1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25};
-        for (int i = 0; i < 13; i++) {
-            deck.getCardIDs().add(CardFactory.getAllBuiltMinions().get(minionIndex[i] - 1).getID());
-        }
-        mainDeck = deck;
-
-        this.getDecks().add("DefaultDeck");
-        this.getAllDecks().put("DefaultDeck", deck);
-        this.getCardIDs().addAll(deck.getCardIDs());
-        this.getCardIDs().add(deck.getHero().getID());
-        this.getCardIDs().add(deck.getItem().getID());
-    }
-
-    {//todo for test + danger
-        this.decks.add("level3");
-        this.allDecks.put("level3", Deck.getAllDecks().get("level3"));
-        this.getCardIDs().addAll(Deck.getAllDecks().get("level3").getCardIDs());
-        this.getCardIDs().add(Deck.getAllDecks().get("level3").getHero().getID());
-        this.getCardIDs().add(Deck.getAllDecks().get("level3").getItem().getID());
-        this.decks.add("level2");
-        this.allDecks.put("level2", Deck.getAllDecks().get("level2"));
-        this.getCardIDs().addAll(Deck.getAllDecks().get("level2").getCardIDs());
-        this.getCardIDs().add(Deck.getAllDecks().get("level2").getHero().getID());
-        this.getCardIDs().add(Deck.getAllDecks().get("level2").getItem().getID());
-        this.decks.add("allCombo");
-        this.allDecks.put("allCombo", Deck.getAllDecks().get("allCombo"));
-        this.getCardIDs().addAll(Deck.getAllDecks().get("allCombo").getCardIDs());
-        this.getCardIDs().add(Deck.getAllDecks().get("allCombo").getHero().getID());
-        this.getCardIDs().add(Deck.getAllDecks().get("allCombo").getItem().getID());
-    }
+//    {//todo for test + danger
+//        this.decks.add("level3");
+//        this.allDecks.put("level3", Deck.getAllDecks().get("level3"));
+//        this.getCardIDs().addAll(Deck.getAllDecks().get("level3").getCardIDs());
+//        this.getCardIDs().add(Deck.getAllDecks().get("level3").getHero().getID());
+//        this.getCardIDs().add(Deck.getAllDecks().get("level3").getItem().getID());
+//        this.decks.add("level2");
+//        this.allDecks.put("level2", Deck.getAllDecks().get("level2"));
+//        this.getCardIDs().addAll(Deck.getAllDecks().get("level2").getCardIDs());
+//        this.getCardIDs().add(Deck.getAllDecks().get("level2").getHero().getID());
+//        this.getCardIDs().add(Deck.getAllDecks().get("level2").getItem().getID());
+//        this.decks.add("allCombo");
+//        this.allDecks.put("allCombo", Deck.getAllDecks().get("allCombo"));
+//        this.getCardIDs().addAll(Deck.getAllDecks().get("allCombo").getCardIDs());
+//        this.getCardIDs().add(Deck.getAllDecks().get("allCombo").getHero().getID());
+//        this.getCardIDs().add(Deck.getAllDecks().get("allCombo").getItem().getID());
+//    }
 
     //***
 
