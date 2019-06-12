@@ -9,8 +9,7 @@ import java.util.Collections;
 
 public class Account implements Comparable<Account>, java.io.Serializable {
 
-    private static Account activeAccount = new Account();
-    private static ArrayList<String> userNames = new ArrayList<>();
+    private static Account activeAccount = null;
     private static HashMap<String, Account> usernameToAccountObject = new HashMap<>();
     //***
     public int derrick = 15000; //todo you can remove getter and setter and make it public
@@ -19,26 +18,29 @@ public class Account implements Comparable<Account>, java.io.Serializable {
     private String username;
     private String password;
 
+
+    public Account(String username, String password) {
+        super();
+        this.username = username;
+        this.password = password;
+        usernameToAccountObject.put(username, this);
+    }
+
     //***
-    public static void createAccount(String username, String password, String againPassword) {
-        if (Account.getUserNames().contains(username)) {
-            Message.thereIsAnAccountWithThisName();
-            return;
+    public static String createAccount(String username, String password, String againPassword) {
+        if (Account.getUsernameToAccountObject().containsKey(username)) {
+            return "There's an account with this name";
         }
         if (!password.equals(againPassword)) {
             Message.noIdenticalPassword();
-            return;
+            return "Your passwords aren't same";
         }
-        Message.accountCreatedSuccessfully();
-        Account account = new Account();
-        account.username = username;
-        account.password = password;
-        userNames.add(username);
-        usernameToAccountObject.put(username, account);
+        Account account = new Account(username, password);
+        return "Account created successfully";
     }
 
     public static boolean login(String username, String password) {
-        if (!Account.getUserNames().contains(username)) {
+        if (!Account.getUsernameToAccountObject().containsKey(username)) {
             Message.thereIsNoAccountWithThisName();
             return false;
         }
@@ -66,7 +68,7 @@ public class Account implements Comparable<Account>, java.io.Serializable {
 
     public static ArrayList<Account> sortAccounts() {
         ArrayList<Account> allAccounts = new ArrayList<>();
-        for (String username : getUserNames()) {
+        for (String username : getUsernameToAccountObject().keySet()) {
             allAccounts.add(getUsernameToAccountObject().get(username));
         }
         Collections.sort(allAccounts);
@@ -97,7 +99,6 @@ public class Account implements Comparable<Account>, java.io.Serializable {
             FileInputStream fis = new FileInputStream(file.getPath() + "/acc");
             ObjectInputStream ois = new ObjectInputStream(fis);
             usernameToAccountObject = (HashMap<String, Account>) ois.readObject();
-            userNames.addAll(usernameToAccountObject.keySet());
             fis.close();
             ois.close();
         } catch (Exception e) {
@@ -115,20 +116,8 @@ public class Account implements Comparable<Account>, java.io.Serializable {
         return activeAccount;
     }
 
-    public static ArrayList<String> getUserNames() {
-        return userNames;
-    }
-
     public static HashMap<String, Account> getUsernameToAccountObject() {
         return usernameToAccountObject;
-    }
-
-    public void setDerrick(int derrick) {
-        this.derrick = derrick;
-    }
-
-    public int getDerrick() {
-        return derrick;
     }
 
     public ArrayList<MatchHistory> getHistory() {

@@ -23,7 +23,7 @@ public class IntroWindow extends Window {
             int indexOfSelectedSubMenu = Integer.parseInt(input);
             switch (indexOfSelectedSubMenu) {
                 case 1:
-                    handleCreatingAccount();
+//                    handleCreatingAccount();
                     continue;
                 case 2:
                     if(handleLoginAccount())break tag1;
@@ -40,15 +40,15 @@ public class IntroWindow extends Window {
         }
     }
 
-    private void handleCreatingAccount() {
-        Message.interUsername();
-        String userName = getNextRequest();
-        Message.interPassword();
-        String password = getNextRequest();
-        Message.interPasswordAgain();
-        String againPassword = getNextRequest();
-        Account.createAccount(userName, password, againPassword);
-    }
+//    private void handleCreatingAccount() {
+//        Message.interUsername();
+//        String userName = getNextRequest();
+//        Message.interPassword();
+//        String password = getNextRequest();
+//        Message.interPasswordAgain();
+//        String againPassword = getNextRequest();
+//        Account.createAccount(userName, password, againPassword);
+//    }
 
     private boolean handleLoginAccount() {
         Message.interUsername();
