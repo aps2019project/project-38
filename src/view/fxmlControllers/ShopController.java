@@ -1,7 +1,6 @@
 package view.fxmlControllers;
 
 import controller.Main;
-import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
@@ -10,16 +9,19 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import view.fxmls.LoadedPanes;
 
 public class ShopController {
     public ImageView background;
-    public ImageView back;
-    public ImageView collection;
     public ScrollPane scrollPane;
     public HBox hBox;
     public VBox leftVBox;
     public VBox rightVBox;
+    public ImageView goldCircleOfCollectionButton;
+    public ImageView backButton;
+    public ImageView collectionButton;
+    public Text collectionText;
 
     public void moveScrollPane(KeyEvent keyEvent) {
     }
@@ -31,11 +33,11 @@ public class ShopController {
     }
 
     public void shineBackBottom(MouseEvent mouseEvent) {
-        back.setEffect(new Glow(0.5));
+        backButton.setEffect(new Glow(0.5));
     }
 
     public void resetBackBottom(MouseEvent mouseEvent) {
-        back.setEffect(null);
+        backButton.setEffect(null);
     }
 
     public void goToCollection(MouseEvent mouseEvent) {
@@ -43,10 +45,14 @@ public class ShopController {
     }
 
     public void shineCollectionBottom(MouseEvent mouseEvent) {
-        collection.setEffect(new Glow(0.5));
+        collectionButton.setEffect(new Glow(0.5));
+        goldCircleOfCollectionButton.setOpacity(0.9);
+        collectionText.setOpacity(1);
     }
 
     public void resetCollectionBottom(MouseEvent mouseEvent) {
-        collection.setEffect(null);
+        collectionButton.setEffect(null);
+        goldCircleOfCollectionButton.setOpacity(0.6);
+        collectionText.setOpacity(0.6);
     }
 }

@@ -14,11 +14,11 @@ import view.fxmls.LoadedPanes;
 
 public class CollectionOfShopController {
     public ImageView backGround;
-    public ImageView back;
     public ScrollPane scrollPane;
     public HBox hbox;
     public VBox leftVBox;
     public VBox rightVBox;
+    public ImageView backButton;
 
     public void scrollScrollPane(ScrollEvent scrollEvent) {
     }
@@ -36,10 +36,10 @@ public class CollectionOfShopController {
     }
 
     public void shineBackBottom(MouseEvent mouseEvent) {
-        back.setEffect(new Glow());
+        backButton.setEffect(new Glow());
     }
 
     public void resetBackBottom(MouseEvent mouseEvent) {
-        back.setEffect(null);
+        backButton.setEffect(null);
     }
 }

@@ -14,19 +14,24 @@
             <Image url="@../images/shop/shopCollection.jpg" />
          </image>
       </ImageView>
-      <ImageView fx:id="back" fitHeight="54.0" fitWidth="54.0" onMouseClicked="#back" onMouseEntered="#shineBackBottom" onMouseExited="#resetBackBottom">
+      <ImageView fx:id="backButton" fitHeight="54.0" fitWidth="54.0" onMouseClicked="#back" onMouseEntered="#shineBackBottom" onMouseExited="#resetBackBottom">
          <image>
             <Image url="@../images/shop/backBottom.png" />
          </image>
       </ImageView>
-      <ScrollPane fx:id="scrollPane" blendMode="DARKEN" layoutX="120.0" prefHeight="540.0" prefWidth="720.0">
+      <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" layoutX="85.0" layoutY="70.0" prefHeight="470.0" prefWidth="790.0" stylesheets="@../../../../../Desktop/style.css" vbarPolicy="NEVER">
          <content>
-            <HBox fx:id="hbox" prefHeight="540.0" prefWidth="720.0">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="790.0">
                <children>
-                  <VBox fx:id="leftVBox" prefHeight="540.0" prefWidth="410.0" />
-                  <VBox fx:id="rightVBox" prefHeight="540.0" prefWidth="410.0" />
+                  <HBox fx:id="hBox" prefHeight="470.0" prefWidth="790.0">
+                     <children>
+                        <VBox fx:id="leftVBox" prefHeight="470.0" prefWidth="395.0" />
+                        <VBox fx:id="rightVBox" prefHeight="470.0" prefWidth="395.0" />
+                     </children>
+                  </HBox>
                </children>
-            </HBox>
-         </content></ScrollPane>
+            </AnchorPane>
+         </content>
+      </ScrollPane>
    </children>
 </AnchorPane>
