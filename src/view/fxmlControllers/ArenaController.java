@@ -6,6 +6,7 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -44,7 +45,7 @@ public class ArenaController implements Initializable {
 
     double getXFromIndexes(int row, int col, VisualMinion vm) {
         Bounds bounds = grid.getCellBounds(col, row);
-        return bounds.getMinX() + grid.getLayoutX() - bounds.getWidth() / 2 + (130 - vm.animation.width);
+        return bounds.getMinX() + grid.getLayoutX() - bounds.getWidth() / 2 + (130 - vm.animation.width)/2;
     }
 
     double getYFromIndexes(int row, int col, VisualMinion vm) {
@@ -106,5 +107,10 @@ public class ArenaController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ac = this;
+//        grid.setOnMouseClicked(event -> {
+//            Node node = (Node) event.getSource();
+//            System.out.println(GridPane.getRowIndex(node));
+//            System.out.println(GridPane.getColumnIndex(node));
+//        });
     }
 }
