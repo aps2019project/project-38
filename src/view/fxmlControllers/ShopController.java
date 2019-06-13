@@ -12,7 +12,7 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import view.fxmls.LoadedPanes;
+import view.fxmls.LoadedScenes;
 
 public class ShopController {
     public ImageView background;
@@ -45,7 +45,7 @@ public class ShopController {
     }
 
     public void goToCollection(MouseEvent mouseEvent) {
-        Main.mainStage.setScene(LoadedPanes.collectionOfShop);
+        Main.mainStage.setScene(LoadedScenes.collectionOfShop);
         Main.mainStage.setFullScreen(true);
     }
 

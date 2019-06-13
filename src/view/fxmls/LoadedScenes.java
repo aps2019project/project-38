@@ -8,7 +8,7 @@ import view.fxmlControllers.RegisterMenuController;
 
 import java.io.IOException;
 
-public class LoadedPanes {
+public class LoadedScenes {
 
     public static Pane registerMenu;
     public static Pane createAccount;

@@ -8,7 +8,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import model.Account;
 import model.MatchHistory;
-import view.fxmls.LoadedPanes;
+import view.fxmls.LoadedScenes;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public class LeatherBoardController implements Initializable {
 
     public static Scene getScene() {
         if (scene == null) {
-            scene = new Scene(LoadedPanes.leatherBoard, 480, 270);
+            scene = new Scene(LoadedScenes.leatherBoard, 480, 270);
         }
         return scene;
     }

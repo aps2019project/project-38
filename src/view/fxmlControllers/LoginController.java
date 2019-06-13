@@ -6,7 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import model.Account;
-import view.fxmls.LoadedPanes;
+import view.fxmls.LoadedScenes;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,7 +21,7 @@ public class LoginController implements Initializable {
 
     public static Scene getScene() {
         if (scene == null) {
-            scene = new Scene(LoadedPanes.login, 480, 270);
+            scene = new Scene(LoadedScenes.login, 480, 270);
         }
         return scene;
     }

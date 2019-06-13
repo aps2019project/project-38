@@ -1,15 +1,9 @@
 package controller;
 
-import controller.window.LoadWindow;
-import controller.window.Window;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
-import view.fxmlControllers.ArenaController;
-import view.fxmlControllers.CreateAccountController;
-import view.fxmlControllers.RegisterMenuController;
-import view.fxmls.LoadedPanes;
+import view.fxmls.LoadedScenes;
 import view.images.LoadedImages;
 
 public class Main extends Application {
@@ -36,16 +30,16 @@ public class Main extends Application {
         });
 
         new LoadedImages();
-        new LoadedPanes();
+        new LoadedScenes();
 //        primaryStage.setScene(RegisterMenuController.getScene());
-//        primaryStage.setScene(LoadedPanes.shop);
-        primaryStage.setScene(LoadedPanes.shop);
+//        primaryStage.setScene(LoadedScenes.shop);
+        primaryStage.setScene(LoadedScenes.shop);
 //        ArenaController.ac.init(null);
 //        ArenaController.ac.put(4,4,"sp");
-//        LoadedPanes.arena.setOnKeyTyped(event -> {
+//        LoadedScenes.arena.setOnKeyTyped(event -> {
 //            ArenaController.ac.attack(4,4,4,4);
 //        });
-//        primaryStage.setScene(LoadedPanes.arena);
+//        primaryStage.setScene(LoadedScenes.arena);
 
         primaryStage.show();
     }

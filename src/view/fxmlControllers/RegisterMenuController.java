@@ -5,9 +5,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Screen;
 import model.Account;
-import view.fxmls.LoadedPanes;
+import view.fxmls.LoadedScenes;
 import view.images.LoadedImages;
 
 import java.net.URL;
@@ -22,7 +21,7 @@ public class RegisterMenuController implements Initializable {
 
     public static Scene getScene() {
         if (scene == null) {
-            scene = new Scene(LoadedPanes.registerMenu, 480, 270);
+            scene = new Scene(LoadedScenes.registerMenu, 480, 270);
         }
         return scene;
     }

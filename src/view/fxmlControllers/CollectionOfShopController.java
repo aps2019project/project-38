@@ -1,7 +1,6 @@
 package view.fxmlControllers;
 
 import controller.Main;
-import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
@@ -11,7 +10,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import view.fxmls.LoadedPanes;
+import view.fxmls.LoadedScenes;
 
 public class CollectionOfShopController {
     public ImageView backGround;
@@ -33,7 +32,7 @@ public class CollectionOfShopController {
     }
 
     public void back(MouseEvent mouseEvent) {
-        Main.mainStage.setScene(LoadedPanes.shop);
+        Main.mainStage.setScene(LoadedScenes.shop);
         Main.mainStage.setFullScreen(true);
     }
 

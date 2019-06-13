@@ -3,15 +3,11 @@ package view.fxmlControllers;
 import controller.Main;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Popup;
-import javafx.stage.Stage;
 import model.Account;
-import view.fxmls.LoadedPanes;
+import view.fxmls.LoadedScenes;
 
-import java.awt.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -32,7 +28,7 @@ public class CreateAccountController implements Initializable {
 
     public static Scene getScene() {
         if (scene == null) {
-            scene = new Scene(LoadedPanes.createAccount, 480, 270);
+            scene = new Scene(LoadedScenes.createAccount, 480, 270);
         }
         return scene;
     }
