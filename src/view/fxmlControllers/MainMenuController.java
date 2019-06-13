@@ -4,6 +4,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import model.Account;
 import view.fxmls.LoadedScenes;
 
 import java.net.URL;
@@ -27,6 +28,7 @@ public class MainMenuController implements Initializable {
     }
 
     public void logout(MouseEvent mouseEvent) {
+        Account.saveAccounts();
     }
 
     public void collection(MouseEvent mouseEvent) {
