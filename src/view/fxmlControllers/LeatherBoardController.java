@@ -29,7 +29,6 @@ public class LeatherBoardController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        mainPane = scale(mainPane);
 
         ArrayList<Account> allAccounts = Account.sortAccounts();
         for (int i = 1; i < rate.getChildren().size(); i++) {

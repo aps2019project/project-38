@@ -24,7 +24,6 @@ public class RegisterMenuController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        mainPane = scale(mainPane);
         backGround.setImage(LoadedImages.backGroundOfRegisterMenu);
     }
 

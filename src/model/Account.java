@@ -111,6 +111,10 @@ public class Account implements Comparable<Account>, java.io.Serializable {
     }
 
     //***
+    public static void setActiveAccount(Account activeAccount) {
+        Account.activeAccount = activeAccount;
+    }
+
     public static Account getActiveAccount() {
         return activeAccount;
     }

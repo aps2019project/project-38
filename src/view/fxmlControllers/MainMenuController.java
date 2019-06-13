@@ -1,5 +1,6 @@
 package view.fxmlControllers;
 
+import controller.Main;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
@@ -21,7 +22,6 @@ public class MainMenuController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        mainPane = scale(mainPane);
     }
 
     public void startGame(MouseEvent mouseEvent) {
@@ -29,6 +29,9 @@ public class MainMenuController implements Initializable {
 
     public void logout(MouseEvent mouseEvent) {
         Account.saveAccounts();
+        Account.setActiveAccount(null);
+        Main.mainStage.setScene(LoadedScenes.registerMenu);
+        Main.mainStage.setFullScreen(true);
     }
 
     public void collection(MouseEvent mouseEvent) {

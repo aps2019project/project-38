@@ -6,6 +6,8 @@ import view.fxmlControllers.RegisterMenuController;
 
 import java.io.IOException;
 
+import static view.Utility.*;
+
 public class LoadedScenes {
 
     public static Scene registerMenu;
@@ -18,13 +20,13 @@ public class LoadedScenes {
 
     {
         try {
-            registerMenu = new Scene(FXMLLoader.load(RegisterMenuController.class.getResource("../fxmls/registerMenu.fxml")));
-            createAccount = new Scene(FXMLLoader.load(RegisterMenuController.class.getResource("../fxmls/createAccount.fxml")));
-            login = new Scene(FXMLLoader.load(RegisterMenuController.class.getResource("../fxmls/login.fxml")));
-            leatherBoard = new Scene(FXMLLoader.load(RegisterMenuController.class.getResource("../fxmls/leatherBoard.fxml")));
-            mainMenu = new Scene(FXMLLoader.load(RegisterMenuController.class.getResource("../fxmls/mainMenu.fxml")));
-            shop = new Scene(FXMLLoader.load(RegisterMenuController.class.getResource("../fxmls/shop.fxml")));
-            collectionOfShop = new Scene(FXMLLoader.load(RegisterMenuController.class.getResource("../fxmls/collectionOfShop.fxml")));
+            registerMenu = new Scene(scale(FXMLLoader.load(RegisterMenuController.class.getResource("../fxmls/registerMenu.fxml"))));
+            createAccount = new Scene(scale(FXMLLoader.load(RegisterMenuController.class.getResource("../fxmls/createAccount.fxml"))));
+            login = new Scene(scale(FXMLLoader.load(RegisterMenuController.class.getResource("../fxmls/login.fxml"))));
+            leatherBoard = new Scene(scale(FXMLLoader.load(RegisterMenuController.class.getResource("../fxmls/leatherBoard.fxml"))));
+            mainMenu = new Scene(scale(FXMLLoader.load(RegisterMenuController.class.getResource("../fxmls/mainMenu.fxml"))));
+            shop = new Scene(scale(FXMLLoader.load(RegisterMenuController.class.getResource("../fxmls/shop.fxml"))));
+            collectionOfShop = new Scene(scale(FXMLLoader.load(RegisterMenuController.class.getResource("../fxmls/collectionOfShop.fxml"))));
         } catch (IOException e) {
             e.printStackTrace();
         }
