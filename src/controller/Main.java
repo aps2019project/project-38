@@ -36,15 +36,11 @@ public class Main extends Application {
 
         new LoadedImages();
         new LoadedScenes();
-        primaryStage.setFullScreen(true);
-        primaryStage.setFullScreenExitHint("");
+
 //        primaryStage.setScene(LoadedScenes.mainMenu);
-        primaryStage.setScene(LoadedScenes.registerMenu);
+//        primaryStage.setScene(LoadedScenes.registerMenu);
 //        primaryStage.setScene(LoadedPanes.shop);
-        new LoadedScenes();
-//        primaryStage.setScene(RegisterMenuController.getScene());
-//        primaryStage.setScene(LoadedScenes.shop);
-        primaryStage.setScene(LoadedScenes.shop);
+
 //        ArenaController.ac.init(null);
 //        ArenaController.ac.put(4,4,"sp");
 //        LoadedScenes.arena.setOnKeyTyped(event -> {
