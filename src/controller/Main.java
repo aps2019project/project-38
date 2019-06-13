@@ -1,5 +1,6 @@
 package controller;
 
+import controller.window.GameWindow;
 import controller.window.MainMenu;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -30,6 +31,7 @@ public class Main extends Application {
 
         mainStage.setFullScreen(true);
         mainStage.setFullScreenExitHint("");
+
         mainStage.setOnCloseRequest(event -> {
             Platform.exit();
             System.exit(0);
@@ -39,7 +41,7 @@ public class Main extends Application {
         new LoadedScenes();
 
 //        primaryStage.setScene(LoadedScenes.mainMenu);
-//        primaryStage.setScene(LoadedScenes.registerMenu);
+        primaryStage.setScene(LoadedScenes.registerMenu);
 //        primaryStage.setScene(LoadedPanes.shop);
 
         ArenaController.ac.init(null);
@@ -47,7 +49,7 @@ public class Main extends Application {
         LoadedScenes.arena.setOnKeyTyped(event -> {
             ArenaController.ac.attack(4,4,4,4);
         });
-        primaryStage.setScene(LoadedScenes.arena);
+//        primaryStage.setScene(LoadedScenes.arena);
 
         primaryStage.show();
     }
