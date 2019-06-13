@@ -18,14 +18,14 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class ArenaController implements Initializable {
-    static ArenaController ac;
+    public static ArenaController ac;
 
     Game game;
     public GridPane grid;
     public Pane pane;
     VisualMinion[][] visualMinions;
 
-    void init(Game game) {
+    public void init(Game game) {
         this.game = game;
         visualMinions = new VisualMinion[5][9];
     }

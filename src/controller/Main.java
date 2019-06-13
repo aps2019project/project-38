@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import view.fxmlControllers.ArenaController;
 import view.fxmlControllers.RegisterMenuController;
 import view.fxmls.LoadedPanes;
 import view.images.LoadedImages;
@@ -36,7 +37,8 @@ public class Main extends Application {
         new LoadedImages();
         new LoadedPanes();
 //        primaryStage.setScene(RegisterMenuController.getScene());
-        primaryStage.setScene(LoadedPanes.shop);
+//        primaryStage.setScene(LoadedPanes.shop);
+        primaryStage.setScene(LoadedPanes.arena);
         primaryStage.show();
     }
 }
