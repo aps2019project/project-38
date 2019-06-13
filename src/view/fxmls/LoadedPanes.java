@@ -17,16 +17,18 @@ public class LoadedPanes {
     public static Scene shop;
     public static Scene collectionOfShop;
     public static Scene arena;
+    public static Scene cartTest;
 
     {
         try {
-            registerMenu = FXMLLoader.load(RegisterMenuController.class.getResource("../fxmls/registerMenu.fxml"));
-            createAccount = FXMLLoader.load(RegisterMenuController.class.getResource("../fxmls/createAccount.fxml"));
-            login = FXMLLoader.load(RegisterMenuController.class.getResource("../fxmls/login.fxml"));
-            leatherBoard = FXMLLoader.load(RegisterMenuController.class.getResource("../fxmls/leatherBoard.fxml"));
-            shop = new Scene(Utility.scale(FXMLLoader.load(RegisterMenuController.class.getResource("../fxmls/shop.fxml"))));
-            collectionOfShop = new Scene(Utility.scale(FXMLLoader.load(RegisterMenuController.class.getResource("../fxmls/collectionOfShop.fxml"))));
+            registerMenu = FXMLLoader.load(getClass().getResource("registerMenu.fxml"));
+            createAccount = FXMLLoader.load(getClass().getResource("createAccount.fxml"));
+            login = FXMLLoader.load(getClass().getResource("login.fxml"));
+            leatherBoard = FXMLLoader.load(getClass().getResource("leatherBoard.fxml"));
+            shop = new Scene(Utility.scale(FXMLLoader.load(getClass().getResource("shop.fxml"))));
+            collectionOfShop = new Scene(Utility.scale(FXMLLoader.load(getClass().getResource("collectionOfShop.fxml"))));
             arena = new Scene(Utility.scale(FXMLLoader.load(getClass().getResource("arena.fxml"))));
+            cartTest = new Scene(FXMLLoader.load(getClass().getResource("warriorCart.fxml")));
         } catch (IOException e) {
             e.printStackTrace();
         }

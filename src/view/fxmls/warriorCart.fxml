@@ -6,73 +6,73 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="490.0" prefWidth="394.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="490.0" prefWidth="394.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.fxmlControllers.WarriorCartController">
    <children>
-      <ImageView fitHeight="400.0" fitWidth="304.0" layoutX="46.0" layoutY="45.0">
-         <image>
-            <Image url="@../../../../duelyst%20resourses/card_backgrounds/neutral_prismatic_unit@2x.png" />
-         </image>
-      </ImageView>
-      <Text fx:id="apText" fill="WHITE" layoutX="100.0" layoutY="295.0" strokeType="OUTSIDE" strokeWidth="0.0" text="99" textAlignment="CENTER" wrappingWidth="36.0">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Text>
-      <Text fx:id="hpText" fill="WHITE" layoutX="264.0" layoutY="294.0" strokeType="OUTSIDE" strokeWidth="0.0" text="99" textAlignment="CENTER" wrappingWidth="29.44921875">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Text>
       <ImageView fx:id="blueLine" blendMode="DARKEN" fitHeight="490.0" fitWidth="394.0" opacity="0.0">
          <image>
-            <Image url="@../../../../duelyst%20resourses/card_backgrounds/card_glow_line@2x.png" />
+            <Image url="@../images/cartsbody/blueLine.png" />
          </image>
       </ImageView>
-      <AnchorPane fx:id="gifPane" layoutX="38.0" layoutY="-15.0" prefHeight="254.0" prefWidth="298.0">
-         <children>
-            <ImageView fitHeight="254.0" fitWidth="318.0">
-               <image>
-                  <Image url="@../../../../../Desktop/1.gif" />
-               </image>
-            </ImageView>
-         </children>
-      </AnchorPane>
-      <ImageView fx:id="pricePlace" fitHeight="93.0" fitWidth="325.0" layoutX="36.0" layoutY="397.0">
+      <ImageView fx:id="cartImage" fitHeight="400.0" fitWidth="304.0" layoutX="46.0" layoutY="45.0" onMouseClicked="#selectCart" onMouseEntered="#shineCart" onMouseExited="#resetCart">
          <image>
-            <Image url="@../../../../../Desktop/notification_challenge@2x.png" />
+            <Image url="@../images/cartsbody/warriorCartBody.png" />
          </image>
       </ImageView>
-      <Text fx:id="priceText" fill="#0b98ab" layoutX="136.0" layoutY="450.0" strokeType="OUTSIDE" strokeWidth="0.0" text="10000D" wrappingWidth="197.7294921875">
+      <Text fx:id="apText" fill="WHITE" layoutX="100.0" layoutY="295.0" onMouseClicked="#selectCart" onMouseEntered="#shineCart" strokeType="OUTSIDE" strokeWidth="0.0" text="99" textAlignment="CENTER" wrappingWidth="36.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fx:id="hpText" fill="WHITE" layoutX="264.0" layoutY="294.0" onMouseClicked="#selectCart" onMouseEntered="#shineCart" strokeType="OUTSIDE" strokeWidth="0.0" text="99" textAlignment="CENTER" wrappingWidth="29.44921875">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <AnchorPane fx:id="gifPane" layoutX="60.0" layoutY="-15.0" onMouseClicked="#selectCart" onMouseEntered="#shineCart" onMouseExited="#resetCart" prefHeight="254.0" prefWidth="276.0">
+<!--         <children>-->
+<!--            <ImageView fitHeight="254.0" fitWidth="318.0">-->
+<!--               <image>-->
+<!--                  <Image url="@../../../../../Desktop/1.gif" />-->
+<!--               </image>-->
+<!--            </ImageView>-->
+<!--         </children>-->
+      </AnchorPane>
+      <ImageView fx:id="pricePlace" fitHeight="93.0" fitWidth="325.0" layoutX="36.0" layoutY="397.0" onMouseClicked="#selectCart" onMouseEntered="#shineCart" onMouseExited="#resetCart">
+         <image>
+            <Image url="@../images/cartsbody/warriorPricePlace.png" />
+         </image>
+      </ImageView>
+      <Text fx:id="priceText" fill="#0b98ab" layoutX="136.0" layoutY="450.0" onMouseClicked="#selectCart" onMouseEntered="#shineCart" strokeType="OUTSIDE" strokeWidth="0.0" text="10000D" wrappingWidth="197.7294921875">
          <font>
             <Font size="35.0" />
          </font>
       </Text>
-      <ImageView fitHeight="51.0" fitWidth="55.0" layoutX="171.0" layoutY="258.0">
+      <ImageView fx:id="blueDot" fitHeight="51.0" fitWidth="55.0" layoutX="171.0" layoutY="258.0" onMouseClicked="#selectCart" onMouseEntered="#shineCart">
          <image>
-            <Image url="@../../../../../Desktop/collection_card_rarity_rare@2x.png" />
+            <Image url="@../images/cartsbody/blueDot.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="blueDimond" fitHeight="80.0" fitWidth="80.0" layoutX="10.0" layoutY="10.0">
+      <ImageView fx:id="blueDiamond" fitHeight="80.0" fitWidth="80.0" layoutX="10.0" layoutY="10.0" onMouseClicked="#selectCart" onMouseEntered="#shineCart" onMouseExited="#resetCart">
          <image>
-            <Image url="@../../../../../Desktop/icon_mana@2x.png" />
+            <Image url="@../images/cartsbody/blueDiamond.png" />
          </image>
       </ImageView>
-      <Text fx:id="manaText" layoutX="39.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="9" textAlignment="CENTER" wrappingWidth="21.0">
+      <Text fx:id="manaText" layoutX="39.0" layoutY="58.0" onMouseClicked="#selectCart" onMouseEntered="#shineCart" strokeType="OUTSIDE" strokeWidth="0.0" text="9" textAlignment="CENTER" wrappingWidth="21.0">
          <font>
             <Font size="25.0" />
          </font>
       </Text>
-      <Text fx:id="nameText" fill="#ddd6d6" layoutX="89.0" layoutY="225.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name Of Card" textAlignment="CENTER" wrappingWidth="221.7294921875">
+      <Text fx:id="nameText" fill="#ddd6d6" layoutX="89.0" layoutY="225.0" onMouseClicked="#selectCart" onMouseEntered="#shineCart" strokeType="OUTSIDE" strokeWidth="0.0" text="Name Of Card" textAlignment="CENTER" wrappingWidth="221.7294921875">
          <font>
             <Font size="16.0" />
          </font>
       </Text>
-      <Text fx:id="typeText" fill="#5954fc" layoutX="89.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Card Type" textAlignment="CENTER" wrappingWidth="221.7294921875">
+      <Text fx:id="typeText" fill="#5954fc" layoutX="89.0" layoutY="240.0" onMouseClicked="#selectCart" onMouseEntered="#shineCart" strokeType="OUTSIDE" strokeWidth="0.0" text="Card Type" textAlignment="CENTER" wrappingWidth="221.7294921875">
          <font>
             <Font size="14.0" />
          </font>
       </Text>
-      <Text fx:id="descriptionText" fill="#5954fc" layoutX="64.0" layoutY="345.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Description: Good Bad Good Bad Good Bad Good Bad Good Bad Good Bad Good Bad Good Bad" textAlignment="CENTER" wrappingWidth="268.0">
+      <Text fx:id="descriptionText" fill="#5954fc" layoutX="64.0" layoutY="345.0" onMouseClicked="#selectCart" onMouseEntered="#shineCart" strokeType="OUTSIDE" strokeWidth="0.0" text="Description" textAlignment="CENTER" wrappingWidth="268.0">
          <font>
             <Font size="12.0" />
          </font>

@@ -2,8 +2,10 @@ package view.fxmlControllers;
 
 import controller.Main;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
@@ -22,6 +24,8 @@ public class ShopController {
     public ImageView backButton;
     public ImageView collectionButton;
     public Text collectionText;
+    public ImageView textFiledImage;
+    public TextField searchTextFiled;
 
     public void moveScrollPane(KeyEvent keyEvent) {
     }
@@ -55,5 +59,8 @@ public class ShopController {
         collectionButton.setEffect(null);
         goldCircleOfCollectionButton.setOpacity(0.6);
         collectionText.setOpacity(0.6);
+    }
+
+    public void recalculateCarts(InputMethodEvent inputMethodEvent) {
     }
 }

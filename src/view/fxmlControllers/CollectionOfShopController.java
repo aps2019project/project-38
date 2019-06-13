@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
@@ -33,6 +34,7 @@ public class CollectionOfShopController {
 
     public void back(MouseEvent mouseEvent) {
         Main.mainStage.setScene(LoadedPanes.shop);
+        Main.mainStage.setFullScreen(true);
     }
 
     public void shineBackBottom(MouseEvent mouseEvent) {
@@ -41,5 +43,8 @@ public class CollectionOfShopController {
 
     public void resetBackBottom(MouseEvent mouseEvent) {
         backButton.setEffect(null);
+    }
+
+    public void recalculateCarts(InputMethodEvent inputMethodEvent) {
     }
 }
