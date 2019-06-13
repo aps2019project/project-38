@@ -4,6 +4,8 @@ import controller.window.GameWindow;
 import controller.window.MainMenu;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.scene.Node;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import view.fxmlControllers.ArenaController;
 import view.fxmls.LoadedScenes;
@@ -45,7 +47,7 @@ public class Main extends Application {
 //        primaryStage.setScene(LoadedPanes.shop);
 
         ArenaController.ac.init(null);
-        ArenaController.ac.put(4,4,"sp");
+        ArenaController.ac.put(4,4,"nanesarma");
         LoadedScenes.arena.setOnKeyTyped(event -> {
             ArenaController.ac.attack(4,4,4,4);
         });
