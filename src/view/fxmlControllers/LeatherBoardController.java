@@ -17,7 +17,6 @@ import java.util.ResourceBundle;
 import static view.Utility.*;
 
 public class LeatherBoardController implements Initializable {
-    private static Scene scene = null;
     public AnchorPane mainPane;
     public VBox rate;
     public Label index;
@@ -25,15 +24,11 @@ public class LeatherBoardController implements Initializable {
     public VBox numOfWin;
 
     public static Scene getScene() {
-        if (scene == null) {
-            scene = new Scene(LoadedScenes.leatherBoard, 480, 270);
-        }
-        return scene;
+        return LoadedScenes.leatherBoard;
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        mainPane = (AnchorPane) scale(mainPane);
 
         ArrayList<Account> allAccounts = Account.sortAccounts();
         for (int i = 1; i < rate.getChildren().size(); i++) {

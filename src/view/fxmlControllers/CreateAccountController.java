@@ -3,8 +3,11 @@ package view.fxmlControllers;
 import controller.Main;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import model.Account;
 import view.fxmls.LoadedScenes;
 
@@ -15,42 +18,61 @@ import static view.Utility.scale;
 
 public class CreateAccountController implements Initializable {
 
-    public static Scene scene;
     public AnchorPane mainPane;
     public TextField username;
     public TextField password;
     public TextField again;
+    public Pane alertWindow;
+    public Label alert;
+    private boolean shouldClose = false;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        mainPane = (AnchorPane) scale(mainPane);
     }
 
     public static Scene getScene() {
-        if (scene == null) {
-            scene = new Scene(LoadedScenes.createAccount, 480, 270);
-        }
-        return scene;
+        return LoadedScenes.createAccount;
     }
 
     public void register() {
         String userNameString = username.getText();
         String passwordString = password.getText();
         String againPasswordString = again.getText();
+        if(userNameString.isEmpty() || passwordString.isEmpty() || againPasswordString.isEmpty()){
+            alertWindow.toFront();
+            alert.setText("Please fill up your fields");
+            return;
+        }
         String result = Account.createAccount(userNameString, passwordString, againPasswordString);
         if (result.equals("There's an account with this name")) {
-            //todo
+            alertWindow.toFront();
+            alert.setText("There's an account with this name");
         }
         if (result.equals("Your passwords aren't same")) {
-            //todo
+            alertWindow.toFront();
+            alert.setText("Your passwords aren't same");
         }
         if (result.equals("Account created successfully")) {
-            //todo
+            alertWindow.toFront();
+            alert.setText("Account created successfully");
+            shouldClose = true;
         }
     }
 
     public void back() {
         Main.mainStage.setScene(RegisterMenuController.getScene());
         Main.mainStage.setFullScreen(true);
+    }
+
+    public void ok() {
+        alertWindow.toBack();
+        if (shouldClose) {
+            Main.mainStage.setScene(LoadedScenes.registerMenu);
+            Main.mainStage.setFullScreen(true);
+            shouldClose = false;
+            username.clear();
+            password.clear();
+            again.clear();
+        }
     }
 }

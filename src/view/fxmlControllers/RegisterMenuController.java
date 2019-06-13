@@ -12,23 +12,18 @@ import view.images.LoadedImages;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static view.Utility.*;
+import static view.Utility.scale;
 
 public class RegisterMenuController implements Initializable {
-    private static Scene scene = null;
     public AnchorPane mainPane;
     public ImageView backGround;
 
     public static Scene getScene() {
-        if (scene == null) {
-            scene = new Scene(LoadedScenes.registerMenu, 480, 270);
-        }
-        return scene;
+        return LoadedScenes.registerMenu;
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        mainPane = (AnchorPane) scale(mainPane);
         backGround.setImage(LoadedImages.backGroundOfRegisterMenu);
     }
 
