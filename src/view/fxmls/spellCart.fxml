@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="490.0" prefWidth="394.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fx:id="cardImage" fitHeight="400.0" fitWidth="304.0" layoutX="46.0" layoutY="45.0" onMouseEntered="#shineCart" onMouseExited="#ResestCart">
+         <image>
+            <Image url="@../../../../../Desktop/neutral_prismatic_spell@2x.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="blueLine" fitHeight="490.0" fitWidth="394.0">
+         <image>
+            <Image url="@../../../../duelyst%20resourses/card_backgrounds/card_glow_line@2x.png" />
+         </image>
+      </ImageView>
+      <AnchorPane fx:id="gifPane" layoutX="116.0" layoutY="68.0" prefHeight="156.0" prefWidth="165.0">
+         <children>
+            <ImageView fitHeight="156.0" fitWidth="165.0">
+               <image>
+                  <Image url="@../../../../../Desktop/s1.gif" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <Text fill="#ddd6d6" layoutX="99.0" layoutY="225.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name Of Card" textAlignment="CENTER" wrappingWidth="198.7294921875">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+      <Text fill="#5954fc" layoutX="99.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Card Type" textAlignment="CENTER" wrappingWidth="198.7294921875">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="55.0" fitWidth="55.0" layoutX="171.0" layoutY="255.0">
+         <image>
+            <Image url="@../../../../../Desktop/collection_card_rarity_epic@2x.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pricePlace" fitHeight="111.0" fitWidth="351.0" layoutX="22.0" layoutY="379.0">
+         <image>
+            <Image url="@../../../../../Desktop/notification_quest_small@2x.png" />
+         </image>
+      </ImageView>
+      <Text fx:id="priceText" fill="#0b98ab" layoutX="136.0" layoutY="441.0" strokeType="OUTSIDE" strokeWidth="0.0" text="10000D" wrappingWidth="197.7294921875">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </Text>
+      <Text fx:id="descriptionText" fill="#5954fc" layoutX="64.0" layoutY="336.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Description: Good Bad Good Bad Good Bad Good Bad Good Bad Good Bad Good Bad Good Bad" textAlignment="CENTER" wrappingWidth="268.0">
+         <font>
+            <Font size="12.0" />
+         </font>
+      </Text>
+      <ImageView fx:id="blueDimond" fitHeight="80.0" fitWidth="80.0" layoutX="10.0" layoutY="10.0">
+         <image>
+            <Image url="@../../../../../Desktop/icon_mana@2x.png" />
+         </image>
+         <effect>
+            <Glow />
+         </effect>
+      </ImageView>
+      <Text fx:id="manaText" layoutX="39.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="9" textAlignment="CENTER" wrappingWidth="21.0">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>
