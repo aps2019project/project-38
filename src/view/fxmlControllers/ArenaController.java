@@ -4,23 +4,29 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+import model.Game;
 import view.visualminion.VisualMinion;
 
+import java.net.URL;
+import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class ArenaController {
-    //Game game;
+public class ArenaController implements Initializable {
+    static ArenaController ac;
+
+    Game game;
     public GridPane grid;
     public Pane pane;
     VisualMinion[][] visualMinions;
 
-    void init() {
-        //this.game = game;
+    void init(Game game) {
+        this.game = game;
         visualMinions = new VisualMinion[5][9];
     }
 
@@ -93,5 +99,10 @@ public class ArenaController {
                 }
             }, visualMinions[row][col].animation.realDuration);
         });
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        ac = this;
     }
 }

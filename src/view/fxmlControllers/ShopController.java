@@ -40,6 +40,7 @@ public class ShopController {
 
     public void goToCollection(MouseEvent mouseEvent) {
         Main.mainStage.setScene(LoadedPanes.collectionOfShop);
+        Main.mainStage.setFullScreen(true);
     }
 
     public void shineCollectionBottom(MouseEvent mouseEvent) {
