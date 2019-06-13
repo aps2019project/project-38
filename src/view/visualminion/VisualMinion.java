@@ -16,7 +16,7 @@ public class VisualMinion {
     public VisualMinion(String name) {
         this.name = name;
         try {
-            view = new ImageView(new Image(new FileInputStream("src/resources/" + name + ".png")));
+            view = new ImageView(new Image(new FileInputStream("src/view/images/sprites/" + name + ".png")));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

@@ -38,7 +38,14 @@ public class Main extends Application {
         new LoadedPanes();
 //        primaryStage.setScene(RegisterMenuController.getScene());
 //        primaryStage.setScene(LoadedPanes.shop);
-        primaryStage.setScene(LoadedPanes.arena);
+
+//        ArenaController.ac.init(null);
+//        ArenaController.ac.put(4,4,"sp");
+//        LoadedPanes.arena.setOnKeyTyped(event -> {
+//            ArenaController.ac.attack(4,4,4,4);
+//        });
+//        primaryStage.setScene(LoadedPanes.arena);
+
         primaryStage.show();
     }
 }

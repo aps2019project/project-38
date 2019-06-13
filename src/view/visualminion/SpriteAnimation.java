@@ -18,6 +18,7 @@ public class SpriteAnimation extends Transition {
     SpriteType type;
     String fileName;
     int prefDuration;
+    public int height,width;
     public int realDuration;
 
     int lastIndex;
@@ -52,7 +53,7 @@ public class SpriteAnimation extends Transition {
     void getFramesFromPlist() {
         String dataS = null;
         try {
-            dataS = new String(Files.readAllBytes(Paths.get("src/resources/" + fileName + ".plist")));
+            dataS = new String(Files.readAllBytes(Paths.get("src/view/images/sprites/" + fileName + ".plist")));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -63,6 +64,8 @@ public class SpriteAnimation extends Transition {
             }
             matcher.find();
             frames.add(new SpriteFrame(Integer.valueOf(matcher.group("x")), Integer.valueOf(matcher.group("y")), Integer.valueOf(matcher.group("width")), Integer.valueOf(matcher.group("height"))));
+            height = Integer.valueOf(matcher.group("height"));
+            width = Integer.valueOf(matcher.group("width"));
             matcher.find();
         }
     }
