@@ -8,7 +8,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import model.Account;
 import model.MatchHistory;
-import view.fxmls.LoadedPanes;
+import view.fxmls.LoadedScenes;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -17,7 +17,6 @@ import java.util.ResourceBundle;
 import static view.Utility.*;
 
 public class LeatherBoardController implements Initializable {
-    private static Scene scene = null;
     public AnchorPane mainPane;
     public VBox rate;
     public Label index;
@@ -25,10 +24,7 @@ public class LeatherBoardController implements Initializable {
     public VBox numOfWin;
 
     public static Scene getScene() {
-        if (scene == null) {
-            scene = new Scene(LoadedPanes.leatherBoard, 480, 270);
-        }
-        return scene;
+        return LoadedScenes.leatherBoard;
     }
 
     @Override

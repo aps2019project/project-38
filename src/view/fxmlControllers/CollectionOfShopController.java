@@ -10,7 +10,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import view.fxmls.LoadedPanes;
+import view.fxmls.LoadedScenes;
 
 public class CollectionOfShopController {
     public ImageView backGround;
@@ -32,7 +32,7 @@ public class CollectionOfShopController {
     }
 
     public void back(MouseEvent mouseEvent) {
-        Main.mainStage.setScene(LoadedPanes.shop);
+        Main.mainStage.setScene(LoadedScenes.shop);
     }
 
     public void shineBackBottom(MouseEvent mouseEvent) {

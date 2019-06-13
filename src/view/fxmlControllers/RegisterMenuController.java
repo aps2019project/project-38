@@ -5,26 +5,21 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Screen;
 import model.Account;
-import view.fxmls.LoadedPanes;
+import view.fxmls.LoadedScenes;
 import view.images.LoadedImages;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static view.Utility.*;
+import static view.Utility.scale;
 
 public class RegisterMenuController implements Initializable {
-    private static Scene scene = null;
     public AnchorPane mainPane;
     public ImageView backGround;
 
     public static Scene getScene() {
-        if (scene == null) {
-            scene = new Scene(LoadedPanes.registerMenu, 480, 270);
-        }
-        return scene;
+        return LoadedScenes.registerMenu;
     }
 
     @Override

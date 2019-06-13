@@ -1,12 +1,11 @@
 package controller;
 
-import controller.window.LoadWindow;
-import controller.window.Window;
+import controller.window.MainMenu;
 import javafx.application.Application;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
+import view.fxmlControllers.MainMenuController;
 import view.fxmlControllers.RegisterMenuController;
-import view.fxmls.LoadedPanes;
+import view.fxmls.LoadedScenes;
 import view.images.LoadedImages;
 
 public class Main extends Application {
@@ -25,11 +24,14 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         mainStage = primaryStage;
-        primaryStage.setFullScreen(true);
+        
         new LoadedImages();
-        new LoadedPanes();
-        primaryStage.setScene(RegisterMenuController.getScene());
-        primaryStage.setScene(LoadedPanes.shop);
+        new LoadedScenes();
+        primaryStage.setFullScreen(true);
+        primaryStage.setFullScreenExitHint("");
+//        primaryStage.setScene(LoadedScenes.mainMenu);
+        primaryStage.setScene(LoadedScenes.registerMenu);
+//        primaryStage.setScene(LoadedPanes.shop);
         primaryStage.show();
     }
 }
