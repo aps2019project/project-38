@@ -3,11 +3,15 @@ package view.fxmlControllers;
 import controller.Main;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Popup;
+import javafx.stage.Stage;
 import model.Account;
 import view.fxmls.LoadedPanes;
 
+import java.awt.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -23,7 +27,7 @@ public class CreateAccountController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        mainPane = scale(mainPane);
+        mainPane = (AnchorPane) scale(mainPane);
     }
 
     public static Scene getScene() {
@@ -49,7 +53,7 @@ public class CreateAccountController implements Initializable {
         }
     }
 
-    public void cancel() {
+    public void back() {
         Main.mainStage.setScene(RegisterMenuController.getScene());
         Main.mainStage.setFullScreen(true);
     }

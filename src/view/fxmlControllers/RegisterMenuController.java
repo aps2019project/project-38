@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Screen;
+import model.Account;
 import view.fxmls.LoadedPanes;
 import view.images.LoadedImages;
 
@@ -28,7 +29,7 @@ public class RegisterMenuController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        mainPane = scale(mainPane);
+        mainPane = (AnchorPane) scale(mainPane);
         backGround.setImage(LoadedImages.backGroundOfRegisterMenu);
     }
 
@@ -43,11 +44,12 @@ public class RegisterMenuController implements Initializable {
     }
 
     public void leatherBoard() {
-        Main.mainStage.setScene(scene);
+        Main.mainStage.setScene(LeatherBoardController.getScene());
         Main.mainStage.setFullScreen(true);
     }
 
     public void exit() {
+        Account.saveAccounts();
         System.exit(0);
     }
 }
