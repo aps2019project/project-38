@@ -3,6 +3,7 @@ package controller;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
+import view.fxmlControllers.ArenaController;
 import view.fxmls.LoadedScenes;
 import view.images.LoadedImages;
 
@@ -33,13 +34,13 @@ public class Main extends Application {
         new LoadedScenes();
 //        primaryStage.setScene(RegisterMenuController.getScene());
 //        primaryStage.setScene(LoadedScenes.shop);
-        primaryStage.setScene(LoadedScenes.shop);
-//        ArenaController.ac.init(null);
-//        ArenaController.ac.put(4,4,"sp");
-//        LoadedScenes.arena.setOnKeyTyped(event -> {
-//            ArenaController.ac.attack(4,4,4,4);
-//        });
-//        primaryStage.setScene(LoadedScenes.arena);
+//        primaryStage.setScene(LoadedScenes.shop);
+        ArenaController.ac.init(null);
+        ArenaController.ac.put(4,4,"#GhoolKhafanAzole");
+        LoadedScenes.arena.setOnKeyTyped(event -> {
+            ArenaController.ac.attack(4,4,4,4);
+        });
+        primaryStage.setScene(LoadedScenes.arena);
 
         primaryStage.show();
     }

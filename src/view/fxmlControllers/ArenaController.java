@@ -44,7 +44,7 @@ public class ArenaController implements Initializable {
 
     double getXFromIndexes(int row, int col, VisualMinion vm) {
         Bounds bounds = grid.getCellBounds(col, row);
-        return bounds.getMinX() + grid.getLayoutX() - bounds.getWidth() / 2 + (130 - vm.animation.width);
+        return bounds.getMinX() + grid.getLayoutX() - bounds.getWidth() / 2 + (130 - vm.animation.width)/2;
     }
 
     double getYFromIndexes(int row, int col, VisualMinion vm) {
