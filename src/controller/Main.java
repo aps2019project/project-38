@@ -4,6 +4,7 @@ import controller.window.MainMenu;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
+import view.fxmlControllers.ArenaController;
 import view.fxmls.LoadedScenes;
 import view.fxmlControllers.MainMenuController;
 import view.fxmlControllers.RegisterMenuController;
@@ -41,12 +42,12 @@ public class Main extends Application {
 //        primaryStage.setScene(LoadedScenes.registerMenu);
 //        primaryStage.setScene(LoadedPanes.shop);
 
-//        ArenaController.ac.init(null);
-//        ArenaController.ac.put(4,4,"sp");
-//        LoadedScenes.arena.setOnKeyTyped(event -> {
-//            ArenaController.ac.attack(4,4,4,4);
-//        });
-//        primaryStage.setScene(LoadedScenes.arena);
+        ArenaController.ac.init(null);
+        ArenaController.ac.put(4,4,"sp");
+        LoadedScenes.arena.setOnKeyTyped(event -> {
+            ArenaController.ac.attack(4,4,4,4);
+        });
+        primaryStage.setScene(LoadedScenes.arena);
 
         primaryStage.show();
     }

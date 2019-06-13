@@ -17,6 +17,7 @@ public class LoadedScenes {
     public static Scene mainMenu;
     public static Scene shop;
     public static Scene collectionOfShop;
+    public static Scene arena;
 
     {
         try {
@@ -27,6 +28,7 @@ public class LoadedScenes {
             mainMenu = new Scene(scale(FXMLLoader.load(RegisterMenuController.class.getResource("../fxmls/mainMenu.fxml"))));
             shop = new Scene(scale(FXMLLoader.load(RegisterMenuController.class.getResource("../fxmls/shop.fxml"))));
             collectionOfShop = new Scene(scale(FXMLLoader.load(RegisterMenuController.class.getResource("../fxmls/collectionOfShop.fxml"))));
+            arena = new Scene(scale(FXMLLoader.load(getClass().getResource("arena.fxml"))));
         } catch (IOException e) {
             e.printStackTrace();
         }
