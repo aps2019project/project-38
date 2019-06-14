@@ -1,5 +1,6 @@
 package model.player;
 
+import javafx.scene.image.Image;
 import model.Constant;
 import model.Deck;
 import model.Game;
@@ -24,6 +25,8 @@ public abstract class Player implements Serializable {
     private ArrayList<Spell> collectibleItems = new ArrayList<>();
     public boolean ableToReplaceCard;
     private Card nextCard;
+    public Image avatar;
+    public String username;
 
     public Player(Deck deck) {
         this.mainDeck = deck;

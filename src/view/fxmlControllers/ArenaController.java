@@ -1,5 +1,6 @@
 package view.fxmlControllers;
 
+import controller.Main;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -7,25 +8,33 @@ import javafx.application.Platform;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.effect.Glow;
 import javafx.scene.effect.PerspectiveTransform;
+import javafx.scene.effect.SepiaTone;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Scale;
 import javafx.util.Duration;
 import model.Game;
+import model.player.Player;
+import view.fxmls.LoadedScenes;
+import view.images.LoadedImages;
 import view.visualentities.VisualMinion;
+import view.visualentities.VisualSpell;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.net.URL;
-import java.util.Objects;
-import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 public class ArenaController implements Initializable {
     public static ArenaController ac;
-
     Game game;
     public GridPane grid;
     public Pane pane;
@@ -116,8 +125,24 @@ public class ArenaController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ac = this;
 
+////        hashem
+//        player1_avatar.setImage(LoadedImages.avatars[4]);
+//        player2_avatar.setImage(LoadedImages.avatars[7]);
+//        setActiveMana(8, 2);
+//        setActiveMana(6, 2);
+//        player1_username.setText("Hashem");
+//        player2_username.setText("Rima");
+//        player1_neededManaForSpecialBuff.setText("4");
+//        player2_neededManaForSpecialBuff.setText("1");
+//        setActivePlayer(1);
+//        setActiveMana(1, 1);
+//
+//        ImageView player1_VS = new VisualMinion("Jen").view;
+//        player1_VS.relocate(135, 170);
+//        pane.getChildren().add(player1_VS);
+
+        ac = this;
         transformGrid();
 
         //producing click boxes and fixing indexes of nodes of gridPane
@@ -148,7 +173,7 @@ public class ArenaController implements Initializable {
                         cellOnMouseEvent(finalI, finalJ);
                     });
                     rect.setOnMouseEntered(event -> {
-                        getGridNodeFromIndexes(finalI,finalJ).setEffect(new Glow(1));
+                        getGridNodeFromIndexes(finalI, finalJ).setEffect(new Glow(1));
                     });
                     rect.setOnMouseExited(event -> {
                         getGridNodeFromIndexes(finalI, finalJ).setEffect(null);
@@ -167,7 +192,6 @@ public class ArenaController implements Initializable {
         return null;
     }
 
-
     private void transformGrid() {
         PerspectiveTransform perspectiveTransform = new PerspectiveTransform();
         perspectiveTransform.setUlx(70);
@@ -179,5 +203,83 @@ public class ArenaController implements Initializable {
         perspectiveTransform.setLlx(0);
         perspectiveTransform.setLly(340);
         grid.setEffect(perspectiveTransform);
+    }
+
+    //for showing items: --------------------------
+
+    public Pane menu;
+    public Label turn_btn;
+    public ImageView player1_avatar;
+    public ImageView player2_avatar;
+    public Label player1_username;
+    public Label player2_username;
+    public GridPane player1_mana;
+    public GridPane player2_mana;
+    public ImageView player1_specialBuff;
+    public Label player1_neededManaForSpecialBuff;
+    public ImageView player2_specialBuff;
+    public Label player2_neededManaForSpecialBuff;
+    public ImageView player1_avatarBorder;
+    public ImageView player2_avatarBorder;
+
+
+    private void beforeStartTheGame(Player player1, Player player2) {
+        player2_avatarBorder.getTransforms().add(new Scale(1.25, 1.25)); // just for first time
+        player1_avatar.setImage(player1.avatar);
+        player2_avatar.setImage(player2.avatar);
+        player1_username.setText(player1.username);
+        player2_username.setText(player2.username);
+        ImageView player1_VS = new VisualSpell(player2.getMainDeck().getHero().getPower().getName()).view;
+        player1_VS.relocate(135, 168);
+        ImageView player2_VS = new VisualSpell(player1.getMainDeck().getHero().getPower().getName()).view;
+        player2_VS.relocate(1004, 168);
+//        player1_neededManaForSpecialBuff.setText();
+//        player2_neededManaForSpecialBuff.setText();
+    }
+
+    private void setActiveMana(int number /* number of active mana */, int playerNumber /* 1 or 2 */) {
+        GridPane gridPane = player2_mana;
+        if (playerNumber == 1) {
+            gridPane = player1_mana;
+        }
+        for (int i = 0; i < 9; i++) {
+            ImageView imageView = (ImageView) gridPane.getChildren().get(i);
+            if (i < number) {
+                imageView.setImage(LoadedImages.blueMana);
+            } else {
+                imageView.setImage(LoadedImages.grayMana);
+            }
+        }
+    }
+
+    private void setActivePlayer(int playerNumber /* 1 or 2 */) {
+        ImageView avatar = player2_avatar;
+        ImageView border = player2_avatarBorder;
+        ImageView otherAvatar = player1_avatar;
+        ImageView otherBorder = player1_avatarBorder;
+        if (playerNumber == 1) {
+            avatar = player1_avatar;
+            border = player1_avatarBorder;
+            otherAvatar = player2_avatar;
+            otherBorder = player2_avatarBorder;
+        }
+        avatar.setEffect(null);
+        border.setEffect(null);
+        otherAvatar.setEffect(new SepiaTone());
+        otherBorder.setEffect(new SepiaTone());
+    }
+
+    public void resume(MouseEvent mouseEvent) {
+        menu.toBack();
+    }
+
+    public void save(MouseEvent mouseEvent) {
+        //todo
+    }
+
+    public void quit(MouseEvent mouseEvent) {
+        //todo
+        Main.mainStage.setScene(LoadedScenes.mainMenu);
+        Main.mainStage.setFullScreen(true);
     }
 }
