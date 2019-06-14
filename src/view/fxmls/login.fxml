@@ -46,9 +46,9 @@
             <Image url="@../images/loginMenu/backGround.jpg" />
          </image>
       </ImageView>
-      <Text layoutX="191.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login">
+      <Text layoutX="204.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login">
          <font>
-            <Font size="40.0" />
+            <Font size="30.0" />
          </font>
       </Text>
       <ImageView fitHeight="40.0" fitWidth="143.0" layoutX="169.0" layoutY="139.0">
