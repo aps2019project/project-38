@@ -15,7 +15,7 @@ public class Selectable implements Serializable {
         return warriorsCell;
     }
 
-    public void seletWarrior(Cell cell) {
+    public void selectWarrior(Cell cell) {
         Game game = cell.getBoard().getGame();
         if (game.getActivePlayer().getWarriors().contains(cell.getWarrior())) {
             cardHandIndex = null;
@@ -47,7 +47,7 @@ public class Selectable implements Serializable {
         specialPowerIsSelected = true;
     }
 
-    public void selectColletableItem(Spell collectableItem) {
+    public void selectCollectibleItem(Spell collectableItem) {
         this.collectibleItem = collectableItem;
     }
 

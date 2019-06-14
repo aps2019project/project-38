@@ -464,7 +464,7 @@ public class GameWindow extends Window {
             } else if (request.matches("Select \\d+")) {
                 int index = Integer.parseInt(request.replace("Select ", ""));
                 if (index < game.getActivePlayer().getCollectibleItems().size()) {
-                    game.getSelectedThings().selectColletableItem(game.getActivePlayer().getCollectibleItems().get(index));
+                    game.getSelectedThings().selectCollectibleItem(game.getActivePlayer().getCollectibleItems().get(index));
                     Message.GameWindow.InsideGame.DoneMessages.selectItem();
                 } else {
                     Message.GameWindow.FailMessage.wrongIndex();
@@ -495,7 +495,7 @@ public class GameWindow extends Window {
         }
         if (!game.getSelectedThings().getWarriorsCell().contains(cell)) {
             if (cell.getWarrior() != null && game.getActivePlayer() == game.getWarriorsPlayer(cell.getWarrior())) {
-                game.getSelectedThings().seletWarrior(game.getBoard().getCell(cell.getRow(), cell.getColumn()));
+                game.getSelectedThings().selectWarrior(game.getBoard().getCell(cell.getRow(), cell.getColumn()));
                 Message.GameWindow.InsideGame.DoneMessages.selectWarrior();
             } else {
                 Message.GameWindow.FailMessage.youHaveNoOwnWarriorInThisCell();
