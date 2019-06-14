@@ -45,9 +45,9 @@ public class Main extends Application {
 //        primaryStage.setScene(LoadedPanes.shop);
 
         ArenaController.ac.init(null);
-        ArenaController.ac.put(4,4,"nanesarma");
+        ArenaController.ac.put(4,3,"#GhoolKhafan2");
         LoadedScenes.arena.setOnKeyTyped(event -> {
-            ArenaController.ac.attack(4,4,4,4);
+            ArenaController.ac.attack(4,3,4,3);
         });
         primaryStage.setScene(LoadedScenes.arena);
 
