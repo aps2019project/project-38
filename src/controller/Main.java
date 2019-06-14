@@ -1,18 +1,12 @@
 package controller;
 
-import controller.window.GameWindow;
-import controller.window.MainMenu;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.scene.Node;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import view.fxmlControllers.ArenaController;
 import view.fxmls.LoadedScenes;
-import view.fxmlControllers.MainMenuController;
-import view.fxmlControllers.RegisterMenuController;
-import view.fxmls.LoadedScenes;
 import view.images.LoadedImages;
+import view.visualentities.VisualMinion;
 
 public class Main extends Application {
     public static Stage mainStage;
@@ -45,7 +39,9 @@ public class Main extends Application {
 //        primaryStage.setScene(LoadedScenes.mainMenu);
         primaryStage.setScene(LoadedScenes.registerMenu);
 //        primaryStage.setScene(LoadedPanes.shop);
-
+        VisualMinion vm = new VisualMinion("#GhoolKhafan2");
+        vm.idle();
+        vm
         ArenaController.ac.init(null);
         ArenaController.ac.put(4,3,"#GhoolKhafan2");
         LoadedScenes.arena.setOnKeyTyped(event -> {

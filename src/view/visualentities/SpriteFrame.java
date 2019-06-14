@@ -1,4 +1,4 @@
-package view.visualminion;
+package view.visualentities;
 
 public class SpriteFrame {
     int x, y;

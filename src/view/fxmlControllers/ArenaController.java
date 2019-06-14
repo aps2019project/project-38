@@ -6,15 +6,12 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
-import javafx.scene.Node;
-import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import model.Game;
-import view.visualminion.VisualMinion;
+import view.visualentities.VisualMinion;
 
-import javax.swing.text.html.ImageView;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Timer;
