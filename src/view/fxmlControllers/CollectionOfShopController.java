@@ -44,6 +44,6 @@ public class CollectionOfShopController {
         backButton.setEffect(null);
     }
 
-    public void recalculateCarts(InputMethodEvent inputMethodEvent) {
+    public void recalculateCards(InputMethodEvent inputMethodEvent) {
     }
 }

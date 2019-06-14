@@ -1,6 +1,7 @@
 package view.fxmlControllers;
 
 import controller.Main;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
@@ -9,6 +10,7 @@ import model.Account;
 import view.fxmls.LoadedScenes;
 import view.images.LoadedImages;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -38,7 +40,11 @@ public class RegisterMenuController implements Initializable {
     }
 
     public void leatherBoard() {
-        Main.mainStage.setScene(LeatherBoardController.getScene());
+        try {
+            Main.mainStage.setScene(new Scene(scale(FXMLLoader.load(LoadedScenes.class.getResource("leatherBoard.fxml")))));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Main.mainStage.setFullScreen(true);
     }
 

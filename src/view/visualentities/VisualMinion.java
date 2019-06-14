@@ -1,4 +1,4 @@
-package view.visualminion;
+package view.visualentities;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

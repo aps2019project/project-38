@@ -3,15 +3,12 @@ package view.fxmlControllers;
 import controller.Main;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import model.Account;
 import view.fxmls.LoadedScenes;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import static view.Utility.*;
 
 public class MainMenuController implements Initializable {
     public AnchorPane mainPane;
@@ -24,20 +21,22 @@ public class MainMenuController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
     }
 
-    public void startGame(MouseEvent mouseEvent) {
+    public void startGame() {
+        Main.mainStage.setScene(LoadedScenes.chooseBattleKind);
+        Main.mainStage.setFullScreen(true);
     }
 
-    public void logout(MouseEvent mouseEvent) {
+    public void logout() {
         Account.saveAccounts();
         Account.setActiveAccount(null);
         Main.mainStage.setScene(LoadedScenes.registerMenu);
         Main.mainStage.setFullScreen(true);
     }
 
-    public void collection(MouseEvent mouseEvent) {
+    public void collection() {
     }
 
-    public void shop(MouseEvent mouseEvent) {
+    public void shop() {
 
     }
 }

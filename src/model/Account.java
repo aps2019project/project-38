@@ -35,7 +35,7 @@ public class Account implements Comparable<Account>, java.io.Serializable {
             Message.noIdenticalPassword();
             return "Your passwords aren't same";
         }
-        Account account = new Account(username, password);
+        new Account(username, password);
         return "Account created successfully";
     }
 

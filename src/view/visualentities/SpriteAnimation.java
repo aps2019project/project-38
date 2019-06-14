@@ -1,4 +1,4 @@
-package view.visualminion;
+package view.visualentities;
 
 import javafx.animation.Interpolator;
 import javafx.animation.Transition;

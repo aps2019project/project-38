@@ -15,7 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import model.Game;
-import view.visualminion.VisualMinion;
+import view.visualentities.VisualMinion;
 
 import java.net.URL;
 import java.util.Objects;

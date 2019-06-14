@@ -8,6 +8,7 @@ import model.triggers.Trigger;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public abstract class Card extends QualityHaver implements Serializable {
     public static HashMap<Integer, Card> allCards = new HashMap<>();
@@ -66,5 +67,10 @@ public abstract class Card extends QualityHaver implements Serializable {
 
     public int getPrice() {
         return price;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

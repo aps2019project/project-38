@@ -1,6 +1,9 @@
 package view.fxmlControllers;
 
 import controller.Main;
+import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.Glow;
@@ -9,12 +12,20 @@ import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import model.cards.Card;
+import model.cards.CardFactory;
+import model.cards.Warrior;
 import view.fxmls.LoadedScenes;
 
-public class ShopController {
+import java.io.IOException;
+import java.net.URL;
+import java.util.*;
+
+public class ShopController implements Initializable {
     public ImageView background;
     public ScrollPane scrollPane;
     public HBox hBox;
@@ -26,6 +37,7 @@ public class ShopController {
     public Text collectionText;
     public ImageView textFiledImage;
     public TextField searchTextFiled;
+    private HashMap<Card, AnchorPane> cards = new HashMap<>();
 
     public void moveScrollPane(KeyEvent keyEvent) {
     }
@@ -61,6 +73,36 @@ public class ShopController {
         collectionText.setOpacity(0.6);
     }
 
-    public void recalculateCarts(InputMethodEvent inputMethodEvent) {
+    public void recalculateCards(KeyEvent keyEvent) {
+        //InputMethodEvent inputMethodEvent
+        String searchText = searchTextFiled.getText();
+        cards.entrySet().removeIf(entry -> !entry.getKey().getName().matches(searchText + ".*"));
+        for (Warrior minion : CardFactory.getAllBuiltMinions()) {
+            if (!cards.containsKey(minion) && minion.getName().matches(searchText + ".*")) addNewMinion(minion);
+        }
+    }
+
+    private void addNewMinion(Warrior minion) {
+        AnchorPane anchorPane = null;
+        WarriorCardController warriorCardController = null;
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("warriorCart.fxml"));
+            anchorPane = fxmlLoader.load();
+            System.out.println(anchorPane);
+            warriorCardController = fxmlLoader.getController();
+            System.out.println(warriorCardController);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        warriorCardController.setFields(minion);
+        cards.put(minion, anchorPane);
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        searchTextFiled.setOnKeyTyped(this::recalculateCards);
+        Platform.runLater(() -> {
+            recalculateCards(null);
+        });
     }
 }
