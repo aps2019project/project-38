@@ -6,38 +6,36 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
-public class WarriorCartController {
+public class SpellCardController {
     public ImageView blueLine;
-    public ImageView cartImage;
-    public Text apText;
-    public Text hpText;
+    public ImageView cardImage;
     public AnchorPane gifPane;
-    public ImageView pricePlace;
-    public Text priceText;
-    public ImageView blueDot;
-    public ImageView blueDiamond;
-    public Text manaText;
     public Text nameText;
     public Text typeText;
+    public ImageView purpleDot;
+    public ImageView pricePlace;
+    public Text priceText;
     public Text descriptionText;
+    public ImageView blueDiamond;
+    public Text manaText;
 
-    public void selectCart(MouseEvent mouseEvent) {
+    public void selectCard(MouseEvent mouseEvent) {
     }
 
-    public void shineCart(MouseEvent mouseEvent) {
+    public void shineCard(MouseEvent mouseEvent) {
         blueLine.setOpacity(1);
-        cartImage.setEffect(new Glow(0.3));
+        cardImage.setEffect(new Glow(0.3));
         blueDiamond.setEffect(new Glow(0.3));
-        blueDot.setEffect(new Glow(0.3));
+        purpleDot.setEffect(new Glow(0.3));
         pricePlace.setEffect(new Glow(0.3));
         gifPane.setEffect(new Glow(0.3));
     }
 
-    public void resetCart(MouseEvent mouseEvent) {
+    public void resetCard(MouseEvent mouseEvent) {
         blueLine.setOpacity(0);
-        cartImage.setEffect(null);
+        cardImage.setEffect(null);
         blueDiamond.setEffect(null);
-        blueDot.setEffect(null);
+        purpleDot.setEffect(null);
         pricePlace.setEffect(null);
         gifPane.setEffect(null);
     }

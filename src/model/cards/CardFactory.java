@@ -19,10 +19,10 @@ import model.triggers.*;
 import java.util.ArrayList;
 
 public class CardFactory {
-    private static ArrayList<Card> allBuiltMinions = new ArrayList<>();
-    private static ArrayList<Card> allBuiltSpells = new ArrayList<>();
-    private static ArrayList<Card> allBuiltHeroes = new ArrayList<>();
-    private static ArrayList<Card> allBuiltItems = new ArrayList<>();
+    private static ArrayList<Warrior> allBuiltMinions = new ArrayList<>();
+    private static ArrayList<Spell> allBuiltSpells = new ArrayList<>();
+    private static ArrayList<Hero> allBuiltHeroes = new ArrayList<>();
+    private static ArrayList<Spell> allBuiltItems = new ArrayList<>();
 
     private static void makeAllMinions() {
         {//
@@ -1099,7 +1099,7 @@ public class CardFactory {
         }
     }
 
-    private static void cardAdder(ArrayList<Card> allBuiltCards) {
+    private static void cardAdder(ArrayList<? extends Card> allBuiltCards) {
         for (Card card : allBuiltCards) {
             Card.getAllCards().put(card.getID(), card);
         }
@@ -1111,19 +1111,19 @@ public class CardFactory {
     //***
 
 
-    public static ArrayList<Card> getAllBuiltMinions() {
+    public static ArrayList<Warrior> getAllBuiltMinions() {
         return allBuiltMinions;
     }
 
-    public static ArrayList<Card> getAllBuiltSpells() {
+    public static ArrayList<Spell> getAllBuiltSpells() {
         return allBuiltSpells;
     }
 
-    public static ArrayList<Card> getAllBuiltHeroes() {
+    public static ArrayList<Hero> getAllBuiltHeroes() {
         return allBuiltHeroes;
     }
 
-    public static ArrayList<Card> getAllBuiltItems() {
+    public static ArrayList<Spell> getAllBuiltItems() {
         return allBuiltItems;
     }
 }

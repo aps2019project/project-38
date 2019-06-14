@@ -419,7 +419,7 @@ public class GameWindow extends Window {
         if (index < Constant.GameConstants.handSize) {
             if (game.getActivePlayer().getHand().get(index) != null) {
                 game.getSelectedThings().selectCard(game, index);
-                Message.GameWindow.InsideGame.DoneMessages.selectCart();
+                Message.GameWindow.InsideGame.DoneMessages.selectCard();
             } else {
                 Message.GameWindow.FailMessage.emptyCard();
             }

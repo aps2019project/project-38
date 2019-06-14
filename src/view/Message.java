@@ -102,7 +102,7 @@ public interface Message {
     }
 
     static void buyWasSuccessful() {
-        System.out.println("You bought the cart successfully :)");
+        System.out.println("You bought the card successfully :)");
     }
 
     static void sellWasSuccessful() {
@@ -617,7 +617,7 @@ public interface Message {
                     System.out.println("attack done");
                 }
 
-                static void selectCart() {
+                static void selectCard() {
                     System.out.println("select card done");
                 }
 
@@ -685,7 +685,7 @@ public interface Message {
             }
 
             static void emptyCard() {
-                System.out.println("you cant select empty cart");
+                System.out.println("you cant select empty card");
             }
 
             static void thisWarriorIsSelected() {
