@@ -53,6 +53,8 @@ public class LoginController implements Initializable {
     public void back() {
         Main.mainStage.setScene(RegisterMenuController.getScene());
         Main.mainStage.setFullScreen(true);
+        username.clear();
+        password.clear();
     }
 
     public void ok() {
