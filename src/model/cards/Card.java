@@ -3,6 +3,7 @@ package model.cards;
 import model.Cell;
 import model.QualityHaver;
 import model.effects.Effect;
+import model.exceptions.NotEnoughConditions;
 import model.triggers.Trigger;
 
 import java.io.Serializable;
@@ -35,7 +36,7 @@ public abstract class Card extends QualityHaver implements Serializable {
         //todo for phase2
     }
 
-    public abstract boolean apply(Cell cell);
+    public abstract void apply(Cell cell) throws NotEnoughConditions;
 
     public abstract Card deepCopy();
 

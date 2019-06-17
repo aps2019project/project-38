@@ -4,6 +4,7 @@ package model.player;
 import model.*;
 import model.cards.Card;
 import model.cards.Warrior;
+import model.exceptions.NotEnoughConditions;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,7 +21,11 @@ public class AIPlayer extends Player {
         for (Map.Entry<Integer, Card> cardEntry : es) {
             if(cardEntry.getValue()!=null){
                 for (Cell cell : getBoardCells()) {
-                    getGame().useCard(cardEntry.getKey(),cell);
+                    try {
+                        getGame().useCard(cardEntry.getKey(),cell);
+                    } catch (NotEnoughConditions notEnoughConditions) {
+                        //no problem he's stupid
+                    }
                 }
             }
         }
@@ -29,8 +34,12 @@ public class AIPlayer extends Player {
         ArrayList<Warrior> tempWarrior = new ArrayList<>(warriors);
         for (Warrior warrior : tempWarrior) {
             for (Cell cell : getBoardCells()) {
-                getGame().attack(warrior.getCell(),cell);
-                getGame().move(warrior.getCell(),cell);
+                try {
+                    getGame().attack(warrior.getCell(),cell);
+                    getGame().move(warrior.getCell(),cell);
+                } catch (NotEnoughConditions notEnoughConditions) {
+                    //no problem he's stupid
+                }
             }
         }
 

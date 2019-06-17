@@ -5,26 +5,25 @@ import model.actions.Killer;
 import model.cards.*;
 import model.effects.Dispelablity;
 import model.effects.Effect;
+import model.exceptions.NotEnoughConditions;
 import model.gamestate.*;
 import model.gamemodes.GameMode;
 import model.player.AIPlayer;
 import model.player.HumanPlayer;
 import model.player.Player;
-import model.targets.OnCellGetter;
 import model.triggers.CollectibleMine;
-import model.triggers.Mine;
 import model.triggers.Trigger;
 
 import java.io.Serializable;
 import java.util.*;
 
-public class Game implements Serializable{
+public class Game implements Serializable {
     GameMode gameMode;
     public int turn;
     Player[] players = new Player[2];
     private Board board = new Board(this);
     //    public Timer timer = new Timer(Constant.GameConstants.turnTime, ignored -> endTurn());
-    private Selectable selectedThings = new Selectable();
+    private SelectionManager selectionManager = new SelectionManager(this);
     public int prize;
 
     public Game(GameMode gameMode, Account accountOne, Account accountTwo) {
@@ -69,8 +68,8 @@ public class Game implements Serializable{
             turn = 0;
         }
         {
-            CollectibleMine c1 = new CollectibleMine(-1, Dispelablity.UNDISPELLABLE,(Spell)CardFactory.getAllBuiltItems().get(9).deepCopy());
-            board.getCell(2,2).addTrigger(c1);
+            CollectibleMine c1 = new CollectibleMine(-1, Dispelablity.UNDISPELLABLE, (Spell) CardFactory.getAllBuiltItems().get(9).deepCopy());
+            board.getCell(2, 2).addTrigger(c1);
         }
         startTurn();
 //        timer.start();
@@ -79,11 +78,15 @@ public class Game implements Serializable{
     private void useUsableItem(Spell spell) {
         for (int i = 0; i < Constant.GameConstants.boardRow; i++) {
             for (int j = 0; j < Constant.GameConstants.boardColumn; j++) {
-                if (spell.apply(board.getCell(i, j))) {
+                try {
+                    spell.apply(board.getCell(i, j));
                     return;
+                } catch (NotEnoughConditions notEnoughConditions) {
+                    //no problem we're brute forcing!
                 }
             }
         }
+
     }
 
     private void initialisePlayerHand(Player player) {
@@ -134,8 +137,8 @@ public class Game implements Serializable{
         return gameMode;
     }
 
-    public Selectable getSelectedThings() {
-        return selectedThings;
+    public SelectionManager getSelectionManager() {
+        return selectionManager;
     }
 
     public void decreaseSpecialPowerCoolDown() {
@@ -156,11 +159,11 @@ public class Game implements Serializable{
     private void iteratePlayerTriggers(Player player, GameState gameState) {
         for (Warrior warrior : player.getWarriors()) {
             UUID id = UUID.randomUUID();
-            warrior.setLock(id+"pti",true);
+            warrior.setLock(id + "pti", true);
             for (Trigger trigger : warrior.getTriggers()) {
                 trigger.check(gameState, warrior);
             }
-            warrior.setLock(id+"pti",false);
+            warrior.setLock(id + "pti", false);
         }
     }
 
@@ -173,16 +176,16 @@ public class Game implements Serializable{
     private void iterateAndExpirePlayerTriggers(Player player) {
         for (Warrior warrior : player.getWarriors()) {
             UUID id = UUID.randomUUID();
-            warrior.setLock(id+"pte",true);
+            warrior.setLock(id + "pte", true);
             for (Trigger trigger : warrior.getTriggers()) {
-                if(trigger.duration > 0){
+                if (trigger.duration > 0) {
                     trigger.duration--;
-                    if(trigger.duration==0){
+                    if (trigger.duration == 0) {
                         warrior.removeTrigger(trigger);
                     }
                 }
             }
-            warrior.setLock(id+"pte",false);
+            warrior.setLock(id + "pte", false);
         }
     }
 
@@ -195,16 +198,16 @@ public class Game implements Serializable{
     private void iterateAndExpirePlayerEffects(Player player) {
         for (Warrior warrior : player.getWarriors()) {
             UUID id = UUID.randomUUID();
-            warrior.setLock(id+"pee",true);
+            warrior.setLock(id + "pee", true);
             for (Effect effect : warrior.getEffects()) {
-                if(effect.duration>0){
+                if (effect.duration > 0) {
                     effect.duration--;
-                    if(effect.duration==0){
+                    if (effect.duration == 0) {
                         warrior.removeEffect(effect);
                     }
                 }
             }
-            warrior.setLock(id+"pee",false);
+            warrior.setLock(id + "pee", false);
         }
     }
 
@@ -232,82 +235,94 @@ public class Game implements Serializable{
         }
     }
 
-    public boolean move(Cell originCell, Cell targetCell) {
-        boolean isDone = false;
-        if (getActivePlayer().getWarriors().contains(originCell.getWarrior()) &&
-                targetCell.getWarrior() == null) {
-            isDone = Move.doIt(originCell, targetCell);
+    ////////////////////////refactor
+    public void move(Cell originCell, Cell targetCell) throws NotEnoughConditions {
+//        if (getActivePlayer().getWarriors().contains(originCell.getWarrior()) && targetCell.getWarrior() == null) {
+        try {
+            Move.doIt(originCell, targetCell);
+        } finally {
             checkGameEndAndThenKillAllDiedWarriors();
         }
-        return isDone;
+//        } else {
+//            throw new NotEnoughConditions("Move more carefully!");
+//        }
     }
 
-    public boolean comboAttack(ArrayList<Cell> attackersCell, Cell defenderCell) {
-        boolean isDone;
-        if (defenderCell.getWarrior() == null) return false;
-        for (Cell cell : attackersCell) {
-            if (cell.getWarrior() == null) {
-                return false;
-            }
+    public void comboAttack(ArrayList<Cell> attackersCell, Cell defenderCell) throws NotEnoughConditions {
+//        if (defenderCell.getWarrior() == null) return false;
+//        for (Cell cell : attackersCell) {
+//            if (cell.getWarrior() == null) {
+//                return false;
+//            }
+//        }
+//        for (int i = 0; i < attackersCell.size() - 1; i++) {
+//            if (getWarriorsPlayer(attackersCell.get(i).getWarrior()) !=
+//                    getWarriorsPlayer(attackersCell.get(i + 1).getWarrior())) {
+//                return false;
+//            }
+//        }
+//        if (defenderCell.getWarrior() == attackersCell.get(0).getWarrior()) {
+//            return false;
+//        }
+        try {
+            ComboAttack.doIt(attackersCell, defenderCell);
+        } finally {
+            checkGameEndAndThenKillAllDiedWarriors();
         }
-        for (int i = 0; i < attackersCell.size() - 1; i++) {
-            if (getWarriorsPlayer(attackersCell.get(i).getWarrior()) !=
-                    getWarriorsPlayer(attackersCell.get(i + 1).getWarrior())) {
-                return false;
-            }
-        }
-        if (defenderCell.getWarrior() == attackersCell.get(0).getWarrior()) {
-            return false;
-        }
-        isDone = ComboAttack.doIt(attackersCell, defenderCell);
-        checkGameEndAndThenKillAllDiedWarriors();
-        return isDone;
     }
 
-    public boolean attack(Cell attackerCell, Cell defenderCell) {
-        boolean isDone = false;
+    public void attack(Cell attackerCell, Cell defenderCell) throws NotEnoughConditions {
         ArrayList<Warrior> activePlayerWarriors = getActivePlayer().getWarriors();
-        if (defenderCell.getWarrior() != null && activePlayerWarriors.contains(attackerCell.getWarrior()) &&
-                !activePlayerWarriors.contains(defenderCell.getWarrior())) {
-            isDone = Attack.doIt(attackerCell, defenderCell,false);
+//        if (defenderCell.getWarrior() != null && activePlayerWarriors.contains(attackerCell.getWarrior()) &&
+//                !activePlayerWarriors.contains(defenderCell.getWarrior())) {
+        try {
+            Attack.doIt(attackerCell, defenderCell, false);
+        } finally {
             checkGameEndAndThenKillAllDiedWarriors();
         }
-        return isDone;
+//        }
     }
 
-    public boolean replaceCard(int handMapKey) {
-        boolean isDone = false;
-        if (getActivePlayer().getHand().get(handMapKey) != null) {
-            isDone = ReplaceCard.doIt(this, handMapKey);
+    public void replaceCard(int handMapKey) throws NotEnoughConditions {
+//        if (getActivePlayer().getHand().get(handMapKey) != null) {
+        try {
+            ReplaceCard.doIt(this, handMapKey);
+        } finally {
             checkGameEndAndThenKillAllDiedWarriors();
         }
-        return isDone;
+//        }
     }
 
-    public boolean useCard(int handMapKey, Cell cell) {
-        boolean isDone = false;
-        if (getActivePlayer().getHand().get(handMapKey) != null) {
-            isDone = UseCard.useCard(handMapKey, cell);
+    public void useCard(int handMapKey, Cell cell) throws NotEnoughConditions {
+//        if (getActivePlayer().getHand().get(handMapKey) != null) {
+        try {
+            UseCard.useCard(handMapKey, cell);
+        } finally {
             checkGameEndAndThenKillAllDiedWarriors();
         }
-        return isDone;
+//        }
     }
 
-    public boolean useSpecialPower(Cell cell) {
-        boolean isDone = false;
+    public void useSpecialPower(Cell cell) throws NotEnoughConditions {
         if (getActivePlayer().getPlayerHero().getPower().coolDownRemaining == 0) {
-            isDone = UseCard.useHeroPower(getActivePlayer().getPlayerHero().getPower(), cell);
-            checkGameEndAndThenKillAllDiedWarriors();
+            try {
+                UseCard.useHeroPower(getActivePlayer().getPlayerHero().getPower(), cell);
+            } finally {
+                checkGameEndAndThenKillAllDiedWarriors();
+            }
+        } else {
+            throw new NotEnoughConditions("It's on cooldown");
         }
-        return isDone;
     }
 
-    public boolean useCollectible(Spell spell, Cell cell) {
-        boolean isDone;
-        isDone = UseCard.useCollectible(spell, cell);
-        checkGameEndAndThenKillAllDiedWarriors();
-        return isDone;
+    public void useCollectible(Spell spell, Cell cell) throws NotEnoughConditions {
+        try {
+            UseCard.useCollectible(spell, cell);
+        } finally {
+            checkGameEndAndThenKillAllDiedWarriors();
+        }
     }
+    /////////////////////////////////////////////////////refactor
 
     public void endTurn() {
         EndTurn.doIt(this);

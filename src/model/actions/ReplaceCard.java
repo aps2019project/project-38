@@ -2,12 +2,13 @@ package model.actions;
 
 import model.Game;
 import model.cards.Card;
+import model.exceptions.NotEnoughConditions;
 import model.gamestate.ReplaceCardState;
 
 import java.util.Random;
 
 public class ReplaceCard {
-    public static boolean doIt(Game game, int handMapKey) {
+    public static void doIt(Game game, int handMapKey) throws NotEnoughConditions {
         if (game.getActivePlayer().ableToReplaceCard) {
             Card card = game.getActivePlayer().getHand().get(handMapKey);
             Random random = new Random();
@@ -24,8 +25,8 @@ public class ReplaceCard {
             game.getActivePlayer().ableToReplaceCard = false;
             ReplaceCardState replaceCardState = new ReplaceCardState();
             game.iterateAllTriggersCheck(replaceCardState);
-            return true;
+        }else {
+            throw new NotEnoughConditions("You have already replaced a card this turn");
         }
-        return false;
     }
 }

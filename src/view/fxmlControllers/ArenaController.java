@@ -1,21 +1,28 @@
 package view.fxmlControllers;
 
+import controller.Main;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.effect.Glow;
 import javafx.scene.effect.PerspectiveTransform;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
+import javafx.stage.Popup;
 import javafx.util.Duration;
 import model.Game;
 import view.visualentities.VisualMinion;
+import view.visualentities.VisualSpell;
 
 import java.net.URL;
 import java.util.Objects;
@@ -27,6 +34,7 @@ public class ArenaController implements Initializable {
     public static ArenaController ac;
 
     Game game;
+
     public GridPane grid;
     public Pane pane;
     VisualMinion[][] visualMinions;
@@ -34,6 +42,7 @@ public class ArenaController implements Initializable {
     public void init(Game game) {
         this.game = game;
         visualMinions = new VisualMinion[5][9];
+        //todo init generals
     }
 
     public void put(int row, int col, String name) {
@@ -111,7 +120,7 @@ public class ArenaController implements Initializable {
     }
 
     void cellOnMouseEvent(int row, int col) {
-        System.out.println(row + " " + col);
+        game.getSelectionManager().selectCell(game.getBoard().getCell(row, col));
     }
 
     @Override
@@ -122,14 +131,7 @@ public class ArenaController implements Initializable {
 
         //producing click boxes and fixing indexes of nodes of gridPane
         Platform.runLater(() -> {
-            for (Node node : grid.getChildren()) {
-                if (!Objects.nonNull(GridPane.getRowIndex(node))) {
-                    GridPane.setRowIndex(node, 0);
-                }
-                if (!Objects.nonNull(GridPane.getColumnIndex(node))) {
-                    GridPane.setColumnIndex(node, 0);
-                }
-            }
+            fixGridNodesIndexes();
 
             for (int i = 0; i < 5; i++) {
                 for (int j = 0; j < 9; j++) {
@@ -148,7 +150,7 @@ public class ArenaController implements Initializable {
                         cellOnMouseEvent(finalI, finalJ);
                     });
                     rect.setOnMouseEntered(event -> {
-                        getGridNodeFromIndexes(finalI,finalJ).setEffect(new Glow(1));
+                        getGridNodeFromIndexes(finalI, finalJ).setEffect(new Glow(1));
                     });
                     rect.setOnMouseExited(event -> {
                         getGridNodeFromIndexes(finalI, finalJ).setEffect(null);
@@ -156,6 +158,17 @@ public class ArenaController implements Initializable {
                 }
             }
         });
+    }
+
+    private void fixGridNodesIndexes() {
+        for (Node node : grid.getChildren()) {
+            if (!Objects.nonNull(GridPane.getRowIndex(node))) {
+                GridPane.setRowIndex(node, 0);
+            }
+            if (!Objects.nonNull(GridPane.getColumnIndex(node))) {
+                GridPane.setColumnIndex(node, 0);
+            }
+        }
     }
 
     private Node getGridNodeFromIndexes(int finalI, int finalJ) {
@@ -179,5 +192,30 @@ public class ArenaController implements Initializable {
         perspectiveTransform.setLlx(0);
         perspectiveTransform.setLly(340);
         grid.setEffect(perspectiveTransform);
+    }
+
+    public static void showMessege(String message) {
+        Popup popup = new Popup();
+        Label label = new Label(message);
+        label.setBackground(new Background(new BackgroundFill(Color.gray(.5, .5), new CornerRadii(10), new Insets(-5, -10, -5, -10))));
+        label.setTextAlignment(TextAlignment.CENTER);
+        label.setFont(new Font(30));
+        label.setTextFill(Color.WHITE);
+        popup.getContent().add(label);
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(popup::hide);
+            }
+        }, 1000);
+        popup.show(Main.mainStage);
+    }
+
+    void setSelectionEffect(){
+
+    }
+
+    void rmSelectionEffects(){
+
     }
 }

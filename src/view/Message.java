@@ -327,23 +327,23 @@ public interface Message {
 
             static void showSelectedThings(Game game) {
                 System.out.print("SelectedCards: ");
-                if (game.getSelectedThings().getWarriorsCell().size() != 0) {
-                    System.out.printf("{Warrior%s}\n", game.getSelectedThings().getWarriorsCell().size() > 1 ? "s" : "");
-                    for (Cell cell : game.getSelectedThings().getWarriorsCell()) {
+                if (game.getSelectionManager().getWarriorsCells().size() != 0) {
+                    System.out.printf("{Warrior%s}\n", game.getSelectionManager().getWarriorsCells().size() > 1 ? "s" : "");
+                    for (Cell cell : game.getSelectionManager().getWarriorsCells()) {
                         CardView.showCard(cell.getWarrior());
                     }
                 }
-                else if (game.getSelectedThings().collectibleItem != null) {
+                else if (game.getSelectionManager().collectibleItem != null) {
                     System.out.println("{Collectible Item}");
-                    Spell item = game.getSelectedThings().collectibleItem;
+                    Spell item = game.getSelectionManager().collectibleItem;
                     CardView.showItem(item);
                 }
-                else if (game.getSelectedThings().cardHandIndex != null) {
+                else if (game.getSelectionManager().cardHandIndex != null) {
                     System.out.println("{Card}");
-                    Card card = game.getActivePlayer().getHand().get(game.getSelectedThings().cardHandIndex);
+                    Card card = game.getActivePlayer().getHand().get(game.getSelectionManager().cardHandIndex);
                     CardView.showCard(card);
                 }
-                else if (game.getSelectedThings().specialPowerIsSelected) {
+                else if (game.getSelectionManager().specialPowerIsSelected) {
                     System.out.println("{Special Power}");
                     HeroPower specialPower = game.getActivePlayer().getPlayerHero().getPower();
                     CardView.ShowSpecialPower(specialPower);

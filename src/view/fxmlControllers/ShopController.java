@@ -88,9 +88,7 @@ public class ShopController implements Initializable {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("warriorCart.fxml"));
             anchorPane = fxmlLoader.load();
-            System.out.println(anchorPane);
             warriorCardController = fxmlLoader.getController();
-            System.out.println(warriorCardController);
         } catch (IOException e) {
             e.printStackTrace();
         }

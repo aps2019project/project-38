@@ -49,11 +49,10 @@ public class Warrior extends Card {
     }
 
     @Override
-    public boolean apply(Cell cell) {
+    public void apply(Cell cell) {
         cell.setWarrior(this);
         this.cell=cell;
         cell.getBoard().getGame().getActivePlayer().getWarriors().add(this);
-        return true;
     }
 
     @Override

@@ -32,20 +32,20 @@ public class Main extends Application {
             Platform.exit();
             System.exit(0);
         });
-        CardFactory.main();
+//        CardFactory.main();
         new LoadedImages();
         new LoadedScenes();
 
-        primaryStage.setScene(LoadedScenes.shop);
+//        primaryStage.setScene(LoadedScenes.shop);
 
         ArenaController.ac.init(null);
         LoadedScenes.arena.setOnKeyTyped(event -> {
             ArenaController.ac.attack(0,0,4,4);
         });
-        ArenaController.ac.put(0,0,"shahzadehtoorani");
-        ArenaController.ac.put(2,5,"shahzadehtoorani");
-        ArenaController.ac.put(4,7,"shahzadehtoorani");
-//        primaryStage.setScene(LoadedScenes.arena);
+        ArenaController.ac.put(0,0,"Siavash");
+        ArenaController.ac.put(2,5,"Siavash");
+        ArenaController.ac.put(4,7,"Siavash");
+        primaryStage.setScene(LoadedScenes.arena);
 
         primaryStage.show();
     }

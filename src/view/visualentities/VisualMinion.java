@@ -8,7 +8,7 @@ import java.io.FileNotFoundException;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class VisualMinion {
+public class VisualMinion extends VisualEntity{
     String name;
     public ImageView view;
     public SpriteAnimation animation;

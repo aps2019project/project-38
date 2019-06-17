@@ -23,7 +23,7 @@
             <Image url="@../images/mainMenu/fire.gif" />
          </image>
       </ImageView>
-      <ImageView fitHeight="58.0" fitWidth="43.0" layoutX="270.0" layoutY="70.0">
+      <ImageView fitHeight="58.0" fitWidth="43.0" layoutX="233.0" layoutY="-29.0">
          <image>
             <Image url="@../images/mainMenu/fire.gif" />
          </image>
