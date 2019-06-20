@@ -14,6 +14,7 @@ public class LoadedImages {
     public static Image activeCard = null;
     public static Image activePlayer = null;
     public static Image inactivePlayer = null;
+    public static Image blueCircle = null;
 
     {
         Random random = new Random();
@@ -22,19 +23,15 @@ public class LoadedImages {
             //for arena:
             blueMana = new Image(new FileInputStream("src/view/images/arena/blueMana.png"));
             grayMana = new Image(new FileInputStream("src/view/images/arena/grayMana.png"));
-            activeCard =new Image(new FileInputStream("src/view/images/arena/activeCard.png"));
-            activePlayer =new Image(new FileInputStream("src/view/images/arena/activePlayer.png"));
-            inactivePlayer =new Image(new FileInputStream("src/view/images/arena/inactivePlayer.png"));
-
+            activeCard = new Image(new FileInputStream("src/view/images/arena/activeCard.png"));
+            activePlayer = new Image(new FileInputStream("src/view/images/arena/activePlayer.png"));
+            inactivePlayer = new Image(new FileInputStream("src/view/images/arena/inactivePlayer.png"));
+            blueCircle = new Image(new FileInputStream("src/view/images/arena/blueCircle.png"));
             for (int i = 0; i < 15; i++) {
                 avatars[i] = new Image(new FileInputStream("src/view/images/accounts/circular/" + i + ".png"));
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-    }
-
-    {
-
     }
 }

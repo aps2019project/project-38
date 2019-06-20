@@ -46,7 +46,7 @@
             </HBox>
          </content>
       </ScrollPane>
-      <ImageView fitHeight="50.0" fitWidth="50.0" onMouseClicked="#back">
+      <ImageView fitHeight="40.0" fitWidth="40.0" onMouseClicked="#back">
          <image>
             <Image url="@../images/leatherBoard/backButton.png" />
          </image>

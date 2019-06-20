@@ -30,10 +30,6 @@ public class CreateAccountController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
     }
 
-    public static Scene getScene() {
-        return LoadedScenes.createAccount;
-    }
-
     public void register() {
         String userNameString = username.getText();
         String passwordString = password.getText();
