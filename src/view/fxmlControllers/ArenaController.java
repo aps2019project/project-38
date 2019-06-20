@@ -105,7 +105,7 @@ public class ArenaController implements Initializable {
                         getGridNodeFromIndexes(finalI, finalJ).setEffect(new Glow(1));
                     });
                     rect.setOnMouseExited(event -> {
-                        getGridNodeFromIndexes(finalI, finalJ).setEffect(null);
+                        setDefaultEffect(getGridNodeFromIndexes(finalI, finalJ));
                     });
                 }
             }
@@ -436,14 +436,6 @@ public class ArenaController implements Initializable {
             }
         }, 1000);
         popup.show(Main.mainStage);
-    }
-
-    void setSelectionEffect() {
-
-    }
-
-    void rmSelectionEffects() {
-
     }
 
     public void backFromGraveYard() {

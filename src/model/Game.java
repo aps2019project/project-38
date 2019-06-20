@@ -346,9 +346,9 @@ public class Game implements Serializable {
         StartTurn.doIt(this);
         checkGameEndAndThenKillAllDiedWarriors();
 
-        ArenaController.ac.setCoolDown(getActivePlayer().getPlayerHero().getPower().coolDownRemaining, getPlayerNumber(getActivePlayer()));
-        ArenaController.ac.setActiveMana(getActivePlayer().mana,getPlayerNumber(getActivePlayer()));
-        ArenaController.ac.setActivePlayer(getPlayerNumber(getActivePlayer()));
+        ArenaController.ac.setCoolDown(getActivePlayer().getPlayerHero().getPower().coolDownRemaining, getPlayerNumber(getActivePlayer())+1);
+        ArenaController.ac.setActiveMana(getActivePlayer().mana,getPlayerNumber(getActivePlayer())+1);
+        ArenaController.ac.setActivePlayer(getPlayerNumber(getActivePlayer())+1);
 
     }
 }

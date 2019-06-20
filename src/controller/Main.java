@@ -63,13 +63,11 @@ public class Main extends Application {
                 System.out.println(notEnoughConditions.getMessage());
             }
             try {
-                game.useCard(0, game.getBoard().getCell(2, 7));
+                game.useCard(0, game.getBoard().getCell(4, 2));
             } catch (NotEnoughConditions notEnoughConditions) {
                 System.out.println(notEnoughConditions.getMessage());
             }
             LoadedScenes.arena.setOnKeyTyped(event -> {
-                System.out.println("key detected");
-                ArenaController.ac.attack(2,5,0,0);
             });
             primaryStage.setScene(LoadedScenes.arena);
         }
