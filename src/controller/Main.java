@@ -5,10 +5,8 @@ import javafx.application.Platform;
 import javafx.stage.Stage;
 import model.cards.CardFactory;
 import view.fxmlControllers.ArenaController;
-import view.fxmlControllers.ShopController;
 import view.fxmls.LoadedScenes;
 import view.images.LoadedImages;
-import view.visualentities.VisualMinion;
 
 public class Main extends Application {
     public static Stage mainStage;
@@ -32,12 +30,12 @@ public class Main extends Application {
             Platform.exit();
             System.exit(0);
         });
-//        CardFactory.main();
+        CardFactory.main();
         new LoadedImages();
         new LoadedScenes();
 
 //        primaryStage.setScene(LoadedScenes.shop);
-
+//
         ArenaController.ac.init(null);
         LoadedScenes.arena.setOnKeyTyped(event -> {
             ArenaController.ac.attack(0,0,4,4);

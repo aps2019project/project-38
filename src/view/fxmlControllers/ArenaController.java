@@ -295,7 +295,7 @@ public class ArenaController implements Initializable {
         Main.mainStage.setFullScreen(true);
     }
 
-    public static void showMessege(String message) {
+    public static void showMessage(String message) {
         Popup popup = new Popup();
         Label label = new Label(message);
         label.setBackground(new Background(new BackgroundFill(Color.gray(.5, .5), new CornerRadii(10), new Insets(-5, -10, -5, -10))));

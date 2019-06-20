@@ -28,19 +28,19 @@ public class SelectionManager implements Serializable {
                 try {
                     game.useCard(cardHandIndex, cell);
                 } catch (NotEnoughConditions notEnoughConditions) {
-                    ArenaController.showMessege(notEnoughConditions.getMessage());
+                    ArenaController.showMessage(notEnoughConditions.getMessage());
                 }
             } else if (specialPowerIsSelected) {
                 try {
                     game.useSpecialPower(cell);
                 } catch (NotEnoughConditions notEnoughConditions) {
-                    ArenaController.showMessege(notEnoughConditions.getMessage());
+                    ArenaController.showMessage(notEnoughConditions.getMessage());
                 }
             } else if (collectibleItem != null) {
                 try {
                     game.useCollectible(collectibleItem, cell);
                 } catch (NotEnoughConditions notEnoughConditions) {
-                    ArenaController.showMessege(notEnoughConditions.getMessage());
+                    ArenaController.showMessage(notEnoughConditions.getMessage());
                 }
             }
             deselectAll();
@@ -57,13 +57,13 @@ public class SelectionManager implements Serializable {
                     try {
                         game.attack(warriorsCells.get(0), cell);
                     } catch (NotEnoughConditions notEnoughConditions) {
-                        ArenaController.showMessege(notEnoughConditions.getMessage());
+                        ArenaController.showMessage(notEnoughConditions.getMessage());
                     }
                 } else if (warriorsCells.size() > 1) {
                     try {
                         game.comboAttack(warriorsCells, cell);
                     } catch (NotEnoughConditions notEnoughConditions) {
-                        ArenaController.showMessege(notEnoughConditions.getMessage());
+                        ArenaController.showMessage(notEnoughConditions.getMessage());
                     }
                 }
                 deselectAll();
@@ -73,7 +73,7 @@ public class SelectionManager implements Serializable {
                 try {
                     game.move(warriorsCells.get(0), cell);
                 } catch (NotEnoughConditions notEnoughConditions) {
-                    ArenaController.showMessege(notEnoughConditions.getMessage());
+                    ArenaController.showMessage(notEnoughConditions.getMessage());
                 }
             }
             deselectAll();
