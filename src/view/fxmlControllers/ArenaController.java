@@ -38,11 +38,76 @@ import java.util.*;
 
 public class ArenaController implements Initializable {
     public static ArenaController ac;
-
     Game game;
-
     public GridPane grid;
     public Pane pane;
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        backGrounds[0] = card_bg;
+        backGrounds[1] = card_bg1;
+        backGrounds[2] = card_bg2;
+        backGrounds[3] = card_bg3;
+        backGrounds[4] = card_bg4;
+        backGrounds[5] = card_bg5;
+//
+//////        hashem
+//        player1_avatar.setImage(LoadedImages.avatars[4]);
+//        player2_avatar.setImage(LoadedImages.avatars[7]);
+//        setActiveMana(8, 2);
+//        setActiveMana(6, 2);
+//        player1_username.setText("Hashem");
+//        player2_username.setText("Rima");
+//        player1_neededManaForSpecialPower.setText("4");
+//        player2_neededManaForSpecialPower.setText("1");
+//        setActivePlayer(1);
+//        setActiveMana(1, 1);
+//
+//        ImageView player1_VS = new VisualMinion("Jen").view;
+//
+//        HashMap<Integer, String> hashMap = new HashMap<>();
+//        hashMap.put(2, "Jen");
+//        buildPlayerHand(hashMap, 1);
+//
+//        player1_VS.relocate(135, 170);
+//        pane.getChildren().add(player1_VS);
+//        setCoolDown(2, 2);
+//        setCoolDown(0, 1);
+
+        ac = this;
+
+        transformGrid();
+
+        //producing click boxes and fixing indexes of nodes of gridPane
+        Platform.runLater(() -> {
+            fixGridNodesIndexes();
+
+            for (int i = 0; i < 5; i++) {
+                for (int j = 0; j < 9; j++) {
+                    ///////////////dirty code ahead//////////////////////
+                    int height = (int) (10 * (i * .65f + 6));
+                    int width = (int) (60 - 2.5f * (4 - i));
+                    Rectangle rect = new Rectangle(width, height);
+                    rect.setFill(Color.TRANSPARENT);
+                    rect.relocate(getXFromIndexes(i, j, width - 40, height - 80), getYFromIndexes(i, j, width - 40, height - 80));
+                    //////////////////////////////////////////////
+                    pane.getChildren().add(rect);
+
+                    int finalI = i;
+                    int finalJ = j;
+                    rect.setOnMouseClicked(event -> {
+                        cellOnMouseEvent(finalI, finalJ);
+                    });
+                    rect.setOnMouseEntered(event -> {
+                        getGridNodeFromIndexes(finalI, finalJ).setEffect(new Glow(1));
+                    });
+                    rect.setOnMouseExited(event -> {
+                        getGridNodeFromIndexes(finalI, finalJ).setEffect(null);
+                    });
+                }
+            }
+        });
+    }
+
     VisualMinion[][] visualMinions;
 
     public void init(Game game) {
@@ -129,79 +194,6 @@ public class ArenaController implements Initializable {
         game.getSelectionManager().selectCell(game.getBoard().getCell(row, col));
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-////        hashem
-        player1_avatar.setImage(LoadedImages.avatars[4]);
-        player2_avatar.setImage(LoadedImages.avatars[7]);
-        setActiveMana(8, 2);
-        setActiveMana(6, 2);
-        player1_username.setText("Hashem");
-        player2_username.setText("Rima");
-        player1_neededManaForSpecialPower.setText("4");
-        player2_neededManaForSpecialPower.setText("1");
-        setActivePlayer(1);
-        setActiveMana(1, 1);
-
-        ImageView player1_VS = new VisualMinion("Jen").view;
-
-        HashMap<Integer, String> hashMap = new HashMap<>();
-        hashMap.put(2, "Jen");
-        buildActivePlayerHand(hashMap, 1);
-
-        player1_VS.relocate(135, 170);
-        pane.getChildren().add(player1_VS);
-        setCoolDown(2, 2);
-        setCoolDown(0, 1);
-
-//        for (int i = 0; i < 2; i++) {
-//            FXMLLoader fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("cartHolder.fxml"));
-//            try {
-//                cartH[i] = fxmlLoader.load();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//            cardHolders[i] = fxmlLoader.getController();
-//            pane.getChildren().add(cartH[i]);
-//            cartH[i].relocate(100 * i + 100, 100 * i + 100);
-//        }
-
-        ac = this;
-
-        transformGrid();
-
-        //producing click boxes and fixing indexes of nodes of gridPane
-        Platform.runLater(() -> {
-            fixGridNodesIndexes();
-
-            for (int i = 0; i < 5; i++) {
-                for (int j = 0; j < 9; j++) {
-                    ///////////////dirty code ahead//////////////////////
-                    int height = (int) (10 * (i * .65f + 6));
-                    int width = (int) (60 - 2.5f * (4 - i));
-                    Rectangle rect = new Rectangle(width, height);
-                    rect.setFill(Color.TRANSPARENT);
-                    rect.relocate(getXFromIndexes(i, j, width - 40, height - 80), getYFromIndexes(i, j, width - 40, height - 80));
-                    //////////////////////////////////////////////
-                    pane.getChildren().add(rect);
-
-                    int finalI = i;
-                    int finalJ = j;
-                    rect.setOnMouseClicked(event -> {
-                        cellOnMouseEvent(finalI, finalJ);
-                    });
-                    rect.setOnMouseEntered(event -> {
-                        getGridNodeFromIndexes(finalI, finalJ).setEffect(new Glow(1));
-                    });
-                    rect.setOnMouseExited(event -> {
-                        getGridNodeFromIndexes(finalI, finalJ).setEffect(null);
-                    });
-                }
-            }
-        });
-    }
-
     private void fixGridNodesIndexes() {
         for (Node node : grid.getChildren()) {
             if (!Objects.nonNull(GridPane.getRowIndex(node))) {
@@ -256,7 +248,37 @@ public class ArenaController implements Initializable {
     public Label player2_remainingTurnForSpecialPower;
     public ImageView player1_specialPowerRequiredMana;
     public ImageView player2_specialPowerRequiredMana;
-    boolean doesAnyHandCardClicked = false;
+    //hand cards:------------------------------------------------
+
+    //mana icon front the card sprite
+    public ImageView cardMana;
+    public ImageView cardMana1;
+    public ImageView cardMana2;
+    public ImageView cardMana3;
+    public ImageView cardMana4;
+    public ImageView cardMana5;
+    //panes that contains card's sprites
+    public Pane gif;
+    public Pane gif1;
+    public Pane gif2;
+    public Pane gif3;
+    public Pane gif4;
+    public Pane gif5;
+    //number of mana is required for use the card
+    public Label neededManaForCart;
+    public Label neededManaForCart1;
+    public Label neededManaForCart2;
+    public Label neededManaForCart3;
+    public Label neededManaForCart4;
+    public Label neededManaForCart5;
+    public ImageView card_bg;
+    public ImageView card_bg1;
+    public ImageView card_bg2;
+    public ImageView card_bg3;
+    public ImageView card_bg4;
+    public ImageView card_bg5;
+    ImageView[] backGrounds = new ImageView[6]; //these imageViews are used when handCards are selected;
+
 
     private int[] playersMana = {0, 0};
 
@@ -374,34 +396,9 @@ public class ArenaController implements Initializable {
         graveYardPane.toFront();
     }
 
-    //hand cards:------------------------------------------------
 
-    public ImageView cardMana;
-    public Label neededManaForCart;
-    public Pane gif;
-    public ImageView cardMana1;
-    public Label neededManaForCart1;
-    public Pane gif1;
-    public ImageView cardMana2;
-    public Label neededManaForCart2;
-    public Pane gif2;
-    public ImageView cardMana3;
-    public Label neededManaForCart3;
-    public Pane gif3;
-    public ImageView cardMana4;
-    public Label neededManaForCart4;
-    public Pane gif4;
-    public ImageView cardMana5;
-    public Label neededManaForCart5;
-    public Pane gif5;
-    public ImageView card_bg;
-    public ImageView card_bg1;
-    public ImageView card_bg2;
-    public ImageView card_bg3;
-    public ImageView card_bg4;
-    public ImageView card_bg5;
 
-    public void buildActivePlayerHand(HashMap<Integer, String> carts, int playerNumber) {
+    public void buildPlayerHand(HashMap<Integer, String> carts, int playerNumber) {
         ImageView[] cartMana = {cardMana, cardMana1, cardMana2, cardMana3, cardMana4, cardMana5};
         Label[] neededManaForCarts = {neededManaForCart, neededManaForCart1, neededManaForCart2, neededManaForCart3, neededManaForCart4, neededManaForCart5};
         Pane[] gifs = {gif, gif1, gif2, gif3, gif4, gif5};
@@ -418,13 +415,13 @@ public class ArenaController implements Initializable {
                     } else {
                         cartMana[i].setEffect(null);
                     }
-                    ImageView visualEntitty = null;
+                    ImageView visualEntity;
                     if (card instanceof Warrior) {
-                        visualEntitty = new VisualMinion(name).view;
+                        visualEntity = new VisualMinion(name).view;
                     } else {
-                        visualEntitty = new VisualSpell(name).view;
+                        visualEntity = new VisualSpell(name).view;
                     }
-                    gifs[i].getChildren().add(visualEntitty);
+                    gifs[i].getChildren().add(visualEntity);
                 }
             }
         }
@@ -432,17 +429,12 @@ public class ArenaController implements Initializable {
 
     private void useCard(int i) {
         Pane[] gifs = {gif, gif1, gif2, gif3, gif4, gif5};
-        ImageView[] backGrounds = {card_bg, card_bg1, card_bg2, card_bg3, card_bg4, card_bg5};
         gifs[i].getChildren().clear();
-        backGrounds[i].setEffect(null);
     }
 
     private void changeBackGroundAfterClick(int i) {
-        if (doesAnyHandCardClicked) return;
-        doesAnyHandCardClicked = true; //todo
         Pane[] gifs = {gif, gif1, gif2, gif3, gif4, gif5};
         ImageView[] backGrounds = {card_bg, card_bg1, card_bg2, card_bg3, card_bg4, card_bg5};
-        backGrounds[i].setEffect(new BoxBlur());
     }
 
     public void clickGif(MouseEvent mouseEvent) {
@@ -469,4 +461,8 @@ public class ArenaController implements Initializable {
         changeBackGroundAfterClick(5);
     }
 
+    public void endTurn(MouseEvent mouseEvent) {
+
+
+    }
 }

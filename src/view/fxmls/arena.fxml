@@ -109,7 +109,7 @@
                 <Image url="@../images/arena/btn1.png" />
             </image>
         </ImageView>
-        <Label fx:id="turn_btn" alignment="CENTER" layoutX="1009.0" layoutY="550.0" prefHeight="49.0" prefWidth="164.0" text="End Turn">
+        <Label fx:id="turn_btn" alignment="CENTER" layoutX="1009.0" layoutY="550.0" onMouseClicked="#endTurn" prefHeight="49.0" prefWidth="164.0" text="End Turn">
             <font>
                 <Font size="25.0" />
             </font>
