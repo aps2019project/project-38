@@ -256,6 +256,7 @@ public class ArenaController implements Initializable {
     public Label player2_remainingTurnForSpecialPower;
     public ImageView player1_specialPowerRequiredMana;
     public ImageView player2_specialPowerRequiredMana;
+    boolean doesAnyHandCardClicked = false;
 
     private int[] playersMana = {0, 0};
 
@@ -437,6 +438,8 @@ public class ArenaController implements Initializable {
     }
 
     private void changeBackGroundAfterClick(int i) {
+        if (doesAnyHandCardClicked) return;
+        doesAnyHandCardClicked = true; //todo
         Pane[] gifs = {gif, gif1, gif2, gif3, gif4, gif5};
         ImageView[] backGrounds = {card_bg, card_bg1, card_bg2, card_bg3, card_bg4, card_bg5};
         backGrounds[i].setEffect(new BoxBlur());
