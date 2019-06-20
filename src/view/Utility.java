@@ -1,10 +1,19 @@
 package view;
 
 import controller.Main;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
+import javafx.application.Platform;
+import javafx.geometry.Insets;
+import javafx.scene.control.Label;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.scene.transform.Scale;
+import javafx.stage.Popup;
 import javafx.stage.Screen;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Utility {
     public static Pane scale(Pane pane) {
@@ -13,5 +22,22 @@ public class Utility {
         Scale scale = new Scale(xScale, yScale, 0, 0);
         pane.getTransforms().add(scale);
         return pane;
+    }
+
+    public static void showMessage(String message) {
+        Popup popup = new Popup();
+        Label label = new Label(message);
+        label.setBackground(new Background(new BackgroundFill(Color.gray(.5, .5), new CornerRadii(10), new Insets(-5, -10, -5, -10))));
+        label.setTextAlignment(TextAlignment.CENTER);
+        label.setFont(new Font(30));
+        label.setTextFill(Color.WHITE);
+        popup.getContent().add(label);
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(popup::hide);
+            }
+        }, 1000);
+        popup.show(Main.mainStage);
     }
 }

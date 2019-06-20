@@ -35,7 +35,6 @@ public class Attack {
     static void checkWarriorsEffectsForAttack
             (Game game, Cell attackerCell, Cell defenderCell, int JumperManhattanDistance) throws NotEnoughConditions {
         Warrior attacker = attackerCell.getWarrior();
-
         if (attacker.getEffects().stream().anyMatch(effect -> effect instanceof Attacked)) {
             throw new NotEnoughConditions("This unit has already attacked");
         }
@@ -54,6 +53,8 @@ public class Attack {
             } else {
                 throw new NotEnoughConditions("That unit is out of reach!");
             }
+        }else {
+            throw new NotEnoughConditions("That unit is out of reach!");
         }
     }
 }

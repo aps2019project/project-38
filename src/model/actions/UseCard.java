@@ -39,7 +39,7 @@ public class UseCard {
             card.apply(cell);
 
             if (gameState instanceof PutMinionState) {
-                ((PutMinionState) gameState).getWarrior().getEffects().add(new Attacked());
+//                ((PutMinionState) gameState).getWarrior().getEffects().add(new Attacked());todo for test only
             }
             game.getActivePlayer().mana -= card.getRequiredMana();
             game.getActivePlayer().getHand().put(handMapKey, null);
@@ -54,7 +54,7 @@ public class UseCard {
 
     static void isOnTerritory(Board board, Cell cell) throws NotEnoughConditions {
         if (board.getEightAdjacent(cell).stream().noneMatch(cell1 -> board.getGame().getActivePlayer().getWarriors().contains(cell1.getWarrior()))) {
-            throw new NotEnoughConditions("You should put it near your existing minions");
+//            throw new NotEnoughConditions("You should put it near your existing minions"); todo for test only
         }
     }
 

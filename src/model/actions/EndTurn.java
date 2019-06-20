@@ -7,7 +7,7 @@ import model.gamestate.TurnEndState;
 public class EndTurn {
     public static void doIt(Game game) {
         game.decreaseSpecialPowerCoolDown();
-        game.getSelectionManager().deselectAll();
+        game.getSelectionManager().deselectAction();
         TurnEndState turnEnd = new TurnEndState();
         game.iterateAllTriggersCheck(turnEnd);
         game.iterateAndExpireAllTriggers();

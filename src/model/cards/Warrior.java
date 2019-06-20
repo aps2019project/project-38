@@ -6,6 +6,7 @@ import model.effects.HP;
 import model.effects.Melee;
 import model.effects.Ranged;
 import model.player.Player;
+import view.fxmlControllers.ArenaController;
 
 import java.io.*;
 
@@ -53,6 +54,8 @@ public class Warrior extends Card {
         cell.setWarrior(this);
         this.cell=cell;
         cell.getBoard().getGame().getActivePlayer().getWarriors().add(this);
+
+        ArenaController.ac.put(cell.getRow(),cell.getColumn(),this.name);
     }
 
     @Override

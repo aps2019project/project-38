@@ -13,7 +13,6 @@ public class VisualSpell extends VisualEntity{
 
     public VisualSpell(String name) {
         this.name = name;
-
         try {
             view = new ImageView(new Image(new FileInputStream("src/view/images/sprites/" + name + ".png")));
         } catch (FileNotFoundException e) {

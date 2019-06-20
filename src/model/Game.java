@@ -13,6 +13,7 @@ import model.player.HumanPlayer;
 import model.player.Player;
 import model.triggers.CollectibleMine;
 import model.triggers.Trigger;
+import view.fxmlControllers.ArenaController;
 
 import java.io.Serializable;
 import java.util.*;
@@ -31,7 +32,6 @@ public class Game implements Serializable {
         int randomIndex = (new Random(System.currentTimeMillis())).nextInt(2);
         this.players[randomIndex] = new HumanPlayer(accountOne, accountOne.getCollection().getMainDeck());
         this.players[(randomIndex + 1) % 2] = new HumanPlayer(accountTwo, accountTwo.getCollection().getMainDeck());
-        initialiseGameFields();
     }
 
     public Game(GameMode gameMode, Account account, Deck aIDeck) {
@@ -39,10 +39,9 @@ public class Game implements Serializable {
         int randomIndex = (new Random(System.currentTimeMillis())).nextInt(2);
         players[randomIndex] = new HumanPlayer(account, account.getCollection().getMainDeck());
         players[(randomIndex + 1) % 2] = new AIPlayer(aIDeck);
-        initialiseGameFields();
     }
 
-    private void initialiseGameFields() {
+    public void initialiseGameFields() {
         {
             turn = 0;
             getActivePlayer().mana = Constant.GameConstants.getTurnMana(turn);
@@ -55,6 +54,10 @@ public class Game implements Serializable {
                     0), players[0].getWarriors().get(0));
             putWarriorInCell(board.getCell(Constant.GameConstants.boardRow / 2,
                     Constant.GameConstants.boardColumn - 1), players[1].getWarriors().get(0));
+//            ArenaController.ac.put(Constant.GameConstants.boardRow / 2,0,players[0].getWarriors().get(0).getName()); //todo because no hero sprite yet
+//            ArenaController.ac.put(Constant.GameConstants.boardRow / 2,Constant.GameConstants.boardColumn - 1,players[1].getWarriors().get(0).getName());//todo because no hero sprite yet
+            ArenaController.ac.put(Constant.GameConstants.boardRow / 2, 0, "Foolad-Zereh");
+            ArenaController.ac.put(Constant.GameConstants.boardRow / 2, Constant.GameConstants.boardColumn - 1, "Ghool-E-Bozorg");
         }
         {
             initialisePlayerHand(players[0]);
@@ -68,8 +71,8 @@ public class Game implements Serializable {
             turn = 0;
         }
         {
-            CollectibleMine c1 = new CollectibleMine(-1, Dispelablity.UNDISPELLABLE, (Spell) CardFactory.getAllBuiltItems().get(9).deepCopy());
-            board.getCell(2, 2).addTrigger(c1);
+//            CollectibleMine c1 = new CollectibleMine(-1, Dispelablity.UNDISPELLABLE, (Spell) CardFactory.getAllBuiltItems().get(9).deepCopy());
+//            board.getCell(2, 2).addTrigger(c1);
         }
         startTurn();
 //        timer.start();
@@ -240,6 +243,7 @@ public class Game implements Serializable {
 //        if (getActivePlayer().getWarriors().contains(originCell.getWarrior()) && targetCell.getWarrior() == null) {
         try {
             Move.doIt(originCell, targetCell);
+            ArenaController.ac.move(originCell.getRow(), originCell.getColumn(), targetCell.getRow(), targetCell.getColumn());
         } finally {
             checkGameEndAndThenKillAllDiedWarriors();
         }
@@ -266,17 +270,22 @@ public class Game implements Serializable {
 //        }
         try {
             ComboAttack.doIt(attackersCell, defenderCell);
+
+            for (Cell cell : attackersCell) {
+                ArenaController.ac.attack(cell.getRow(), cell.getColumn(), defenderCell.getRow(), defenderCell.getColumn());
+            }
         } finally {
             checkGameEndAndThenKillAllDiedWarriors();
         }
     }
 
     public void attack(Cell attackerCell, Cell defenderCell) throws NotEnoughConditions {
-        ArrayList<Warrior> activePlayerWarriors = getActivePlayer().getWarriors();
+//        ArrayList<Warrior> activePlayerWarriors = getActivePlayer().getWarriors();
 //        if (defenderCell.getWarrior() != null && activePlayerWarriors.contains(attackerCell.getWarrior()) &&
 //                !activePlayerWarriors.contains(defenderCell.getWarrior())) {
         try {
             Attack.doIt(attackerCell, defenderCell, false);
+            ArenaController.ac.attack(attackerCell.getRow(), attackerCell.getColumn(), defenderCell.getRow(), defenderCell.getColumn());
         } finally {
             checkGameEndAndThenKillAllDiedWarriors();
         }
@@ -307,6 +316,9 @@ public class Game implements Serializable {
         if (getActivePlayer().getPlayerHero().getPower().coolDownRemaining == 0) {
             try {
                 UseCard.useHeroPower(getActivePlayer().getPlayerHero().getPower(), cell);
+
+                Cell heroCell = getActivePlayer().getPlayerHero().getCell();
+                ArenaController.ac.cast(heroCell.getRow(), heroCell.getColumn());
             } finally {
                 checkGameEndAndThenKillAllDiedWarriors();
             }
@@ -333,6 +345,11 @@ public class Game implements Serializable {
     private void startTurn() {
         StartTurn.doIt(this);
         checkGameEndAndThenKillAllDiedWarriors();
+
+        ArenaController.ac.setCoolDown(getActivePlayer().getPlayerHero().getPower().coolDownRemaining, getPlayerNumber(getActivePlayer()));
+        ArenaController.ac.setActiveMana(getActivePlayer().mana,getPlayerNumber(getActivePlayer()));
+        ArenaController.ac.setActivePlayer(getPlayerNumber(getActivePlayer()));
+
     }
 }
 

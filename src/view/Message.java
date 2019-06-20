@@ -327,9 +327,9 @@ public interface Message {
 
             static void showSelectedThings(Game game) {
                 System.out.print("SelectedCards: ");
-                if (game.getSelectionManager().getWarriorsCells().size() != 0) {
-                    System.out.printf("{Warrior%s}\n", game.getSelectionManager().getWarriorsCells().size() > 1 ? "s" : "");
-                    for (Cell cell : game.getSelectionManager().getWarriorsCells()) {
+                if (game.getSelectionManager().getCells().size() != 0) {
+                    System.out.printf("{Warrior%s}\n", game.getSelectionManager().getCells().size() > 1 ? "s" : "");
+                    for (Cell cell : game.getSelectionManager().getCells()) {
                         CardView.showCard(cell.getWarrior());
                     }
                 }

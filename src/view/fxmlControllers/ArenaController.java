@@ -13,9 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Label;
-import javafx.scene.effect.Glow;
-import javafx.scene.effect.PerspectiveTransform;
-import javafx.scene.effect.SepiaTone;
+import javafx.scene.effect.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -29,7 +27,9 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Popup;
 import javafx.scene.transform.Scale;
 import javafx.util.Duration;
+import model.Cell;
 import model.Game;
+import model.SelectionManager;
 import model.player.Player;
 import view.fxmls.LoadedScenes;
 import view.images.LoadedImages;
@@ -51,7 +51,7 @@ public class ArenaController implements Initializable {
     public void init(Game game) {
         this.game = game;
         visualMinions = new VisualMinion[5][9];
-        //todo init generals
+//        beforeStartTheGame(game.getPlayers()[0],game.getPlayers()[1]); todo because hero powers do not have name or sprite yet. also remember that some heros don't have power
     }
 
     public void put(int row, int col, String name) {
@@ -80,6 +80,8 @@ public class ArenaController implements Initializable {
     public void move(int sRow, int sCol, int tRow, int tCol) {
         Platform.runLater(() -> {
             VisualMinion vm = visualMinions[sRow][sCol];
+            visualMinions[sRow][sCol] = null;
+            visualMinions[tRow][tCol] = vm;
             if ((tCol - sCol) * vm.view.getScaleX() < 0) {
                 vm.view.setScaleX(-vm.view.getScaleX());
             }
@@ -100,6 +102,7 @@ public class ArenaController implements Initializable {
     }
 
     public void attack(int sRow, int sCol, int tRow, int tCol) {
+        System.out.println(sRow + " " + sCol + " " + tRow + " " + tCol);
         Platform.runLater(() -> {
             VisualMinion vm = visualMinions[sRow][sCol];
             if ((tCol - sCol) * vm.view.getScaleX() < 0) {
@@ -116,20 +119,23 @@ public class ArenaController implements Initializable {
     }
 
     public void kill(int row, int col) {
-        Platform.runLater(() -> {
-            visualMinions[row][col].death();
-            new Timer().schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    visualMinions[row][col].view.setImage(null);
-                    visualMinions[row][col] = null;
-                }
-            }, visualMinions[row][col].animation.realDuration);
+        new Thread(() -> {
+            try {
+                Thread.sleep(300);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Platform.runLater(() -> {
+                visualMinions[row][col].death();
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        visualMinions[row][col].view.setImage(null);
+                        visualMinions[row][col] = null;
+                    }
+                }, visualMinions[row][col].animation.realDuration);
+            });
         });
-    }
-
-    void cellOnMouseEvent(int row, int col) {
-        game.getSelectionManager().selectCell(game.getBoard().getCell(row, col));
     }
 
     @Override
@@ -165,6 +171,8 @@ public class ArenaController implements Initializable {
 //            cartH[i].relocate(100 * i + 100, 100 * i + 100);
 //        }
 
+        //amir
+
         ac = this;
 
         transformGrid();
@@ -193,7 +201,7 @@ public class ArenaController implements Initializable {
                         getGridNodeFromIndexes(finalI, finalJ).setEffect(new Glow(1));
                     });
                     rect.setOnMouseExited(event -> {
-                        getGridNodeFromIndexes(finalI, finalJ).setEffect(null);
+                        setDefaultEffect(getGridNodeFromIndexes(finalI, finalJ));
                     });
                 }
             }
@@ -233,8 +241,58 @@ public class ArenaController implements Initializable {
         grid.setEffect(perspectiveTransform);
     }
 
-    //for showing items: --------------------------
+    void cellOnMouseEvent(int row, int col) {
+        game.getSelectionManager().selectCell(game.getBoard().getCell(row, col));
 
+//        ColorAdjust colorAdjust = new ColorAdjust();
+//        colorAdjust.setContrast(.3);
+//        colorAdjust.setHue(.4);
+//        colorAdjust.setBrightness(0.1);
+//        colorAdjust.setSaturation(.8);
+//        getGridNodeFromIndexes(row, col).setEffect(colorAdjust);
+//        selectedNodes.add(getGridNodeFromIndexes(row, col));
+    }
+
+    ArrayList<Node> selectedNodes = new ArrayList<>();
+
+    void setDefaultEffect(Node node) {
+        if (selectedNodes.contains(node)) {
+            ColorAdjust colorAdjust = new ColorAdjust();
+            colorAdjust.setContrast(.3);
+            colorAdjust.setHue(.4);
+            colorAdjust.setBrightness(0.1);
+            colorAdjust.setSaturation(.8);
+            node.setEffect(colorAdjust);
+        } else {
+            node.setEffect(null);
+        }
+    }
+
+    public void setSelectionEffect(SelectionManager sm) {
+        rmSelectionEffects();
+
+        for (Cell cell : sm.getCells()) {
+            ColorAdjust colorAdjust = new ColorAdjust();
+            colorAdjust.setContrast(.3);
+            colorAdjust.setHue(.4);
+            colorAdjust.setBrightness(0.1);
+            colorAdjust.setSaturation(.8);
+            Node node = getGridNodeFromIndexes(cell.getRow(), cell.getColumn());
+            node.setEffect(colorAdjust);
+
+            selectedNodes.add(node);
+        }
+        //todo other sm fields
+    }
+
+    void rmSelectionEffects() {
+        for (Node node : selectedNodes) {
+            node.setEffect(null);
+        }
+        selectedNodes.clear();
+    }
+
+    //for showing items: --------------------------
     public Pane menu;
     public Label turn_btn;
     public ImageView player1_avatar;
@@ -254,16 +312,19 @@ public class ArenaController implements Initializable {
     public Label player1_remainingTurnForSpecialPower;
     public Label player2_remainingTurnForSpecialPower;
     public ImageView player1_specialPowerRequiredMana;
+
     public ImageView player2_specialPowerRequiredMana;
-
     private Pane[] cartH = new Pane[10];
-    private CartHolder[] cardHolders = new CartHolder[10];
 
-    private void beforeStartTheGame(Player player1, Player player2) throws IOException {
+    private CartHolder[] cardHolders = new CartHolder[10];
+    /* call after players are specified */
+
+    private void beforeStartTheGame(Player player1, Player player2) {
         player1_avatar.setImage(player1.avatar);
         player2_avatar.setImage(player2.avatar);
         player1_username.setText(player1.username);
         player2_username.setText(player2.username);
+        System.out.println(player2.getMainDeck().getHero().getPower().getName());
         ImageView player1_VS = new VisualSpell(player2.getMainDeck().getHero().getPower().getName()).view;
         player1_VS.relocate(135, 168);
         ImageView player2_VS = new VisualSpell(player1.getMainDeck().getHero().getPower().getName()).view;
@@ -276,13 +337,18 @@ public class ArenaController implements Initializable {
 
         for (int i = 0; i < 5; i++) {
             FXMLLoader fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("cartHolder.fxml"));
-            cartH[i] = fxmlLoader.load();
+            try {
+                cartH[i] = fxmlLoader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             cardHolders[i] = fxmlLoader.getController();
             pane.getChildren().add(cartH[i]);
 //            cartH[i].relocate(,);
         }
 
     }
+    //call when hero special power is used
 
     public void setCoolDown(int remainingTurn, int playerNumber /* 1 or 2 */) {
         Label label = player2_remainingTurnForSpecialPower;
@@ -299,6 +365,7 @@ public class ArenaController implements Initializable {
             mana.setImage(LoadedImages.blueMana);
         }
     }
+    //call when something that needed mana is used or at the start of each turn
 
     public void setActiveMana(int number /* number of active mana */, int playerNumber /* 1 or 2 */) {
         GridPane gridPane = player2_mana;
@@ -314,6 +381,7 @@ public class ArenaController implements Initializable {
             }
         }
     }
+    //call on end turn
 
     public void setActivePlayer(int playerNumber /* 1 or 2 */) {
         ImageView avatar = player2_avatar;
@@ -342,34 +410,9 @@ public class ArenaController implements Initializable {
     }
 
     public void quit(MouseEvent mouseEvent) {
-        //todo
+        //todo the one choosing this should lose
         Main.mainStage.setScene(LoadedScenes.mainMenu);
         Main.mainStage.setFullScreen(true);
-    }
-
-    public static void showMessage(String message) {
-        Popup popup = new Popup();
-        Label label = new Label(message);
-        label.setBackground(new Background(new BackgroundFill(Color.gray(.5, .5), new CornerRadii(10), new Insets(-5, -10, -5, -10))));
-        label.setTextAlignment(TextAlignment.CENTER);
-        label.setFont(new Font(30));
-        label.setTextFill(Color.WHITE);
-        popup.getContent().add(label);
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                Platform.runLater(popup::hide);
-            }
-        }, 1000);
-        popup.show(Main.mainStage);
-    }
-
-    void setSelectionEffect(){
-
-    }
-
-    void rmSelectionEffects(){
-
     }
 
     public void backFromGraveYard() {

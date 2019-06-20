@@ -10,6 +10,7 @@ import model.effects.Effect;
 import model.exceptions.NotEnoughConditions;
 import model.gamestate.AttackState;
 import model.gamestate.GameState;
+import view.fxmlControllers.ArenaController;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -27,10 +28,12 @@ public class CounterAttack extends Trigger {
 
     @Override
     protected void executeActions(GameState gameState, QualityHaver owner) {
-        AttackState attackState =(AttackState)gameState;
+        AttackState attackState = (AttackState) gameState;
         try {
             Attack.doIt(attackState.getAttacked().getCell(),
-                    attackState.getAttacker().getCell(),true);
+                    attackState.getAttacker().getCell(), true);
+            ArenaController.ac.attack(attackState.getAttacked().getCell().getRow(), attackState.getAttacked().getCell().getColumn(),
+                    attackState.getAttacker().getCell().getRow(),attackState.getAttacker().getCell().getColumn());
         } catch (NotEnoughConditions notEnoughConditions) {
             //what? it's right.
         }

@@ -356,9 +356,9 @@
 //        if (cell == null) {
 //            return;
 //        }
-//        if (game.getSelectionManager().getWarriorsCells().size() > 1) {
+//        if (game.getSelectionManager().getCells().size() > 1) {
 //            if (cell.getWarrior() != null && game.getActivePlayer() != game.getWarriorsPlayer(cell.getWarrior())) {
-//                if (game.comboAttack(game.getSelectionManager().getWarriorsCells(), cell)) {
+//                if (game.comboAttack(game.getSelectionManager().getCells(), cell)) {
 //                    Message.GameWindow.InsideGame.DoneMessages.comboAttack();
 //                } else {
 //                    Message.GameWindow.FailMessage.notEnoughNecessaryCondition();
@@ -377,9 +377,9 @@
 //        if (cell == null) {
 //            return;
 //        }
-//        if (game.getSelectionManager().getWarriorsCells().size() == 1) {
+//        if (game.getSelectionManager().getCells().size() == 1) {
 //            if (cell.getWarrior() == null) {
-//                if (game.move(game.getSelectionManager().getWarriorsCells().get(0), cell)) {
+//                if (game.move(game.getSelectionManager().getCells().get(0), cell)) {
 //                    Message.GameWindow.InsideGame.DoneMessages.move();
 //                } else {
 //                    Message.GameWindow.FailMessage.notEnoughNecessaryCondition();
@@ -398,9 +398,9 @@
 //        if (cell == null) {
 //            return;
 //        }
-//        if (game.getSelectionManager().getWarriorsCells().size() == 1) {
+//        if (game.getSelectionManager().getCells().size() == 1) {
 //            if (cell.getWarrior() != null && game.getActivePlayer() != game.getWarriorsPlayer(cell.getWarrior())) {
-//                if (game.attack(game.getSelectionManager().getWarriorsCells().get(0), cell)) {
+//                if (game.attack(game.getSelectionManager().getCells().get(0), cell)) {
 //                    Message.GameWindow.InsideGame.DoneMessages.attack();
 //                } else {
 //                    Message.GameWindow.FailMessage.notEnoughNecessaryCondition();
@@ -493,7 +493,7 @@
 //        if (cell == null) {
 //            return;
 //        }
-//        if (!game.getSelectionManager().getWarriorsCells().contains(cell)) {
+//        if (!game.getSelectionManager().getCells().contains(cell)) {
 //            if (cell.getWarrior() != null && game.getActivePlayer() == game.getWarriorsPlayer(cell.getWarrior())) {
 //                game.getSelectionManager().selectCell(game.getBoard().getCell(cell.getRow(), cell.getColumn()));
 //                Message.GameWindow.InsideGame.DoneMessages.selectCell();

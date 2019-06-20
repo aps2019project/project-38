@@ -3,7 +3,16 @@ package controller;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
+import model.Account;
+import model.Deck;
+import model.Game;
+import model.Level;
+import model.actions.Killer;
+import model.cards.Card;
 import model.cards.CardFactory;
+import model.cards.Warrior;
+import model.exceptions.NotEnoughConditions;
+import model.gamemodes.KillingEnemyHero;
 import view.fxmlControllers.ArenaController;
 import view.fxmls.LoadedScenes;
 import view.images.LoadedImages;
@@ -35,16 +44,38 @@ public class Main extends Application {
         new LoadedScenes();
 
 //        primaryStage.setScene(LoadedScenes.shop);
-//
-        ArenaController.ac.init(null);
-        LoadedScenes.arena.setOnKeyTyped(event -> {
-            ArenaController.ac.attack(0,0,4,4);
-        });
-        ArenaController.ac.put(0,0,"Siavash");
-        ArenaController.ac.put(2,5,"Siavash");
-        ArenaController.ac.put(4,7,"Siavash");
-        primaryStage.setScene(LoadedScenes.arena);
+
+        {//arena
+            Account account = new Account("test", "test");
+            Deck.deckLevelBuilder();
+            account.getCollection().setMainDeck(Deck.getAllDecks().get("level1"));
+            Game game = Level.getAvailableLevels().get("1").getLevelGame(account);
+            ArenaController.ac.init(game);
+            game.initialiseGameFields();
+            LoadedScenes.arena.setOnKeyTyped(event -> {
+                ArenaController.ac.attack(0, 0, 4, 4);
+            });
+
+            game.getActivePlayer().mana = 20;
+            try {
+                game.useCard(1, game.getBoard().getCell(2, 6));
+            } catch (NotEnoughConditions notEnoughConditions) {
+                System.out.println(notEnoughConditions.getMessage());
+            }
+            try {
+                game.useCard(0, game.getBoard().getCell(2, 7));
+            } catch (NotEnoughConditions notEnoughConditions) {
+                System.out.println(notEnoughConditions.getMessage());
+            }
+            LoadedScenes.arena.setOnKeyTyped(event -> {
+                System.out.println("key detected");
+                ArenaController.ac.attack(2,5,0,0);
+            });
+            primaryStage.setScene(LoadedScenes.arena);
+        }
 
         primaryStage.show();
     }
+
+
 }
