@@ -23,10 +23,6 @@ public class LoginController implements Initializable {
     public Label alert;
     private boolean shouldClose = false;
 
-    public static Scene getScene() {
-        return LoadedScenes.login;
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }

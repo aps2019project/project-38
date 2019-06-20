@@ -5,6 +5,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
@@ -15,9 +16,11 @@ import javafx.scene.control.Label;
 import javafx.scene.effect.Glow;
 import javafx.scene.effect.PerspectiveTransform;
 import javafx.scene.effect.SepiaTone;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -33,8 +36,7 @@ import view.images.LoadedImages;
 import view.visualentities.VisualMinion;
 import view.visualentities.VisualSpell;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
@@ -134,20 +136,34 @@ public class ArenaController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
 ////        hashem
-//        player1_avatar.setImage(LoadedImages.avatars[4]);
-//        player2_avatar.setImage(LoadedImages.avatars[7]);
-//        setActiveMana(8, 2);
-//        setActiveMana(6, 2);
-//        player1_username.setText("Hashem");
-//        player2_username.setText("Rima");
-//        player1_neededManaForSpecialBuff.setText("4");
-//        player2_neededManaForSpecialBuff.setText("1");
-//        setActivePlayer(1);
-//        setActiveMana(1, 1);
-//
-//        ImageView player1_VS = new VisualMinion("Jen").view;
-//        player1_VS.relocate(135, 170);
-//        pane.getChildren().add(player1_VS);
+        player1_avatar.setImage(LoadedImages.avatars[4]);
+        player2_avatar.setImage(LoadedImages.avatars[7]);
+        setActiveMana(8, 2);
+        setActiveMana(6, 2);
+        player1_username.setText("Hashem");
+        player2_username.setText("Rima");
+        player1_neededManaForSpecialPower.setText("4");
+        player2_neededManaForSpecialPower.setText("1");
+        setActivePlayer(1);
+        setActiveMana(1, 1);
+
+        ImageView player1_VS = new VisualMinion("Jen").view;
+        player1_VS.relocate(135, 170);
+        pane.getChildren().add(player1_VS);
+        setCoolDown(2, 2);
+        setCoolDown(0, 1);
+
+//        for (int i = 0; i < 2; i++) {
+//            FXMLLoader fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("cartHolder.fxml"));
+//            try {
+//                cartH[i] = fxmlLoader.load();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            cardHolders[i] = fxmlLoader.getController();
+//            pane.getChildren().add(cartH[i]);
+//            cartH[i].relocate(100 * i + 100, 100 * i + 100);
+//        }
 
         ac = this;
 
@@ -227,16 +243,23 @@ public class ArenaController implements Initializable {
     public Label player2_username;
     public GridPane player1_mana;
     public GridPane player2_mana;
-    public ImageView player1_specialBuff;
-    public Label player1_neededManaForSpecialBuff;
-    public ImageView player2_specialBuff;
-    public Label player2_neededManaForSpecialBuff;
+    public ImageView player1_specialPower;
+    public ImageView player2_specialPower;
+    public Label player1_neededManaForSpecialPower;
+    public Label player2_neededManaForSpecialPower;
     public ImageView player1_avatarBorder;
     public ImageView player2_avatarBorder;
+    public Pane graveYardPane;
+    public HBox graveYard;
+    public Label player1_remainingTurnForSpecialPower;
+    public Label player2_remainingTurnForSpecialPower;
+    public ImageView player1_specialPowerRequiredMana;
+    public ImageView player2_specialPowerRequiredMana;
 
+    private Pane[] cartH = new Pane[10];
+    private CartHolder[] cardHolders = new CartHolder[10];
 
-    private void beforeStartTheGame(Player player1, Player player2) {
-        player2_avatarBorder.getTransforms().add(new Scale(1.25, 1.25)); // just for first time
+    private void beforeStartTheGame(Player player1, Player player2) throws IOException {
         player1_avatar.setImage(player1.avatar);
         player2_avatar.setImage(player2.avatar);
         player1_username.setText(player1.username);
@@ -245,11 +268,39 @@ public class ArenaController implements Initializable {
         player1_VS.relocate(135, 168);
         ImageView player2_VS = new VisualSpell(player1.getMainDeck().getHero().getPower().getName()).view;
         player2_VS.relocate(1004, 168);
-//        player1_neededManaForSpecialBuff.setText();
-//        player2_neededManaForSpecialBuff.setText();
+        player1_neededManaForSpecialPower.setText(String.valueOf(player1.getMainDeck().getHero().getPower().getRequiredMana()));
+        player2_neededManaForSpecialPower.setText(String.valueOf(player2.getMainDeck().getHero().getPower().getRequiredMana()));
+
+//        player1_neededManaForSpecialPower.setText();
+//        player2_neededManaForSpecialPower.setText();
+
+        for (int i = 0; i < 5; i++) {
+            FXMLLoader fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("cartHolder.fxml"));
+            cartH[i] = fxmlLoader.load();
+            cardHolders[i] = fxmlLoader.getController();
+            pane.getChildren().add(cartH[i]);
+//            cartH[i].relocate(,);
+        }
+
     }
 
-    private void setActiveMana(int number /* number of active mana */, int playerNumber /* 1 or 2 */) {
+    public void setCoolDown(int remainingTurn, int playerNumber /* 1 or 2 */) {
+        Label label = player2_remainingTurnForSpecialPower;
+        ImageView backGround = player2_specialPower;
+        ImageView mana = player2_specialPowerRequiredMana;
+        if (playerNumber == 1) {
+            label = player1_remainingTurnForSpecialPower;
+            backGround = player1_specialPower;
+            mana = player1_specialPowerRequiredMana;
+        }
+        label.setText(String.valueOf(remainingTurn));
+        if (remainingTurn == 0) {
+            backGround.setImage(LoadedImages.blueCircle);
+            mana.setImage(LoadedImages.blueMana);
+        }
+    }
+
+    public void setActiveMana(int number /* number of active mana */, int playerNumber /* 1 or 2 */) {
         GridPane gridPane = player2_mana;
         if (playerNumber == 1) {
             gridPane = player1_mana;
@@ -264,7 +315,7 @@ public class ArenaController implements Initializable {
         }
     }
 
-    private void setActivePlayer(int playerNumber /* 1 or 2 */) {
+    public void setActivePlayer(int playerNumber /* 1 or 2 */) {
         ImageView avatar = player2_avatar;
         ImageView border = player2_avatarBorder;
         ImageView otherAvatar = player1_avatar;
@@ -281,12 +332,13 @@ public class ArenaController implements Initializable {
         otherBorder.setEffect(new SepiaTone());
     }
 
+
     public void resume(MouseEvent mouseEvent) {
         menu.toBack();
     }
 
     public void save(MouseEvent mouseEvent) {
-        //todo
+        //todo Optional
     }
 
     public void quit(MouseEvent mouseEvent) {
@@ -318,5 +370,17 @@ public class ArenaController implements Initializable {
 
     void rmSelectionEffects(){
 
+    }
+
+    public void backFromGraveYard() {
+        graveYardPane.toBack();
+    }
+
+    public void menu(MouseEvent mouseEvent) {
+        menu.toFront();
+    }
+
+    public void graveYard(MouseEvent mouseEvent) {
+        graveYardPane.toFront();
     }
 }

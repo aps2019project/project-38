@@ -30,12 +30,12 @@ public class RegisterMenuController implements Initializable {
     }
 
     public void createAccount() {
-        Main.mainStage.setScene(CreateAccountController.getScene());
+        Main.mainStage.setScene(LoadedScenes.createAccount);
         Main.mainStage.setFullScreen(true);
     }
 
     public void login() {
-        Main.mainStage.setScene(LoginController.getScene());
+        Main.mainStage.setScene(LoadedScenes.login);
         Main.mainStage.setFullScreen(true);
     }
 
