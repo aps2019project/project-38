@@ -350,6 +350,10 @@ public class Game implements Serializable {
         ArenaController.ac.setActiveMana(getActivePlayer().mana,getPlayerNumber(getActivePlayer())+1);
         ArenaController.ac.setActivePlayer(getPlayerNumber(getActivePlayer())+1);
 
+
+        if(getActivePlayer() instanceof AIPlayer){
+            ((AIPlayer)getActivePlayer()).doSomething();
+        }
     }
 }
 

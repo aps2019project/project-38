@@ -115,7 +115,7 @@ public class ArenaController implements Initializable {
     public void init(Game game) {
         this.game = game;
         visualMinions = new VisualMinion[5][9];
-//        beforeStartTheGame(game.getPlayers()[0],game.getPlayers()[1]); todo because hero powers do not have name or sprite yet. also remember that some heros don't have power
+//        beforeStartTheGame(game.getPlayers()[0],game.getPlayers()[1]); todo because hero powers do not have name or sprite yet. also remember that some heroes don't have power
     }
 
     public void put(int row, int col, String name) {
@@ -324,8 +324,8 @@ public class ArenaController implements Initializable {
     public Label player2_specialPowerNeededMana;
     public ImageView player1_specialPowerBackGround;//todo MOEINI
     public ImageView player2_specialPowerBackGround;//todo MOEINI
-    public ImageView player1_specialPowerRequiredManaBackGround;//todo MOEINI
-    public ImageView player2_specialPowerRequiredManaBackGround;//todo MOEINI
+    public ImageView player1_specialPowerRequiredManaBackGround;
+    public ImageView player2_specialPowerRequiredManaBackGround;
     private int[] playersMana = {0, 0};
     //........................:hand:.............................
     //mana icon front the card sprite
@@ -515,5 +515,6 @@ public class ArenaController implements Initializable {
     }
 
     public void endTurn() {
+        game.endTurn();
     }
 }
