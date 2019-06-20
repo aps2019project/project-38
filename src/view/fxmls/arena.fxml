@@ -4,6 +4,7 @@
 <?import javafx.geometry.Point3D?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.effect.SepiaTone?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -103,12 +104,12 @@
                 <Image url="@../images/arena/midground_cracks_glow@2x.png" />
             </image>
         </ImageView>
-        <ImageView fitHeight="98.0" fitWidth="234.0" layoutX="968.0" layoutY="519.0">
+        <ImageView fitHeight="98.0" fitWidth="234.0" layoutX="977.0" layoutY="525.0">
             <image>
                 <Image url="@../images/arena/btn1.png" />
             </image>
         </ImageView>
-        <Label fx:id="turn_btn" alignment="CENTER" layoutX="1000.0" layoutY="544.0" prefHeight="49.0" prefWidth="164.0" text="End Turn">
+        <Label fx:id="turn_btn" alignment="CENTER" layoutX="1009.0" layoutY="550.0" onMouseClicked="#endTurn" prefHeight="49.0" prefWidth="164.0" text="End Turn">
             <font>
                 <Font size="25.0" />
             </font>
@@ -119,8 +120,8 @@
                 <Image url="@../images/arena/activePlayer.png" />
             </image>
         </ImageView>
-        <ImageView fx:id="player2_avatar" fitHeight="153.0" fitWidth="164.0" layoutX="1055.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" />
-        <ImageView fx:id="player2_avatarBorder" fitHeight="208.0" fitWidth="224.0" layoutX="1025.0" layoutY="-13.0">
+        <ImageView fx:id="player2_avatar" fitHeight="153.0" fitWidth="164.0" layoutX="1053.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="player2_avatarBorder" fitHeight="208.0" fitWidth="224.0" layoutX="1023.0" layoutY="-13.0">
             <image>
                 <Image url="@../images/arena/activePlayer.png" />
             </image>
@@ -326,26 +327,201 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <ImageView fitHeight="51.0" fitWidth="122.0" layoutX="963.0" layoutY="603.0">
+      <ImageView fitHeight="51.0" fitWidth="122.0" layoutX="972.0" layoutY="602.0">
          <image>
             <Image url="@../images/arena/leftButton.png" />
          </image>
       </ImageView>
-      <Label alignment="CENTER" layoutX="974.0" layoutY="614.0" onMouseClicked="#menu" prefHeight="30.0" prefWidth="107.0" text="Menu">
+      <Label alignment="CENTER" layoutX="983.0" layoutY="613.0" onMouseClicked="#menu" prefHeight="30.0" prefWidth="107.0" text="Menu">
          <font>
             <Font size="17.0" />
          </font>
       </Label>
-      <ImageView fitHeight="51.0" fitWidth="122.0" layoutX="1076.0" layoutY="603.0">
+      <ImageView fitHeight="51.0" fitWidth="122.0" layoutX="1085.0" layoutY="602.0">
          <image>
             <Image url="@../images/arena/rightButton.png" />
          </image>
       </ImageView>
-      <Label alignment="CENTER" layoutX="1080.0" layoutY="614.0" onMouseClicked="#graveYard" prefHeight="30.0" prefWidth="107.0" text="Grave Yard">
+      <Label alignment="CENTER" layoutX="1089.0" layoutY="613.0" onMouseClicked="#graveYard" prefHeight="30.0" prefWidth="107.0" text="Grave Yard">
          <font>
             <Font size="17.0" />
          </font>
       </Label>
+      <Pane fx:id="cartHolder" layoutX="203.0" layoutY="514.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="155.0" prefWidth="142.0">
+         <children>
+            <ImageView fx:id="card_bg" fitHeight="150.0" fitWidth="150.0" layoutX="-5.0" layoutY="-6.0">
+               <image>
+                  <Image url="@../images/arena/replace_background@2x.png" />
+               </image>
+               <effect>
+                  <SepiaTone />
+               </effect>
+            </ImageView>
+            <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="-5.0" layoutY="-6.0" rotate="80.0">
+               <image>
+                  <Image url="@../images/arena/card_background_highlight@2x.png" />
+               </image>
+               <effect>
+                  <SepiaTone />
+               </effect>
+            </ImageView>
+            <ImageView fx:id="cardMana" fitHeight="60.0" fitWidth="60.0" layoutX="40.0" layoutY="95.0">
+               <image>
+                  <Image url="@../images/arena/blueMana.png" />
+               </image>
+               <effect>
+                  <SepiaTone />
+               </effect>
+            </ImageView>
+            <Label fx:id="neededManaForCart" alignment="CENTER" layoutX="48.0" layoutY="104.0" prefHeight="43.0" prefWidth="45.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Pane fx:id="gif" layoutX="17.0" layoutY="15.0" onMouseClicked="#clickGif" prefHeight="108.0" prefWidth="106.0" />
+            <Label alignment="CENTER" layoutX="26.0" layoutY="-21.0" opacity="0.63" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: white; -fx-background-radius: 10;" text="NextTurnCard" />
+         </children>
+      </Pane>
+      <Pane fx:id="cartHolder1" layoutX="337.0" layoutY="514.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="155.0" prefWidth="142.0">
+         <children>
+            <ImageView fx:id="card_bg1" fitHeight="150.0" fitWidth="150.0" layoutX="-5.0" layoutY="-6.0">
+               <image>
+                  <Image url="@../images/arena/replace_background@2x.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="-5.0" layoutY="-6.0" rotate="80.0">
+               <image>
+                  <Image url="@../images/arena/card_background_highlight@2x.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardMana1" fitHeight="60.0" fitWidth="60.0" layoutX="40.0" layoutY="95.0">
+               <image>
+                  <Image url="@../images/arena/blueMana.png" />
+               </image>
+               <effect>
+                  <SepiaTone />
+               </effect>
+            </ImageView>
+            <Label fx:id="neededManaForCart1" alignment="CENTER" layoutX="48.0" layoutY="104.0" prefHeight="43.0" prefWidth="45.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Pane fx:id="gif1" layoutX="17.0" layoutY="15.0" onMouseClicked="#clickGif1" prefHeight="108.0" prefWidth="106.0" />
+         </children>
+      </Pane>
+      <Pane fx:id="cartHolder2" layoutX="464.0" layoutY="514.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="155.0" prefWidth="142.0">
+         <children>
+            <ImageView fx:id="card_bg2" fitHeight="150.0" fitWidth="150.0" layoutX="-5.0" layoutY="-6.0">
+               <image>
+                  <Image url="@../images/arena/replace_background@2x.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="-5.0" layoutY="-6.0" rotate="80.0">
+               <image>
+                  <Image url="@../images/arena/card_background_highlight@2x.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardMana2" fitHeight="60.0" fitWidth="60.0" layoutX="40.0" layoutY="95.0">
+               <image>
+                  <Image url="@../images/arena/blueMana.png" />
+               </image>
+               <effect>
+                  <SepiaTone />
+               </effect>
+            </ImageView>
+            <Label fx:id="neededManaForCart2" alignment="CENTER" layoutX="48.0" layoutY="104.0" prefHeight="43.0" prefWidth="45.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Pane fx:id="gif2" layoutX="17.0" layoutY="15.0" onMouseClicked="#clickGif2" prefHeight="108.0" prefWidth="106.0" />
+         </children>
+      </Pane>
+      <Pane fx:id="cartHolder3" layoutX="589.0" layoutY="514.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="155.0" prefWidth="142.0">
+         <children>
+            <ImageView fx:id="card_bg3" fitHeight="150.0" fitWidth="150.0" layoutX="-5.0" layoutY="-6.0">
+               <image>
+                  <Image url="@../images/arena/replace_background@2x.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="-5.0" layoutY="-6.0" rotate="80.0">
+               <image>
+                  <Image url="@../images/arena/card_background_highlight@2x.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardMana3" fitHeight="60.0" fitWidth="60.0" layoutX="40.0" layoutY="95.0">
+               <image>
+                  <Image url="@../images/arena/blueMana.png" />
+               </image>
+               <effect>
+                  <SepiaTone />
+               </effect>
+            </ImageView>
+            <Label fx:id="neededManaForCart3" alignment="CENTER" layoutX="48.0" layoutY="104.0" prefHeight="43.0" prefWidth="45.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Pane fx:id="gif3" layoutX="17.0" layoutY="15.0" onMouseClicked="#clickGif3" prefHeight="108.0" prefWidth="106.0" />
+         </children>
+      </Pane>
+      <Pane fx:id="cartHolder4" layoutX="713.0" layoutY="514.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="155.0" prefWidth="142.0">
+         <children>
+            <ImageView fx:id="card_bg4" fitHeight="150.0" fitWidth="150.0" layoutX="-5.0" layoutY="-6.0">
+               <image>
+                  <Image url="@../images/arena/replace_background@2x.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="-5.0" layoutY="-6.0" rotate="80.0">
+               <image>
+                  <Image url="@../images/arena/card_background_highlight@2x.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardMana4" fitHeight="60.0" fitWidth="60.0" layoutX="40.0" layoutY="95.0">
+               <image>
+                  <Image url="@../images/arena/blueMana.png" />
+               </image>
+               <effect>
+                  <SepiaTone />
+               </effect>
+            </ImageView>
+            <Label fx:id="neededManaForCart4" alignment="CENTER" layoutX="48.0" layoutY="104.0" prefHeight="43.0" prefWidth="45.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Pane fx:id="gif4" layoutX="17.0" layoutY="15.0" onMouseClicked="#clickGif4" prefHeight="108.0" prefWidth="106.0" />
+         </children>
+      </Pane>
+      <Pane fx:id="cartHolder5" layoutX="839.0" layoutY="514.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="155.0" prefWidth="142.0">
+         <children>
+            <ImageView fx:id="card_bg5" fitHeight="150.0" fitWidth="150.0" layoutX="-5.0" layoutY="-6.0">
+               <image>
+                  <Image url="@../images/arena/replace_background@2x.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="-5.0" layoutY="-6.0" rotate="80.0">
+               <image>
+                  <Image url="@../images/arena/card_background_highlight@2x.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardMana5" fitHeight="60.0" fitWidth="60.0" layoutX="40.0" layoutY="95.0">
+               <image>
+                  <Image url="@../images/arena/blueMana.png" />
+               </image>
+               <effect>
+                  <SepiaTone />
+               </effect>
+            </ImageView>
+            <Label fx:id="neededManaForCart5" alignment="CENTER" layoutX="48.0" layoutY="104.0" prefHeight="43.0" prefWidth="45.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Pane fx:id="gif5" layoutX="17.0" layoutY="15.0" onMouseClicked="#clickGif5" prefHeight="108.0" prefWidth="106.0" />
+         </children>
+      </Pane>
         <GridPane fx:id="grid" hgap="3.0" layoutX="323.0" layoutY="216.0" prefHeight="345.0" prefWidth="595.0" vgap="3.0">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

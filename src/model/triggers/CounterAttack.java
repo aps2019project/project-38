@@ -35,7 +35,7 @@ public class CounterAttack extends Trigger {
             ArenaController.ac.attack(attackState.getAttacked().getCell().getRow(), attackState.getAttacked().getCell().getColumn(),
                     attackState.getAttacker().getCell().getRow(),attackState.getAttacker().getCell().getColumn());
         } catch (NotEnoughConditions notEnoughConditions) {
-            //what? it's right.
+            //no problem
         }
     }
 }
