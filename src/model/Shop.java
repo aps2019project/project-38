@@ -46,7 +46,7 @@ public class Shop {
     }
 
     public void buy(String cardName) {
-        Card card = getCardByItsName(Card.lowerNameToOriginalName.get(cardName.toLowerCase()));
+        Card card = getCardByItsName(cardName);
         Account account = Account.getActiveAccount();
 
         if (card == null) {
@@ -83,7 +83,7 @@ public class Shop {
     }
 
     public void sell(String cardName) {
-        Card card = getCardByItsName(Card.lowerNameToOriginalName.get(cardName.toLowerCase()));
+        Card card = getCardByItsName(cardName);
         Account account = Account.getActiveAccount();
 
         if (card == null) {

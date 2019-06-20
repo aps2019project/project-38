@@ -32,7 +32,7 @@ public class Main extends Application {
             Platform.exit();
             System.exit(0);
         });
-//        CardFactory.main();
+        CardFactory.main();
         new LoadedImages();
         new LoadedScenes();
 

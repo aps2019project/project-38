@@ -7,6 +7,7 @@ import model.conditions.HasBeenAttacked;
 import model.effects.Attacked;
 import model.effects.Dispelablity;
 import model.effects.Effect;
+import model.exceptions.NotEnoughConditions;
 import model.gamestate.AttackState;
 import model.gamestate.GameState;
 
@@ -27,7 +28,11 @@ public class CounterAttack extends Trigger {
     @Override
     protected void executeActions(GameState gameState, QualityHaver owner) {
         AttackState attackState =(AttackState)gameState;
-        Attack.doIt(attackState.getAttacked().getCell(),
-                attackState.getAttacker().getCell(),true);
+        try {
+            Attack.doIt(attackState.getAttacked().getCell(),
+                    attackState.getAttacker().getCell(),true);
+        } catch (NotEnoughConditions notEnoughConditions) {
+            //no problem
+        }
     }
 }

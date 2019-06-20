@@ -13,7 +13,6 @@ import java.util.Objects;
 
 public abstract class Card extends QualityHaver implements Serializable {
     public static HashMap<Integer, Card> allCards = new HashMap<>();
-    public static HashMap<String,String> lowerNameToOriginalName = new HashMap<>();
     public Description description = new Description();
     protected int ID;
     protected String name;
@@ -25,7 +24,6 @@ public abstract class Card extends QualityHaver implements Serializable {
         this.name = name;
         this.requiredMana = requiredMana;
         this.price = price;
-        lowerNameToOriginalName.put(name.toLowerCase(),name);
     }
 
     public static void getNewCardFromUser() {
