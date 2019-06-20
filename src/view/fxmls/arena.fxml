@@ -17,6 +17,30 @@
 
 <Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="682.0" prefWidth="1248.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.fxmlControllers.ArenaController">
     <children>
+      <Pane fx:id="graveYardPane" prefHeight="738.0" prefWidth="1260.0">
+         <children>
+            <Pane opacity="0.79" prefHeight="744.0" prefWidth="1264.0" style="-fx-background-color: gray;">
+               <children>
+                  <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="177.0" layoutY="73.0" onMouseClicked="#backFromGraveYard">
+                     <image>
+                        <Image url="@../images/arena/close.png" />
+                     </image>
+                  </ImageView>
+               </children></Pane>
+            <ImageView fitHeight="424.0" fitWidth="690.0" layoutX="283.0" layoutY="77.0">
+               <image>
+                  <Image url="@../images/arena/cemetry.jpg" />
+               </image>
+            </ImageView>
+            <ScrollPane layoutX="283.0" layoutY="500.0" prefHeight="142.0" prefWidth="690.0">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="123.0" prefWidth="1033.0">
+                     <children>
+                        <HBox fx:id="graveYard" prefHeight="128.0" prefWidth="1044.0" />
+                     </children></AnchorPane>
+              </content>
+            </ScrollPane>
+         </children></Pane>
         <Pane fx:id="menu" prefHeight="732.0" prefWidth="1258.0">
             <children>
                 <Pane opacity="0.73" prefHeight="740.0" prefWidth="1264.0" style="-fx-background-color: gray;" />
@@ -67,28 +91,6 @@
                 </Label>
             </children>
         </Pane>
-      <Pane fx:id="graveYardPane" prefHeight="738.0" prefWidth="1260.0">
-         <children>
-            <Pane opacity="0.79" prefHeight="744.0" prefWidth="1264.0" style="-fx-background-color: gray;" />
-            <ImageView fitHeight="424.0" fitWidth="690.0" layoutX="283.0" layoutY="77.0">
-               <image>
-                  <Image url="@../images/arena/cemetry.jpg" />
-               </image>
-            </ImageView>
-            <ScrollPane layoutX="283.0" layoutY="500.0" prefHeight="142.0" prefWidth="690.0">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="123.0" prefWidth="1033.0">
-                     <children>
-                        <HBox fx:id="graveYard" prefHeight="128.0" prefWidth="1044.0" />
-                     </children></AnchorPane>
-              </content>
-            </ScrollPane>
-            <ImageView fitHeight="100.0" fitWidth="100.0" onMouseClicked="#backFromGraveYard">
-               <image>
-                  <Image url="@../images/arena/backButton.png" />
-               </image>
-            </ImageView>
-         </children></Pane>
         <ImageView fitHeight="732.0" fitWidth="1258.0">
             <image>
                 <Image url="@../images/arena/background@2x.jpg" />
@@ -268,42 +270,42 @@
                 </ImageView>
             </children>
         </GridPane>
-        <ImageView fx:id="player1_specialPower" fitHeight="98.0" fitWidth="100.0" layoutX="134.0" layoutY="176.0" opacity="0.85">
+        <ImageView fx:id="player1_specialPowerBackGround" fitHeight="98.0" fitWidth="100.0" layoutX="134.0" layoutY="176.0" opacity="0.85">
             <image>
                 <Image url="@../images/arena/grayCircle.png" />
             </image>
         </ImageView>
-        <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="135.0" layoutY="176.0">
+        <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="134.0" layoutY="175.0">
             <image>
                 <Image url="@../images/arena/dialogue_border@2x.png" />
             </image>
         </ImageView>
-        <Label fx:id="player1_neededManaForSpecialPower" alignment="CENTER" layoutX="167.0" layoutY="258.0" prefWidth="37.0" style="-fx-background-color: gray; -fx-background-radius: 10;">
+        <Label fx:id="player1_specialPowerNeededMana" alignment="CENTER" layoutX="167.0" layoutY="258.0" prefWidth="37.0" style="-fx-background-color: gray; -fx-background-radius: 10;">
             <font>
                 <Font size="20.0" />
             </font>
         </Label>
-        <ImageView fx:id="player1_specialPowerRequiredMana" fitHeight="50.0" fitWidth="50.0" layoutX="161.0" layoutY="248.0">
+        <ImageView fx:id="player1_specialPowerRequiredManaBackGround" fitHeight="50.0" fitWidth="50.0" layoutX="161.0" layoutY="248.0">
             <image>
                 <Image url="@../images/arena/icon_mana_inactive@2x.png" />
             </image>
         </ImageView>
-        <ImageView fx:id="player2_specialPower" fitHeight="98.0" fitWidth="100.0" layoutX="1004.0" layoutY="172.0" opacity="0.84">
+        <ImageView fx:id="player2_specialPowerBackGround" fitHeight="98.0" fitWidth="100.0" layoutX="1004.0" layoutY="172.0" opacity="0.84">
             <image>
                 <Image url="@../images/arena/grayCircle.png" />
             </image>
         </ImageView>
-        <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="1004.0" layoutY="172.0">
+        <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="1003.0" layoutY="171.0">
             <image>
                 <Image url="@../images/arena/dialogue_border@2x.png" />
             </image>
         </ImageView>
-        <Label fx:id="player2_neededManaForSpecialPower" alignment="CENTER" layoutX="1036.0" layoutY="255.0" prefWidth="37.0" style="-fx-background-color: gray; -fx-background-radius: 10;">
+        <Label fx:id="player2_specialPowerNeededMana" alignment="CENTER" layoutX="1036.0" layoutY="255.0" prefWidth="37.0" style="-fx-background-color: gray; -fx-background-radius: 10;">
             <font>
                 <Font size="20.0" />
             </font>
         </Label>
-        <ImageView fx:id="player2_specialPowerRequiredMana" fitHeight="50.0" fitWidth="50.0" layoutX="1029.0" layoutY="244.0">
+        <ImageView fx:id="player2_specialPowerRequiredManaBackGround" fitHeight="50.0" fitWidth="50.0" layoutX="1029.0" layoutY="244.0">
             <image>
                 <Image url="@../images/arena/icon_mana_inactive@2x.png" />
             </image>
@@ -313,7 +315,7 @@
             <Image url="@../images/arena/remainingTurn.png" />
          </image>
       </ImageView>
-      <Label fx:id="player1_remainingTurnForSpecialPower" alignment="CENTER" layoutX="166.0" layoutY="165.0" prefHeight="30.0" prefWidth="37.0">
+      <Label fx:id="player1_specialPowerRemainedTurn" alignment="CENTER" layoutX="166.0" layoutY="165.0" prefHeight="30.0" prefWidth="37.0">
          <font>
             <Font size="20.0" />
          </font></Label>
@@ -322,7 +324,7 @@
             <Image url="@../images/arena/remainingTurn.png" />
          </image>
       </ImageView>
-      <Label fx:id="player2_remainingTurnForSpecialPower" alignment="CENTER" layoutX="1039.0" layoutY="159.0" prefHeight="19.0" prefWidth="33.0">
+      <Label fx:id="player2_specialPowerRemainedTurn" alignment="CENTER" layoutX="1039.0" layoutY="159.0" prefHeight="19.0" prefWidth="33.0">
          <font>
             <Font size="20.0" />
          </font>

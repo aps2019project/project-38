@@ -10,12 +10,10 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.Glow;
 import javafx.scene.effect.PerspectiveTransform;
 import javafx.scene.effect.SepiaTone;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -41,6 +39,7 @@ public class ArenaController implements Initializable {
     Game game;
     public GridPane grid;
     public Pane pane;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         backGrounds[0] = card_bg;
@@ -49,29 +48,29 @@ public class ArenaController implements Initializable {
         backGrounds[3] = card_bg3;
         backGrounds[4] = card_bg4;
         backGrounds[5] = card_bg5;
-//
-//////        hashem
-//        player1_avatar.setImage(LoadedImages.avatars[4]);
-//        player2_avatar.setImage(LoadedImages.avatars[7]);
-//        setActiveMana(8, 2);
-//        setActiveMana(6, 2);
-//        player1_username.setText("Hashem");
-//        player2_username.setText("Rima");
-//        player1_neededManaForSpecialPower.setText("4");
-//        player2_neededManaForSpecialPower.setText("1");
-//        setActivePlayer(1);
-//        setActiveMana(1, 1);
-//
-//        ImageView player1_VS = new VisualMinion("Jen").view;
-//
-//        HashMap<Integer, String> hashMap = new HashMap<>();
-//        hashMap.put(2, "Jen");
-//        buildPlayerHand(hashMap, 1);
-//
-//        player1_VS.relocate(135, 170);
-//        pane.getChildren().add(player1_VS);
-//        setCoolDown(2, 2);
-//        setCoolDown(0, 1);
+
+////        hashem
+        player1_avatar.setImage(LoadedImages.avatars[4]);
+        player2_avatar.setImage(LoadedImages.avatars[7]);
+        setActiveMana(8, 2);
+        setActiveMana(6, 2);
+        player1_username.setText("Hashem");
+        player2_username.setText("Rima");
+        player1_specialPowerNeededMana.setText("4");
+        player2_specialPowerNeededMana.setText("1");
+        setActivePlayer(1);
+        setActiveMana(1, 1);
+
+        ImageView player1_VS = new VisualMinion("Jen").view;
+
+        HashMap<Integer, String> hashMap = new HashMap<>();
+        hashMap.put(2, "Jen");
+        buildPlayerHand(hashMap, 1);
+
+        player1_VS.relocate(135, 170);
+        pane.getChildren().add(player1_VS);
+        setCoolDown(2, 2);
+        setCoolDown(0, 1);
 
         ac = this;
 
@@ -227,29 +226,48 @@ public class ArenaController implements Initializable {
         grid.setEffect(perspectiveTransform);
     }
 
-    //for showing items: --------------------------
+    public static void showMessage(String message) {
+        Popup popup = new Popup();
+        Label label = new Label(message);
+        label.setBackground(new Background(new BackgroundFill(Color.gray(.5, .5), new CornerRadii(10), new Insets(-5, -10, -5, -10))));
+        label.setTextAlignment(TextAlignment.CENTER);
+        label.setFont(new Font(30));
+        label.setTextFill(Color.WHITE);
+        popup.getContent().add(label);
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(popup::hide);
+            }
+        }, 1000);
+        popup.show(Main.mainStage);
+    }
 
+    //menus:
     public Pane menu;
+    public Pane graveYardPane;
+    public HBox graveYard;
+    //....................:window top section:..................
+    //top window items:
     public ImageView player1_avatar;
     public ImageView player2_avatar;
     public Label player1_username;
     public Label player2_username;
-    public GridPane player1_mana;
-    public GridPane player2_mana;
-    public ImageView player1_specialPower;
-    public ImageView player2_specialPower;
-    public Label player1_neededManaForSpecialPower;
-    public Label player2_neededManaForSpecialPower;
     public ImageView player1_avatarBorder;
     public ImageView player2_avatarBorder;
-    public Pane graveYardPane;
-    public HBox graveYard;
-    public Label player1_remainingTurnForSpecialPower;
-    public Label player2_remainingTurnForSpecialPower;
-    public ImageView player1_specialPowerRequiredMana;
-    public ImageView player2_specialPowerRequiredMana;
-    //hand cards:------------------------------------------------
-
+    public GridPane player1_mana;
+    public GridPane player2_mana;
+    //players special power mana:
+    public Label player1_specialPowerRemainedTurn;
+    public Label player2_specialPowerRemainedTurn;
+    public Label player1_specialPowerNeededMana;
+    public Label player2_specialPowerNeededMana;
+    public ImageView player1_specialPowerBackGround;//todo MOEINI
+    public ImageView player2_specialPowerBackGround;//todo MOEINI
+    public ImageView player1_specialPowerRequiredManaBackGround;//todo MOEINI
+    public ImageView player2_specialPowerRequiredManaBackGround;//todo MOEINI
+    private int[] playersMana = {0, 0};
+    //........................:hand:.............................
     //mana icon front the card sprite
     public ImageView cardMana;
     public ImageView cardMana1;
@@ -271,18 +289,16 @@ public class ArenaController implements Initializable {
     public Label neededManaForCart3;
     public Label neededManaForCart4;
     public Label neededManaForCart5;
+    //backGround of hand cards (used for Mouse_Enter method)
     public ImageView card_bg;
     public ImageView card_bg1;
     public ImageView card_bg2;
     public ImageView card_bg3;
     public ImageView card_bg4;
     public ImageView card_bg5;
-    ImageView[] backGrounds = new ImageView[6]; //these imageViews are used when handCards are selected;
+    ImageView[] backGrounds = new ImageView[6]; //todo MOEINI;
 
-
-    private int[] playersMana = {0, 0};
-
-    private void beforeStartTheGame(Player player1, Player player2) throws IOException {
+    private void beforeStartTheGame(Player player1, Player player2) {
         player1_avatar.setImage(player1.avatar);
         player2_avatar.setImage(player2.avatar);
         player1_username.setText(player1.username);
@@ -291,19 +307,19 @@ public class ArenaController implements Initializable {
         player1_VS.relocate(135, 165);
         ImageView player2_VS = new VisualSpell(player1.getMainDeck().getHero().getPower().getName()).view;
         player2_VS.relocate(1004, 165);
-        player1_neededManaForSpecialPower.setText(String.valueOf(player1.getMainDeck().getHero().getPower().getRequiredMana()));
-        player2_neededManaForSpecialPower.setText(String.valueOf(player2.getMainDeck().getHero().getPower().getRequiredMana()));
+        player1_specialPowerNeededMana.setText(String.valueOf(player1.getMainDeck().getHero().getPower().getRequiredMana()));
+        player2_specialPowerNeededMana.setText(String.valueOf(player2.getMainDeck().getHero().getPower().getRequiredMana()));
 
     }
 
     public void setCoolDown(int remainingTurn, int playerNumber /* 1 or 2 */) {
-        Label label = player2_remainingTurnForSpecialPower;
-        ImageView backGround = player2_specialPower;
-        ImageView mana = player2_specialPowerRequiredMana;
+        Label label = player2_specialPowerRemainedTurn;
+        ImageView backGround = player2_specialPowerBackGround;
+        ImageView mana = player2_specialPowerRequiredManaBackGround;
         if (playerNumber == 1) {
-            label = player1_remainingTurnForSpecialPower;
-            backGround = player1_specialPower;
-            mana = player1_specialPowerRequiredMana;
+            label = player1_specialPowerRemainedTurn;
+            backGround = player1_specialPowerBackGround;
+            mana = player1_specialPowerRequiredManaBackGround;
         }
         label.setText(String.valueOf(remainingTurn));
         if (remainingTurn == 0) {
@@ -345,59 +361,6 @@ public class ArenaController implements Initializable {
         otherBorder.setEffect(new SepiaTone());
     }
 
-    public void resume() {
-        menu.toBack();
-    }
-
-    public void save() {
-        //todo Optional
-    }
-
-    public void quit() {
-        //todo set the other player as winner
-        Main.mainStage.setScene(LoadedScenes.mainMenu);
-        Main.mainStage.setFullScreen(true);
-    }
-
-    public static void showMessage(String message) {
-        Popup popup = new Popup();
-        Label label = new Label(message);
-        label.setBackground(new Background(new BackgroundFill(Color.gray(.5, .5), new CornerRadii(10), new Insets(-5, -10, -5, -10))));
-        label.setTextAlignment(TextAlignment.CENTER);
-        label.setFont(new Font(30));
-        label.setTextFill(Color.WHITE);
-        popup.getContent().add(label);
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                Platform.runLater(popup::hide);
-            }
-        }, 1000);
-        popup.show(Main.mainStage);
-    }
-
-    void setSelectionEffect() {
-
-    }
-
-    void rmSelectionEffects() {
-
-    }
-
-    public void backFromGraveYard() {
-        graveYardPane.toBack();
-    }
-
-    public void menu() {
-        menu.toFront();
-    }
-
-    public void graveYard() {
-        graveYardPane.toFront();
-    }
-
-
-
     public void buildPlayerHand(HashMap<Integer, String> carts, int playerNumber) {
         ImageView[] cartMana = {cardMana, cardMana1, cardMana2, cardMana3, cardMana4, cardMana5};
         Label[] neededManaForCarts = {neededManaForCart, neededManaForCart1, neededManaForCart2, neededManaForCart3, neededManaForCart4, neededManaForCart5};
@@ -435,34 +398,59 @@ public class ArenaController implements Initializable {
     private void changeBackGroundAfterClick(int i) {
         Pane[] gifs = {gif, gif1, gif2, gif3, gif4, gif5};
         ImageView[] backGrounds = {card_bg, card_bg1, card_bg2, card_bg3, card_bg4, card_bg5};
+        //todo
     }
 
-    public void clickGif(MouseEvent mouseEvent) {
+    public void resume() {
+        menu.toBack();
+    }
+
+    public void save() {
+        //todo Optional
+    }
+
+    public void quit() {
+        //todo set the other player as winner MOEINI
+        Main.mainStage.setScene(LoadedScenes.mainMenu);
+        Main.mainStage.setFullScreen(true);
+    }
+
+    public void backFromGraveYard() {
+        graveYardPane.toBack();
+    }
+
+    public void menu() {
+        menu.toFront();
+    }
+
+    public void graveYard() {
+        graveYardPane.toFront();
+    }
+
+    public void clickGif() {
         changeBackGroundAfterClick(0);
     }
 
-    public void clickGif1(MouseEvent mouseEvent) {
+    public void clickGif1() {
         changeBackGroundAfterClick(1);
     }
 
-    public void clickGif2(MouseEvent mouseEvent) {
+    public void clickGif2() {
         changeBackGroundAfterClick(2);
     }
 
-    public void clickGif3(MouseEvent mouseEvent) {
+    public void clickGif3() {
         changeBackGroundAfterClick(3);
     }
 
-    public void clickGif4(MouseEvent mouseEvent) {
+    public void clickGif4() {
         changeBackGroundAfterClick(4);
     }
 
-    public void clickGif5(MouseEvent mouseEvent) {
+    public void clickGif5() {
         changeBackGroundAfterClick(5);
     }
 
-    public void endTurn(MouseEvent mouseEvent) {
-
-
+    public void endTurn() {
     }
 }
