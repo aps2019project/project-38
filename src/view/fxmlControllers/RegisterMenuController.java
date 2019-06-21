@@ -41,7 +41,7 @@ public class RegisterMenuController implements Initializable {
 
     public void leatherBoard() {
         try {
-            Main.mainStage.setScene(new Scene(scale(FXMLLoader.load(LoadedScenes.class.getResource("leatherBoard.fxml")))));
+            Main.mainStage.setScene(new Scene(scale(FXMLLoader.load(LoadedScenes.class.getResource("leaderBoard.fxml")))));
         } catch (IOException e) {
             e.printStackTrace();
         }

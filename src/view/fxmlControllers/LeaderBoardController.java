@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
 
 import static view.Utility.*;
 
-public class LeatherBoardController implements Initializable {
+public class LeaderBoardController implements Initializable {
     public AnchorPane mainPane;
     public VBox rate;
     public Label index;

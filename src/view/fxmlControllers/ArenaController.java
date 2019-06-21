@@ -5,28 +5,29 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
-import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.Glow;
 import javafx.scene.effect.PerspectiveTransform;
 import javafx.scene.effect.SepiaTone;
-import javafx.scene.effect.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.TextAlignment;
-import javafx.stage.Popup;
 import javafx.util.Duration;
 import model.Cell;
 import model.Game;
+import model.SelectionManager;
 import model.cards.Card;
 import model.cards.Warrior;
-import model.SelectionManager;
 import model.player.Player;
 import view.fxmls.LoadedScenes;
 import view.images.LoadedImages;
@@ -45,14 +46,24 @@ public class ArenaController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        backGrounds[0] = card_bg;
-        backGrounds[1] = card_bg1;
-        backGrounds[2] = card_bg2;
-        backGrounds[3] = card_bg3;
-        backGrounds[4] = card_bg4;
-        backGrounds[5] = card_bg5;
+//        beforeStartTheGame();
+        for (int i = 0; i < 6; i++) {
+            fxmlLoaders[i] = new FXMLLoader(LoadedScenes.class.getResource("cardHolder.fxml"));
+            try {
+                Pane pane = fxmlLoaders[i].load();
+                cardHolders[i] = fxmlLoaders[i].getController();
+                hand.getChildren().add(pane);
+                if (i == 0) {
+                    cardHolders[i].cardBackGround.setEffect(new SepiaTone());
+                    cardHolders[i].manaBackGround.setEffect(new SepiaTone());
+                    cardHolders[i].isThisCardComing = true;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
-////        hashem
+//        hashem
         player1_avatar.setImage(LoadedImages.avatars[4]);
         player2_avatar.setImage(LoadedImages.avatars[7]);
         setActiveMana(8, 2);
@@ -65,16 +76,20 @@ public class ArenaController implements Initializable {
         setActiveMana(1, 1);
 
         ImageView player1_VS = new VisualMinion("Jen").view;
+        showCollectedCollectibleItems("Jen", 1);
+
 
         HashMap<Integer, String> hashMap = new HashMap<>();
         hashMap.put(2, "Jen");
         buildPlayerHand(hashMap, 1);
 
-        player1_VS.relocate(135, 170);
+        player1_VS.relocate(135, 165);
         pane.getChildren().add(player1_VS);
         setCoolDown(2, 2);
         setCoolDown(0, 1);
 
+        transferToGraveYard("Jen", 2);
+        //--------------------------------------------------------------------
         ac = this;
 
         transformGrid();
@@ -234,24 +249,6 @@ public class ArenaController implements Initializable {
         grid.setEffect(perspectiveTransform);
     }
 
-    public static void showMessage(String message) {
-        Popup popup = new Popup();
-        Label label = new Label(message);
-        label.setBackground(new Background(new BackgroundFill(Color.gray(.5, .5), new CornerRadii(10), new Insets(-5, -10, -5, -10))));
-        label.setTextAlignment(TextAlignment.CENTER);
-        label.setFont(new Font(30));
-        label.setTextFill(Color.WHITE);
-        popup.getContent().add(label);
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                Platform.runLater(popup::hide);
-            }
-        }, 1000);
-        popup.show(Main.mainStage);
-    }
-
-    //menus:
     void cellOnMouseEvent(int row, int col) {
         game.getSelectionManager().selectCell(game.getBoard().getCell(row, col));
 
@@ -303,10 +300,18 @@ public class ArenaController implements Initializable {
         selectedNodes.clear();
     }
 
-    //for showing items: --------------------------
+    //required things: --------------------------
     public Pane menu;
     public Pane graveYardPane;
-    public HBox graveYard;
+    public HBox mainGraveYard;
+    public VBox player1_items;
+    public VBox player2_items;
+    public HBox hand;
+    CardHolder[] cardHolders = new CardHolder[6];
+    FXMLLoader[] fxmlLoaders = new FXMLLoader[6];
+    public ImageView replaceButton;
+    private ArrayList<ImageView> player1GraveYard = new ArrayList<>();
+    private ArrayList<ImageView> player2GraveYard = new ArrayList<>();
     //....................:window top section:..................
     //top window items:
     public ImageView player1_avatar;
@@ -322,41 +327,12 @@ public class ArenaController implements Initializable {
     public Label player2_specialPowerRemainedTurn;
     public Label player1_specialPowerNeededMana;
     public Label player2_specialPowerNeededMana;
-    public ImageView player1_specialPowerBackGround;//todo MOEINI
-    public ImageView player2_specialPowerBackGround;//todo MOEINI
-    public ImageView player1_specialPowerRequiredManaBackGround;
-    public ImageView player2_specialPowerRequiredManaBackGround;
+    public ImageView player1_specialPowerBackGround;
+    public ImageView player2_specialPowerBackGround;
+    public ImageView player1_specialPowerRequiredManaBackGround;//todo MOEINI
+    public ImageView player2_specialPowerRequiredManaBackGround;//todo MOEINI
     private int[] playersMana = {0, 0};
-    //........................:hand:.............................
-    //mana icon front the card sprite
-    public ImageView cardMana;
-    public ImageView cardMana1;
-    public ImageView cardMana2;
-    public ImageView cardMana3;
-    public ImageView cardMana4;
-    public ImageView cardMana5;
-    //panes that contains card's sprites
-    public Pane gif;
-    public Pane gif1;
-    public Pane gif2;
-    public Pane gif3;
-    public Pane gif4;
-    public Pane gif5;
-    //number of mana is required for use the card
-    public Label neededManaForCart;
-    public Label neededManaForCart1;
-    public Label neededManaForCart2;
-    public Label neededManaForCart3;
-    public Label neededManaForCart4;
-    public Label neededManaForCart5;
-    //backGround of hand cards (used for Mouse_Enter method)
-    public ImageView card_bg;
-    public ImageView card_bg1;
-    public ImageView card_bg2;
-    public ImageView card_bg3;
-    public ImageView card_bg4;
-    public ImageView card_bg5;
-    ImageView[] backGrounds = new ImageView[6]; //todo MOEINI;
+
 
     private void beforeStartTheGame(Player player1, Player player2) {
         player1_avatar.setImage(player1.avatar);
@@ -364,15 +340,30 @@ public class ArenaController implements Initializable {
         player1_username.setText(player1.username);
         player2_username.setText(player2.username);
         ImageView player1_VS = new VisualSpell(player2.getMainDeck().getHero().getPower().getName()).view;
-        player1_VS.relocate(135, 165);
+        player1_VS.relocate(133, 165);
         ImageView player2_VS = new VisualSpell(player1.getMainDeck().getHero().getPower().getName()).view;
         player2_VS.relocate(1004, 165);
         player1_specialPowerNeededMana.setText(String.valueOf(player1.getMainDeck().getHero().getPower().getRequiredMana()));
         player2_specialPowerNeededMana.setText(String.valueOf(player2.getMainDeck().getHero().getPower().getRequiredMana()));
 
+        for (int i = 0; i < 6; i++) {
+            fxmlLoaders[i] = new FXMLLoader(LoadedScenes.class.getResource("cardHolder.fxml"));
+            try {
+                Pane pane = fxmlLoaders[i].load();
+                cardHolders[i] = fxmlLoaders[i].getController();
+                hand.getChildren().add(pane);
+                if (i == 0) {
+                    cardHolders[i].cardBackGround.setEffect(new SepiaTone());
+                    cardHolders[i].manaBackGround.setEffect(new SepiaTone());
+                    cardHolders[i].isThisCardComing = true;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
-    //call when hero special power is used
 
+    //call when hero special power is used
     public void setCoolDown(int remainingTurn, int playerNumber /* 1 or 2 */) {
         Label label = player2_specialPowerRemainedTurn;
         ImageView backGround = player2_specialPowerBackGround;
@@ -388,8 +379,8 @@ public class ArenaController implements Initializable {
             mana.setImage(LoadedImages.blueMana);
         }
     }
-    //call when something that needed mana is used or at the start of each turn
 
+    //call when something that needed mana is used or at the start of each turn
     public void setActiveMana(int number /* number of active mana */, int playerNumber /* 1 or 2 */) {
         playersMana[playerNumber - 1] = number;
         GridPane gridPane = player2_mana;
@@ -405,8 +396,27 @@ public class ArenaController implements Initializable {
             }
         }
     }
-    //call on end turn
 
+    //call when a collectible-item is collected
+    public void showCollectedCollectibleItems(String itemName, int playerName /* 1 or 2 */) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("itemHolder.fxml"));
+            Pane pane = fxmlLoader.load();
+            ItemHolder itemHolder = fxmlLoader.getController();
+            ImageView visualSpell = new VisualMinion(itemName).view; //todo DANGER!!!!
+            itemHolder.gif.getChildren().add(visualSpell);
+            visualSpell.relocate(visualSpell.getX() - 17, visualSpell.getY() - 29);
+            if (playerName == 1) {
+                player1_items.getChildren().add(pane);
+            } else {
+                player2_items.getChildren().add(pane);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //call on end turn
     public void setActivePlayer(int playerNumber /* 1 or 2 */) {
         ImageView avatar = player2_avatar;
         ImageView border = player2_avatarBorder;
@@ -424,22 +434,18 @@ public class ArenaController implements Initializable {
         otherBorder.setEffect(new SepiaTone());
     }
 
-    public void buildPlayerHand(HashMap<Integer, String> carts, int playerNumber) {
-        ImageView[] cartMana = {cardMana, cardMana1, cardMana2, cardMana3, cardMana4, cardMana5};
-        Label[] neededManaForCarts = {neededManaForCart, neededManaForCart1, neededManaForCart2, neededManaForCart3, neededManaForCart4, neededManaForCart5};
-        Pane[] gifs = {gif, gif1, gif2, gif3, gif4, gif5};
-
-        for (int i : carts.keySet()) {
-            String name = carts.get(i);
-            for (int cartID : Card.getAllCards().keySet()) {
-                Card card = Card.getAllCards().get(cartID);
+    public void buildPlayerHand(HashMap<Integer, String> cards, int playerNumber) {
+        for (int i : cards.keySet()) {
+            String name = cards.get(i);
+            for (int cardID : Card.getAllCards().keySet()) {
+                Card card = Card.getAllCards().get(cardID);
                 if (card.getName().equals(name)) {
                     int requiredMana = card.getRequiredMana();
-                    neededManaForCarts[i].setText(String.valueOf(requiredMana));
+                    cardHolders[i].neededManaForCart.setText(String.valueOf(requiredMana));
                     if (playersMana[playerNumber - 1] < requiredMana) {
-                        cartMana[i].setEffect(new SepiaTone());
+                        cardHolders[i].manaBackGround.setEffect(new SepiaTone());
                     } else {
-                        cartMana[i].setEffect(null);
+                        cardHolders[i].manaBackGround.setEffect(null);
                     }
                     ImageView visualEntity;
                     if (card instanceof Warrior) {
@@ -447,21 +453,68 @@ public class ArenaController implements Initializable {
                     } else {
                         visualEntity = new VisualSpell(name).view;
                     }
-                    gifs[i].getChildren().add(visualEntity);
+                    cardHolders[i].gif.getChildren().add(visualEntity);
+                    visualEntity.relocate(visualEntity.getX() - 10, visualEntity.getY() - 24);
                 }
             }
         }
     }
 
-    private void useCard(int i) {
-        Pane[] gifs = {gif, gif1, gif2, gif3, gif4, gif5};
-        gifs[i].getChildren().clear();
+    public void transferToGraveYard(String cardName, int playerNumber /* 1 or 2 */) {
+        ArrayList<ImageView> graveYardCards = player2GraveYard;
+        if (playerNumber == 1) {
+            graveYardCards = player1GraveYard;
+        }
+        for (int cardID : Card.getAllCards().keySet()) {
+            Card card = Card.getAllCards().get(cardID);
+            if (card.getName().equals(cardName)) {
+                if (card instanceof Warrior) {
+                    graveYardCards.add(new VisualMinion(cardName).view);
+                } else {
+                    graveYardCards.add(new VisualSpell(cardName).view);
+                }
+            }
+        }
+        mainGraveYard.getChildren().clear();
+        for (ImageView cardGif : graveYardCards) {
+            mainGraveYard.getChildren().add(cardGif);
+        }
     }
 
-    private void changeBackGroundAfterClick(int i) {
-        Pane[] gifs = {gif, gif1, gif2, gif3, gif4, gif5};
-        ImageView[] backGrounds = {card_bg, card_bg1, card_bg2, card_bg3, card_bg4, card_bg5};
-        //todo
+    public void useCollectibleItem(int i /* 0-base */, int playerNumber) {
+        VBox vBox = player2_items;
+        if (playerNumber == 1) {
+            vBox = player1_items;
+        }
+        vBox.getChildren().remove(i);
+    }
+
+    public void useCard(int i) {
+        cardHolders[i].gif.getChildren().clear();
+    }
+
+
+    //arena buttons:
+    public void endTurn() {
+        game.endTurn();
+    }
+
+    public void replace() {
+        SelectionManager.replaceSelectedCard();
+    }
+
+    //grave yard:
+    public void backFromGraveYard() {
+        graveYardPane.toBack();
+    }
+
+    public void graveYard() {
+        graveYardPane.toFront();
+    }
+
+    //menu:
+    public void menu() {
+        menu.toFront();
     }
 
     public void resume() {
@@ -476,45 +529,5 @@ public class ArenaController implements Initializable {
         //todo set the other player as winner MOEINI
         Main.mainStage.setScene(LoadedScenes.mainMenu);
         Main.mainStage.setFullScreen(true);
-    }
-
-    public void backFromGraveYard() {
-        graveYardPane.toBack();
-    }
-
-    public void menu() {
-        menu.toFront();
-    }
-
-    public void graveYard() {
-        graveYardPane.toFront();
-    }
-
-    public void clickGif() {
-        changeBackGroundAfterClick(0);
-    }
-
-    public void clickGif1() {
-        changeBackGroundAfterClick(1);
-    }
-
-    public void clickGif2() {
-        changeBackGroundAfterClick(2);
-    }
-
-    public void clickGif3() {
-        changeBackGroundAfterClick(3);
-    }
-
-    public void clickGif4() {
-        changeBackGroundAfterClick(4);
-    }
-
-    public void clickGif5() {
-        changeBackGroundAfterClick(5);
-    }
-
-    public void endTurn() {
-        game.endTurn();
     }
 }
