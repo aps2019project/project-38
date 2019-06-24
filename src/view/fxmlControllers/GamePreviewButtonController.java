@@ -15,6 +15,7 @@ public class GamePreviewButtonController {
     private String fatherSceneName, nextSceneName;
 
     public void doClickEvents(MouseEvent mouseEvent) {
+        LoadingGamePreviewScenes.selectedButtonsText.add(buttonText.getText());
         LoadingGamePreviewScenes.sceneControllers.get(nextSceneName).setPreviewSceneName(fatherSceneName);
         Main.mainStage.setScene(LoadingGamePreviewScenes.starterScenes.get(nextSceneName));
         Main.mainStage.setFullScreen(true);

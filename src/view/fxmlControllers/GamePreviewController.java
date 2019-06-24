@@ -23,6 +23,8 @@ public class GamePreviewController {
     private String previewSceneName;
 
     public void back(MouseEvent mouseEvent) {
+        if (LoadingGamePreviewScenes.selectedButtonsText.size() > 0)
+            LoadingGamePreviewScenes.selectedButtonsText.remove(LoadingGamePreviewScenes.selectedButtonsText.size() - 1);
         if (previewSceneName.equals("Main Menu")) {
             Main.mainStage.setScene(LoadedScenes.mainMenu);
             Main.mainStage.setFullScreen(true);

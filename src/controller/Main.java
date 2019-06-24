@@ -47,34 +47,32 @@ public class Main extends Application {
         new LoadedScenes();
         new LoadWindow().main();
 
-//        primaryStage.setScene(LoadedScenes.shop);
-
-        {//arena
-            Account account = new Account("test", "test");
-            Deck.deckLevelBuilder();
-            account.getCollection().setMainDeck(Deck.getAllDecks().get("level1"));
-            Game game = Level.getAvailableLevels().get("1").getLevelGame(account);
-            ArenaController.ac.init(game);
-            game.initialiseGameFields();
-            LoadedScenes.arena.setOnKeyTyped(event -> {
-                ArenaController.ac.attack(0, 0, 4, 4);
-            });
-
-            game.getActivePlayer().mana = 20;
-            try {
-                game.useCard(1, game.getBoard().getCell(2, 6));
-            } catch (NotEnoughConditions notEnoughConditions) {
-                System.out.println(notEnoughConditions.getMessage());
-            }
-            try {
-                game.useCard(0, game.getBoard().getCell(4, 2));
-            } catch (NotEnoughConditions notEnoughConditions) {
-                System.out.println(notEnoughConditions.getMessage());
-            }
-            LoadedScenes.arena.setOnKeyTyped(event -> {
-            });
-            primaryStage.setScene(LoadedScenes.arena);
-        }
+//        {//arena
+//            Account account = new Account("test", "test");
+//            Deck.deckLevelBuilder();
+//            account.getCollection().setMainDeck(Deck.getAllDecks().get("level1"));
+//            Game game = Level.getAvailableLevels().get("1").getLevelGame(account);
+//            ArenaController.ac.init(game);
+//            game.initialiseGameFields();
+//            LoadedScenes.arena.setOnKeyTyped(event -> {
+//                ArenaController.ac.attack(0, 0, 4, 4);
+//            });
+//
+//            game.getActivePlayer().mana = 20;
+//            try {
+//                game.useCard(1, game.getBoard().getCell(2, 6));
+//            } catch (NotEnoughConditions notEnoughConditions) {
+//                System.out.println(notEnoughConditions.getMessage());
+//            }
+//            try {
+//                game.useCard(0, game.getBoard().getCell(4, 2));
+//            } catch (NotEnoughConditions notEnoughConditions) {
+//                System.out.println(notEnoughConditions.getMessage());
+//            }
+//            LoadedScenes.arena.setOnKeyTyped(event -> {
+//            });
+//            primaryStage.setScene(LoadedScenes.arena);
+//        }
 
         primaryStage.show();
     }
