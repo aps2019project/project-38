@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.SepiaTone?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane fx:id="card" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="142.0" prefWidth="129.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.fxmlControllers.CardHolder">
+   <children>
+      <ImageView fx:id="cardBackGround" fitHeight="132.0" fitWidth="132.0" layoutX="-1.0">
+         <image>
+            <Image url="@../images/arena/replace_background@2x.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="132.0" fitWidth="132.0" layoutX="-2.0" rotate="80.0">
+         <image>
+            <Image url="@../images/arena/card_background_highlight@2x.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="manaBackGround" fitHeight="49.0" fitWidth="45.0" layoutX="41.0" layoutY="88.0">
+         <image>
+            <Image url="@../images/arena/blueMana.png" />
+         </image>
+         <effect>
+            <SepiaTone />
+         </effect>
+      </ImageView>
+      <Label fx:id="neededManaForCart" alignment="CENTER" layoutX="41.0" layoutY="91.0" prefHeight="43.0" prefWidth="45.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Pane fx:id="gif" layoutX="23.0" layoutY="26.0" onMouseEntered="#changeBackGround_Enter" onMouseExited="#changeBackGround_Exit" prefHeight="80.0" prefWidth="82.0" />
+   </children>
+</Pane>
