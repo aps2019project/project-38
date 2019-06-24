@@ -5,6 +5,7 @@ import model.QualityHaver;
 import model.cards.Warrior;
 import model.gamestate.DeathState;
 import model.player.Player;
+import view.fxmlControllers.ArenaController;
 
 public class Killer implements AutoAction{
 
@@ -23,5 +24,7 @@ public class Killer implements AutoAction{
         game.iterateAllTriggersCheck(death);
         warrior.getCell().setWarrior(null);
         player.getWarriors().remove(warrior);
+
+        ArenaController.ac.kill(warrior.getCell().getRow(),warrior.getCell().getColumn());
     }
 }

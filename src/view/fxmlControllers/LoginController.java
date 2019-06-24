@@ -23,10 +23,6 @@ public class LoginController implements Initializable {
     public Label alert;
     private boolean shouldClose = false;
 
-    public static Scene getScene() {
-        return LoadedScenes.login;
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
@@ -53,6 +49,8 @@ public class LoginController implements Initializable {
     public void back() {
         Main.mainStage.setScene(RegisterMenuController.getScene());
         Main.mainStage.setFullScreen(true);
+        username.clear();
+        password.clear();
     }
 
     public void ok() {

@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainPane" prefHeight="248.0" prefWidth="480.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.fxmlControllers.LeatherBoardController">
+<AnchorPane fx:id="mainPane" prefHeight="248.0" prefWidth="480.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.fxmlControllers.LeaderBoardController">
    <children>
       <ImageView fitHeight="289.0" fitWidth="504.0">
          <image>
@@ -46,7 +46,7 @@
             </HBox>
          </content>
       </ScrollPane>
-      <ImageView fitHeight="50.0" fitWidth="50.0" onMouseClicked="#back">
+      <ImageView fitHeight="40.0" fitWidth="40.0" onMouseClicked="#back">
          <image>
             <Image url="@../images/leatherBoard/backButton.png" />
          </image>

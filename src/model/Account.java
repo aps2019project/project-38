@@ -1,6 +1,8 @@
 package model;
 
+import javafx.scene.image.Image;
 import view.Message;
+import view.images.LoadedImages;
 
 import java.io.*;
 import java.util.*;
@@ -12,18 +14,19 @@ public class Account implements Comparable<Account>, java.io.Serializable {
     private static Account activeAccount = null;
     private static HashMap<String, Account> usernameToAccountObject = new HashMap<>();
     //***
-    public int derrick = 15000; //todo you can remove getter and setter and make it public
+    public int derrick = 15000;
     private ArrayList<MatchHistory> history = new ArrayList<>();
     private Collection collection = new Collection();
     private String username;
     private String password;
-
+    public Image avatar;
 
     public Account(String username, String password) {
         super();
         this.username = username;
         this.password = password;
         usernameToAccountObject.put(username, this);
+        avatar= LoadedImages.avatars[new Random().nextInt(15)];
     }
 
     //***

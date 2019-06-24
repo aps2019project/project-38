@@ -3,6 +3,7 @@ package model.cards;
 import model.Cell;
 import model.QualityHaver;
 import model.effects.Effect;
+import model.exceptions.NotEnoughConditions;
 import model.triggers.Trigger;
 
 import java.io.Serializable;
@@ -12,7 +13,6 @@ import java.util.Objects;
 
 public abstract class Card extends QualityHaver implements Serializable {
     public static HashMap<Integer, Card> allCards = new HashMap<>();
-    public static HashMap<String,String> lowerNameToOriginalName = new HashMap<>();
     public Description description = new Description();
     protected int ID;
     protected String name;
@@ -24,7 +24,6 @@ public abstract class Card extends QualityHaver implements Serializable {
         this.name = name;
         this.requiredMana = requiredMana;
         this.price = price;
-        lowerNameToOriginalName.put(name.toLowerCase(),name);
     }
 
     public static void getNewCardFromUser() {
@@ -35,7 +34,7 @@ public abstract class Card extends QualityHaver implements Serializable {
         //todo for phase2
     }
 
-    public abstract boolean apply(Cell cell);
+    public abstract void apply(Cell cell) throws NotEnoughConditions;
 
     public abstract Card deepCopy();
 

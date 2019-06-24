@@ -3,6 +3,7 @@ package model.cards;
 import model.Cell;
 import model.QualityHaver;
 import model.actions.AutoAction;
+import model.exceptions.NotEnoughConditions;
 import model.player.Player;
 import model.targets.SpellTarget;
 
@@ -32,7 +33,7 @@ public class Spell extends Card {
     }
 
     @Override
-    public boolean apply(Cell cell) {
+    public void apply(Cell cell) throws NotEnoughConditions {
         Player user = cell.getBoard().getGame().getActivePlayer();
         boolean didSth = false;
         for (Map.Entry<AutoAction, SpellTarget> entry : actions.entrySet()) {
@@ -40,7 +41,9 @@ public class Spell extends Card {
                 didSth = entry.getKey().execute(this, target);
             }
         }
-        return didSth;
+        if(!didSth){
+            throw new NotEnoughConditions("No valid target");
+        }
     }
 
     @Override

@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
 
 import static view.Utility.*;
 
-public class LeatherBoardController implements Initializable {
+public class LeaderBoardController implements Initializable {
     public AnchorPane mainPane;
     public VBox rate;
     public Label index;
@@ -29,7 +29,6 @@ public class LeatherBoardController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println(Account.getUsernameToAccountObject().size()+"???????????????????");
         ArrayList<Account> allAccounts = Account.sortAccounts();
         for (int i = 1; i < rate.getChildren().size(); i++) {
             rate.getChildren().remove(rate.getChildren().get(i));

@@ -1,6 +1,7 @@
 package model.cards;
 
 import model.Cell;
+import model.exceptions.NotEnoughConditions;
 
 //used decorator pattern instead of subClassing because i wanted to be able to have a warrior card as powerCard too.
 public class HeroPower extends Spell {
@@ -13,11 +14,8 @@ public class HeroPower extends Spell {
     }
 
     @Override
-    public boolean apply(Cell cell) {
-        boolean didSth = super.apply(cell);
-        if(didSth) {
-            coolDownRemaining = coolDown;
-        }
-        return didSth;
+    public void apply(Cell cell) throws NotEnoughConditions {
+        super.apply(cell);
+        coolDownRemaining = coolDown;
     }
 }

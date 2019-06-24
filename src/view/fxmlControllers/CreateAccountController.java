@@ -30,15 +30,11 @@ public class CreateAccountController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
     }
 
-    public static Scene getScene() {
-        return LoadedScenes.createAccount;
-    }
-
     public void register() {
         String userNameString = username.getText();
         String passwordString = password.getText();
         String againPasswordString = again.getText();
-        if(userNameString.isEmpty() || passwordString.isEmpty() || againPasswordString.isEmpty()){
+        if (userNameString.isEmpty() || passwordString.isEmpty() || againPasswordString.isEmpty()) {
             alertWindow.toFront();
             alert.setText("Please fill up your fields");
             return;
@@ -62,6 +58,9 @@ public class CreateAccountController implements Initializable {
     public void back() {
         Main.mainStage.setScene(RegisterMenuController.getScene());
         Main.mainStage.setFullScreen(true);
+        username.clear();
+        password.clear();
+        again.clear();
     }
 
     public void ok() {

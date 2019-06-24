@@ -18,7 +18,7 @@ public class SpriteAnimation extends Transition {
     SpriteType type;
     String fileName;
     int prefDuration;
-    public int height,width;
+    public int height, width;
     public int realDuration;
 
     int lastIndex;
@@ -57,7 +57,16 @@ public class SpriteAnimation extends Transition {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Matcher matcher = Pattern.compile("(?<key>_" + type.name() + "_)|((?<x>\\d+),(?<y>\\d+)},\\{(?<width>\\d+),(?<height>\\d+))").matcher(dataS);
+
+        Matcher matcher;
+        switch (type) {
+            case spellBreathing:
+                matcher = Pattern.compile("(?<key>>[0-9a-zA-Z]*_[0-9a-zA-Z]*_[0-9a-zA-Z]*_[0-9a-zA-Z]*\\.)|((?<x>\\d+),(?<y>\\d+)},\\{(?<width>\\d+),(?<height>\\d+))").matcher(dataS);
+                break;
+            default:
+                matcher = Pattern.compile("(?<key>_" + type.name() + "_)|((?<x>\\d+),(?<y>\\d+)},\\{(?<width>\\d+),(?<height>\\d+))").matcher(dataS);
+                break;
+        }
         while (matcher.find()) {
             if (matcher.group("key") == null) {
                 continue;
