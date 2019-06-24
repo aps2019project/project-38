@@ -4,7 +4,9 @@ import model.cards.Warrior;
 import model.triggers.Trigger;
 
 import java.io.Serializable;
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
+
 
 public class Cell extends QualityHaver implements Serializable {
     private Board board;
@@ -37,4 +39,8 @@ public class Cell extends QualityHaver implements Serializable {
     public Board getBoard() {
         return board;
     }
+}
+
+@interface Kir {
+    int len() default 0;
 }

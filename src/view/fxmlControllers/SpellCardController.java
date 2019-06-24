@@ -5,6 +5,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import model.cards.Hero;
+import model.cards.Spell;
+import model.cards.Warrior;
+import view.visualentities.VisualMinion;
 
 public class SpellCardController {
     public ImageView blueLine;
@@ -38,5 +42,17 @@ public class SpellCardController {
         purpleDot.setEffect(null);
         pricePlace.setEffect(null);
         gifPane.setEffect(null);
+    }
+
+    public void setFields(Spell spell) {
+        VisualMinion vm = new VisualMinion(spell.getName());
+        gifPane.getChildren().add(vm.view);
+        vm.view.setFitWidth(gifPane.getMinWidth());
+        vm.view.setFitHeight(gifPane.getMinHeight());
+        priceText.setText(String.valueOf(spell.getPrice()));
+        manaText.setText(String.valueOf(spell.getRequiredMana()));
+        nameText.setText(spell.getName());
+        typeText.setText(String.format("%s", spell.isItem() ? "Item" : "Spell"));
+        descriptionText.setText(spell.description.descriptionOfCardSpecialAbility);//todo
     }
 }

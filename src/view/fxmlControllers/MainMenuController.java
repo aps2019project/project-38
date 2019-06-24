@@ -22,8 +22,9 @@ public class MainMenuController implements Initializable {
     }
 
     public void startGame() {
-        Main.mainStage.setScene(LoadedScenes.chooseBattleKind);
-        Main.mainStage.setFullScreen(true);
+//        Main.mainStage.setScene(LoadedScenes.chooseBattleKind);
+//        Main.mainStage.setFullScreen(true);
+        LoadingGamePreviewScenes.load();
     }
 
     public void logout() {
@@ -37,6 +38,7 @@ public class MainMenuController implements Initializable {
     }
 
     public void shop() {
-
+        Main.mainStage.setScene(LoadedScenes.shop);
+        Main.mainStage.setFullScreen(true);
     }
 }

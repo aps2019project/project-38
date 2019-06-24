@@ -1,10 +1,12 @@
 package controller;
 
+import controller.window.LoadWindow;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 import model.cards.CardFactory;
 import view.fxmlControllers.ArenaController;
+import view.fxmlControllers.LoadingGamePreviewScenes;
 import view.fxmlControllers.ShopController;
 import view.fxmls.LoadedScenes;
 import view.images.LoadedImages;
@@ -35,13 +37,14 @@ public class Main extends Application {
         CardFactory.main();
         new LoadedImages();
         new LoadedScenes();
+        new LoadWindow().main();
 
 //        ArenaController.ac.init(null);
 //        ArenaController.ac.put(4,3,"#GhoolKhafan2");
 //        LoadedScenes.arena.setOnKeyTyped(event -> {
 //            ArenaController.ac.attack(4,3,4,3);
 //        });
-        primaryStage.setScene(LoadedScenes.shop);
+        LoadingGamePreviewScenes.load();
 
 
         primaryStage.show();

@@ -59,4 +59,8 @@ public class Spell extends Card {
         }
         return this;
     }
+
+    public boolean isItem() {
+        return isItem;
+    }
 }

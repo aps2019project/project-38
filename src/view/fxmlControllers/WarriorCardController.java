@@ -6,6 +6,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import model.cards.Card;
+import model.cards.Hero;
 import model.cards.Warrior;
 import view.visualentities.VisualMinion;
 
@@ -55,7 +56,7 @@ public class WarriorCardController {
         priceText.setText(String.valueOf(warrior.getPrice()));
         manaText.setText(String.valueOf(warrior.getRequiredMana()));
         nameText.setText(warrior.getName());
-        typeText.setText("Minion");
-        descriptionText.setText(warrior.description.descriptionOfCardSpecialAbility);//todo + milli ranged hybrid
+        typeText.setText(String.format("%s (%s)", warrior instanceof Hero ? "Hero" : "Minion", warrior.getWarriorType()));
+        descriptionText.setText(warrior.description.descriptionOfCardSpecialAbility);//todo
     }
 }
