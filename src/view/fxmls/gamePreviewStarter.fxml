@@ -15,6 +15,7 @@
             </ImageView>
             <AnchorPane fx:id="faceAnchorPane" prefHeight="555.0" prefWidth="960.0" />
             <AnchorPane fx:id="shadowAnchorPane" prefHeight="555.0" prefWidth="960.0" />
+            <AnchorPane fx:id="gamePreviewAnchorPane" prefHeight="555.0" prefWidth="960.0" />
          </children>
       </AnchorPane>
    </children>

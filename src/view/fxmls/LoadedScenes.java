@@ -29,10 +29,9 @@ public class LoadedScenes {
             chooseBattleKind = new Scene(scale(FXMLLoader.load(getClass().getResource("chooseBattleKind.fxml"))));
             shop = new Scene(scale(FXMLLoader.load(getClass().getResource("shop.fxml"))));
             collectionOfShop = new Scene(scale(FXMLLoader.load(getClass().getResource("collectionOfShop.fxml"))));
-            arena = new Scene(scale(FXMLLoader.load(getClass().getResource("arena.fxml"))));
+//            arena = new Scene(scale(FXMLLoader.load(getClass().getResource("arena.fxml"))));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
 }

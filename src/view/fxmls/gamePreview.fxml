@@ -13,13 +13,8 @@
    <children>
       <AnchorPane prefHeight="555.0" prefWidth="960.0">
          <children>
-            <ImageView fitHeight="139.0" fitWidth="960.0">
-               <image>
-                  <Image url="@../images/gamepreview/statics/background.png" />
-               </image>
-            </ImageView>
             <AnchorPane fx:id="backgroundAnchorPane" prefHeight="555.0" prefWidth="960.0" />
-            <ImageView fitHeight="94.0" fitWidth="560.0" layoutX="200.0">
+            <ImageView fx:id="titleBackgroundImage" fitHeight="94.0" fitWidth="560.0" layoutX="200.0">
                <image>
                   <Image url="@../images/gamepreview/statics/title.png" />
                </image>

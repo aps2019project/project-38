@@ -4,19 +4,8 @@ import controller.window.LoadWindow;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
-import model.Account;
-import model.Deck;
-import model.Game;
-import model.Level;
-import model.actions.Killer;
-import model.cards.Card;
 import model.cards.CardFactory;
-import model.cards.Warrior;
-import model.exceptions.NotEnoughConditions;
-import model.gamemodes.KillingEnemyHero;
-import view.fxmlControllers.ArenaController;
 import view.fxmlControllers.LoadingGamePreviewScenes;
-import view.fxmlControllers.ShopController;
 import view.fxmls.LoadedScenes;
 import view.images.LoadedImages;
 
@@ -46,6 +35,8 @@ public class Main extends Application {
         new LoadedImages();
         new LoadedScenes();
         new LoadWindow().main();
+
+        LoadingGamePreviewScenes.load();
 
 //        {//arena
 //            Account account = new Account("test", "test");

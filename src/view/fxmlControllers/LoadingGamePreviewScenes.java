@@ -1,7 +1,6 @@
 package view.fxmlControllers;
 
 import controller.Main;
-import controller.window.normalwindow.ChoosingWindow;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -17,7 +16,7 @@ import java.util.*;
 public abstract class LoadingGamePreviewScenes {
     static HashMap<String, Scene> starterScenes = new HashMap<>();
     static HashMap<String, GamePreviewStarterController> starterControllers = new HashMap<>();
-    static HashMap<String, Scene> scenes = new HashMap<>();
+    static HashMap<String, AnchorPane> scenesAsAnchorPane = new HashMap<>();
     static HashMap<String, GamePreviewController> sceneControllers = new HashMap<>();
     static ArrayList<String> selectedButtonsText = new ArrayList<>();
 
@@ -47,7 +46,7 @@ public abstract class LoadingGamePreviewScenes {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader
                     (LoadedScenes.class.getResource("gamePreview.fxml"));
-            scenes.put("Battle", new Scene(scale(fxmlLoader.load())));
+            scenesAsAnchorPane.put("Battle", fxmlLoader.load());
             sceneControllers.put("Battle", fxmlLoader.getController());
         } catch (IOException e) {
             e.printStackTrace();
@@ -70,7 +69,7 @@ public abstract class LoadingGamePreviewScenes {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        starterControllers.get("Battle").setFields(imagesNumber, scenes.get("Battle"));
+        starterControllers.get("Battle").setFields(imagesNumber, "Battle");
         sceneControllers.get("Battle").setFields("Battle", imagesNumber);
         sceneControllers.get("Battle").addButton(singlePlayerButton, multiPlayerButton);
         sceneControllers.get("Battle").setPreviewSceneName("Main Menu");
@@ -89,7 +88,7 @@ public abstract class LoadingGamePreviewScenes {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader
                     (LoadedScenes.class.getResource("gamePreview.fxml"));
-            scenes.put("Single Player", new Scene(scale(fxmlLoader.load())));
+            scenesAsAnchorPane.put("Single Player", fxmlLoader.load());
             sceneControllers.put("Single Player", fxmlLoader.getController());
         } catch (IOException e) {
             e.printStackTrace();
@@ -112,7 +111,7 @@ public abstract class LoadingGamePreviewScenes {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        starterControllers.get("Single Player").setFields(imagesNumber, scenes.get("Single Player"));
+        starterControllers.get("Single Player").setFields(imagesNumber, "Single Player");
         sceneControllers.get("Single Player").setFields("Single Player", imagesNumber);
         sceneControllers.get("Single Player").addButton(storyButton, customButton);
     }
@@ -130,7 +129,7 @@ public abstract class LoadingGamePreviewScenes {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader
                     (LoadedScenes.class.getResource("gamePreview.fxml"));
-            scenes.put("Multi Player", new Scene(scale(fxmlLoader.load())));
+            scenesAsAnchorPane.put("Multi Player", fxmlLoader.load());
             sceneControllers.put("Multi Player", fxmlLoader.getController());
         } catch (IOException e) {
             e.printStackTrace();
@@ -145,7 +144,7 @@ public abstract class LoadingGamePreviewScenes {
                 e.printStackTrace();
             }
         }
-        starterControllers.get("Multi Player").setFields(imagesNumber, scenes.get("Multi Player"));
+        starterControllers.get("Multi Player").setFields(imagesNumber, "Multi Player");
         sceneControllers.get("Multi Player").setFields("Multi Player", imagesNumber);
     }
 
@@ -162,7 +161,7 @@ public abstract class LoadingGamePreviewScenes {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader
                     (LoadedScenes.class.getResource("gamePreview.fxml"));
-            scenes.put("Story", new Scene(scale(fxmlLoader.load())));
+            scenesAsAnchorPane.put("Story", fxmlLoader.load());
             sceneControllers.put("Story", fxmlLoader.getController());
         } catch (IOException e) {
             e.printStackTrace();
@@ -179,7 +178,7 @@ public abstract class LoadingGamePreviewScenes {
                 e.printStackTrace();
             }
         }
-        starterControllers.get("Story").setFields(imagesNumber, scenes.get("Story"));
+        starterControllers.get("Story").setFields(imagesNumber, "Story");
         sceneControllers.get("Story").setFields("Story", imagesNumber);
     }
 
@@ -196,7 +195,7 @@ public abstract class LoadingGamePreviewScenes {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader
                     (LoadedScenes.class.getResource("gamePreview.fxml"));
-            scenes.put("Custom", new Scene(scale(fxmlLoader.load())));
+            scenesAsAnchorPane.put("Custom", fxmlLoader.load());
             sceneControllers.put("Custom", fxmlLoader.getController());
         } catch (IOException e) {
             e.printStackTrace();
@@ -212,7 +211,7 @@ public abstract class LoadingGamePreviewScenes {
                 e.printStackTrace();
             }
         }
-        starterControllers.get("Custom").setFields(imagesNumber, scenes.get("Custom"));
+        starterControllers.get("Custom").setFields(imagesNumber, "Custom");
         sceneControllers.get("Custom").setFields("Custom", imagesNumber);
     }
 
@@ -229,7 +228,7 @@ public abstract class LoadingGamePreviewScenes {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader
                     (LoadedScenes.class.getResource("gamePreview.fxml"));
-            scenes.put("Mood", new Scene(scale(fxmlLoader.load())));
+            scenesAsAnchorPane.put("Mood", fxmlLoader.load());
             sceneControllers.put("Mood", fxmlLoader.getController());
         } catch (IOException e) {
             e.printStackTrace();
@@ -261,7 +260,7 @@ public abstract class LoadingGamePreviewScenes {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        starterControllers.get("Mood").setFields(imagesNumber, scenes.get("Mood"));
+        starterControllers.get("Mood").setFields(imagesNumber, "Mood");
         sceneControllers.get("Mood").setFields("Mood", imagesNumber);
         sceneControllers.get("Mood").addButton(killingEnemyHeroButton,carryingFlagButton, collectingFlagButton);
     }

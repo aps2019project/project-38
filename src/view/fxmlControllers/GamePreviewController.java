@@ -1,6 +1,7 @@
 package view.fxmlControllers;
 
 import controller.Main;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
@@ -20,7 +21,24 @@ public class GamePreviewController {
     public VBox leftVBox;
     public VBox rightVBox;
     public AnchorPane backgroundAnchorPane;
+    public ImageView titleBackgroundImage;
     private String previewSceneName;
+
+    public void run() {
+        while (titleText.getOpacity() < 1 || titleBackgroundImage.getOpacity() < 1 || backButton.getOpacity() < 1) {
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            double newOpacity = titleText.getOpacity() + 0.0005 < 1 ? titleText.getOpacity() + 0.0005 : 1;
+            Platform.runLater(() -> {
+                titleText.setOpacity(newOpacity);
+                titleBackgroundImage.setOpacity(newOpacity);
+                backButton.setOpacity(newOpacity);
+            });
+        }
+    }
 
     public void back(MouseEvent mouseEvent) {
         if (LoadingGamePreviewScenes.selectedButtonsText.size() > 0)
