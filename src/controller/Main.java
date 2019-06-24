@@ -4,8 +4,15 @@ import controller.window.LoadWindow;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
+import model.Account;
+import model.Deck;
+import model.Game;
+import model.Level;
 import model.cards.CardFactory;
+import model.exceptions.NotEnoughConditions;
+import view.fxmlControllers.ArenaController;
 import view.fxmlControllers.LoadingGamePreviewScenes;
+import view.fxmlControllers.WindowChanger;
 import view.fxmls.LoadedScenes;
 import view.images.LoadedImages;
 
@@ -62,7 +69,7 @@ public class Main extends Application {
 //            }
 //            LoadedScenes.arena.setOnKeyTyped(event -> {
 //            });
-//            primaryStage.setScene(LoadedScenes.arena);
+//            WindowChanger.instance.setNewScene(LoadedScenes.arena);
 //        }
 
         primaryStage.show();

@@ -60,8 +60,8 @@ public class CollectionOfShopController implements Initializable {
     }
 
     public void back(MouseEvent mouseEvent) {
-        Main.mainStage.setScene(LoadedScenes.shop);
-        Main.mainStage.setFullScreen(true);
+        WindowChanger.instance.setNewScene(LoadedScenes.shop);
+
     }
 
     public void shineBackBottom(MouseEvent mouseEvent) {

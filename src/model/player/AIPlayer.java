@@ -20,35 +20,35 @@ public class AIPlayer extends Player {
     }
 
     public void doSomething() {
-        ArrayList<Map.Entry<Integer, Card>> es = new ArrayList<>(hand.entrySet());
-        Collections.shuffle(es);
-        for (Map.Entry<Integer, Card> cardEntry : es) {
-            if (cardEntry.getValue() != null) {
-                for (Cell cell : getBoardCells()) {
-                    try {
-                        getGame().useCard(cardEntry.getKey(), cell);
-                    } catch (NotEnoughConditions notEnoughConditions) {
-                        //no problem he's stupid
+//        ArrayList<Map.Entry<Integer, Card>> es = new ArrayList<>(hand.entrySet());
+//        Collections.shuffle(es);
+//        for (Map.Entry<Integer, Card> cardEntry : es) {
+//            if (cardEntry.getValue() != null) {
+//                for (Cell cell : getBoardCells()) {
+//                    try {
+//                        getGame().useCard(cardEntry.getKey(), cell);
+//                    } catch (NotEnoughConditions notEnoughConditions) {
+//                        no problem he's stupid
                     }
-                }
-            }
-        }
-
-        Collections.shuffle(warriors);
-        ArrayList<Warrior> tempWarrior = new ArrayList<>(warriors);
-        for (Warrior warrior : tempWarrior) {
-            for (Cell cell : getBoardCells()) {
-                try {
-                    getGame().attack(warrior.getCell(), cell);
-                    getGame().move(warrior.getCell(), cell);
-                } catch (NotEnoughConditions notEnoughConditions) {
-                    //no problem he's stupid
-                }
-            }
-        }
-
-        getGame().endTurn();
-    }
+//                }
+//            }
+//        }
+//
+//        Collections.shuffle(warriors);
+//        ArrayList<Warrior> tempWarrior = new ArrayList<>(warriors);
+//        for (Warrior warrior : tempWarrior) {
+//            for (Cell cell : getBoardCells()) {
+//                try {
+//                    getGame().attack(warrior.getCell(), cell);
+//                    getGame().move(warrior.getCell(), cell);
+//                } catch (NotEnoughConditions notEnoughConditions) {
+//                    no problem he's stupid
+//                }
+//            }
+//        }
+//
+//        getGame().endTurn();
+//    }
 
     private ArrayList<Cell> getBoardCells() {
         ArrayList<Cell> cells = new ArrayList<>();

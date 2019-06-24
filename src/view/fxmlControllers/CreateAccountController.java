@@ -56,8 +56,7 @@ public class CreateAccountController implements Initializable {
     }
 
     public void back() {
-        Main.mainStage.setScene(RegisterMenuController.getScene());
-        Main.mainStage.setFullScreen(true);
+        WindowChanger.instance.setNewScene(RegisterMenuController.getScene());
         username.clear();
         password.clear();
         again.clear();
@@ -66,8 +65,7 @@ public class CreateAccountController implements Initializable {
     public void ok() {
         alertWindow.toBack();
         if (shouldClose) {
-            Main.mainStage.setScene(LoadedScenes.registerMenu);
-            Main.mainStage.setFullScreen(true);
+            WindowChanger.instance.setNewScene(LoadedScenes.registerMenu);
             shouldClose = false;
             username.clear();
             password.clear();

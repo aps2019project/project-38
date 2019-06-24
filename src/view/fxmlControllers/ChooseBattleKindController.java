@@ -55,7 +55,6 @@ public class ChooseBattleKindController {
     //---------------
 
     public void back() {
-        Main.mainStage.setScene(LoadedScenes.mainMenu);
-        Main.mainStage.setFullScreen(true);
+        WindowChanger.instance.setNewScene(LoadedScenes.mainMenu);
     }
 }

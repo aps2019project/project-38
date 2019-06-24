@@ -44,12 +44,10 @@ public class GamePreviewController {
         if (LoadingGamePreviewScenes.selectedButtonsText.size() > 0)
             LoadingGamePreviewScenes.selectedButtonsText.remove(LoadingGamePreviewScenes.selectedButtonsText.size() - 1);
         if (previewSceneName.equals("Main Menu")) {
-            Main.mainStage.setScene(LoadedScenes.mainMenu);
-            Main.mainStage.setFullScreen(true);
+            WindowChanger.instance.setNewScene(LoadedScenes.mainMenu);
         }
         else {
-            Main.mainStage.setScene(LoadingGamePreviewScenes.starterScenes.get(previewSceneName));
-            Main.mainStage.setFullScreen(true);
+            WindowChanger.instance.setNewScene(LoadingGamePreviewScenes.starterScenes.get(previewSceneName));
             LoadingGamePreviewScenes.starterControllers.get(previewSceneName).run();
         }
     }

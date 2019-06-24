@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import model.Account;
 import view.fxmls.LoadedScenes;
 import view.images.LoadedImages;
@@ -20,7 +21,7 @@ public class RegisterMenuController implements Initializable {
     public AnchorPane mainPane;
     public ImageView backGround;
 
-    public static Scene getScene() {
+    public static Pane getScene() {
         return LoadedScenes.registerMenu;
     }
 
@@ -30,22 +31,21 @@ public class RegisterMenuController implements Initializable {
     }
 
     public void createAccount() {
-        Main.mainStage.setScene(LoadedScenes.createAccount);
-        Main.mainStage.setFullScreen(true);
+        WindowChanger.instance.setNewScene(LoadedScenes.createAccount);
+
     }
 
     public void login() {
-        Main.mainStage.setScene(LoadedScenes.login);
-        Main.mainStage.setFullScreen(true);
+        WindowChanger.instance.setNewScene(LoadedScenes.login);
+
     }
 
     public void leatherBoard() {
         try {
-            Main.mainStage.setScene(new Scene(scale(FXMLLoader.load(LoadedScenes.class.getResource("leaderBoard.fxml")))));
+            WindowChanger.instance.setNewScene(FXMLLoader.load(LoadedScenes.class.getResource("leaderBoard.fxml")));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Main.mainStage.setFullScreen(true);
     }
 
     public void exit() {

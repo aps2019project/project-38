@@ -1,24 +1,20 @@
 package view.fxmlControllers;
 
 import controller.Main;
-import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Text;
-import view.fxmls.LoadedScenes;
 
 public class GamePreviewButtonController {
     public ImageView buttonImageView;
-    public Text buttonText;
+    public Label buttonText;
     private String fatherSceneName, nextSceneName;
 
     public void doClickEvents(MouseEvent mouseEvent) {
         LoadingGamePreviewScenes.selectedButtonsText.add(buttonText.getText());
         LoadingGamePreviewScenes.sceneControllers.get(nextSceneName).setPreviewSceneName(fatherSceneName);
-        Main.mainStage.setScene(LoadingGamePreviewScenes.starterScenes.get(nextSceneName));
-        Main.mainStage.setFullScreen(true);
+        WindowChanger.instance.setNewScene(LoadingGamePreviewScenes.starterScenes.get(nextSceneName));
         LoadingGamePreviewScenes.starterControllers.get(nextSceneName).run();
     }
 
@@ -29,6 +25,7 @@ public class GamePreviewButtonController {
     public void resetButton(MouseEvent mouseEvent) {
         buttonImageView.setEffect(null);
     }
+
 
     public void setFields(String text,String fatherSceneName, String nextSceneName) {
         buttonText.setText(text);

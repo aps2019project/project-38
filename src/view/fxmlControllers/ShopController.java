@@ -54,8 +54,7 @@ public class ShopController implements Initializable {
     }
 
     public void back(MouseEvent mouseEvent) {
-        Main.mainStage.setScene(LoadedScenes.mainMenu);
-        Main.mainStage.setFullScreen(true);
+        WindowChanger.instance.setNewScene(LoadedScenes.mainMenu);
     }
 
     public void shineBackBottom(MouseEvent mouseEvent) {
@@ -67,8 +66,7 @@ public class ShopController implements Initializable {
     }
 
     public void goToCollection(MouseEvent mouseEvent) {
-        Main.mainStage.setScene(LoadedScenes.collectionOfShop);
-        Main.mainStage.setFullScreen(true);
+        WindowChanger.instance.setNewScene(LoadedScenes.collectionOfShop);
     }
 
     public void shineCollectionBottom(MouseEvent mouseEvent) {
@@ -104,9 +102,9 @@ public class ShopController implements Initializable {
             for (Warrior minion : CardFactory.getAllBuiltMinions()) {
                 if (!minions.containsKey(minion) && minion.getName().matches(searchText + ".*")) addNewMinion(minion);
             }
-            minionsLeftVBox.getChildren().removeAll();
-            minionsMiddleVBox.getChildren().removeAll();
-            minionsRightVBox.getChildren().removeAll();
+            minionsLeftVBox.getChildren().removeAll(minionsLeftVBox.getChildren());
+            minionsMiddleVBox.getChildren().removeAll(minionsLeftVBox.getChildren());
+            minionsRightVBox.getChildren().removeAll(minionsLeftVBox.getChildren());
             for (Map.Entry<Warrior, AnchorPane> entry : minions.entrySet()) {
                 if (minionsLeftVBox.getChildren().size() <= minionsMiddleVBox.getChildren().size() &&
                         minionsLeftVBox.getChildren().size() <= minionsRightVBox.getChildren().size())

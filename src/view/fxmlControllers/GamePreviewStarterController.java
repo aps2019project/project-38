@@ -22,15 +22,17 @@ public class GamePreviewStarterController {
         gamePreviewController.titleBackgroundImage.setOpacity(0);
         gamePreviewController.backButton.setOpacity(0);
         new Thread(() -> {
-            while (shadow.getOpacity() != 0) {
-                try {
-                    Thread.sleep(1);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+            new Thread(() -> {
+                while (shadow.getOpacity() != 0) {
+                    try {
+                        Thread.sleep(1);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    double newOpacity = shadow.getOpacity() - 0.0003 > 0 ? shadow.getOpacity() - 0.0003 : 0;
+                    Platform.runLater(() -> shadow.setOpacity(newOpacity));
                 }
-                double newOpacity = shadow.getOpacity() - 0.0003 > 0 ? shadow.getOpacity() - 0.0003 : 0;
-                Platform.runLater(() -> shadow.setOpacity(newOpacity));
-            }
+            }).start();
             while (gamePreviewAnchorPane.getLayoutY() != 0) {
                 try {
                     Thread.sleep(2);

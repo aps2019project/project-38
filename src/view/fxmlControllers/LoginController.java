@@ -47,8 +47,7 @@ public class LoginController implements Initializable {
     }
 
     public void back() {
-        Main.mainStage.setScene(RegisterMenuController.getScene());
-        Main.mainStage.setFullScreen(true);
+        WindowChanger.instance.setNewScene(RegisterMenuController.getScene());
         username.clear();
         password.clear();
     }
@@ -56,8 +55,7 @@ public class LoginController implements Initializable {
     public void ok() {
         alertWindow.toBack();
         if (shouldClose) {
-            Main.mainStage.setScene(LoadedScenes.mainMenu);
-            Main.mainStage.setFullScreen(true);
+            WindowChanger.instance.setNewScene(LoadedScenes.mainMenu);
             shouldClose = false;
             username.clear();
             password.clear();

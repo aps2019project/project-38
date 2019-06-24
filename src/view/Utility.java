@@ -24,6 +24,12 @@ public class Utility {
         return pane;
     }
 
+    public static Pane twiceScale(Pane pane) {
+        Scale scale = new Scale(2, 2, 0, 0);
+        pane.getTransforms().add(scale);
+        return pane;
+    }
+
     public static void showMessage(String message) {
         Popup popup = new Popup();
         Label label = new Label(message);

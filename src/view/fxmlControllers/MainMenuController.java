@@ -4,6 +4,7 @@ import controller.Main;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import model.Account;
 import view.fxmls.LoadedScenes;
 
@@ -13,7 +14,7 @@ import java.util.ResourceBundle;
 public class MainMenuController implements Initializable {
     public AnchorPane mainPane;
 
-    public static Scene getScene() {
+    public static Pane getScene() {
         return LoadedScenes.mainMenu;
     }
 
@@ -22,23 +23,20 @@ public class MainMenuController implements Initializable {
     }
 
     public void startGame() {
-//        Main.mainStage.setScene(LoadedScenes.chooseBattleKind);
-//        Main.mainStage.setFullScreen(true);
+//        WindowChanger.instance.setNewScene(LoadedScenes.chooseBattleKind);
         LoadingGamePreviewScenes.load();
     }
 
     public void logout() {
         Account.saveAccounts();
         Account.setActiveAccount(null);
-        Main.mainStage.setScene(LoadedScenes.registerMenu);
-        Main.mainStage.setFullScreen(true);
+        WindowChanger.instance.setNewScene(LoadedScenes.registerMenu);
     }
 
     public void collection() {
     }
 
     public void shop() {
-        Main.mainStage.setScene(LoadedScenes.shop);
-        Main.mainStage.setFullScreen(true);
+        WindowChanger.instance.setNewScene(LoadedScenes.shop);
     }
 }

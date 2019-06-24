@@ -5,6 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import model.Account;
 import model.MatchHistory;
@@ -23,7 +24,7 @@ public class LeaderBoardController implements Initializable {
     public VBox username;
     public VBox numOfWin;
 
-    public static Scene getScene() {
+    public static Pane getScene() {
         return LoadedScenes.leatherBoard;
     }
 
@@ -52,7 +53,6 @@ public class LeaderBoardController implements Initializable {
     }
 
     public void back() {
-        Main.mainStage.setScene(RegisterMenuController.getScene());
-        Main.mainStage.setFullScreen(true);
+        WindowChanger.instance.setNewScene(RegisterMenuController.getScene());
     }
 }
