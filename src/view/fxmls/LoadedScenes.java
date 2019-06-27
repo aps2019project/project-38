@@ -21,7 +21,6 @@ public class LoadedScenes {
     public static Pane shop;
     public static Pane collectionOfShop;
     public static Pane arena;
-    public static Pane customCard;
 
     {
         try {
@@ -33,7 +32,6 @@ public class LoadedScenes {
             shop = scale(FXMLLoader.load(getClass().getResource("shop.fxml")));
             collectionOfShop = scale(FXMLLoader.load(getClass().getResource("collectionOfShop.fxml")));
             arena = scale(FXMLLoader.load(getClass().getResource("arena.fxml")));
-            customCard = scale(FXMLLoader.load(getClass().getResource("customCard.fxml")));
         } catch (IOException e) {
             e.printStackTrace();
         }

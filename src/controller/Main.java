@@ -43,7 +43,7 @@ public class Main extends Application {
 
         new LoadWindow().main();
 
-        WindowChanger.instance.setNewScene(LoadedScenes.customCard);
+        WindowChanger.instance.setNewScene(LoadedScenes.registerMenu);
 
 //        LoadingGamePreviewScenes.load();
 

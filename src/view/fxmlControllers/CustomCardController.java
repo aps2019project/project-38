@@ -1,12 +1,16 @@
 package view.fxmlControllers;
 
+import controller.window.Window;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import view.fxmls.LoadedScenes;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -38,7 +42,7 @@ public class CustomCardController implements Initializable {
 
     //lists of choice boxes:
     private ObservableList<String> type_list = FXCollections.observableArrayList("Spell", "Minion", "Hero");
-    private ObservableList<String> spellTarget_list = FXCollections.observableArrayList("Opponent Hero", "Friend Hero", "A 2*2 Square", "A Friend Warrior", "A Opponent Warrior", "All Opponent Warriors", "All Friend Warriors", "A Random Warrior");
+    private ObservableList<String> spellTarget_list = FXCollections.observableArrayList("Opponent Hero", "Friend Hero", "A 2*2 Square", "A Friend Warrior", "An Opponent Warrior", "All Opponent Warriors", "All Friend Warriors", "A Random Warrior");
     private ObservableList<String> warriorAttackType_list = FXCollections.observableArrayList("Ranged", "Melee", "Hybrid");
     private ObservableList<String> warriorSpecialPower_list = FXCollections.observableArrayList(
             "Stuns opponent warrior for current turn (ATTACK)",
@@ -49,8 +53,8 @@ public class CustomCardController implements Initializable {
             "Poisons opponent warrior by 3 turn (ATTACK)",
             "HolyBuff has no effect on attack of this warrior (ATTACK)",
             "Opponent minions with a 2 manhattan distance, attacked 1 more number on each being attacked (SPAWN)",
-            "HP of this minion decreased by 6 and 4 numbers in two coming turns after attacking on a opponent minion (ATTACK)",
-            "HP of this minion decreased by 8 numbers in coming turn after attacking on a opponent minion (ATTACK)",
+            "HP of this minion decreased by 6 and 4 numbers in two coming turns after attacking on an opponent minion (ATTACK)",
+            "HP of this minion decreased by 8 numbers in coming turn after attacking on an opponent minion (ATTACK)",
             "On coming turn, it's HP decreased by 6 number (ATTACK)",
             "Gives a Power buff with +2 AP and a Weakness buff with -1 HP to itself and every friendly minion in 8 adjacent spaces (PASSIVE)",
             "Gives a Power buff with +2 AP and a Holy buff to every friendly minion in 8 adjacent spaces (PASSIVE)",
@@ -105,6 +109,16 @@ public class CustomCardController implements Initializable {
         }
     }
 
+
+    // buttons :
+
+    public void back_btn() {
+        WindowChanger.instance.setNewScene(LoadedScenes.mainMenu);
+    }
+
+    public void apply_btn() {
+        // todo for MOEINI
+    }
 
     //--------.: GETTERS :.---------
 
