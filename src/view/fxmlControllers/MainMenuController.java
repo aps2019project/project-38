@@ -13,11 +13,7 @@ import java.util.ResourceBundle;
 
 public class MainMenuController implements Initializable {
     public AnchorPane mainPane;
-
-    public static Pane getScene() {
-        return LoadedScenes.mainMenu;
-    }
-
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
