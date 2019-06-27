@@ -96,25 +96,36 @@ public class ShopController implements Initializable {
     }
 
     private synchronized void recalculateMinions(KeyEvent ignored) {
+        String searchText = minionsSearchTextField.getText();
+        minions.entrySet().removeIf(entry -> !entry.getKey().getName().matches(searchText + ".*"));
+        for (Warrior minion : CardFactory.getAllBuiltMinions()) {
+            if (!minions.containsKey(minion) && minion.getName().matches(searchText + ".*")) addNewMinion(minion);
+        }
         Platform.runLater(() -> {
-            String searchText = minionsSearchTextField.getText();
-            minions.entrySet().removeIf(entry -> !entry.getKey().getName().matches(searchText + ".*"));
-            for (Warrior minion : CardFactory.getAllBuiltMinions()) {
-                if (!minions.containsKey(minion) && minion.getName().matches(searchText + ".*")) addNewMinion(minion);
-            }
             minionsLeftVBox.getChildren().removeAll(minionsLeftVBox.getChildren());
             minionsMiddleVBox.getChildren().removeAll(minionsLeftVBox.getChildren());
             minionsRightVBox.getChildren().removeAll(minionsLeftVBox.getChildren());
-            for (Map.Entry<Warrior, AnchorPane> entry : minions.entrySet()) {
-                if (minionsLeftVBox.getChildren().size() <= minionsMiddleVBox.getChildren().size() &&
-                        minionsLeftVBox.getChildren().size() <= minionsRightVBox.getChildren().size())
-                    minionsLeftVBox.getChildren().add(entry.getValue());
-                else if (minionsMiddleVBox.getChildren().size() <= minionsLeftVBox.getChildren().size() &&
-                        minionsMiddleVBox.getChildren().size() <= minionsRightVBox.getChildren().size())
-                    minionsMiddleVBox.getChildren().add(entry.getValue());
-                else minionsRightVBox.getChildren().add(entry.getValue());
-            }
         });
+        try {
+            Thread.sleep(0);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        for (Map.Entry<Warrior, AnchorPane> entry : minions.entrySet()) {
+            if (minionsLeftVBox.getChildren().size() <= minionsMiddleVBox.getChildren().size() &&
+                    minionsLeftVBox.getChildren().size() <= minionsRightVBox.getChildren().size())
+                Platform.runLater(() -> minionsLeftVBox.getChildren().add(entry.getValue()));
+            else if (minionsMiddleVBox.getChildren().size() <= minionsLeftVBox.getChildren().size() &&
+                    minionsMiddleVBox.getChildren().size() <= minionsRightVBox.getChildren().size())
+                Platform.runLater(() -> minionsMiddleVBox.getChildren().add(entry.getValue()));
+            else Platform.runLater(() -> minionsRightVBox.getChildren().add(entry.getValue()));
+            try {
+                Thread.sleep(0);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     private void addNewMinion(Warrior minion) {

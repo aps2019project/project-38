@@ -5,6 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import model.Game;
 
 public class GamePreviewButtonController {
     public ImageView buttonImageView;
@@ -12,10 +13,28 @@ public class GamePreviewButtonController {
     private String fatherSceneName, nextSceneName;
 
     public void doClickEvents(MouseEvent mouseEvent) {
-        LoadingGamePreviewScenes.selectedButtonsText.add(buttonText.getText());
-        LoadingGamePreviewScenes.sceneControllers.get(nextSceneName).setPreviewSceneName(fatherSceneName);
-        WindowChanger.instance.setNewScene(LoadingGamePreviewScenes.starterScenes.get(nextSceneName));
-        LoadingGamePreviewScenes.starterControllers.get(nextSceneName).run();
+//        Game game = new Game();
+        if (nextSceneName.equals("Game Window")) {
+            if (LoadingGamePreviewScenes.selectedButtonsText.equals("Single Player")) {
+                if (LoadingGamePreviewScenes.selectedButtonsText.equals("Story")) {
+                    //story
+                }
+                else {
+                    //deck
+                    //mood
+                }
+            }
+            else {
+                //acount
+                //mood
+            }
+        }
+        else {
+            LoadingGamePreviewScenes.selectedButtonsText.add(buttonText.getText());
+            LoadingGamePreviewScenes.sceneControllers.get(nextSceneName).setPreviewSceneName(fatherSceneName);
+            WindowChanger.instance.setNewScene(LoadingGamePreviewScenes.starterScenes.get(nextSceneName));
+            LoadingGamePreviewScenes.starterControllers.get(nextSceneName).run();
+        }
     }
 
     public void shineButton(MouseEvent mouseEvent) {
