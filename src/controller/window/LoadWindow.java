@@ -11,8 +11,8 @@ public class LoadWindow extends Window {
     @Override
     public void main() {
         //todo after making files
-//        CardFactory.main();
-//        Deck.deckLevelBuilder();
+        CardFactory.main();
+        Deck.deckLevelBuilder();
         Account.loadAccounts();
         new LoadedImages();
         new LoadedScenes();

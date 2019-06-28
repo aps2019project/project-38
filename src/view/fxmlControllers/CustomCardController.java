@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import view.WindowChanger;
 import view.fxmls.LoadedScenes;
 
 import java.net.URL;
