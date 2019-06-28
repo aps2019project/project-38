@@ -10,7 +10,6 @@ import java.util.HashMap;
 
 public class Deck implements Serializable {
     private static HashMap<String, Deck> allDecks = new HashMap<>();
-    private static HashMap<String, String> lowerCaseNamesToOriginalName = new HashMap<>();
     private ArrayList<Integer> cardIDs = new ArrayList<>();
     private String name;
     private Spell item;

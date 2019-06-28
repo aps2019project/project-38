@@ -417,7 +417,7 @@ public class CardFactory {
             warrior.getTriggers().add(aura);
 
 
-            warrior.description.descriptionOfCardSpecialAbility = "Turn itself to a random enemy minion";
+            warrior.description.descriptionOfCardSpecialAbility = "Has 12 number of HolyBuf with CONTINUOUS mode";
             allBuiltMinions.add(warrior);
         }
         {//
@@ -429,7 +429,7 @@ public class CardFactory {
             trigger.getEffects().add(new HP(-1, Dispelablity.UNDISPELLABLE, -6));
             warrior.getTriggers().add(trigger);
 
-            warrior.description.descriptionOfCardSpecialAbility = "Deals 6 damage to enemy Hero on death";
+            warrior.description.descriptionOfCardSpecialAbility = "F";
             allBuiltMinions.add(warrior);
         }
         {//

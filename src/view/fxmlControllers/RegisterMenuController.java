@@ -7,6 +7,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import model.Account;
 import view.WindowChanger;
+import view.Utility;
 import view.fxmls.LoadedScenes;
 import view.images.LoadedImages;
 
@@ -39,7 +40,7 @@ public class RegisterMenuController implements Initializable {
 
     public void leatherBoard() {
         try {
-            WindowChanger.instance.setNewScene(FXMLLoader.load(LoadedScenes.class.getResource("leaderBoard.fxml")));
+            WindowChanger.instance.setNewScene(Utility.scale(FXMLLoader.load(LoadedScenes.class.getResource("leaderBoard.fxml"))));
         } catch (IOException e) {
             e.printStackTrace();
         }

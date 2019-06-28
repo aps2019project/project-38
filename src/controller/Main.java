@@ -1,6 +1,8 @@
 package controller;
 
+import com.sun.webkit.graphics.WCImage;
 import controller.window.LoadWindow;
+import controller.window.Window;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
@@ -36,6 +38,8 @@ public class Main extends Application {
         });
 
         new LoadWindow().main();
+
+        WindowChanger.instance.setNewScene(LoadedScenes.registerMenu);
 
 //        LoadingGamePreviewScenes.load();
 
