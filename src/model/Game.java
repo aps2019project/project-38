@@ -17,6 +17,7 @@ import view.fxmlControllers.ArenaController;
 
 import java.io.Serializable;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Game implements Serializable {
     GameMode gameMode;
@@ -306,6 +307,7 @@ public class Game implements Serializable {
 //        if (getActivePlayer().getHand().get(handMapKey) != null) {
         try {
             UseCard.useCard(handMapKey, cell);
+            ArenaController.ac.useCard(handMapKey);
         } finally {
             checkGameEndAndThenKillAllDiedWarriors();
         }
@@ -346,14 +348,20 @@ public class Game implements Serializable {
         StartTurn.doIt(this);
         checkGameEndAndThenKillAllDiedWarriors();
 
-        ArenaController.ac.setCoolDown(getActivePlayer().getPlayerHero().getPower().coolDownRemaining, getPlayerNumber(getActivePlayer())+1);
-        ArenaController.ac.setActiveMana(getActivePlayer().mana,getPlayerNumber(getActivePlayer())+1);
-        ArenaController.ac.setActivePlayer(getPlayerNumber(getActivePlayer())+1);
+        ArenaController.ac.setCoolDown(getActivePlayer().getPlayerHero().getPower().coolDownRemaining, getPlayerNumber(getActivePlayer()) + 1);
+        ArenaController.ac.setActiveMana(getActivePlayer().mana, getPlayerNumber(getActivePlayer()) + 1);
+        ArenaController.ac.setActivePlayer(getPlayerNumber(getActivePlayer()) + 1);
 
 
-        if(getActivePlayer() instanceof AIPlayer){
-            ((AIPlayer)getActivePlayer()).doSomething();
+        HashMap<Integer, String> handMap = (HashMap<Integer, String>) getActivePlayer().getHand().entrySet().stream()
+                .filter(integerCardEntry -> integerCardEntry.getValue() != null)
+                .collect(Collectors.toMap((Map.Entry<Integer, Card> o) -> o.getKey() + 1
+                        , (Map.Entry<Integer, Card> o) -> o.getValue().getName()));
+        handMap.put(0, getActivePlayer().getNextCard().getName());
+        ArenaController.ac.buildPlayerHand(handMap, getPlayerNumber(getActivePlayer()) + 1);
+
+        if (getActivePlayer() instanceof AIPlayer) {
+            ((AIPlayer) getActivePlayer()).doSomething();
         }
     }
 }
-

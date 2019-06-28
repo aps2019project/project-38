@@ -84,6 +84,9 @@ public class SpriteAnimation extends Transition {
         final int index = Math.min((int) Math.floor(k * frames.size()), frames.size() - 1);
         if (index != lastIndex) {
             imageView.setViewport(new Rectangle2D(frames.get(index).x, frames.get(index).y, frames.get(index).width, frames.get(index).height));
+            if(!imageView.isVisible()) {
+                imageView.setVisible(true);
+            }
             lastIndex = index;
         }
     }

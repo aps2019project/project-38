@@ -1,20 +1,16 @@
 package view.fxmlControllers;
 
-import controller.Main;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import model.Account;
+import view.WindowChanger;
 import view.fxmls.LoadedScenes;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import static view.Utility.scale;
 
 public class CreateAccountController implements Initializable {
 

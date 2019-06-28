@@ -1,12 +1,12 @@
-package view.fxmlControllers;
+package view;
 
 import controller.Main;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
+import view.fxmlControllers.MainAnchorPaneController;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ public class WindowChanger {
     private ArrayList<AnchorPane> anchorPanes = new ArrayList<>();
 
     private WindowChanger() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../fxmls/mainWindow.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxmls/mainWindow.fxml"));
         try {
             Main.mainStage.setScene(new Scene(scale(fxmlLoader.load())));
             Main.mainStage.setFullScreen(true);

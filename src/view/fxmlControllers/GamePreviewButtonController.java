@@ -1,11 +1,10 @@
 package view.fxmlControllers;
 
-import controller.Main;
 import javafx.scene.control.Label;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import model.Game;
+import view.WindowChanger;
 
 public class GamePreviewButtonController {
     public ImageView buttonImageView;

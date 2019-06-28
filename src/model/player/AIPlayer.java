@@ -41,27 +41,32 @@ public class AIPlayer extends Player {
         outer:
         for (Warrior warrior : tempWarrior) {
             for (Cell cell : getBoardCells()) {
-                try {
-                    getGame().attack(warrior.getCell(), cell);
-                    continue outer;
-                } catch (NotEnoughConditions notEnoughConditions) {
-//                    no problem he's stupid
+                if (cell.getWarrior() != null && !warriors.contains(cell.getWarrior())) {
+                    try {
+                        getGame().attack(warrior.getCell(),cell);
+                        continue outer;
+                    } catch (NotEnoughConditions notEnoughConditions) {
+                        //np
+                    }
                 }
             }
             for (Cell cell : getBoardCells()) {
-                try {
-                    getGame().move(warrior.getCell(), cell);
-                    continue outer;
-                } catch (NotEnoughConditions notEnoughConditions) {
-//                    no problem he's stupid
+                if (cell.getWarrior() == null) {
+                    try {
+                        getGame().move(warrior.getCell(),cell);
+                    } catch (NotEnoughConditions notEnoughConditions) {
+                        //np
+                    }
                 }
             }
             for (Cell cell : getBoardCells()) {
-                try {
-                    getGame().attack(warrior.getCell(), cell);
-                    continue outer;
-                } catch (NotEnoughConditions notEnoughConditions) {
-//                    no problem he's stupid
+                if (cell.getWarrior() != null && !warriors.contains(cell.getWarrior())) {
+                    try {
+                        getGame().attack(warrior.getCell(),cell);
+                        continue outer;
+                    } catch (NotEnoughConditions notEnoughConditions) {
+                        //np
+                    }
                 }
             }
         }

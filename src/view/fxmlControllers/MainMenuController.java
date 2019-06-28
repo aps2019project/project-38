@@ -1,11 +1,10 @@
 package view.fxmlControllers;
 
-import controller.Main;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import model.Account;
+import view.WindowChanger;
 import view.fxmls.LoadedScenes;
 
 import java.net.URL;

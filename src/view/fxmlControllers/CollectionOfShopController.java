@@ -1,25 +1,21 @@
 package view.fxmlControllers;
 
-import controller.Main;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import model.Account;
 import model.cards.CardFactory;
 import model.cards.Hero;
 import model.cards.Spell;
 import model.cards.Warrior;
+import view.WindowChanger;
 import view.fxmls.LoadedScenes;
 
 import java.io.IOException;

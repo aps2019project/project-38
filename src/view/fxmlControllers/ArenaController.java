@@ -1,6 +1,5 @@
 package view.fxmlControllers;
 
-import controller.Main;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -8,7 +7,6 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.effect.ColorAdjust;
@@ -29,6 +27,7 @@ import model.SelectionManager;
 import model.cards.Card;
 import model.cards.Warrior;
 import model.player.Player;
+import view.WindowChanger;
 import view.fxmls.LoadedScenes;
 import view.images.LoadedImages;
 import view.visualentities.VisualMinion;
@@ -208,12 +207,15 @@ public class ArenaController implements Initializable {
                 new Timer().schedule(new TimerTask() {
                     @Override
                     public void run() {
-                        visualMinions[row][col].view.setImage(null);
-                        visualMinions[row][col] = null;
+                        Platform.runLater(() -> {
+                            pane.getChildren().remove(visualMinions[row][col].view);
+                            visualMinions[row][col] = null;
+                        });
                     }
                 }, visualMinions[row][col].animation.realDuration);
             });
-        });
+        }).start();
+
     }
 
     private void fixGridNodesIndexes() {
@@ -251,14 +253,6 @@ public class ArenaController implements Initializable {
 
     void cellOnMouseEvent(int row, int col) {
         game.getSelectionManager().selectCell(game.getBoard().getCell(row, col));
-
-//        ColorAdjust colorAdjust = new ColorAdjust();
-//        colorAdjust.setContrast(.3);
-//        colorAdjust.setHue(.4);
-//        colorAdjust.setBrightness(0.1);
-//        colorAdjust.setSaturation(.8);
-//        getGridNodeFromIndexes(row, col).setEffect(colorAdjust);
-//        selectedNodes.add(getGridNodeFromIndexes(row, col));
     }
 
     ArrayList<Node> selectedNodes = new ArrayList<>();
@@ -363,7 +357,6 @@ public class ArenaController implements Initializable {
         }
     }
 
-    //call when hero special power is used
     public void setCoolDown(int remainingTurn, int playerNumber /* 1 or 2 */) {
         Label label = player2_specialPowerRemainedTurn;
         ImageView backGround = player2_specialPowerBackGround;
@@ -380,7 +373,6 @@ public class ArenaController implements Initializable {
         }
     }
 
-    //call when something that needed mana is used or at the start of each turn
     public void setActiveMana(int number /* number of active mana */, int playerNumber /* 1 or 2 */) {
         playersMana[playerNumber - 1] = number;
         GridPane gridPane = player2_mana;
@@ -397,7 +389,7 @@ public class ArenaController implements Initializable {
         }
     }
 
-    //call when a collectible-item is collected
+    //todo call when a collectible-item is collected
     public void showCollectedCollectibleItems(String itemName, int playerName /* 1 or 2 */) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("itemHolder.fxml"));
@@ -416,7 +408,6 @@ public class ArenaController implements Initializable {
         }
     }
 
-    //call on end turn
     public void setActivePlayer(int playerNumber /* 1 or 2 */) {
         ImageView avatar = player2_avatar;
         ImageView border = player2_avatarBorder;
@@ -434,7 +425,11 @@ public class ArenaController implements Initializable {
         otherBorder.setEffect(new SepiaTone());
     }
 
+    //todo call at the start of turns
     public void buildPlayerHand(HashMap<Integer, String> cards, int playerNumber) {
+        for (CardHolder holder : cardHolders) {
+            holder.gif.getChildren().clear();
+        }
         for (int i : cards.keySet()) {
             String name = cards.get(i);
             for (int cardID : Card.getAllCards().keySet()) {
@@ -453,13 +448,18 @@ public class ArenaController implements Initializable {
                     } else {
                         visualEntity = new VisualSpell(name).view;
                     }
+
+                    visualEntity.setOnMouseClicked(event -> game.getSelectionManager().selectCard(i-1));
+
                     cardHolders[i].gif.getChildren().add(visualEntity);
                     visualEntity.relocate(visualEntity.getX() - 10, visualEntity.getY() - 24);
+                    break;
                 }
             }
         }
     }
 
+    //todo call when you want to add sth to a grave yard
     public void transferToGraveYard(String cardName, int playerNumber /* 1 or 2 */) {
         ArrayList<ImageView> graveYardCards = player2GraveYard;
         if (playerNumber == 1) {
@@ -481,6 +481,7 @@ public class ArenaController implements Initializable {
         }
     }
 
+    //todo call when using a collectible
     public void useCollectibleItem(int i /* 0-base */, int playerNumber) {
         VBox vBox = player2_items;
         if (playerNumber == 1) {
@@ -489,8 +490,9 @@ public class ArenaController implements Initializable {
         vBox.getChildren().remove(i);
     }
 
+    //todo call when using a card
     public void useCard(int i) {
-        cardHolders[i].gif.getChildren().clear();
+        cardHolders[i+1].gif.getChildren().clear();
     }
 
 

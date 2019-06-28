@@ -6,7 +6,7 @@ import javafx.scene.image.ImageView;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class VisualSpell extends VisualEntity{
+public class VisualSpell {
     String name;
     public ImageView view;
     public SpriteAnimation animation;
@@ -14,11 +14,13 @@ public class VisualSpell extends VisualEntity{
     public VisualSpell(String name) {
         this.name = name;
         try {
-            view = new ImageView(new Image(new FileInputStream("src/view/images/sprites/" + name + ".png")));
+            ImageView temp = new ImageView(new Image(new FileInputStream("src/view/images/sprites/" + name + ".png")));
+            temp.setVisible(false);
+            view = temp;
+            animation = new SpriteAnimation(view, SpriteType.spellBreathing, name, -1);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        animation = new SpriteAnimation(view, SpriteType.spellBreathing, name, -1);
 
         view.setOnMouseEntered(event -> idle());
         view.setOnMouseExited(event -> breathing());

@@ -1,21 +1,18 @@
 package view.fxmlControllers;
 
-import controller.Main;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import model.Account;
+import view.WindowChanger;
 import view.fxmls.LoadedScenes;
 import view.images.LoadedImages;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import static view.Utility.scale;
 
 public class RegisterMenuController implements Initializable {
     public AnchorPane mainPane;

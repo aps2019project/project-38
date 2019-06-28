@@ -1,6 +1,5 @@
 package view.fxmlControllers;
 
-import controller.Main;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -13,6 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import model.cards.*;
+import view.WindowChanger;
 import view.fxmls.LoadedScenes;
 
 import java.io.IOException;
