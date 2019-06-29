@@ -531,4 +531,8 @@ public class ArenaController implements Initializable {
         //todo set the other player as winner MOEINI
         WindowChanger.instance.setNewScene(LoadedScenes.mainMenu);
     }
+
+    public void endGame(Player winner){
+        WindowChanger.instance.setNewScene(LoadedScenes.mainMenu);
+    }
 }

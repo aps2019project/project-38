@@ -13,7 +13,9 @@ import model.player.HumanPlayer;
 import model.player.Player;
 import model.triggers.CollectibleMine;
 import model.triggers.Trigger;
+import view.WindowChanger;
 import view.fxmlControllers.ArenaController;
+import view.fxmls.LoadedScenes;
 
 import java.io.Serializable;
 import java.util.*;
@@ -225,10 +227,15 @@ public class Game implements Serializable {
         }
     }
 
-    private void checkGameEndAndThenKillAllDiedWarriors() {
-        gameMode.checkGameEnd(this);
+    private boolean checkGameEndAndThenKillAllDiedWarriors() {
         killPlayerDiedWarriors(players[0]);
         killPlayerDiedWarriors(players[1]);
+        if (gameMode.checkGameEnd(this)) {
+            endGame();
+            ArenaController.ac.endGame(gameMode.winner);
+            return true;
+        }
+        return false;
     }
 
     private void killPlayerDiedWarriors(Player player) {
@@ -239,7 +246,17 @@ public class Game implements Serializable {
         }
     }
 
-    ////////////////////////refactor
+    private void endGame() {
+        for (Player player : players) {
+            if (player instanceof HumanPlayer) {
+                ((HumanPlayer) player).getAccount().putGameInHistory(getOtherPlayer(player).username, gameMode.winner.equals(player));
+            }
+        }
+        if (gameMode.winner instanceof HumanPlayer) {
+            ((HumanPlayer) gameMode.winner).getAccount().derrick += prize;
+        }
+    }
+
     public void move(Cell originCell, Cell targetCell) throws NotEnoughConditions {
 //        if (getActivePlayer().getWarriors().contains(originCell.getWarrior()) && targetCell.getWarrior() == null) {
         try {
@@ -336,18 +353,18 @@ public class Game implements Serializable {
             checkGameEndAndThenKillAllDiedWarriors();
         }
     }
-    /////////////////////////////////////////////////////refactor
 
     public void endTurn() {
         EndTurn.doIt(this);
-        checkGameEndAndThenKillAllDiedWarriors();
-        startTurn();
+        if (!checkGameEndAndThenKillAllDiedWarriors())
+            startTurn();
     }
 
     private void startTurn() {
         StartTurn.doIt(this);
         checkGameEndAndThenKillAllDiedWarriors();
 
+        //todo this part updates the ui for the new player. in the networking this should implemented somewhere else.
         ArenaController.ac.setCoolDown(getActivePlayer().getPlayerHero().getPower().coolDownRemaining, getPlayerNumber(getActivePlayer()) + 1);
         ArenaController.ac.setActiveMana(getActivePlayer().mana, getPlayerNumber(getActivePlayer()) + 1);
         ArenaController.ac.setActivePlayer(getPlayerNumber(getActivePlayer()) + 1);
@@ -360,6 +377,7 @@ public class Game implements Serializable {
         handMap.put(0, getActivePlayer().getNextCard().getName());
         ArenaController.ac.buildPlayerHand(handMap, getPlayerNumber(getActivePlayer()) + 1);
 
+        //todo this is an unwanted recurse sol: a "your turn" field in player that ai waits on
         if (getActivePlayer() instanceof AIPlayer) {
             ((AIPlayer) getActivePlayer()).doSomething();
         }
