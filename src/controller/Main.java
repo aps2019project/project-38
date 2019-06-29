@@ -10,6 +10,7 @@ import model.Game;
 import model.Level;
 import view.WindowChanger;
 import view.fxmlControllers.ArenaController;
+import view.fxmlControllers.LoadingGamePreviewScenes;
 import view.fxmls.LoadedScenes;
 
 public class Main extends Application {
@@ -32,7 +33,7 @@ public class Main extends Application {
         new LoadWindow().main();
 
 //        WindowChanger.instance.setNewScene(LoadedScenes.registerMenu);
-//        LoadingGamePreviewScenes.load();
+        LoadingGamePreviewScenes.load();
 
         {//arena
             Account account = new Account("test", "test");

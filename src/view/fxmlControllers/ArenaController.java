@@ -39,7 +39,7 @@ import java.util.*;
 
 public class ArenaController implements Initializable {
     public static ArenaController ac;
-    Game game;
+    public Game game;
     public GridPane grid;
     public Pane pane;
 
@@ -318,7 +318,7 @@ public class ArenaController implements Initializable {
         selectedNodes.clear();
     }
 
-    //required things: --------------------------
+    //-----------------------:required things:--------------------------
     public Pane menu;
     public Pane graveYardPane;
     public HBox mainGraveYard;
@@ -330,8 +330,7 @@ public class ArenaController implements Initializable {
     private ArrayList<ImageView> player1GraveYard = new ArrayList<>();
     private ArrayList<ImageView> player2GraveYard = new ArrayList<>();
 
-    public ImageView replaceButton;
-    //....................:window top section:..................
+    //----------------------:window top section:--------------------
     //top window items:
     public ImageView player1_avatar;
     public ImageView player2_avatar;
@@ -344,6 +343,7 @@ public class ArenaController implements Initializable {
     //players special power mana:
     private FXMLLoader[] fxmlLoaders1 = new FXMLLoader[2];
     private HeroSpecialPowerController[] heroSpecialPowerControllers = new HeroSpecialPowerController[2];
+    // todo: MOEINI, use ^this^ heroSpecialPowerControllers.gif to control hero special powers.
     public Pane hero1SpecialPower;
     public Pane hero2SpecialPower;
     private int[] playersMana = {0, 0};
@@ -399,7 +399,7 @@ public class ArenaController implements Initializable {
         heroSpecialPowerControllers[playerNumber - 1].setRemainedTurn(remainingTurn);
     }
 
-    //use this ,method after any use of mana
+    //use this method after any use of mana
     public void setActiveMana(int number /* number of active mana */, int playerNumber /* 1 or 2 */) {
         playersMana[playerNumber - 1] = number;
         GridPane gridPane = player2_mana;
@@ -461,7 +461,7 @@ public class ArenaController implements Initializable {
         otherBorder.setEffect(new SepiaTone());
     }
 
-    //todo call at the start of turns
+    //call at the start of turns
     public void buildPlayerHand(HashMap<Integer, String> cards, int playerNumber) {
         for (CardHolderController holder : cardHolders) {
             holder.gif.getChildren().clear();
@@ -501,6 +501,12 @@ public class ArenaController implements Initializable {
     public void useCard(int i) {
         cardHolders[i + 1].gif.getChildren().clear();
         cardHolders[i + 1].neededMana.setText("");
+        for (int j = 1; j < 6; j++) {
+            if (cardHolders[j].neededMana.getText().equals("")) continue;
+            if (Integer.parseInt(cardHolders[j].neededMana.getText()) > playersMana[getCurrentPlayer()]) {
+                cardHolders[j].manaBackGround.setEffect(new SepiaTone());
+            }
+        }
     }
 
     //call when you want to add a dead card to it's player grave yard
@@ -530,16 +536,20 @@ public class ArenaController implements Initializable {
         game.endTurn();
     }
 
-    public void replace() {
-        SelectionManager.replaceSelectedCard();
-    }
-
     //grave yard:
     public void backFromGraveYard() {
         graveYardPane.toBack();
     }
 
     public void graveYard() {
+        ArrayList<ImageView>template = player2GraveYard;
+        if(getCurrentPlayer()==0) {
+            template=player1GraveYard;
+        }
+        mainGraveYard.getChildren().clear();
+        for(ImageView imageView : template){
+            mainGraveYard.getChildren().add(imageView);
+        }
         graveYardPane.toFront();
     }
 
@@ -564,5 +574,9 @@ public class ArenaController implements Initializable {
     public void endGame(Player winner) {
         //todo a banner or sth
         WindowChanger.instance.setNewScene(LoadedScenes.mainMenu);
+    }
+
+    int getCurrentPlayer(){
+        return ArenaController.ac.game.turn%2;
     }
 }

@@ -7,13 +7,13 @@ import model.gamestate.DeathState;
 import model.player.Player;
 import view.fxmlControllers.ArenaController;
 
-public class Killer implements AutoAction{
+public class Killer implements AutoAction {
 
     @Override
     public boolean execute(QualityHaver source, QualityHaver target) {
         assert target instanceof Warrior;
 
-        kill((Warrior)target);
+        kill((Warrior) target);
         return true;//todo: it always gets done right?
     }
 
@@ -25,6 +25,11 @@ public class Killer implements AutoAction{
         warrior.getCell().setWarrior(null);
         player.getWarriors().remove(warrior);
 
-        ArenaController.ac.kill(warrior.getCell().getRow(),warrior.getCell().getColumn());
+        ArenaController.ac.kill(warrior.getCell().getRow(), warrior.getCell().getColumn());
+        if (player.equals(game.getPlayers()[0])) {
+            ArenaController.ac.transferToGraveYard(warrior.getName(), 1);
+        } else {
+            ArenaController.ac.transferToGraveYard(warrior.getName(), 2);
+        }
     }
 }

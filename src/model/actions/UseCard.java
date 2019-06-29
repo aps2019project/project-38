@@ -12,6 +12,7 @@ import model.exceptions.NotEnoughConditions;
 import model.gamestate.GameState;
 import model.gamestate.PutMinionState;
 import model.gamestate.UseSpellState;
+import view.fxmlControllers.ArenaController;
 
 public class UseCard {
     public static void useCard(int handMapKey, Cell cell) throws NotEnoughConditions {//todo badana
@@ -42,6 +43,7 @@ public class UseCard {
 //                ((PutMinionState) gameState).getWarrior().getEffects().add(new Attacked());todo for test only
             }
             game.getActivePlayer().mana -= card.getRequiredMana();
+            ArenaController.ac.setActiveMana(game.getActivePlayer().mana, game.getActivePlayerIndex()+1);
             game.getActivePlayer().getHand().put(handMapKey, null);
             game.getActivePlayer().getUsedCards().add(card);
             game.iterateAllTriggersCheck(gameState);
@@ -69,6 +71,7 @@ public class UseCard {
         if (game.getActivePlayer().mana >= heroPower.getRequiredMana()) {
             heroPower.apply(cell);
             game.getActivePlayer().mana -= heroPower.getRequiredMana();
+            ArenaController.ac.setActiveMana(game.getActivePlayer().mana, game.getActivePlayerIndex()+1);
             game.iterateAllTriggersCheck(useSpellState);
         } else {
             throw new NotEnoughConditions("Not enough mana");
