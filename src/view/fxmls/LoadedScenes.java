@@ -1,14 +1,11 @@
 package view.fxmls;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import view.fxmlControllers.RegisterMenuController;
 
 import java.io.IOException;
 
-import static view.Utility.*;
+import static view.Utility.scale;
 
 public class LoadedScenes {
 

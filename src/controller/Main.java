@@ -1,8 +1,6 @@
 package controller;
 
-import com.sun.webkit.graphics.WCImage;
 import controller.window.LoadWindow;
-import controller.window.Window;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
@@ -10,21 +8,14 @@ import model.Account;
 import model.Deck;
 import model.Game;
 import model.Level;
-import view.fxmlControllers.ArenaController;
 import view.WindowChanger;
-import view.fxmlControllers.LoadingGamePreviewScenes;
+import view.fxmlControllers.ArenaController;
 import view.fxmls.LoadedScenes;
 
 public class Main extends Application {
     public static Stage mainStage;
 
     public static void main(String[] args) {
-//        new LoadWindow().openWindow();
-//        while (true) {
-//            if (!Window.runLastOpenWindow()) {
-//                break;
-//            }
-//        }
         launch(args);
     }
 
@@ -41,7 +32,6 @@ public class Main extends Application {
         new LoadWindow().main();
 
 //        WindowChanger.instance.setNewScene(LoadedScenes.registerMenu);
-
 //        LoadingGamePreviewScenes.load();
 
         {//arena

@@ -74,8 +74,7 @@ public class CustomCardController implements Initializable {
         setPreValues();
     }
 
-    //use this function before each enter to custom card menu:
-    public void setPreValues() {
+    private void setPreValues() {
         clearForNewUse();
         type_chb.setItems(type_list);
         type_chb.setValue("Spell");

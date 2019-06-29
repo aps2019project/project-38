@@ -16,6 +16,5 @@ public class LoadWindow extends Window {
         Account.loadAccounts();
         new LoadedImages();
         new LoadedScenes();
-//        new IntroWindow().openWindow();
     }
 }
