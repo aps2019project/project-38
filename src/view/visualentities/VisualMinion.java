@@ -13,6 +13,14 @@ public class VisualMinion {
     public ImageView view;
     public SpriteAnimation animation;
 
+   public double getWidth(){
+       return animation.getWidth();
+   }
+
+   public double getHeight(){
+       return animation.getHeight();
+   }
+
     public VisualMinion(String name) {
         this.name = name;
         try {

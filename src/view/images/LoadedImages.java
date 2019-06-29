@@ -20,6 +20,7 @@ public class LoadedImages {
     public static Image activePlayer = null;
     public static Image inactivePlayer = null;
     public static Image blueCircle = null;
+    public static Image grayCircle;
 
     {
         Random random = new Random();
@@ -32,6 +33,7 @@ public class LoadedImages {
             activePlayer = new Image(new FileInputStream("src/view/images/arena/activePlayer.png"));
             inactivePlayer = new Image(new FileInputStream("src/view/images/arena/inactivePlayer.png"));
             blueCircle = new Image(new FileInputStream("src/view/images/arena/blueCircle.png"));
+            grayCircle = new Image(new FileInputStream("src/view/images/arena/grayCircle.png"));
             for (int i = 0; i < 15; i++) {
                 avatars[i] = new Image(new FileInputStream("src/view/images/accounts/circular/" + i + ".png"));
             }

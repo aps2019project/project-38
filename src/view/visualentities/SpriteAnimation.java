@@ -21,6 +21,14 @@ public class SpriteAnimation extends Transition {
     public int height, width;
     public int realDuration;
 
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
     int lastIndex;
     ArrayList<SpriteFrame> frames = new ArrayList<>();
 
@@ -50,7 +58,7 @@ public class SpriteAnimation extends Transition {
         this.play();
     }
 
-    void getFramesFromPlist() {
+    private void getFramesFromPlist() {
         String dataS = null;
         try {
             dataS = new String(Files.readAllBytes(Paths.get("src/view/images/sprites/" + fileName + ".plist")));
