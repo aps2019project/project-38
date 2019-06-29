@@ -45,6 +45,8 @@ public class ArenaController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+//        hashem
+
         for (int i = 0; i < 6; i++) {
             fxmlLoaders[i] = new FXMLLoader(LoadedScenes.class.getResource("cardHolder.fxml"));
             try {
@@ -62,31 +64,48 @@ public class ArenaController implements Initializable {
             }
         }
 
-//        hashem
-        player1_avatar.setImage(LoadedImages.avatars[4]);
-        player2_avatar.setImage(LoadedImages.avatars[7]);
+
+        for (int i = 0; i < 2; i++) {
+            fxmlLoaders1[i] = new FXMLLoader(LoadedScenes.class.getResource("heroSpecialPower.fxml"));
+            Pane pane = null;
+            try {
+                pane = fxmlLoaders1[i].load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            heroSpecialPowerControllers[i] = fxmlLoaders1[i].getController();
+            if (i == 0) {
+                hero1SpecialPower.getChildren().add(pane);
+//                heroSpecialPowerControllers[i].setHeroSpecialPowerFirstInfo(player1);
+            } else {
+                hero2SpecialPower.getChildren().add(pane);
+//                heroSpecialPowerControllers[i].setHeroSpecialPowerFirstInfo(player2);
+            }
+        }
+
+        player1_avatar.setImage(LoadedImages.avatars[3]);
+        player2_avatar.setImage(LoadedImages.avatars[9]);
+
         setActiveMana(8, 2);
+
         setActiveMana(6, 2);
         player1_username.setText("Hashem");
         player2_username.setText("Rima");
-        player1_specialPowerNeededMana.setText("4");
-        player2_specialPowerNeededMana.setText("1");
+
         setActivePlayer(1);
+
         setActiveMana(1, 1);
 
-//        showCollectedCollectibleItems("TotalDisarm", 1); // DANGER
-//        showCollectedCollectibleItems("TotalDisarm", 2);
+        showCollectedCollectibleItems("TotalDisarm", 1);
+        showCollectedCollectibleItems("TotalDisarm", 2);
 
+        setCoolDown(4, 2);
+        setCoolDown(0, 1);
 
-        ImageView player1_VS = new VisualMinion("Ashkboos").view;
         HashMap<Integer, String> hashMap = new HashMap<>();
         hashMap.put(2, "Jen");
-        buildPlayerHand(hashMap, 1);
 
-        player1_VS.relocate(135, 165);
-        pane.getChildren().add(player1_VS);
-        setCoolDown(2, 2);
-        setCoolDown(0, 1);
+        buildPlayerHand(hashMap, 1);
 
         transferToGraveYard("Jen", 2);
 
@@ -97,7 +116,9 @@ public class ArenaController implements Initializable {
         transformGrid();
 
         //producing click boxes and fixing indexes of nodes of gridPane
-        Platform.runLater(() -> {
+        Platform.runLater(() ->
+
+        {
             fixGridNodesIndexes();
 
             for (int i = 0; i < 5; i++) {
@@ -304,8 +325,8 @@ public class ArenaController implements Initializable {
     public VBox player1_items;
     public VBox player2_items;
     public HBox hand;
-    CardHolderController[] cardHolders = new CardHolderController[6];
-    FXMLLoader[] fxmlLoaders = new FXMLLoader[6];
+    private FXMLLoader[] fxmlLoaders = new FXMLLoader[6];
+    private CardHolderController[] cardHolders = new CardHolderController[6];
     private ArrayList<ImageView> player1GraveYard = new ArrayList<>();
     private ArrayList<ImageView> player2GraveYard = new ArrayList<>();
 
@@ -321,28 +342,39 @@ public class ArenaController implements Initializable {
     public GridPane player1_mana;
     public GridPane player2_mana;
     //players special power mana:
-    public Label player1_specialPowerRemainedTurn;
-    public Label player2_specialPowerRemainedTurn;
-    public Label player1_specialPowerNeededMana;
-    public Label player2_specialPowerNeededMana;
-    public ImageView player1_specialPowerBackGround;
-    public ImageView player2_specialPowerBackGround;
-    public ImageView player1_specialPowerRequiredManaBackGround;
-    public ImageView player2_specialPowerRequiredManaBackGround;
+    private FXMLLoader[] fxmlLoaders1 = new FXMLLoader[2];
+    private HeroSpecialPowerController[] heroSpecialPowerControllers = new HeroSpecialPowerController[2];
+    public Pane hero1SpecialPower;
+    public Pane hero2SpecialPower;
     private int[] playersMana = {0, 0};
 
 
     private void beforeStartTheGame(Player player1, Player player2) {
         player1_avatar.setImage(player1.avatar);
         player2_avatar.setImage(player2.avatar);
+
         player1_username.setText(player1.username);
         player2_username.setText(player2.username);
-        ImageView player1_VS = new VisualSpell(player2.getMainDeck().getHero().getPower().getName()).view;
-        player1_VS.relocate(133, 165);
-        ImageView player2_VS = new VisualSpell(player1.getMainDeck().getHero().getPower().getName()).view;
-        player2_VS.relocate(1004, 165);
-        player1_specialPowerNeededMana.setText(String.valueOf(player1.getMainDeck().getHero().getPower().getRequiredMana()));
-        player2_specialPowerNeededMana.setText(String.valueOf(player2.getMainDeck().getHero().getPower().getRequiredMana()));
+
+
+        for (int i = 0; i < 2; i++) {
+            fxmlLoaders1[i] = new FXMLLoader(LoadedScenes.class.getResource("heroSpecialPower.fxml"));
+            Pane pane = null;
+            try {
+                pane = fxmlLoaders1[i].load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            heroSpecialPowerControllers[i] = fxmlLoaders1[i].getController();
+            if (i == 0) {
+                hero1SpecialPower.getChildren().add(pane);
+                heroSpecialPowerControllers[i].setHeroSpecialPowerFirstInfo(player1);
+            } else {
+                hero2SpecialPower.getChildren().add(pane);
+                heroSpecialPowerControllers[i].setHeroSpecialPowerFirstInfo(player2);
+
+            }
+        }
 
         for (int i = 0; i < 6; i++) {
             fxmlLoaders[i] = new FXMLLoader(LoadedScenes.class.getResource("cardHolder.fxml"));
@@ -364,19 +396,7 @@ public class ArenaController implements Initializable {
 
     //use this method to set the number of turns needed for hero special ability to be ready to use.
     public void setCoolDown(int remainingTurn, int playerNumber /* 1 or 2 */) {
-        Label label = player2_specialPowerRemainedTurn;
-        ImageView backGround = player2_specialPowerBackGround;
-        ImageView mana = player2_specialPowerRequiredManaBackGround;
-        if (playerNumber == 1) {
-            label = player1_specialPowerRemainedTurn;
-            backGround = player1_specialPowerBackGround;
-            mana = player1_specialPowerRequiredManaBackGround;
-        }
-        label.setText(String.valueOf(remainingTurn));
-        if (remainingTurn == 0) {
-            backGround.setImage(LoadedImages.blueCircle);
-            mana.setImage(LoadedImages.blueMana);
-        }
+        heroSpecialPowerControllers[playerNumber - 1].setRemainedTurn(remainingTurn);
     }
 
     //use this ,method after any use of mana
@@ -413,6 +433,15 @@ public class ArenaController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    //call when using a collectible of a player (item with 0 index is at bottom of the VBox)
+    public void useCollectibleItem(int i /* 0-base */, int playerNumber /* 1 or 2 */) {
+        VBox vBox = player2_items;
+        if (playerNumber == 1) {
+            vBox = player1_items;
+        }
+        vBox.getChildren().remove(i);
     }
 
     public void setActivePlayer(int playerNumber /* 1 or 2 */) {
@@ -459,11 +488,19 @@ public class ArenaController implements Initializable {
                         visualEntity = vm.view;
                         cardHolders[i].put(visualEntity, vm.getWidth(), vm.getHeight());
                     }
-                    visualEntity.setOnMouseClicked(event -> game.getSelectionManager().selectCard(i - 1));
+                    if (i > 0) {
+                        visualEntity.setOnMouseClicked(event -> game.getSelectionManager().selectCard(i - 1));
+                    }
                     break;
                 }
             }
         }
+    }
+
+    //call when using a card from "current" player hand
+    public void useCard(int i) {
+        cardHolders[i + 1].gif.getChildren().clear();
+        cardHolders[i + 1].neededMana.setText("");
     }
 
     //call when you want to add a dead card to it's player grave yard
@@ -486,20 +523,6 @@ public class ArenaController implements Initializable {
         for (ImageView cardGif : graveYardCards) {
             mainGraveYard.getChildren().add(cardGif);
         }
-    }
-
-    //call when using a collectible of a player (item with 0 index is at bottom of the VBox)
-    public void useCollectibleItem(int i /* 0-base */, int playerNumber /* 1 or 2 */) {
-        VBox vBox = player2_items;
-        if (playerNumber == 1) {
-            vBox = player1_items;
-        }
-        vBox.getChildren().remove(i);
-    }
-
-    //call when using a card from "current" player hand
-    public void useCard(int i) {
-        cardHolders[i + 1].gif.getChildren().clear();
     }
 
     //arena buttons:

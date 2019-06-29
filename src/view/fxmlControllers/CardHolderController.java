@@ -10,7 +10,6 @@ public class CardHolderController extends Holder{
     public ImageView manaBackGround;
     boolean isThisCardComingCard;
 
-
     public void changeBackGround_Enter() {
         if (isThisCardComingCard) return;
         backGround.setEffect(new BoxBlur());

@@ -4,21 +4,18 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="96.0"
-      prefWidth="103.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="view.fxmlControllers.Holder">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="100.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.fxmlControllers.Holder">
     <children>
-        <ImageView fx:id="backGround" fitHeight="108.0" fitWidth="113.0" layoutX="-5.0" layoutY="-6.0">
+        <ImageView fx:id="backGround" fitHeight="108.0" fitWidth="113.0" layoutX="-6.0" layoutY="-4.0">
             <image>
-                <Image url="@../images/arena/replace_background@2x.png"/>
+                <Image url="@../images/arena/replace_background@2x.png" />
             </image>
         </ImageView>
-        <ImageView fitHeight="108.0" fitWidth="113.0" layoutX="-5.0" layoutY="-6.0" rotate="80.0">
+        <ImageView fitHeight="108.0" fitWidth="113.0" layoutX="-6.0" layoutY="-4.0" rotate="80.0">
             <image>
-                <Image url="@../images/arena/card_background_highlight@2x.png"/>
+                <Image url="@../images/arena/card_background_highlight@2x.png" />
             </image>
         </ImageView>
-        <Pane fx:id="gif" layoutX="18.0" layoutY="17.0" onMouseEntered="#changeBackGround_Enter"
-              onMouseExited="#changeBackGround_Exit" prefHeight="63.0" prefWidth="67.0"/>
+        <Pane fx:id="gif" layoutX="1.0" onMouseEntered="#changeBackGround_Enter" onMouseExited="#changeBackGround_Exit" prefHeight="100.0" prefWidth="100.0" />
     </children>
 </Pane>
