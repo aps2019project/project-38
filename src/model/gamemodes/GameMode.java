@@ -8,7 +8,7 @@ import java.io.Serializable;
 public abstract class GameMode implements Serializable {
     public Player winner;
 
-    public abstract boolean checkGameEnd(Game game);
+    public abstract void checkGameEnd(Game game);
 
     public abstract void applyTriggerToBoard(Game game);
 

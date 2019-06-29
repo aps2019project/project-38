@@ -227,15 +227,12 @@ public class Game implements Serializable {
         }
     }
 
-    private boolean checkGameEndAndThenKillAllDiedWarriors() {
+    private void checkGameEndAndThenKillAllDiedWarriors() {
         killPlayerDiedWarriors(players[0]);
         killPlayerDiedWarriors(players[1]);
-        if (gameMode.checkGameEnd(this)) {
+        if (gameMode.winner != null) {
             endGame();
-            ArenaController.ac.endGame(gameMode.winner);
-            return true;
         }
-        return false;
     }
 
     private void killPlayerDiedWarriors(Player player) {
@@ -246,15 +243,21 @@ public class Game implements Serializable {
         }
     }
 
-    private void endGame() {
+    public void endGame() {
+        //add game to history
         for (Player player : players) {
             if (player instanceof HumanPlayer) {
                 ((HumanPlayer) player).getAccount().putGameInHistory(getOtherPlayer(player).username, gameMode.winner.equals(player));
             }
         }
+
+        //give prize
         if (gameMode.winner instanceof HumanPlayer) {
             ((HumanPlayer) gameMode.winner).getAccount().derrick += prize;
         }
+
+        //and update the graphics
+        ArenaController.ac.endGame(gameMode.winner);
     }
 
     public void move(Cell originCell, Cell targetCell) throws NotEnoughConditions {
@@ -356,7 +359,9 @@ public class Game implements Serializable {
 
     public void endTurn() {
         EndTurn.doIt(this);
-        if (!checkGameEndAndThenKillAllDiedWarriors())
+        checkGameEndAndThenKillAllDiedWarriors();
+
+        if (gameMode.winner==null)//why a condition? because if the game end because of endTurn the flow returns here and starts a new turn.
             startTurn();
     }
 

@@ -449,7 +449,7 @@ public class ArenaController implements Initializable {
                         visualEntity = new VisualSpell(name).view;
                     }
 
-                    visualEntity.setOnMouseClicked(event -> game.getSelectionManager().selectCard(i-1));
+                    visualEntity.setOnMouseClicked(event -> game.getSelectionManager().selectCard(i - 1));
 
                     cardHolders[i].gif.getChildren().add(visualEntity);
                     visualEntity.relocate(visualEntity.getX() - 10, visualEntity.getY() - 24);
@@ -490,9 +490,8 @@ public class ArenaController implements Initializable {
         vBox.getChildren().remove(i);
     }
 
-    //todo call when using a card
     public void useCard(int i) {
-        cardHolders[i+1].gif.getChildren().clear();
+        cardHolders[i + 1].gif.getChildren().clear();
     }
 
 
@@ -528,11 +527,12 @@ public class ArenaController implements Initializable {
     }
 
     public void quit() {
-        //todo set the other player as winner MOEINI
-        WindowChanger.instance.setNewScene(LoadedScenes.mainMenu);
+        game.getGameMode().winner = game.getOtherPlayer(game.getActivePlayer());
+        game.endGame();
     }
 
-    public void endGame(Player winner){
+    public void endGame(Player winner) {
+        //todo a banner or sth
         WindowChanger.instance.setNewScene(LoadedScenes.mainMenu);
     }
 }

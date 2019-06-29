@@ -13,15 +13,13 @@ public class CarryingFlag extends GameMode {
     private  boolean gameHasFlag = false;
 
     @Override
-    public boolean checkGameEnd(Game game) {
+    public void checkGameEnd(Game game) {
         updateScores(game);
         for (int i = 0; i < 2; i++) {
             if (playersScore[i] > Constant.GameConstants.carryingFlagModeWinScore) {
                 winner = game.getPlayers()[i];
-                return true;
             }
         }
-        return false;
     }
 
     private void updateScores(Game game) {
