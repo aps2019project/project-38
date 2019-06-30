@@ -1,12 +1,8 @@
 package view.fxmlControllers;
 
-import controller.Main;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import model.Account;
 import view.Utility;
 import view.WindowChanger;
@@ -24,8 +20,11 @@ public class MainMenuController implements Initializable {
     }
 
     public void startGame() {
-//        WindowChanger.instance.setNewScene(LoadedScenes.chooseBattleKind);
-        LoadingGamePreviewScenes.load();
+        if (Account.getActiveAccount().getCollection().getMainDeck() != null) {
+            LoadingGamePreviewScenes.load();
+        } else {
+            AlertController.setAndShowAndWaitToGetResult("You have not a main deck", false);
+        }
     }
 
     public void logout() {

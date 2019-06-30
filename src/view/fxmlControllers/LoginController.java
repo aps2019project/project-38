@@ -8,6 +8,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import model.Account;
 import view.Utility;
+import view.WindowChanger;
 import view.fxmls.LoadedScenes;
 
 import java.io.IOException;
