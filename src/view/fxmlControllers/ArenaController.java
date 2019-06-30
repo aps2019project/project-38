@@ -115,9 +115,9 @@ public class ArenaController implements Initializable, PropertyChangeListener {
         transferToGraveYard("Jen", 2);
 */
 
-        VisualMinion vm = new VisualMinion("Jen");
-
-        showInfoOfACard("ali", "alalalalala", "warrior", vm.view, vm.getWidth(), vm.getHeight(), 100, 100);
+//        VisualMinion vm = new VisualMinion("Jen");
+//
+//        showInfoOfACard("ali", "alalalalala", "warrior", vm.view, vm.getWidth(), vm.getHeight(), 100, 100);
         //--------------------------------------------------------------------
 
         ac = this;
@@ -126,7 +126,6 @@ public class ArenaController implements Initializable, PropertyChangeListener {
 
         //producing click boxes and fixing indexes of nodes of gridPane
         Platform.runLater(() ->
-
         {
             fixGridNodesIndexes();
 
@@ -172,7 +171,7 @@ public class ArenaController implements Initializable, PropertyChangeListener {
         this.game = game;
         visualMinions = new VisualMinion[5][9];
 
-        beforeStartTheGame(game.getPlayers()[0],game.getPlayers()[1]);// todo because hero powers do not have name or sprite yet. also remember that some heroes don't have power
+        beforeStartTheGame(game.getPlayers()[0], game.getPlayers()[1]);
     }
 
     public void put(int row, int col, String name) {

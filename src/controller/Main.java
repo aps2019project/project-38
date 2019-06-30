@@ -11,7 +11,6 @@ import model.Game;
 import model.Level;
 import view.WindowChanger;
 import view.fxmlControllers.ArenaController;
-import view.fxmlControllers.LoadingGamePreviewScenes;
 import view.fxmls.LoadedScenes;
 
 public class Main extends Application {
@@ -33,16 +32,16 @@ public class Main extends Application {
 
         new LoadWindow().main();
 
-        WindowChanger.instance.setNewScene(LoadedScenes.registerMenu);
-//        {//arena
-//            Account account = new Account("test", "test");
-//            account.getCollection().setMainDeck(Deck.getAllDecks().get("level1"));
-//            Game game = Level.getAvailableLevels().get("1").getLevelGame(account);
-//            ArenaController.ac.init(game);
-//            game.initialiseGameFields();
-//
-//            WindowChanger.instance.setNewScene(LoadedScenes.arena);
-//        }
+//        WindowChanger.instance.setNewScene(LoadedScenes.registerMenu);
+        {//arena
+            Account account = new Account("test", "test");
+            account.getCollection().setMainDeck(Deck.getAllDecks().get("level1"));
+            Game game = Level.getAvailableLevels().get("1").getLevelGame(account);
+            ArenaController.ac.init(game);
+            game.initialiseGameFields();
+
+            WindowChanger.instance.setNewScene(LoadedScenes.arena);
+        }
 
         primaryStage.show();
     }

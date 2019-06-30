@@ -58,8 +58,6 @@ public class Game implements Serializable {
                     Constant.GameConstants.boardColumn - 1), players[1].getWarriors().get(0));
             ArenaController.ac.put(Constant.GameConstants.boardRow / 2,0,players[0].getWarriors().get(0).getName());
             ArenaController.ac.put(Constant.GameConstants.boardRow / 2,Constant.GameConstants.boardColumn - 1,players[1].getWarriors().get(0).getName());
-//            ArenaController.ac.put(Constant.GameConstants.boardRow / 2, 0, "Foolad-Zereh");
-//            ArenaController.ac.put(Constant.GameConstants.boardRow / 2, Constant.GameConstants.boardColumn - 1, "Ghool-E-Bozorg");
         }
         {
             initialisePlayerHand(players[0]);

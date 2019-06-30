@@ -37,7 +37,7 @@ public class WindowChanger {
     }
 
     public void setNewScene(Pane pane) {
-        Platform.runLater(() -> {
+//        Platform.runLater(() -> {
 //            anchorPanes.get(1).getChildren().removeAll(anchorPanes.get(1).getChildren());
 //            anchorPanes.get(1).getChildren().add(pane);
 //            while (anchorPanes.get(1).getLayoutY() > 0 || anchorPanes.get(0).getLayoutY() > -1 * Screen.getPrimary().getVisualBounds().getHeight()) {
@@ -50,7 +50,7 @@ public class WindowChanger {
 //            anchorPanes.add(anchorPanes.get(0));
 //            anchorPanes.remove(0);
             Main.mainStage.getScene().setRoot(pane);
-        });
+//        });
     }
 
     public void addNewScene(Pane pane) {
