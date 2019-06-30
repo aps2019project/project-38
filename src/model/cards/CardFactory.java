@@ -878,10 +878,11 @@ public class CardFactory {
                     assert owner instanceof Warrior;
                     Warrior warrior = (Warrior) owner;
                     ((Warrior) owner).getCell().getBoard().getGame().getWarriorsPlayer(warrior).addMana(3);
-                    System.out.println("here");
                 }
             };
             manaPotion.getConditions().add(new HasTurnStarted());
+            item.getTriggers().add(manaPotion);
+            item.getActions().put(new Applier(),new HeroGetter(true));
 
             item.description.descriptionOfCardSpecialAbility = "Increase Mana 3 units";
             allBuiltItems.add(item);

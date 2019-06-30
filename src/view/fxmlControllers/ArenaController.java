@@ -446,7 +446,6 @@ public class ArenaController implements Initializable, PropertyChangeListener {
                 player1_items.getChildren().add(pane);
             } else {
                 player2_items.getChildren().add(pane);
-                System.out.println("here in player 2 c adder");
             }
 
             pane.setOnMouseClicked(event -> {
