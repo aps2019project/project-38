@@ -649,7 +649,6 @@ public class ArenaController implements Initializable, PropertyChangeListener {
             shownSpellInArenaController.put(vs.view, vs.animation.width, vs.animation.height);
         }
     }
-
     public void endShowInfoOfACard() {
         shownCardInformationHolder_pn.getChildren().clear();
     }

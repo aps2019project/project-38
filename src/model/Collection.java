@@ -4,6 +4,8 @@ import model.cards.Card;
 import model.cards.Hero;
 import model.cards.Spell;
 import view.Message;
+import view.Utility;
+import view.fxmlControllers.CreateDeckController;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -62,7 +64,7 @@ public class Collection implements Serializable {
     public void createDeck(String deckName) {
         for (String template : getDecks()) {
             if (template.toLowerCase().equals(deckName.toLowerCase())) {
-                Message.thereIsAlreadyADeckWhitThisName();
+                Utility.showMessage("There is already a deck with this name");
                 return;
             }
         }
@@ -70,7 +72,8 @@ public class Collection implements Serializable {
         deck.setName(deckName);
         getDecks().add(deckName);
         getAllDecks().put(deckName, deck);
-        Message.deckCreated();
+        CreateDeckController.putANewDeckToList(deckName);
+        Utility.showMessage("Deck created :)");
     }
 
     public void deleteDeck(String deckName) {
@@ -81,16 +84,17 @@ public class Collection implements Serializable {
             }
         }
         if (!isDeckNameValid) {
-            Message.thereIsNoDeckWithThisName();
+            Utility.showMessage("There is no deck with this name :(");
             return;
         }
         Deck deck = Account.getActiveAccount().getCollection().getAllDecks().get(deckName);
-        if (this.getMainDeck()!=null && this.getMainDeck().equals(deck)) {
+        if (this.getMainDeck() != null && this.getMainDeck().equals(deck)) {
             this.setMainDeck(null);
         }
         getDecks().remove(deckName);
         getAllDecks().remove(deckName);
-        Message.deckDeleted();
+        CreateDeckController.removeADeckFromList(deckName);
+        Utility.showMessage("Deck deleted :)");
     }
 
     public void addCardToDeck(String cardName, String deckName) {
@@ -188,30 +192,30 @@ public class Collection implements Serializable {
         }
     }
 
-    public boolean validateDeck(String deckName, boolean showResultsOrNot) {
+    public boolean validateDeck(String deckName) {
         if (!Account.getActiveAccount().getCollection().getAllDecks().containsKey(deckName)) {
-            if (showResultsOrNot) Message.thereIsNoDeckWithThisName();
+            Utility.showMessage("There is no deck with this name :(");
             return false;
         }
         Deck deck = Account.getActiveAccount().getCollection().getAllDecks().get(deckName);
         if (deck.getCardIDs().size() != 20 || deck.getHero() == null) {
-            if (showResultsOrNot) Message.deckIsNotValid();
+            Utility.showMessage("This deck is not valid :(");
             return false;
         }
-        if (showResultsOrNot) Message.deckIsValid();
+        Utility.showMessage("This deck is valid :)");
         return true;
     }
 
     public void selectMainDeck(String deckName) {
         if (!Account.getActiveAccount().getCollection().getAllDecks().containsKey(deckName)) {
-            Message.thereIsNoDeckWithThisName();
+            Utility.showMessage("There is no deck with this name :(");
             return;
         }
-        if (validateDeck(deckName, false)) {
+        if (validateDeck(deckName)) {
             setMainDeck(Account.getActiveAccount().getCollection().getAllDecks().get(deckName));
-            Message.deckSelectedAsMain();
+            Utility.showMessage("This deck selected as main successfully :)");
         } else {
-            Message.deckIsNotValid();
+            Utility.showMessage("This deck is not valid :(");
         }
     }
 

@@ -14,6 +14,7 @@ public class Deck implements Serializable {
     private String name;
     private Spell item;
     private Hero hero;
+
     //***
 
     public static void deckLevelBuilder() {

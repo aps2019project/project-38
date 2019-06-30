@@ -33,8 +33,8 @@ public class MainMenuController implements Initializable {
         WindowChanger.instance.setNewScene(LoadedScenes.registerMenu);
     }
 
-    public void collection() {
-        WindowChanger.instance.setNewScene(LoadedScenes.collectionOfShop);
+    public void createDeck() {
+        WindowChanger.instance.setNewScene(LoadedScenes.createDeck);
     }
 
     public void shop() {
