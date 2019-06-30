@@ -39,13 +39,13 @@ public class VisualMinion {
 
         view.setOnMouseEntered(event -> {
             idle();
-//            if (ArenaController.ac.game != null) {
-//                Warrior theCard =(Warrior) Card.getAllCards().values().stream().filter(card -> card.getName().equals(name)).findAny().orElse(null);
-//                if(theCard==null){
-//                    return;
-//                }
-//                ArenaController.ac.showInfoOfACard(name,theCard.description.getDescriptionOfCardSpecialAbility(),"warrior",view,animation.width,animation.height,theCard.getHp(),theCard.getAp());
-//            }
+            if (ArenaController.ac.game != null) {
+                Warrior theCard =(Warrior) Card.getAllCards().values().stream().filter(card -> card.getName().equals(name)).findAny().orElse(null);
+                if(theCard==null){
+                    return;
+                }
+                ArenaController.ac.showInfoOfACard(name,theCard.description.getDescriptionOfCardSpecialAbility(),"warrior",theCard.getHp(),theCard.getAp());
+            }
         });
         view.setOnMouseExited(event -> {
             breathing();

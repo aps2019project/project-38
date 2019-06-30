@@ -609,13 +609,11 @@ public class ArenaController implements Initializable, PropertyChangeListener {
     }
 
 
-    //for show information of cards: // todo for MOEINI
-
     public Pane shownCardInformationHolder_pn;
     private Pane shownSpell_pn;
     private Pane shownWarrior_pn;
 
-    public void showInfoOfACard(String name, String description, String type /* spell or warrior */, ImageView sprite, double widthOfSprite, double heightOfSprite, int HP, int AP /* put anything if the card isn't a warrior */) {
+    public void showInfoOfACard(String name, String description, String type /* spell or warrior */, int HP, int AP /* put anything if the card isn't a warrior */) {
         FXMLLoader spellFXML = new FXMLLoader(LoadedScenes.class.getResource("shownSpellInArena.fxml"));
         FXMLLoader warriorFXML = new FXMLLoader(LoadedScenes.class.getResource("shownWarriorInArena.fxml"));
         try {
@@ -634,13 +632,21 @@ public class ArenaController implements Initializable, PropertyChangeListener {
             shownWarriorInArenaController.setType("warrior");
             shownWarriorInArenaController.setAP(AP);
             shownWarriorInArenaController.setHP(HP);
-            shownWarriorInArenaController.put(sprite, widthOfSprite, heightOfSprite);
+
+            VisualMinion vm = new VisualMinion(name);
+            vm.view.setOnMouseEntered(null);
+            vm.view.setOnMouseExited(null);
+            shownWarriorInArenaController.put(vm.view, vm.animation.width, vm.animation.height);
         } else {
             shownCardInformationHolder_pn.getChildren().add(shownSpell_pn);
             shownSpellInArenaController.setName(name);
             shownSpellInArenaController.setDescription(description);
             shownSpellInArenaController.setType("spell");
-            shownSpellInArenaController.put(sprite, widthOfSprite, heightOfSprite);
+
+            VisualSpell vs = new VisualSpell(name);
+            vs.view.setOnMouseEntered(null);
+            vs.view.setOnMouseExited(null);
+            shownSpellInArenaController.put(vs.view, vs.animation.width, vs.animation.height);
         }
     }
 
