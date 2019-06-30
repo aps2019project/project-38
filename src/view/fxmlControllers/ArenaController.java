@@ -48,6 +48,7 @@ public class ArenaController implements Initializable, PropertyChangeListener {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 //        hashem
+/*
 
         for (int i = 0; i < 6; i++) {
             fxmlLoaders[i] = new FXMLLoader(LoadedScenes.class.getResource("cardHolder.fxml"));
@@ -110,6 +111,7 @@ public class ArenaController implements Initializable, PropertyChangeListener {
         buildPlayerHand(hashMap, 1);
 
         transferToGraveYard("Jen", 2);
+*/
 
         //--------------------------------------------------------------------
 
@@ -165,11 +167,7 @@ public class ArenaController implements Initializable, PropertyChangeListener {
         this.game = game;
         visualMinions = new VisualMinion[5][9];
 
-        //todo temp:
-        game.getPlayers()[0].addListener(this);
-        game.getPlayers()[1].addListener(this);
-
-//        beforeStartTheGame(game.getPlayers()[0],game.getPlayers()[1]); todo because hero powers do not have name or sprite yet. also remember that some heroes don't have power
+        beforeStartTheGame(game.getPlayers()[0],game.getPlayers()[1]);// todo because hero powers do not have name or sprite yet. also remember that some heroes don't have power
     }
 
     public void put(int row, int col, String name) {

@@ -23,9 +23,11 @@ public class HeroSpecialPowerController extends Holder {
     }
 
     public void setHeroSpecialPowerFirstInfo(Player player) {
-        VisualSpell vs = new VisualSpell(player.getMainDeck().getHero().getPower().getName());
-        put(vs.view, vs.getWidth(), vs.getHeight());
-        neededMana.setText(String.valueOf(player.getMainDeck().getHero().getPower().getRequiredMana()));
-        remainedTurn.setText(String.valueOf(player.getMainDeck().getHero().getPower().coolDownRemaining));
+        if(player.getMainDeck().getHero().getPower()!=null) {
+            VisualSpell vs = new VisualSpell(player.getMainDeck().getHero().getPower().getName());
+            put(vs.view, vs.getWidth(), vs.getHeight());
+            neededMana.setText(String.valueOf(player.getMainDeck().getHero().getPower().getRequiredMana()));
+            remainedTurn.setText(String.valueOf(player.getMainDeck().getHero().getPower().coolDownRemaining));
+        }
     }
 }

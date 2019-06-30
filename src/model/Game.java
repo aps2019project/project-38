@@ -59,10 +59,10 @@ public class Game implements Serializable {
                     0), players[0].getWarriors().get(0));
             putWarriorInCell(board.getCell(Constant.GameConstants.boardRow / 2,
                     Constant.GameConstants.boardColumn - 1), players[1].getWarriors().get(0));
-//            ArenaController.ac.put(Constant.GameConstants.boardRow / 2,0,players[0].getWarriors().get(0).getName()); //todo because no hero sprite yet
-//            ArenaController.ac.put(Constant.GameConstants.boardRow / 2,Constant.GameConstants.boardColumn - 1,players[1].getWarriors().get(0).getName());//todo because no hero sprite yet
-            ArenaController.ac.put(Constant.GameConstants.boardRow / 2, 0, "Foolad-Zereh");
-            ArenaController.ac.put(Constant.GameConstants.boardRow / 2, Constant.GameConstants.boardColumn - 1, "Ghool-E-Bozorg");
+            ArenaController.ac.put(Constant.GameConstants.boardRow / 2,0,players[0].getWarriors().get(0).getName());
+            ArenaController.ac.put(Constant.GameConstants.boardRow / 2,Constant.GameConstants.boardColumn - 1,players[1].getWarriors().get(0).getName());
+//            ArenaController.ac.put(Constant.GameConstants.boardRow / 2, 0, "Foolad-Zereh");
+//            ArenaController.ac.put(Constant.GameConstants.boardRow / 2, Constant.GameConstants.boardColumn - 1, "Ghool-E-Bozorg");
         }
         {
             initialisePlayerHand(players[0]);
@@ -236,6 +236,7 @@ public class Game implements Serializable {
     private void checkGameEndAndThenKillAllDiedWarriors() {
         killPlayerDiedWarriors(players[0]);
         killPlayerDiedWarriors(players[1]);
+        gameMode.checkGameEnd(this);
         if (gameMode.winner != null) {
             endGame();
         }
@@ -390,7 +391,6 @@ public class Game implements Serializable {
 
         //todo this part updates the ui for the new player. in the networking this should implemented somewhere else.
         ArenaController.ac.setCoolDown(getActivePlayer().getPlayerHero().getPower().coolDownRemaining, getPlayerNumber(getActivePlayer()) + 1);
-//        ArenaController.ac.setActiveMana(getActivePlayer().getMana(), getPlayerNumber(getActivePlayer()) + 1);
         ArenaController.ac.setActivePlayer(getPlayerNumber(getActivePlayer()) + 1);
 
 
