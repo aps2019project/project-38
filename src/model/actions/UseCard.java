@@ -45,6 +45,9 @@ public class UseCard {
             game.getActivePlayer().addMana(-card.getRequiredMana());
             game.getActivePlayer().getHand().put(handMapKey, null);
             game.getActivePlayer().getUsedCards().add(card);
+
+            ArenaController.ac.transferToGraveYard(card.getName(),game.getActivePlayerIndex()+1);
+
             game.iterateAllTriggersCheck(gameState);
 
             System.err.println(card.getName() + " (" + cell.getRow() + "," + cell.getColumn() + ")");
