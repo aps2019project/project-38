@@ -41,7 +41,7 @@ public class GamePreviewButtonController {
                 else {
                     Matcher matcher = Pattern.compile("Deck: (?<deckName>.+) Hero: .+")
                             .matcher(LoadingGamePreviewScenes.selectedButtonsText.get(2));
-                    assert matcher.matches();
+                    matcher.matches();
                     Deck deck = Account.getActiveAccount().getCollection().getAllDecks().get(matcher.group("deckName"));
                     game = new Game(getMoodForStartingGame(2), Account.getActiveAccount(), deck);
                 }

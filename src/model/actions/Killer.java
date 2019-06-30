@@ -8,7 +8,6 @@ import model.player.Player;
 import view.fxmlControllers.ArenaController;
 
 public class Killer implements AutoAction {
-
     @Override
     public boolean execute(QualityHaver source, QualityHaver target) {
         assert target instanceof Warrior;
@@ -24,5 +23,7 @@ public class Killer implements AutoAction {
         game.iterateAllTriggersCheck(death);
         warrior.getCell().setWarrior(null);
         player.getWarriors().remove(warrior);
+
+        ArenaController.ac.kill(warrior.getCell().getRow(), warrior.getCell().getColumn());
     }
 }
