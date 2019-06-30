@@ -34,7 +34,7 @@ public class Main extends Application {
         new LoadWindow().main();
 
 //        WindowChanger.instance.setNewScene(LoadedScenes.registerMenu);
-        LoadingGamePreviewScenes.load();
+//        LoadingGamePreviewScenes.load();
 
         {//arena
             Account account = new Account("test", "test");
