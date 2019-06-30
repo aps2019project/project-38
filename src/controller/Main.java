@@ -4,13 +4,7 @@ import controller.window.LoadWindow;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
-import model.Account;
-import model.Deck;
-import model.Game;
-import model.Level;
 import model.cards.CardFactory;
-import model.exceptions.NotEnoughConditions;
-import view.fxmlControllers.ArenaController;
 import view.fxmlControllers.LoadingGamePreviewScenes;
 import view.fxmlControllers.WindowChanger;
 import view.fxmls.LoadedScenes;
@@ -43,7 +37,10 @@ public class Main extends Application {
         new LoadedScenes();
         new LoadWindow().main();
 
-        LoadingGamePreviewScenes.load();
+//        LoadingGamePreviewScenes.load();
+
+        WindowChanger.instance.setNewScene(LoadedScenes.registerMenu);
+
 
 //        {//arena
 //            Account account = new Account("test", "test");

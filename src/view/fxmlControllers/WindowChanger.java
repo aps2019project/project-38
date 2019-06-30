@@ -4,6 +4,7 @@ import controller.Main;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.effect.SepiaTone;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
@@ -16,6 +17,7 @@ import static view.Utility.scale;
 public class WindowChanger {
     public static final WindowChanger instance = new WindowChanger();
     private ArrayList<AnchorPane> anchorPanes = new ArrayList<>();
+    private AnchorPane additionalAnchorPane;
 
     private WindowChanger() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../fxmls/mainWindow.fxml"));
@@ -26,6 +28,8 @@ public class WindowChanger {
             anchorPanes.add(mainAnchorPaneController.anchorPaneOne);
             anchorPanes.add(mainAnchorPaneController.anchorPaneTwo);
             anchorPanes.get(1).setLayoutY(Screen.getPrimary().getVisualBounds().getHeight());
+            additionalAnchorPane = mainAnchorPaneController.additionalAnchorPane;
+            additionalAnchorPane.setLayoutY(Screen.getPrimary().getVisualBounds().getHeight());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -44,6 +48,29 @@ public class WindowChanger {
             anchorPanes.get(0).setLayoutY(Screen.getPrimary().getVisualBounds().getHeight());
             anchorPanes.add(anchorPanes.get(0));
             anchorPanes.remove(0);
+        });
+    }
+
+    public void addNewScene(Pane pane) {
+        Platform.runLater(() -> {
+            additionalAnchorPane.getChildren().add(pane);
+            while (additionalAnchorPane.getLayoutY() > 0) {
+                double newLayoutY = additionalAnchorPane.getLayoutY() - 10 > 0 ? additionalAnchorPane.getLayoutY() - 10 : 0;
+                additionalAnchorPane.setLayoutY(newLayoutY);
+            }
+            anchorPanes.get(0).setEffect(new SepiaTone(1));
+        });
+    }
+
+    public void  removeAdditionalScene() {
+        Platform.runLater(() -> {
+            while (additionalAnchorPane.getLayoutY() < Screen.getPrimary().getVisualBounds().getHeight()) {
+                double newLayoutY = additionalAnchorPane.getLayoutY() + 10 < Screen.getPrimary().getVisualBounds().getHeight() ?
+                        additionalAnchorPane.getLayoutY() + 10 : Screen.getPrimary().getVisualBounds().getHeight();
+                additionalAnchorPane.setLayoutY(newLayoutY);
+            }
+            additionalAnchorPane.getChildren().removeAll(additionalAnchorPane.getChildren());
+            anchorPanes.get(0).setEffect(null);
         });
     }
 }

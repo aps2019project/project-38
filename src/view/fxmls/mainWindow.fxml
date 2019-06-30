@@ -6,5 +6,6 @@
    <children>
       <AnchorPane fx:id="anchorPaneTwo" prefHeight="540.0" prefWidth="960.0" />
       <AnchorPane fx:id="anchorPaneOne" prefHeight="540.0" prefWidth="960.0" />
+      <AnchorPane fx:id="additionalAnchorPane" prefHeight="540.0" prefWidth="960.0" />
    </children>
 </AnchorPane>

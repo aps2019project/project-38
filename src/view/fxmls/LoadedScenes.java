@@ -11,7 +11,6 @@ import java.io.IOException;
 import static view.Utility.*;
 
 public class LoadedScenes {
-
     public static Pane registerMenu;
     public static Pane createAccount;
     public static Pane login;
@@ -30,7 +29,6 @@ public class LoadedScenes {
             mainMenu = twiceScale(FXMLLoader.load(getClass().getResource("mainMenu.fxml")));
             chooseBattleKind = twiceScale(FXMLLoader.load(getClass().getResource("chooseBattleKind.fxml")));
             shop = FXMLLoader.load(getClass().getResource("shop.fxml"));
-            collectionOfShop = FXMLLoader.load(getClass().getResource("collectionOfShop.fxml"));
             arena = twiceScale(FXMLLoader.load(getClass().getResource("arena.fxml")));
         } catch (IOException e) {
             e.printStackTrace();
