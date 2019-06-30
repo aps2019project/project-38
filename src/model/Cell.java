@@ -40,7 +40,3 @@ public class Cell extends QualityHaver implements Serializable {
         return board;
     }
 }
-
-@interface Kir {
-    int len() default 0;
-}

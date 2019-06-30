@@ -45,10 +45,12 @@ public class ArenaController implements Initializable, PropertyChangeListener {
     public GridPane grid;
     public Pane pane;
 
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 //        hashem
 /*
+
 
         for (int i = 0; i < 6; i++) {
             fxmlLoaders[i] = new FXMLLoader(LoadedScenes.class.getResource("cardHolder.fxml"));
@@ -113,6 +115,9 @@ public class ArenaController implements Initializable, PropertyChangeListener {
         transferToGraveYard("Jen", 2);
 */
 
+        VisualMinion vm = new VisualMinion("Jen");
+
+        showInfoOfACard("ali", "alalalalala", "warrior", vm.view, vm.getWidth(), vm.getHeight(), 100, 100);
         //--------------------------------------------------------------------
 
         ac = this;
@@ -154,7 +159,7 @@ public class ArenaController implements Initializable, PropertyChangeListener {
         Platform.runLater(() -> {
             pane.requestFocus();
             pane.setOnKeyTyped(event -> {
-                if (event.getCharacter().getBytes()[0]==27) {
+                if (event.getCharacter().getBytes()[0] == 27) {
                     game.getSelectionManager().deselectAction();
                 }
             });
@@ -340,7 +345,7 @@ public class ArenaController implements Initializable, PropertyChangeListener {
     public VBox player2_items;
     public HBox hand;
     private FXMLLoader[] fxmlLoaders = new FXMLLoader[6];
-    private CardHolderController[] cardHolders = new CardHolderController[6];
+    private HandSpriteHolderController[] cardHolders = new HandSpriteHolderController[6];
     private ArrayList<ImageView> player1GraveYard = new ArrayList<>();
     private ArrayList<ImageView> player2GraveYard = new ArrayList<>();
 
@@ -356,7 +361,7 @@ public class ArenaController implements Initializable, PropertyChangeListener {
     public GridPane player2_mana;
     //players special power mana:
     private FXMLLoader[] fxmlLoaders1 = new FXMLLoader[2];
-    private HeroSpecialPowerController[] heroSpecialPowerControllers = new HeroSpecialPowerController[2];
+    private HeroSpecialPowerSpriteController[] heroSpecialPowerControllers = new HeroSpecialPowerSpriteController[2];
     // todo: MOEINI, use ^this^ heroSpecialPowerControllers.gif to control hero special powers.
     public Pane hero1SpecialPower;
     public Pane hero2SpecialPower;
@@ -372,7 +377,6 @@ public class ArenaController implements Initializable, PropertyChangeListener {
 
         player1_username.setText(player1.username);
         player2_username.setText(player2.username);
-
 
         for (int i = 0; i < 2; i++) {
             fxmlLoaders1[i] = new FXMLLoader(LoadedScenes.class.getResource("heroSpecialPower.fxml"));
@@ -481,8 +485,8 @@ public class ArenaController implements Initializable, PropertyChangeListener {
     }
 
     //call at the start of turns
-    public void buildPlayerHand(HashMap<Integer, String> cards, int playerNumber) {
-        for (CardHolderController holder : cardHolders) {
+    public void buildPlayerHand(HashMap<Integer, String> cards, int playerNumber /* 1 or 2 */) {
+        for (HandSpriteHolderController holder : cardHolders) {
             holder.gif.getChildren().clear();
         }
         for (int i : cards.keySet()) {
@@ -595,12 +599,52 @@ public class ArenaController implements Initializable, PropertyChangeListener {
         WindowChanger.instance.setNewScene(LoadedScenes.mainMenu);
     }
 
-    int getCurrentPlayer() {
+    private int getCurrentPlayer() {
         return ArenaController.ac.game.turn % 2;
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
         setActiveMana((int) propertyChangeEvent.getNewValue(), game.getPlayerNumber(game.getActivePlayer()) + 1);
+    }
+
+
+    //for show information of cards: // todo for MOEINI
+
+    public Pane shownCardInformationHolder_pn;
+    private Pane shownSpell_pn;
+    private Pane shownWarrior_pn;
+
+    public void showInfoOfACard(String name, String description, String type /* spell or warrior */, ImageView sprite, double widthOfSprite, double heightOfSprite, int HP, int AP /* put anything if the card isn't a warrior */) {
+        FXMLLoader spellFXML = new FXMLLoader(LoadedScenes.class.getResource("shownSpellInArena.fxml"));
+        FXMLLoader warriorFXML = new FXMLLoader(LoadedScenes.class.getResource("shownWarriorInArena.fxml"));
+        try {
+            shownSpell_pn = spellFXML.load();
+            shownWarrior_pn = warriorFXML.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ShownSomethingInArenaController shownSpellInArenaController = spellFXML.getController();
+        ShownWarriorInArenaController shownWarriorInArenaController = warriorFXML.getController();
+
+        if (type.equals("warrior")) {
+            shownCardInformationHolder_pn.getChildren().add(shownWarrior_pn);
+            shownWarriorInArenaController.setName(name);
+            shownWarriorInArenaController.setDescription(description);
+            shownWarriorInArenaController.setType("warrior");
+            shownWarriorInArenaController.setAP(AP);
+            shownWarriorInArenaController.setHP(HP);
+            shownWarriorInArenaController.put(sprite, widthOfSprite, heightOfSprite);
+        } else {
+            shownCardInformationHolder_pn.getChildren().add(shownSpell_pn);
+            shownSpellInArenaController.setName(name);
+            shownSpellInArenaController.setDescription(description);
+            shownSpellInArenaController.setType("spell");
+            shownSpellInArenaController.put(sprite, widthOfSprite, heightOfSprite);
+        }
+    }
+
+    public void endShowInfoOfACard() {
+        shownCardInformationHolder_pn.getChildren().clear();
     }
 }

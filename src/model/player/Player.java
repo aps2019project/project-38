@@ -1,6 +1,7 @@
 package model.player;
 
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import model.Constant;
 import model.Deck;
 import model.Game;

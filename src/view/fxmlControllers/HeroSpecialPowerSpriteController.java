@@ -6,7 +6,7 @@ import model.player.Player;
 import view.images.LoadedImages;
 import view.visualentities.VisualSpell;
 
-public class HeroSpecialPowerController extends Holder {
+public class HeroSpecialPowerSpriteController extends Holder {
     public Label neededMana;
     public Label remainedTurn;
     public ImageView manaBackGround;

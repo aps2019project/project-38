@@ -19,14 +19,14 @@ public class Account implements Comparable<Account>, java.io.Serializable {
     private Collection collection = new Collection();
     private String username;
     private String password;
-    public Image avatar;
+    public int avatarNumber;
 
     public Account(String username, String password) {
         super();
         this.username = username;
         this.password = password;
         usernameToAccountObject.put(username, this);
-        avatar= LoadedImages.avatars[new Random().nextInt(15)];
+        avatarNumber = new Random().nextInt(15);
     }
 
     //***
