@@ -544,10 +544,6 @@ public class ArenaController implements Initializable, PropertyChangeListener {
         game.endTurn();
     }
 
-    public void replace() {
-        SelectionManager.replaceSelectedCard();
-    }
-
     //grave yard:
     public void backFromGraveYard() {
         graveYardPane.toBack();
