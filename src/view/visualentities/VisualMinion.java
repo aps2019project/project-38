@@ -49,9 +49,9 @@ public class VisualMinion {
         });
         view.setOnMouseExited(event -> {
             breathing();
-//            if (ArenaController.ac.game != null) {
-//                ArenaController.ac.endShowInfoOfACard();
-//            }
+            if (ArenaController.ac.game != null) {
+                ArenaController.ac.endShowInfoOfACard();
+            }
         });
     }
 
