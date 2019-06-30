@@ -29,14 +29,12 @@ public class CollectingFlag extends GameMode {
     }
 
     @Override
-    public boolean checkGameEnd(Game game) {
+    public void checkGameEnd(Game game) {
         for (Player player : game.getPlayers()) {
             if (getNumberOFPlayerFlags(player) > gameMaxFlags / 2) {
                 winner = player;
-                return true;
             }
         }
-        return false;
     }
 
     @Override

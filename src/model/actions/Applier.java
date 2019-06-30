@@ -1,12 +1,15 @@
 package model.actions;
 
+import model.Game;
 import model.QualityHaver;
 import model.cards.Warrior;
 import model.effects.Effect;
 import model.gamestate.EffTriggApplyState;
+import model.player.Player;
 import model.triggers.CollectibleMine;
 import model.triggers.Mine;
 import model.triggers.Trigger;
+import view.fxmlControllers.ArenaController;
 
 import static model.QualityHaver.getGameFromQualityHaver;
 
@@ -44,7 +47,11 @@ public class Applier implements AutoAction {
 
         if(source instanceof CollectibleMine){
             CollectibleMine cMine = (CollectibleMine)source;
-            QualityHaver.getGameFromQualityHaver(target).getWarriorsPlayer((Warrior) target).getCollectibleItems().add(cMine.getCollectible());
+            Game game = QualityHaver.getGameFromQualityHaver(target);
+            Player player = game.getWarriorsPlayer((Warrior) target);
+            player.getCollectibleItems().add(cMine.getCollectible());
+
+            ArenaController.ac.showCollectedCollectibleItems(cMine.getCollectible().getName(),game.getPlayerNumber(player)+1);
         }
 
         return didSth;

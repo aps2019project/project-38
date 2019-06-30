@@ -12,7 +12,7 @@ public class SelectionManager implements Serializable {
     private ArrayList<Cell> cells = new ArrayList<>();
     public Integer cardHandIndex;
     public boolean specialPowerIsSelected;
-    public Spell collectibleItem;
+    public String collectibleItem;
     Game game;
 
     public SelectionManager(Game game) {
@@ -24,30 +24,29 @@ public class SelectionManager implements Serializable {
     }
 
     public void selectCell(Cell cell) {
-        if (cells.size() == 0) {
-            if (cardHandIndex != null) {
-                try {
-                    game.useCard(cardHandIndex, cell);
-                } catch (NotEnoughConditions notEnoughConditions) {
-                    Utility.showMessage(notEnoughConditions.getMessage());
-                }
-            } else if (specialPowerIsSelected) {
-                try {
-                    game.useSpecialPower(cell);
-                } catch (NotEnoughConditions notEnoughConditions) {
-                    Utility.showMessage(notEnoughConditions.getMessage());
-                }
-            } else if (collectibleItem != null) {
-                try {
-                    game.useCollectible(collectibleItem, cell);
-                } catch (NotEnoughConditions notEnoughConditions) {
-                    Utility.showMessage(notEnoughConditions.getMessage());
-                }
+
+        if (cardHandIndex != null) {
+            try {
+                game.useCard(cardHandIndex, cell);
+            } catch (NotEnoughConditions notEnoughConditions) {
+                Utility.showMessage(notEnoughConditions.getMessage());
             }
             deselectAll();
-        }
-
-        if (cell.getWarrior() != null) {
+        } else if (specialPowerIsSelected) {
+            try {
+                game.useSpecialPower(cell);
+            } catch (NotEnoughConditions notEnoughConditions) {
+                Utility.showMessage(notEnoughConditions.getMessage());
+            }
+            deselectAll();
+        } else if (collectibleItem != null) {
+            try {
+                game.useCollectible(collectibleItem, cell);
+            } catch (NotEnoughConditions notEnoughConditions) {
+                Utility.showMessage(notEnoughConditions.getMessage());
+            }
+            deselectAll();
+        } else if (cell.getWarrior() != null) {
             if (game.getActivePlayer().getWarriors().contains(cell.getWarrior())) {
                 cardHandIndex = null;
                 specialPowerIsSelected = false;
@@ -60,14 +59,15 @@ public class SelectionManager implements Serializable {
                     } catch (NotEnoughConditions notEnoughConditions) {
                         Utility.showMessage(notEnoughConditions.getMessage());
                     }
+                    deselectAll();
                 } else if (cells.size() > 1) {
                     try {
                         game.comboAttack(cells, cell);
                     } catch (NotEnoughConditions notEnoughConditions) {
                         Utility.showMessage(notEnoughConditions.getMessage());
                     }
+                    deselectAll();
                 }
-                deselectAll();
             }
         } else {
             if (cells.size() == 1) {
@@ -76,8 +76,8 @@ public class SelectionManager implements Serializable {
                 } catch (NotEnoughConditions notEnoughConditions) {
                     Utility.showMessage(notEnoughConditions.getMessage());
                 }
+                deselectAll();
             }
-            deselectAll();
         }
 
         ArenaController.ac.setSelectionEffect(this);
@@ -99,18 +99,15 @@ public class SelectionManager implements Serializable {
         ArenaController.ac.setSelectionEffect(this);
     }
 
-    public void selectCollectibleItem(Spell collectableItem) {
+    public void selectCollectibleItem(String collectableItem) {
+
         deselectAll();
         this.collectibleItem = collectableItem;
 
         ArenaController.ac.setSelectionEffect(this);
     }
 
-    public static void replaceSelectedCard(){
-        //todo
-    }
-
-    public void deselectAction(){
+    public void deselectAction() {
         deselectAll();
 
         ArenaController.ac.setSelectionEffect(this);

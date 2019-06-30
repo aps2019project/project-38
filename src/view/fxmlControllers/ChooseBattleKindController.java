@@ -1,8 +1,8 @@
 package view.fxmlControllers;
 
-import controller.Main;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.ImageView;
+import view.WindowChanger;
 import view.fxmls.LoadedScenes;
 
 public class ChooseBattleKindController {

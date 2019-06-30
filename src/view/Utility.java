@@ -50,7 +50,7 @@ public class Utility {
             public void run() {
                 Platform.runLater(popup::hide);
             }
-        }, 1000);
+        }, 2000);
         popup.show(Main.mainStage);
     }
 }

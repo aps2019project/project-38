@@ -1,21 +1,18 @@
 package view.fxmlControllers;
 
-import controller.Main;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import model.Account;
 import model.MatchHistory;
+import view.WindowChanger;
 import view.fxmls.LoadedScenes;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
-import static view.Utility.*;
 
 public class LeaderBoardController implements Initializable {
     public AnchorPane mainPane;

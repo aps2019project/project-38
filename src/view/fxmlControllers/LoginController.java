@@ -1,21 +1,18 @@
 package view.fxmlControllers;
 
-import controller.Main;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import model.Account;
+import view.Utility;
 import view.fxmls.LoadedScenes;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import static view.Utility.scale;
 
 public class LoginController implements Initializable {
     public AnchorPane mainPane;
@@ -48,7 +45,7 @@ public class LoginController implements Initializable {
 
             FXMLLoader fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("collectionOfShop.fxml"));//todo don't change this
             try {
-                LoadedScenes.collectionOfShop = fxmlLoader.load();
+                LoadedScenes.collectionOfShop = Utility.scale(fxmlLoader.load());
                 CollectionOfShopController.collectionOfShopController = fxmlLoader.getController();
             } catch (IOException e) {
                 e.printStackTrace();

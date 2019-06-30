@@ -1,8 +1,6 @@
 package view.fxmlControllers;
 
-import controller.Main;
 import javafx.application.Platform;
-import javafx.scene.Scene;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -10,7 +8,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Scale;
-import javafx.stage.Screen;
+import view.WindowChanger;
 import view.fxmls.LoadedScenes;
 import view.images.LoadedImages;
 

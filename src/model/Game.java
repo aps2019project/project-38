@@ -13,10 +13,14 @@ import model.player.HumanPlayer;
 import model.player.Player;
 import model.triggers.CollectibleMine;
 import model.triggers.Trigger;
+import view.WindowChanger;
 import view.fxmlControllers.ArenaController;
+import view.fxmls.LoadedScenes;
 
 import java.io.Serializable;
+import java.sql.SQLOutput;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Game implements Serializable {
     GameMode gameMode;
@@ -44,7 +48,7 @@ public class Game implements Serializable {
     public void initialiseGameFields() {
         {
             turn = 0;
-            getActivePlayer().mana = Constant.GameConstants.getTurnMana(turn);
+            getActivePlayer().setMana(Constant.GameConstants.getTurnMana(turn));
             getActivePlayer().ableToReplaceCard = true;
         }
         {
@@ -71,8 +75,8 @@ public class Game implements Serializable {
             turn = 0;
         }
         {
-//            CollectibleMine c1 = new CollectibleMine(-1, Dispelablity.UNDISPELLABLE, (Spell) CardFactory.getAllBuiltItems().get(9).deepCopy());
-//            board.getCell(2, 2).addTrigger(c1);
+            CollectibleMine c1 = new CollectibleMine(-1, Dispelablity.UNDISPELLABLE, (Spell) CardFactory.getAllBuiltItems().get(8).deepCopy());
+            board.getCell(2, 2).addTrigger(c1);
         }
         startTurn();
 //        timer.start();
@@ -107,6 +111,10 @@ public class Game implements Serializable {
 
     public Player getActivePlayer() {
         return players[turn % 2];
+    }
+
+    public int getActivePlayerIndex() {
+        return turn % 2;
     }
 
     public int getPlayerNumber(Player player) {
@@ -225,9 +233,11 @@ public class Game implements Serializable {
     }
 
     private void checkGameEndAndThenKillAllDiedWarriors() {
-        gameMode.checkGameEnd(this);
         killPlayerDiedWarriors(players[0]);
         killPlayerDiedWarriors(players[1]);
+        if (gameMode.winner != null) {
+            endGame();
+        }
     }
 
     private void killPlayerDiedWarriors(Player player) {
@@ -238,7 +248,23 @@ public class Game implements Serializable {
         }
     }
 
-    ////////////////////////refactor
+    public void endGame() {
+        //add game to history
+        for (Player player : players) {
+            if (player instanceof HumanPlayer) {
+                ((HumanPlayer) player).getAccount().putGameInHistory(getOtherPlayer(player).username, gameMode.winner.equals(player));
+            }
+        }
+
+        //give prize
+        if (gameMode.winner instanceof HumanPlayer) {
+            ((HumanPlayer) gameMode.winner).getAccount().derrick += prize;
+        }
+
+        //and update the graphics
+        ArenaController.ac.endGame(gameMode.winner);
+    }
+
     public void move(Cell originCell, Cell targetCell) throws NotEnoughConditions {
 //        if (getActivePlayer().getWarriors().contains(originCell.getWarrior()) && targetCell.getWarrior() == null) {
         try {
@@ -306,6 +332,7 @@ public class Game implements Serializable {
 //        if (getActivePlayer().getHand().get(handMapKey) != null) {
         try {
             UseCard.useCard(handMapKey, cell);
+            ArenaController.ac.useCard(handMapKey);
         } finally {
             checkGameEndAndThenKillAllDiedWarriors();
         }
@@ -327,33 +354,56 @@ public class Game implements Serializable {
         }
     }
 
-    public void useCollectible(Spell spell, Cell cell) throws NotEnoughConditions {
+    public void useCollectible(String spellName, Cell cell) throws NotEnoughConditions {
         try {
+            Spell spell=null;
+            int index = -1;
+
+            ArrayList<Spell> collectibleItems = getActivePlayer().getCollectibleItems();
+            for (int i = 0; i < collectibleItems.size(); i++) {
+                Spell item = collectibleItems.get(i);
+                if(item.getName().equals(spellName)){
+                    spell = item;
+                    index = i;
+                    break;
+                }
+            }
+
             UseCard.useCollectible(spell, cell);
+            ArenaController.ac.useCollectibleItem(index,getActivePlayerIndex()+1);
         } finally {
             checkGameEndAndThenKillAllDiedWarriors();
         }
     }
-    /////////////////////////////////////////////////////refactor
 
     public void endTurn() {
         EndTurn.doIt(this);
         checkGameEndAndThenKillAllDiedWarriors();
-        startTurn();
+
+        if (gameMode.winner == null)//why a condition? because if the game end because of endTurn the flow returns here and starts a new turn.
+            startTurn();
     }
 
     private void startTurn() {
         StartTurn.doIt(this);
         checkGameEndAndThenKillAllDiedWarriors();
 
-        ArenaController.ac.setCoolDown(getActivePlayer().getPlayerHero().getPower().coolDownRemaining, getPlayerNumber(getActivePlayer())+1);
-        ArenaController.ac.setActiveMana(getActivePlayer().mana,getPlayerNumber(getActivePlayer())+1);
-        ArenaController.ac.setActivePlayer(getPlayerNumber(getActivePlayer())+1);
+        //todo this part updates the ui for the new player. in the networking this should implemented somewhere else.
+        ArenaController.ac.setCoolDown(getActivePlayer().getPlayerHero().getPower().coolDownRemaining, getPlayerNumber(getActivePlayer()) + 1);
+//        ArenaController.ac.setActiveMana(getActivePlayer().getMana(), getPlayerNumber(getActivePlayer()) + 1);
+        ArenaController.ac.setActivePlayer(getPlayerNumber(getActivePlayer()) + 1);
 
 
-        if(getActivePlayer() instanceof AIPlayer){
-            ((AIPlayer)getActivePlayer()).doSomething();
+        HashMap<Integer, String> handMap = (HashMap<Integer, String>) getActivePlayer().getHand().entrySet().stream()
+                .filter(integerCardEntry -> integerCardEntry.getValue() != null)
+                .collect(Collectors.toMap((Map.Entry<Integer, Card> o) -> o.getKey() + 1
+                        , (Map.Entry<Integer, Card> o) -> o.getValue().getName()));
+        handMap.put(0, getActivePlayer().getNextCard().getName());
+        ArenaController.ac.buildPlayerHand(handMap, getPlayerNumber(getActivePlayer()) + 1);
+
+        //todo this is an unwanted recurse sol: a "your turn" field in player that ai waits on
+        if (getActivePlayer() instanceof AIPlayer) {
+            ((AIPlayer) getActivePlayer()).doSomething();
         }
     }
 }
-

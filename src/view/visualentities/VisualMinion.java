@@ -8,19 +8,29 @@ import java.io.FileNotFoundException;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class VisualMinion extends VisualEntity{
+public class VisualMinion {
     String name;
     public ImageView view;
     public SpriteAnimation animation;
 
+   public double getWidth(){
+       return animation.getWidth();
+   }
+
+   public double getHeight(){
+       return animation.getHeight();
+   }
+
     public VisualMinion(String name) {
         this.name = name;
         try {
-            view = new ImageView(new Image(new FileInputStream("src/view/images/sprites/" + name + ".png")));
+            ImageView temp = new ImageView(new Image(new FileInputStream("src/view/images/sprites/" + name + ".png")));
+            temp.setVisible(false);
+            view = temp;
+            animation = new SpriteAnimation(view, SpriteType.breathing, name, -1);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        animation = new SpriteAnimation(view, SpriteType.breathing, name, -1);
 
         view.setOnMouseEntered(event -> idle());
         view.setOnMouseExited(event -> breathing());
@@ -41,6 +51,7 @@ public class VisualMinion extends VisualEntity{
             }
         }, sp.realDuration);
     }
+
 
     public void run() {
         animation.stop();

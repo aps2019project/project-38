@@ -1,14 +1,12 @@
 package view.fxmlControllers;
 
-import controller.Main;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import model.Account;
 import model.Deck;
 import model.Level;
+import view.WindowChanger;
 import view.fxmls.LoadedScenes;
-import static view.Utility.*;
 
 import java.io.IOException;
 import java.util.*;
