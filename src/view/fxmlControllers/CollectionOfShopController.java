@@ -65,20 +65,20 @@ public class CollectionOfShopController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         minionsSearchTextField.setOnKeyTyped(this::recalculateMinions);
-//        heroesSearchTextField.setOnKeyTyped(this::recalculateHeroes);
-//        spellsSearchTextField.setOnKeyTyped(this::recalculateSpells);
-//        itemsSearchTextField.setOnKeyTyped(this::recalculateItems);
+        heroesSearchTextField.setOnKeyTyped(this::recalculateHeroes);
+        spellsSearchTextField.setOnKeyTyped(this::recalculateSpells);
+        itemsSearchTextField.setOnKeyTyped(this::recalculateItems);
         calculateEverything();
     }
 
     public void calculateEverything() {
         initializeAllMinions();
         recalculateMinions(null);
-//        initializeAllHeroes();
+        initializeAllHeroes();
         recalculateHeroes(null);
-//        initializeAllSpells();
+        initializeAllSpells();
         recalculateSpells(null);
-//        initializeAllItems();
+        initializeAllItems();
         recalculateItems(null);
     }
 
@@ -297,7 +297,7 @@ public class CollectionOfShopController implements Initializable {
 
     private void initializeAllItems() {
         for (Spell item : CardFactory.getAllBuiltItems()) {
-            if (Account.getActiveAccount().getCollection().getHowManyCard().containsKey(item.getName()) && !allItems.containsKey(item)) {
+            if (item.getPrice() != 0 && Account.getActiveAccount().getCollection().getHowManyCard().containsKey(item.getName()) && !allItems.containsKey(item)) {
                 loadItem(item);
             }
         }

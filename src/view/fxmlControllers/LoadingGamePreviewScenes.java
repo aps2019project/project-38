@@ -37,7 +37,7 @@ public abstract class LoadingGamePreviewScenes {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader
                     (LoadedScenes.class.getResource("gamePreviewStarter.fxml"));
-            starterScenes.put("Battle", ((AnchorPane)scale(fxmlLoader.load())));
+            starterScenes.put("Battle", fxmlLoader.load());
             starterControllers.put("Battle", fxmlLoader.getController());
         } catch (IOException e) {
             e.printStackTrace();
@@ -79,7 +79,7 @@ public abstract class LoadingGamePreviewScenes {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader
                     (LoadedScenes.class.getResource("gamePreviewStarter.fxml"));
-            starterScenes.put("Single Player", ((AnchorPane)scale(fxmlLoader.load())));
+            starterScenes.put("Single Player", fxmlLoader.load());
             starterControllers.put("Single Player", fxmlLoader.getController());
         } catch (IOException e) {
             e.printStackTrace();
@@ -120,7 +120,7 @@ public abstract class LoadingGamePreviewScenes {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader
                     (LoadedScenes.class.getResource("gamePreviewStarter.fxml"));
-            starterScenes.put("Multi Player", ((AnchorPane)scale(fxmlLoader.load())));
+            starterScenes.put("Multi Player", fxmlLoader.load());
             starterControllers.put("Multi Player", fxmlLoader.getController());
         } catch (IOException e) {
             e.printStackTrace();
@@ -154,7 +154,7 @@ public abstract class LoadingGamePreviewScenes {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader
                     (LoadedScenes.class.getResource("gamePreviewStarter.fxml"));
-            starterScenes.put("Story", ((AnchorPane)scale(fxmlLoader.load())));
+            starterScenes.put("Story", fxmlLoader.load());
             starterControllers.put("Story", fxmlLoader.getController());
         } catch (IOException e) {
             e.printStackTrace();
@@ -188,7 +188,7 @@ public abstract class LoadingGamePreviewScenes {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader
                     (LoadedScenes.class.getResource("gamePreviewStarter.fxml"));
-            starterScenes.put("Custom", ((AnchorPane)scale(fxmlLoader.load())));
+            starterScenes.put("Custom", fxmlLoader.load());
             starterControllers.put("Custom", fxmlLoader.getController());
         } catch (IOException e) {
             e.printStackTrace();
@@ -221,7 +221,7 @@ public abstract class LoadingGamePreviewScenes {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader
                     (LoadedScenes.class.getResource("gamePreviewStarter.fxml"));
-            starterScenes.put("Mood", ((AnchorPane)scale(fxmlLoader.load())));
+            starterScenes.put("Mood", fxmlLoader.load());
             starterControllers.put("Mood", fxmlLoader.getController());
         } catch (IOException e) {
             e.printStackTrace();
@@ -271,7 +271,7 @@ public abstract class LoadingGamePreviewScenes {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader
                     (LoadedScenes.class.getResource("gamePreviewStarter.fxml"));
-            starterScenes.put("Collecting Flag", ((AnchorPane)scale(fxmlLoader.load())));
+            starterScenes.put("Collecting Flag", fxmlLoader.load());
             starterControllers.put("Collecting Flag", fxmlLoader.getController());
         } catch (IOException e) {
             e.printStackTrace();

@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
+import static view.Utility.scaleCard;
+
 public class ShopController implements Initializable {
     public VBox minionsLeftVBox;
     public VBox minionsMiddleVBox;
@@ -78,16 +80,16 @@ public class ShopController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         minionsSearchTextField.setOnKeyTyped(this::recalculateMinions);
-//        heroesSearchTextField.setOnKeyTyped(this::recalculateHeroes);
-//        spellsSearchTextField.setOnKeyTyped(this::recalculateSpells);
-//        itemsSearchTextField.setOnKeyTyped(this::recalculateItems);
+        heroesSearchTextField.setOnKeyTyped(this::recalculateHeroes);
+        spellsSearchTextField.setOnKeyTyped(this::recalculateSpells);
+        itemsSearchTextField.setOnKeyTyped(this::recalculateItems);
         initializeAllMinions();
         recalculateMinions(null);
-//        initializeAllHeroes();
+        initializeAllHeroes();
         recalculateHeroes(null);
-//        initializeAllSpells();
+        initializeAllSpells();
         recalculateSpells(null);
-//        initializeAllItems();
+        initializeAllItems();
         recalculateItems(null);
     }
 
@@ -133,7 +135,7 @@ public class ShopController implements Initializable {
         WarriorCardController warriorCardController = null;
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("warriorCart.fxml"));
-            anchorPane = Utility.scaleCard(fxmlLoader.load());
+            anchorPane = scaleCard(fxmlLoader.load());
             warriorCardController = fxmlLoader.getController();
         } catch (IOException e) {
             e.printStackTrace();
@@ -184,7 +186,7 @@ public class ShopController implements Initializable {
         WarriorCardController warriorCardController = null;
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("warriorCart.fxml"));
-            anchorPane = Utility.scaleCard(fxmlLoader.load());
+            anchorPane = scaleCard(fxmlLoader.load());
             warriorCardController = fxmlLoader.getController();
         } catch (IOException e) {
             e.printStackTrace();
@@ -235,7 +237,7 @@ public class ShopController implements Initializable {
         SpellCardController spellCardController = null;
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("spellCart.fxml"));
-            anchorPane = fxmlLoader.load();
+            anchorPane = scaleCard(fxmlLoader.load());
             spellCardController = fxmlLoader.getController();
         } catch (IOException e) {
             e.printStackTrace();
@@ -277,7 +279,9 @@ public class ShopController implements Initializable {
 
     private void initializeAllItems() {
         for (Spell item : CardFactory.getAllBuiltItems()) {
-            loadItem(item);
+            if (item.getPrice() != 0) {
+                loadItem(item);
+            }
         }
     }
 
@@ -286,7 +290,7 @@ public class ShopController implements Initializable {
         SpellCardController spellCardController = null;
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("spellCart.fxml"));
-            anchorPane = fxmlLoader.load();
+            anchorPane = scaleCard(fxmlLoader.load());
             spellCardController = fxmlLoader.getController();
         } catch (IOException e) {
             e.printStackTrace();

@@ -101,7 +101,7 @@ public class WarriorCardController {
         vm.view.getTransforms().add(scale);
         gifPane.getChildren().add(vm.view);
         priceText.setText(String.valueOf(warrior.getPrice()));
-        manaText.setText(String.valueOf(warrior.getRequiredMana()));
+        if (!(warrior instanceof Hero)) manaText.setText(String.valueOf(warrior.getRequiredMana()));
         nameText.setText(warrior.getName());
         typeText.setText(String.format("%s (%s)", warrior instanceof Hero ? "Hero" : "Minion", warrior.getWarriorType()));
         descriptionText.setText(warrior.description.descriptionOfCardSpecialAbility);//todo

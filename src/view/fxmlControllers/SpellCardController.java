@@ -11,6 +11,7 @@ import model.cards.Hero;
 import model.cards.Spell;
 import model.cards.Warrior;
 import view.visualentities.VisualMinion;
+import view.visualentities.VisualSpell;
 
 public class SpellCardController {
     public ImageView blueLine;
@@ -87,16 +88,16 @@ public class SpellCardController {
     }
 
     public void setFields(Spell spell, boolean forSell) {
-        VisualMinion vm = new VisualMinion(spell.getName());
-        double widthScale = gifPane.getPrefWidth() / vm.animation.width;
-        double heightScale = gifPane.getPrefHeight() / vm.animation.height;
+        VisualSpell vs = new VisualSpell(spell.getName());
+        double widthScale = gifPane.getPrefWidth() / vs.animation.width;
+        double heightScale = gifPane.getPrefHeight() / vs.animation.height;
         Scale scale = new Scale(widthScale, heightScale, 0, 0);
-        vm.view.getTransforms().add(scale);
-        gifPane.getChildren().add(vm.view);
+        vs.view.getTransforms().add(scale);
+        gifPane.getChildren().add(vs.view);
         priceText.setText(String.valueOf(spell.getPrice()));
-        manaText.setText(String.valueOf(spell.getRequiredMana()));
+        if (!Spell.checkIsItem(spell)) manaText.setText(String.valueOf(spell.getRequiredMana()));
         nameText.setText(spell.getName());
-        typeText.setText(String.format("%s", spell.isItem() ? "Item" : "Spell"));
+        typeText.setText(String.format("%s", Spell.checkIsItem(spell) ? "Item" : "Spell"));
         descriptionText.setText(spell.description.descriptionOfCardSpecialAbility);//todo
         this.forSell = forSell;
     }

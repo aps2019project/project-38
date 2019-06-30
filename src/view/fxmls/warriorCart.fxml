@@ -29,13 +29,6 @@
             </font>
         </Text>
         <AnchorPane fx:id="gifPane" layoutX="60.0" layoutY="-15.0" onMouseClicked="#selectCard" onMouseEntered="#shineCard" onMouseExited="#resetCard" prefHeight="254.0" prefWidth="276.0">
-            <!--         <children>-->
-            <!--            <ImageView fitHeight="254.0" fitWidth="318.0">-->
-            <!--               <image>-->
-            <!--                  <Image url="@../../../../../Desktop/1.gif" />-->
-            <!--               </image>-->
-            <!--            </ImageView>-->
-            <!--         </children>-->
         </AnchorPane>
         <ImageView fx:id="pricePlace" fitHeight="93.0" fitWidth="325.0" layoutX="36.0" layoutY="397.0" onMouseClicked="#selectCard" onMouseEntered="#shineCard" onMouseExited="#resetCard">
             <image>

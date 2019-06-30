@@ -38,19 +38,19 @@ public class WindowChanger {
 
     public void setNewScene(Pane pane) {
         Platform.runLater(() -> {
-//            anchorPanes.get(1).getChildren().removeAll(anchorPanes.get(1).getChildren());
-//            anchorPanes.get(1).getChildren().add(pane);
-//            while (anchorPanes.get(1).getLayoutY() > 0 || anchorPanes.get(0).getLayoutY() > -1 * Screen.getPrimary().getVisualBounds().getHeight()) {
-//                double newPaneY = anchorPanes.get(1).getLayoutY() - 10 > 0 ? anchorPanes.get(1).getLayoutY() - 10 : 0;
-//                double oldPaneY = anchorPanes.get(0).getLayoutY() - 10 > -1 * Screen.getPrimary().getVisualBounds().getHeight() ? anchorPanes.get(0).getLayoutY() - 10 : -1 * Screen.getPrimary().getVisualBounds().getHeight();
-//                anchorPanes.get(1).setLayoutY(newPaneY);
-//                anchorPanes.get(0).setLayoutY(oldPaneY);
-//            }
-//            anchorPanes.get(0).setLayoutY(Screen.getPrimary().getVisualBounds().getHeight());
-//            anchorPanes.add(anchorPanes.get(0));
-//            anchorPanes.remove(0);
-            Main.mainStage.getScene().setRoot(pane);
+            anchorPanes.get(1).getChildren().removeAll(anchorPanes.get(1).getChildren());
+            anchorPanes.get(1).getChildren().add(pane);
+            while (anchorPanes.get(1).getLayoutY() > 0 || anchorPanes.get(0).getLayoutY() > -1 * Screen.getPrimary().getVisualBounds().getHeight()) {
+                double newPaneY = anchorPanes.get(1).getLayoutY() - 10 > 0 ? anchorPanes.get(1).getLayoutY() - 10 : 0;
+                double oldPaneY = anchorPanes.get(0).getLayoutY() - 10 > -1 * Screen.getPrimary().getVisualBounds().getHeight() ? anchorPanes.get(0).getLayoutY() - 10 : -1 * Screen.getPrimary().getVisualBounds().getHeight();
+                anchorPanes.get(1).setLayoutY(newPaneY);
+                anchorPanes.get(0).setLayoutY(oldPaneY);
+            }
+            anchorPanes.get(0).setLayoutY(Screen.getPrimary().getVisualBounds().getHeight());
+            anchorPanes.add(anchorPanes.get(0));
+            anchorPanes.remove(0);
         });
+//        Main.mainStage.getScene().setRoot(pane);
     }
 
     public void addNewScene(Pane pane) {
@@ -61,6 +61,7 @@ public class WindowChanger {
                 additionalAnchorPane.setLayoutY(newLayoutY);
             }
             anchorPanes.get(0).setEffect(new SepiaTone(1));
+            anchorPanes.get(1).setEffect(new SepiaTone(1));
         });
     }
 

@@ -46,7 +46,7 @@ public class LoginController implements Initializable {
 
             FXMLLoader fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("collectionOfShop.fxml"));//todo don't change this
             try {
-                LoadedScenes.collectionOfShop = Utility.scale(fxmlLoader.load());
+                LoadedScenes.collectionOfShop = fxmlLoader.load();
                 CollectionOfShopController.collectionOfShopController = fxmlLoader.getController();
             } catch (IOException e) {
                 e.printStackTrace();

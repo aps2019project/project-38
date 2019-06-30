@@ -20,13 +20,6 @@
          </image>
       </ImageView>
       <AnchorPane fx:id="gifPane" layoutX="116.0" layoutY="68.0" onMouseClicked="#selectCard" onMouseEntered="#shineCard" prefHeight="156.0" prefWidth="165.0">
-<!--         <children>-->
-<!--            <ImageView fitHeight="156.0" fitWidth="165.0">-->
-<!--               <image>-->
-<!--                  <Image url="@../../../../../Desktop/s1.gif" />-->
-<!--               </image>-->
-<!--            </ImageView>-->
-<!--         </children>-->
       </AnchorPane>
       <Text fx:id="nameText" fill="#ddd6d6" layoutX="99.0" layoutY="225.0" onMouseClicked="#selectCard" onMouseEntered="#shineCard" strokeType="OUTSIDE" strokeWidth="0.0" text="Name Of Card" textAlignment="CENTER" wrappingWidth="198.7294921875">
          <font>

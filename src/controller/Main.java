@@ -5,13 +5,8 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
-import model.Account;
-import model.Deck;
-import model.Game;
-import model.Level;
 import view.WindowChanger;
-import view.fxmlControllers.ArenaController;
-import view.fxmlControllers.LoadingGamePreviewScenes;
+import view.fxmlControllers.AlertController;
 import view.fxmls.LoadedScenes;
 
 public class Main extends Application {
