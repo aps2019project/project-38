@@ -392,7 +392,6 @@ public class ArenaController implements Initializable, PropertyChangeListener {
             } else {
                 hero2SpecialPower.getChildren().add(pane);
                 heroSpecialPowerControllers[i].setHeroSpecialPowerFirstInfo(player2);
-
             }
         }
 

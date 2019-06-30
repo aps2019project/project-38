@@ -23,7 +23,7 @@ public class HeroSpecialPowerSpriteController extends Holder {
     }
 
     public void setHeroSpecialPowerFirstInfo(Player player) {
-        if(player.getMainDeck().getHero().getPower()!=null) {
+        if (player.getMainDeck().getHero().getPower() != null) {
             VisualSpell vs = new VisualSpell(player.getMainDeck().getHero().getPower().getName());
             put(vs.view, vs.getWidth(), vs.getHeight());
             neededMana.setText(String.valueOf(player.getMainDeck().getHero().getPower().getRequiredMana()));
