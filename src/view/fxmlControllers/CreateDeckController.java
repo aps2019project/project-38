@@ -24,6 +24,7 @@ import java.util.ResourceBundle;
 public class CreateDeckController implements Initializable {
 
     public TextField deckName;
+    public TextField cardName;
     private static VBox staticDeckList;
     public VBox deckList;
     private VBox[][] containers = new VBox[4][3];
@@ -55,29 +56,27 @@ public class CreateDeckController implements Initializable {
         containers[3][0] = items1;
         containers[3][1] = items2;
         containers[3][2] = items3;
-        int cnt = 0;
-        for (Map.Entry<Hero, AnchorPane> tmp : ShopController.allHeroes.entrySet()) {
-            System.out.println(":)))");
-            containers[0][cnt % 3].getChildren().add(scaleCard(tmp.getValue()));
-            cnt++;
-        }
-        cnt = 0;
-        for (Map.Entry<Warrior, AnchorPane> tmp : ShopController.allMinions.entrySet()) {
-            containers[1][cnt % 3].getChildren().add(scaleCard(tmp.getValue()));
-            cnt++;
-        }
-        cnt = 0;
-        for (Map.Entry<Spell, AnchorPane> tmp : ShopController.allSpells.entrySet()) {
-            containers[2][cnt % 3].getChildren().add(scaleCard(tmp.getValue()));
-            cnt++;
-        }
-        cnt = 0;
-        for (Map.Entry<Spell, AnchorPane> tmp : ShopController.allItems.entrySet()) {
-            containers[3][cnt % 3].getChildren().add(scaleCard(tmp.getValue()));
-            cnt++;
-        }
+//        int cnt = 0;
+//        for (Map.Entry<Hero, AnchorPane> tmp : ShopController.heroes.entrySet()) {
+//            containers[0][cnt % 3].getChildren().add(scaleCard(tmp.getValue()));
+//            cnt++;
+//        }
+//        cnt = 0;
+//        for (Map.Entry<Warrior, AnchorPane> tmp : ShopController.minions.entrySet()) {
+//            containers[1][cnt % 3].getChildren().add(scaleCard(tmp.getValue()));
+//            cnt++;
+//        }
+//        cnt = 0;
+//        for (Map.Entry<Spell, AnchorPane> tmp : ShopController.spells.entrySet()) {
+//            containers[2][cnt % 3].getChildren().add(scaleCard(tmp.getValue()));
+//            cnt++;
+//        }
+//        cnt = 0;
+//        for (Map.Entry<Spell, AnchorPane> tmp : ShopController.items.entrySet()) {
+//            containers[3][cnt % 3].getChildren().add(scaleCard(tmp.getValue()));
+//            cnt++;
+//        }
     }
-
 
     public void back() {
         WindowChanger.instance.setNewScene(LoadedScenes.mainMenu);
@@ -100,9 +99,11 @@ public class CreateDeckController implements Initializable {
     }
 
     public void addCard() {
+        Account.getActiveAccount().getCollection().addCardToDeck(deckName.getText(),cardName.getText());
     }
 
     public void removeCard() {
+        Account.getActiveAccount().getCollection().removeCardFromDeck(deckName.getText(),cardName.getText());
     }
 
     public static void putANewDeckToList(String name) {

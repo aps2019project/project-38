@@ -130,11 +130,12 @@
             </image>
         </ImageView>
         <TextField fx:id="deckName" alignment="CENTER" layoutX="39.0" layoutY="402.0" promptText="Enter Deck Name" />
+        <TextField fx:id="cardName" alignment="CENTER" layoutX="39.0" layoutY="376.0" promptText="Enter Card Name" />
         <Button layoutX="40.0" layoutY="431.0" mnemonicParsing="false" onAction="#createDeck" text="CreateDeck" />
         <Button layoutX="120.0" layoutY="459.0" mnemonicParsing="false" onAction="#deleteDeck" text="DeleteDeck" />
         <Button layoutX="119.0" layoutY="431.0" mnemonicParsing="false" onAction="#addCard" text="AddCard" />
         <Button layoutX="34.0" layoutY="459.0" mnemonicParsing="false" onAction="#removeCard" text="RemoveCard" />
-      <Button layoutX="35.0" layoutY="486.0" mnemonicParsing="false" onAction="#validateDeck" text="Validate" />
-      <Button layoutX="96.0" layoutY="486.0" mnemonicParsing="false" onAction="#selectMainDeck" text="SelectMainDeck" />
+        <Button layoutX="35.0" layoutY="486.0" mnemonicParsing="false" onAction="#validateDeck" text="Validate" />
+        <Button layoutX="96.0" layoutY="486.0" mnemonicParsing="false" onAction="#selectMainDeck" text="SelectMainDeck" />
     </children>
 </Pane>
