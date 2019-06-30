@@ -36,20 +36,20 @@ public class VisualSpell {
 
         view.setOnMouseEntered(event -> {
             idle();
-//            if (ArenaController.ac.game != null) {
-//                Spell theCard =(Spell) Card.getAllCards().values().stream().filter(card -> card.getName().equals(name)).findAny().orElse(null);
-//                if(theCard==null){
-//                    return;
-//                }
-//                ArenaController.ac.showInfoOfACard(name,theCard.description.getDescriptionOfCardSpecialAbility(),"Minion",view,animation.width,animation.height,0,0);
-//
-//            }
+            if (ArenaController.ac.game != null) {
+                Spell theCard =(Spell) Card.getAllCards().values().stream().filter(card -> card.getName().equals(name)).findAny().orElse(null);
+                if(theCard==null){
+                    return;
+                }
+                ArenaController.ac.showInfoOfACard(name,theCard.description.getDescriptionOfCardSpecialAbility(),"spell",view,animation.width,animation.height,0,0);
+
+            }
         });
         view.setOnMouseExited(event -> {
             breathing();
-//            if (ArenaController.ac.game != null) {
-//                ArenaController.ac.endShowInfoOfACard();
-//            }
+            if (ArenaController.ac.game != null) {
+                ArenaController.ac.endShowInfoOfACard();
+            }
         });
     }
 
