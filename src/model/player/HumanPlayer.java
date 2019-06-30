@@ -3,6 +3,7 @@ package model.player;
 
 import model.Account;
 import model.Deck;
+import view.images.LoadedImages;
 
 
 public class HumanPlayer extends Player {
@@ -11,7 +12,7 @@ public class HumanPlayer extends Player {
     public HumanPlayer(Account account, Deck deck) {
         super(deck);
         this.account = account;
-        avatar = account.avatar;
+        avatar = LoadedImages.avatars[account.avatarNumber];
         username = account.getUsername();
     }
 

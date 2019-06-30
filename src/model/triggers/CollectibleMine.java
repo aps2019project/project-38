@@ -28,10 +28,11 @@ public class CollectibleMine extends Mine {
     @Override
     protected void executeActions(GameState gameState, QualityHaver owner) {
         super.executeActions(gameState, owner);
-        if(gameState instanceof MoveState) {
-            ((MoveState) gameState).getWarrior().getCell().removeTrigger(this);
-        }else{
-            ((PutMinionState)gameState).getWarrior().getCell().removeTrigger(this);
-        }
+        owner.removeTrigger(this);
+//        if(gameState instanceof MoveState) {
+//            ((MoveState) gameState).getWarrior().getCell().removeTrigger(this);
+//        }else{
+//            ((PutMinionState)gameState).getWarrior().getCell().removeTrigger(this);
+//        }
     }
 }

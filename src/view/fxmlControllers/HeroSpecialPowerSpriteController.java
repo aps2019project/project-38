@@ -6,7 +6,7 @@ import model.player.Player;
 import view.images.LoadedImages;
 import view.visualentities.VisualSpell;
 
-public class HeroSpecialPowerController extends Holder {
+public class HeroSpecialPowerSpriteController extends Holder {
     public Label neededMana;
     public Label remainedTurn;
     public ImageView manaBackGround;
@@ -23,9 +23,11 @@ public class HeroSpecialPowerController extends Holder {
     }
 
     public void setHeroSpecialPowerFirstInfo(Player player) {
-        VisualSpell vs = new VisualSpell(player.getMainDeck().getHero().getPower().getName());
-        put(vs.view, vs.getWidth(), vs.getHeight());
-        neededMana.setText(String.valueOf(player.getMainDeck().getHero().getPower().getRequiredMana()));
-        remainedTurn.setText(String.valueOf(player.getMainDeck().getHero().getPower().coolDownRemaining));
+        if(player.getMainDeck().getHero().getPower()!=null) {
+            VisualSpell vs = new VisualSpell(player.getMainDeck().getHero().getPower().getName());
+            put(vs.view, vs.getWidth(), vs.getHeight());
+            neededMana.setText(String.valueOf(player.getMainDeck().getHero().getPower().getRequiredMana()));
+            remainedTurn.setText(String.valueOf(player.getMainDeck().getHero().getPower().coolDownRemaining));
+        }
     }
 }

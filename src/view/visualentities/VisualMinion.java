@@ -2,6 +2,11 @@ package view.visualentities;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import model.Collection;
+import model.cards.Card;
+import model.cards.CardFactory;
+import model.cards.Warrior;
+import view.fxmlControllers.ArenaController;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -13,13 +18,13 @@ public class VisualMinion {
     public ImageView view;
     public SpriteAnimation animation;
 
-   public double getWidth(){
-       return animation.getWidth();
-   }
+    public double getWidth() {
+        return animation.getWidth();
+    }
 
-   public double getHeight(){
-       return animation.getHeight();
-   }
+    public double getHeight() {
+        return animation.getHeight();
+    }
 
     public VisualMinion(String name) {
         this.name = name;
@@ -32,8 +37,22 @@ public class VisualMinion {
             e.printStackTrace();
         }
 
-        view.setOnMouseEntered(event -> idle());
-        view.setOnMouseExited(event -> breathing());
+        view.setOnMouseEntered(event -> {
+            idle();
+//            if (ArenaController.ac.game != null) {
+//                Warrior theCard =(Warrior) Card.getAllCards().values().stream().filter(card -> card.getName().equals(name)).findAny().orElse(null);
+//                if(theCard==null){
+//                    return;
+//                }
+//                ArenaController.ac.showInfoOfACard(name,theCard.description.getDescriptionOfCardSpecialAbility(),"Minion",view,animation.width,animation.height,theCard.getHp(),theCard.getAp());
+//            }
+        });
+        view.setOnMouseExited(event -> {
+            breathing();
+//            if (ArenaController.ac.game != null) {
+//                ArenaController.ac.endShowInfoOfACard();
+//            }
+        });
     }
 
     public void attack() {

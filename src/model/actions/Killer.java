@@ -24,12 +24,5 @@ public class Killer implements AutoAction {
         game.iterateAllTriggersCheck(death);
         warrior.getCell().setWarrior(null);
         player.getWarriors().remove(warrior);
-
-        ArenaController.ac.kill(warrior.getCell().getRow(), warrior.getCell().getColumn());
-        if (player.equals(game.getPlayers()[0])) {
-            ArenaController.ac.transferToGraveYard(warrior.getName(), 1);
-        } else {
-            ArenaController.ac.transferToGraveYard(warrior.getName(), 2);
-        }
     }
 }
