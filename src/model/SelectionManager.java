@@ -12,7 +12,7 @@ public class SelectionManager implements Serializable {
     private ArrayList<Cell> cells = new ArrayList<>();
     public Integer cardHandIndex;
     public boolean specialPowerIsSelected;
-    public Spell collectibleItem;
+    public String collectibleItem;
     Game game;
 
     public SelectionManager(Game game) {
@@ -25,8 +25,28 @@ public class SelectionManager implements Serializable {
 
     public void selectCell(Cell cell) {
 
-
-        if (cell.getWarrior() != null) {
+        if (cardHandIndex != null) {
+            try {
+                game.useCard(cardHandIndex, cell);
+            } catch (NotEnoughConditions notEnoughConditions) {
+                Utility.showMessage(notEnoughConditions.getMessage());
+            }
+            deselectAll();
+        } else if (specialPowerIsSelected) {
+            try {
+                game.useSpecialPower(cell);
+            } catch (NotEnoughConditions notEnoughConditions) {
+                Utility.showMessage(notEnoughConditions.getMessage());
+            }
+            deselectAll();
+        } else if (collectibleItem != null) {
+            try {
+                game.useCollectible(collectibleItem, cell);
+            } catch (NotEnoughConditions notEnoughConditions) {
+                Utility.showMessage(notEnoughConditions.getMessage());
+            }
+            deselectAll();
+        } else if (cell.getWarrior() != null) {
             if (game.getActivePlayer().getWarriors().contains(cell.getWarrior())) {
                 cardHandIndex = null;
                 specialPowerIsSelected = false;
@@ -36,52 +56,27 @@ public class SelectionManager implements Serializable {
                 if (cells.size() == 1) {
                     try {
                         game.attack(cells.get(0), cell);
-                        deselectAll();
                     } catch (NotEnoughConditions notEnoughConditions) {
                         Utility.showMessage(notEnoughConditions.getMessage());
                     }
+                    deselectAll();
                 } else if (cells.size() > 1) {
                     try {
                         game.comboAttack(cells, cell);
-                        deselectAll();
                     } catch (NotEnoughConditions notEnoughConditions) {
                         Utility.showMessage(notEnoughConditions.getMessage());
                     }
+                    deselectAll();
                 }
             }
         } else {
             if (cells.size() == 1) {
                 try {
                     game.move(cells.get(0), cell);
-                    deselectAll();
                 } catch (NotEnoughConditions notEnoughConditions) {
                     Utility.showMessage(notEnoughConditions.getMessage());
                 }
-            }
-        }
-
-        if (cells.size() == 0) {
-            if (cardHandIndex != null) {
-                try {
-                    game.useCard(cardHandIndex, cell);
-                    deselectAll();
-                } catch (NotEnoughConditions notEnoughConditions) {
-                    Utility.showMessage(notEnoughConditions.getMessage());
-                }
-            } else if (specialPowerIsSelected) {
-                try {
-                    game.useSpecialPower(cell);
-                    deselectAll();
-                } catch (NotEnoughConditions notEnoughConditions) {
-                    Utility.showMessage(notEnoughConditions.getMessage());
-                }
-            } else if (collectibleItem != null) {
-                try {
-                    game.useCollectible(collectibleItem, cell);
-                    deselectAll();
-                } catch (NotEnoughConditions notEnoughConditions) {
-                    Utility.showMessage(notEnoughConditions.getMessage());
-                }
+                deselectAll();
             }
         }
 
@@ -104,7 +99,8 @@ public class SelectionManager implements Serializable {
         ArenaController.ac.setSelectionEffect(this);
     }
 
-    public void selectCollectibleItem(Spell collectableItem) {
+    public void selectCollectibleItem(String collectableItem) {
+
         deselectAll();
         this.collectibleItem = collectableItem;
 

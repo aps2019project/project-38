@@ -12,7 +12,7 @@ import model.gamestate.PutMinionState;
 public class CollectibleMine extends Mine {
     private Spell collectible;
 
-    public CollectibleMine(int duration, Dispelablity dispelablity, Spell collectible) {
+    public CollectibleMine(int duration, Dispelablity dispelablity, Spell collectible/*must be deep copied*/) {
         super(duration, dispelablity);
         this.collectible = collectible;
     }

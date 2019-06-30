@@ -1,6 +1,5 @@
 package view.fxmlControllers;
 
-import controller.Main;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -15,7 +14,6 @@ import javafx.scene.effect.Glow;
 import javafx.scene.effect.PerspectiveTransform;
 import javafx.scene.effect.SepiaTone;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -100,8 +98,8 @@ public class ArenaController implements Initializable, PropertyChangeListener {
 
         setActiveMana(1, 1);
 
-        showCollectedCollectibleItems("TotalDisarm", 1);
-        showCollectedCollectibleItems("TotalDisarm", 2);
+//        showCollectedCollectibleItems("TotalDisarm", 1);
+//        showCollectedCollectibleItems("TotalDisarm", 2);
 
         setCoolDown(4, 2);
         setCoolDown(0, 1);
@@ -436,7 +434,7 @@ public class ArenaController implements Initializable, PropertyChangeListener {
     }
 
     //call when a collectible-item is collected
-    public void showCollectedCollectibleItems(String itemName, int playerName /* 1 or 2 */) {
+    public void showCollectedCollectibleItems(String itemName, int playerNum /* 1 or 2 */) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("itemHolder.fxml"));
             Pane pane = fxmlLoader.load();
@@ -444,11 +442,16 @@ public class ArenaController implements Initializable, PropertyChangeListener {
             VisualSpell vs = new VisualSpell(itemName);
             ImageView visualSpell = vs.view;
             itemHolder.put(visualSpell, vs.getWidth(), vs.getHeight());
-            if (playerName == 1) {
+            if (playerNum == 1) {
                 player1_items.getChildren().add(pane);
             } else {
                 player2_items.getChildren().add(pane);
+                System.out.println("here in player 2 c adder");
             }
+
+            pane.setOnMouseClicked(event -> {
+                game.getSelectionManager().selectCollectibleItem(itemName);
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -878,6 +878,7 @@ public class CardFactory {
                     assert owner instanceof Warrior;
                     Warrior warrior = (Warrior) owner;
                     ((Warrior) owner).getCell().getBoard().getGame().getWarriorsPlayer(warrior).addMana(3);
+                    System.out.println("here");
                 }
             };
             manaPotion.getConditions().add(new HasTurnStarted());

@@ -18,6 +18,7 @@ import view.fxmlControllers.ArenaController;
 import view.fxmls.LoadedScenes;
 
 import java.io.Serializable;
+import java.sql.SQLOutput;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -74,8 +75,8 @@ public class Game implements Serializable {
             turn = 0;
         }
         {
-//            CollectibleMine c1 = new CollectibleMine(-1, Dispelablity.UNDISPELLABLE, (Spell) CardFactory.getAllBuiltItems().get(9).deepCopy());
-//            board.getCell(2, 2).addTrigger(c1);
+            CollectibleMine c1 = new CollectibleMine(-1, Dispelablity.UNDISPELLABLE, (Spell) CardFactory.getAllBuiltItems().get(8).deepCopy());
+            board.getCell(2, 2).addTrigger(c1);
         }
         startTurn();
 //        timer.start();
@@ -353,9 +354,23 @@ public class Game implements Serializable {
         }
     }
 
-    public void useCollectible(Spell spell, Cell cell) throws NotEnoughConditions {
+    public void useCollectible(String spellName, Cell cell) throws NotEnoughConditions {
         try {
+            Spell spell=null;
+            int index = -1;
+
+            ArrayList<Spell> collectibleItems = getActivePlayer().getCollectibleItems();
+            for (int i = 0; i < collectibleItems.size(); i++) {
+                Spell item = collectibleItems.get(i);
+                if(item.getName().equals(spellName)){
+                    spell = item;
+                    index = i;
+                    break;
+                }
+            }
+
             UseCard.useCollectible(spell, cell);
+            ArenaController.ac.useCollectibleItem(index,getActivePlayerIndex()+1);
         } finally {
             checkGameEndAndThenKillAllDiedWarriors();
         }

@@ -326,31 +326,31 @@ public interface Message {
             }
 
             static void showSelectedThings(Game game) {
-                System.out.print("SelectedCards: ");
-                if (game.getSelectionManager().getCells().size() != 0) {
-                    System.out.printf("{Warrior%s}\n", game.getSelectionManager().getCells().size() > 1 ? "s" : "");
-                    for (Cell cell : game.getSelectionManager().getCells()) {
-                        CardView.showCard(cell.getWarrior());
-                    }
-                }
-                else if (game.getSelectionManager().collectibleItem != null) {
-                    System.out.println("{Collectible Item}");
-                    Spell item = game.getSelectionManager().collectibleItem;
-                    CardView.showItem(item);
-                }
-                else if (game.getSelectionManager().cardHandIndex != null) {
-                    System.out.println("{Card}");
-                    Card card = game.getActivePlayer().getHand().get(game.getSelectionManager().cardHandIndex);
-                    CardView.showCard(card);
-                }
-                else if (game.getSelectionManager().specialPowerIsSelected) {
-                    System.out.println("{Special Power}");
-                    HeroPower specialPower = game.getActivePlayer().getPlayerHero().getPower();
-                    CardView.ShowSpecialPower(specialPower);
-                }
-                else {
-                    System.out.print("Empty\n");
-                }
+//                System.out.print("SelectedCards: ");
+//                if (game.getSelectionManager().getCells().size() != 0) {
+//                    System.out.printf("{Warrior%s}\n", game.getSelectionManager().getCells().size() > 1 ? "s" : "");
+//                    for (Cell cell : game.getSelectionManager().getCells()) {
+//                        CardView.showCard(cell.getWarrior());
+//                    }
+//                }
+//                else if (game.getSelectionManager().collectibleItem != null) {
+//                    System.out.println("{Collectible Item}");
+//                    Spell item = game.getSelectionManager().collectibleItem;
+//                    CardView.showItem(item);
+//                }
+//                else if (game.getSelectionManager().cardHandIndex != null) {
+//                    System.out.println("{Card}");
+//                    Card card = game.getActivePlayer().getHand().get(game.getSelectionManager().cardHandIndex);
+//                    CardView.showCard(card);
+//                }
+//                else if (game.getSelectionManager().specialPowerIsSelected) {
+//                    System.out.println("{Special Power}");
+//                    HeroPower specialPower = game.getActivePlayer().getPlayerHero().getPower();
+//                    CardView.ShowSpecialPower(specialPower);
+//                }
+//                else {
+//                    System.out.print("Empty\n");
+//                }
             }
 
             static void showBoard(Game game) {
