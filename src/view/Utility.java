@@ -30,6 +30,13 @@ public class Utility {
         return pane;
     }
 
+    public static AnchorPane scaleCard(AnchorPane pane) {
+        double scaleDouble = 260f / pane.getPrefWidth();
+        Scale scale = new Scale(scaleDouble, scaleDouble, 0, 0);
+        pane.getTransforms().add(scale);
+        return pane;
+    }
+
     public static void showMessage(String message) {
         Popup popup = new Popup();
         Label label = new Label(message);
