@@ -106,11 +106,7 @@ public class SelectionManager implements Serializable {
         ArenaController.ac.setSelectionEffect(this);
     }
 
-    public static void replaceSelectedCard(){
-        //todo
-    }
-
-    public void deselectAction(){
+    public void deselectAction() {
         deselectAll();
 
         ArenaController.ac.setSelectionEffect(this);

@@ -2,9 +2,10 @@ package view.fxmlControllers;
 
 import javafx.scene.control.Label;
 import javafx.scene.effect.BoxBlur;
+import javafx.scene.effect.SepiaTone;
 import javafx.scene.image.ImageView;
 
-public class CardHolderController extends Holder{
+public class CardHolderController extends Holder {
     public Label neededMana;
     public ImageView border;
     public ImageView manaBackGround;

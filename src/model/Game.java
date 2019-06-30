@@ -112,6 +112,10 @@ public class Game implements Serializable {
         return players[turn % 2];
     }
 
+    public int getActivePlayerIndex() {
+        return turn % 2;
+    }
+
     public int getPlayerNumber(Player player) {
         return player == players[0] ? 0 : 1;
     }
@@ -361,7 +365,7 @@ public class Game implements Serializable {
         EndTurn.doIt(this);
         checkGameEndAndThenKillAllDiedWarriors();
 
-        if (gameMode.winner==null)//why a condition? because if the game end because of endTurn the flow returns here and starts a new turn.
+        if (gameMode.winner == null)//why a condition? because if the game end because of endTurn the flow returns here and starts a new turn.
             startTurn();
     }
 

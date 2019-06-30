@@ -14,7 +14,7 @@ public class EndTurn {
         game.iterateAndExpireAllEffects();
         game.turn++;
         game.addNextCardToPlayerHand(game.getActivePlayer());
-        game.getActivePlayer().setMana(Constant.GameConstants.getTurnMana(game.turn));
+        game.getActivePlayer().setMana(Constant.GameConstants.getTurnMana(game.turn)); //hashem
         game.getActivePlayer().ableToReplaceCard = true;
 //        game.timer.restart();
     }
