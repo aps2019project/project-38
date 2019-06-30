@@ -800,7 +800,7 @@ public class CardFactory {
                 protected void executeActions(GameState gameState, QualityHaver owner) {
                     assert owner instanceof Warrior;
                     Warrior warrior = (Warrior) owner;
-                    warrior.getCell().getBoard().getGame().getWarriorsPlayer(warrior).mana += 1;
+                    warrior.getCell().getBoard().getGame().getWarriorsPlayer(warrior).addMana(1);
                 }
             };
             manaRegen.getConditions().add(new HasTurnStarted());
@@ -877,7 +877,7 @@ public class CardFactory {
                 protected void executeActions(GameState gameState, QualityHaver owner) {
                     assert owner instanceof Warrior;
                     Warrior warrior = (Warrior) owner;
-                    ((Warrior) owner).getCell().getBoard().getGame().getWarriorsPlayer(warrior).mana += 3;
+                    ((Warrior) owner).getCell().getBoard().getGame().getWarriorsPlayer(warrior).addMana(3);
                 }
             };
             manaPotion.getConditions().add(new HasTurnStarted());
@@ -957,7 +957,7 @@ public class CardFactory {
                     assert owner instanceof Warrior;
                     Warrior warrior = (Warrior) owner;
 
-                    warrior.getCell().getBoard().getGame().getWarriorsPlayer(warrior).mana += 1;
+                    warrior.getCell().getBoard().getGame().getWarriorsPlayer(warrior).addMana(1);
                 }
             };
             manaRegen.getConditions().add(new HasTurnStarted());

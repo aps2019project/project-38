@@ -297,7 +297,7 @@ public interface Message {
                             mode.getNumberOFPlayerFlags(game.getPlayers()[1]));
                 }
                 System.out.printf("Player %d: %s\n", activePlayerNumber, completeName);
-                System.out.println("Mana: " + game.getActivePlayer().mana);
+                System.out.println("Mana: " + game.getActivePlayer().getMana());
             }
 
             static void showBoardBottom(Game game) {

@@ -33,11 +33,13 @@ import view.images.LoadedImages;
 import view.visualentities.VisualMinion;
 import view.visualentities.VisualSpell;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
-public class ArenaController implements Initializable {
+public class ArenaController implements Initializable, PropertyChangeListener {
     public static ArenaController ac;
     Game game;
     public GridPane grid;
@@ -153,6 +155,11 @@ public class ArenaController implements Initializable {
     public void init(Game game) {
         this.game = game;
         visualMinions = new VisualMinion[5][9];
+
+        //todo temp:
+        game.getPlayers()[0].addListener(this);
+        game.getPlayers()[1].addListener(this);
+
 //        beforeStartTheGame(game.getPlayers()[0],game.getPlayers()[1]); todo because hero powers do not have name or sprite yet. also remember that some heroes don't have power
     }
 
@@ -350,6 +357,9 @@ public class ArenaController implements Initializable {
 
 
     private void beforeStartTheGame(Player player1, Player player2) {
+        player1.addListener(this);
+        player2.addListener(this);
+
         player1_avatar.setImage(player1.avatar);
         player2_avatar.setImage(player2.avatar);
 
@@ -394,12 +404,10 @@ public class ArenaController implements Initializable {
         }
     }
 
-    //use this method to set the number of turns needed for hero special ability to be ready to use.
     public void setCoolDown(int remainingTurn, int playerNumber /* 1 or 2 */) {
         heroSpecialPowerControllers[playerNumber - 1].setRemainedTurn(remainingTurn);
     }
 
-    //use this ,method after any use of mana
     public void setActiveMana(int number /* number of active mana */, int playerNumber /* 1 or 2 */) {
         playersMana[playerNumber - 1] = number;
         GridPane gridPane = player2_mana;
@@ -564,5 +572,10 @@ public class ArenaController implements Initializable {
     public void endGame(Player winner) {
         //todo a banner or sth
         WindowChanger.instance.setNewScene(LoadedScenes.mainMenu);
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
+        setActiveMana((int) propertyChangeEvent.getNewValue(),game.getPlayerNumber(game.getActivePlayer())+1);
     }
 }

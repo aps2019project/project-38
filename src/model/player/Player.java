@@ -9,6 +9,8 @@ import model.cards.Hero;
 import model.cards.Spell;
 import model.cards.Warrior;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,7 +19,8 @@ import java.util.Random;
 
 
 public abstract class Player implements Serializable {
-    public int mana;
+    private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+    private int mana;
     protected Deck mainDeck;
     protected HashMap<Integer, Card> hand = new HashMap<>();
     protected ArrayList<Warrior> warriors = new ArrayList<>();
@@ -36,6 +39,24 @@ public abstract class Player implements Serializable {
         initializeNextCard();
     }
 
+    public void addListener(PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(listener);
+    }
+
+    public int getMana() {
+        return mana;
+    }
+
+    public void setMana(int amount) {
+        mana = amount;
+        pcs.firePropertyChange("mana", -1, mana);
+    }
+
+    public void addMana(int amount) {
+        mana += amount;
+        pcs.firePropertyChange("mana", -1, mana);
+    }
+
     public void initializeNextCard() {
         int randomIndex = (new Random(System.currentTimeMillis()).nextInt(this.getMainDeck().getCardIDs().size()));
         nextCard = Card.getAllCards().get(this.getMainDeck().getCardIDs().get(randomIndex)).deepCopy();
@@ -49,7 +70,7 @@ public abstract class Player implements Serializable {
         return warriors;
     }
 
-    public Hero getPlayerHero(){
+    public Hero getPlayerHero() {
         Optional<Warrior> optional = warriors.stream().filter(warrior -> warrior instanceof Hero).findFirst();
         return (Hero) optional.orElse(null);
     }
@@ -70,7 +91,7 @@ public abstract class Player implements Serializable {
         return nextCard;
     }
 
-    public Game getGame(){
+    public Game getGame() {
         return warriors.get(0).getCell().getBoard().getGame();
     }
 }

@@ -1,7 +1,6 @@
 package model;
 
 import model.cards.Card;
-import model.cards.CardFactory;
 import model.cards.Hero;
 import model.cards.Spell;
 import view.Message;

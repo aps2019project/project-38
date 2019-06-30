@@ -35,13 +35,13 @@ public class UseCard {
 
             gameState = new PutMinionState(warrior);
         }
-        if (game.getActivePlayer().mana >= card.getRequiredMana()) {
+        if (game.getActivePlayer().getMana()>= card.getRequiredMana()) {
             card.apply(cell);
 
             if (gameState instanceof PutMinionState) {
 //                ((PutMinionState) gameState).getWarrior().getEffects().add(new Attacked());todo for test only
             }
-            game.getActivePlayer().mana -= card.getRequiredMana();
+            game.getActivePlayer().addMana(-card.getRequiredMana());
             game.getActivePlayer().getHand().put(handMapKey, null);
             game.getActivePlayer().getUsedCards().add(card);
             game.iterateAllTriggersCheck(gameState);
@@ -66,9 +66,9 @@ public class UseCard {
             throw new NotEnoughConditions("Something prevented you from using your hero's special power!");
         }
         useSpellState.pending = false;
-        if (game.getActivePlayer().mana >= heroPower.getRequiredMana()) {
+        if (game.getActivePlayer().getMana()>= heroPower.getRequiredMana()) {
             heroPower.apply(cell);
-            game.getActivePlayer().mana -= heroPower.getRequiredMana();
+            game.getActivePlayer().addMana(-heroPower.getRequiredMana());
             game.iterateAllTriggersCheck(useSpellState);
         } else {
             throw new NotEnoughConditions("Not enough mana");

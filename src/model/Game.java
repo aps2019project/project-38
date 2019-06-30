@@ -47,7 +47,7 @@ public class Game implements Serializable {
     public void initialiseGameFields() {
         {
             turn = 0;
-            getActivePlayer().mana = Constant.GameConstants.getTurnMana(turn);
+            getActivePlayer().setMana(Constant.GameConstants.getTurnMana(turn));
             getActivePlayer().ableToReplaceCard = true;
         }
         {
@@ -371,7 +371,7 @@ public class Game implements Serializable {
 
         //todo this part updates the ui for the new player. in the networking this should implemented somewhere else.
         ArenaController.ac.setCoolDown(getActivePlayer().getPlayerHero().getPower().coolDownRemaining, getPlayerNumber(getActivePlayer()) + 1);
-        ArenaController.ac.setActiveMana(getActivePlayer().mana, getPlayerNumber(getActivePlayer()) + 1);
+//        ArenaController.ac.setActiveMana(getActivePlayer().getMana(), getPlayerNumber(getActivePlayer()) + 1);
         ArenaController.ac.setActivePlayer(getPlayerNumber(getActivePlayer()) + 1);
 
 
