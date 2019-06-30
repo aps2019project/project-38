@@ -40,7 +40,8 @@ public class Game implements Serializable {
 
     public Game(GameMode gameMode, Account account, Deck aIDeck) {
         this.gameMode = gameMode;
-        int randomIndex = (new Random(System.currentTimeMillis())).nextInt(2);
+        int randomIndex = /*(new Random(System.currentTimeMillis())).nextInt(2)*/0;//todo test only
+
         players[randomIndex] = new HumanPlayer(account, account.getCollection().getMainDeck());
         players[(randomIndex + 1) % 2] = new AIPlayer(aIDeck);
     }
@@ -75,7 +76,7 @@ public class Game implements Serializable {
             turn = 0;
         }
         {
-            CollectibleMine c1 = new CollectibleMine(-1, Dispelablity.UNDISPELLABLE, (Spell) CardFactory.getAllBuiltItems().get(8).deepCopy());
+            CollectibleMine c1 = new CollectibleMine(-1, Dispelablity.UNDISPELLABLE, (Spell) CardFactory.getAllBuiltItems().get(7).deepCopy());
             board.getCell(2, 2).addTrigger(c1);
         }
         startTurn();
@@ -368,7 +369,6 @@ public class Game implements Serializable {
                     break;
                 }
             }
-
             UseCard.useCollectible(spell, cell);
             ArenaController.ac.useCollectibleItem(index,getActivePlayerIndex()+1);
         } finally {

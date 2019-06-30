@@ -1,13 +1,15 @@
 package model.targets;
 
+import model.Cell;
 import model.QualityHaver;
 import model.cards.Hero;
 import model.cards.Warrior;
 import model.gamestate.GameState;
+import model.player.Player;
 
 import java.util.ArrayList;
 
-public class HeroGetter implements TriggerTarget{
+public class HeroGetter implements TriggerTarget,SpellTarget{
     private boolean friendMod;
 
     public HeroGetter(boolean friendMod) {
@@ -26,5 +28,12 @@ public class HeroGetter implements TriggerTarget{
             target.add(warrior.getCell().getBoard().getGame().getWarriorsEnemyPlayer(warrior).getPlayerHero());
         }
         return target;
+    }
+
+    @Override
+    public ArrayList<? extends QualityHaver> getTarget(Player spellOwner, Cell cell) {
+        ArrayList<Hero> targets = new ArrayList<>();
+        targets.add(spellOwner.getPlayerHero());
+        return targets;
     }
 }

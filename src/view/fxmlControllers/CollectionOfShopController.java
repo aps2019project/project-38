@@ -11,49 +11,43 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import model.Account;
-import model.cards.CardFactory;
-import model.cards.Hero;
-import model.cards.Spell;
-import model.cards.Warrior;
-import view.WindowChanger;
+import model.Collection;
+import model.Deck;
+import model.cards.*;
+import view.Message;
+import view.Utility;
 import view.fxmls.LoadedScenes;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.ResourceBundle;
 
 public class CollectionOfShopController implements Initializable {
+    public static CollectionOfShopController collectionOfShopController;
     public VBox minionsLeftVBox;
     public VBox minionsMiddleVBox;
     public VBox minionsRightVBox;
     public TextField minionsSearchTextField;
-    private HashMap<Warrior, AnchorPane> minions = new HashMap<>();
+    private HashMap<Warrior, AnchorPane> minions = new HashMap<>(), allMinions = new HashMap<>();
     public VBox heroesLeftVBox;
     public VBox heroesMiddleVBox;
     public VBox heroesRightVBox;
     public TextField heroesSearchTextField;
-    private HashMap<Hero, AnchorPane> heroes = new HashMap<>();
+    private HashMap<Hero, AnchorPane> heroes = new HashMap<>(), allHeroes = new HashMap<>();
     public VBox spellsLeftVBox;
     public VBox spellsMiddleVBox;
     public VBox spellsRightVBox;
     public TextField spellsSearchTextField;
-    private HashMap<Spell, AnchorPane> spells = new HashMap<>();
+    private HashMap<Spell, AnchorPane> spells = new HashMap<>(), allSpells = new HashMap<>();
     public VBox itemsLeftVBox;
     public VBox itemsMiddleVBox;
     public VBox itemsRightVBox;
     public TextField itemsSearchTextField;
-    private HashMap<Spell, AnchorPane> items = new HashMap<>();
+    private HashMap<Spell, AnchorPane> items = new HashMap<>(), allItems = new HashMap<>();
     public ImageView backButton;
-
-    public void moveScrollPane(KeyEvent keyEvent) {
-        if (keyEvent.getCode().getName().equals("Up")) {
-            //todo
-        } else if (keyEvent.getCode().getName().equals("Down")) {
-            //todo
-        }
-    }
 
     public void back(MouseEvent mouseEvent) {
         WindowChanger.instance.setNewScene(LoadedScenes.shop);
@@ -70,113 +64,193 @@ public class CollectionOfShopController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-//        minionsSearchTextField.setOnKeyTyped(this::recalculateMinions);
+        minionsSearchTextField.setOnKeyTyped(this::recalculateMinions);
 //        heroesSearchTextField.setOnKeyTyped(this::recalculateHeroes);
 //        spellsSearchTextField.setOnKeyTyped(this::recalculateSpells);
 //        itemsSearchTextField.setOnKeyTyped(this::recalculateItems);
-        Platform.runLater(() -> {
-//            recalculateMinions(null);//todo active account is null at first
-//            recalculateHeroes(null);
-//            recalculateSpells(null);
-//            recalculateItems(null);
-        });
+        calculateEverything();
     }
 
-    private synchronized void recalculateMinions(KeyEvent ignored) {
+    public void calculateEverything() {
+        initializeAllMinions();
+        recalculateMinions(null);
+//        initializeAllHeroes();
+        recalculateHeroes(null);
+//        initializeAllSpells();
+        recalculateSpells(null);
+//        initializeAllItems();
+        recalculateItems(null);
+    }
+
+    private synchronized void recalculateMinions(KeyEvent keyEvent) {
         String searchText = minionsSearchTextField.getText();
-        minions.entrySet().removeIf(entry -> !entry.getKey().getName().matches(searchText + ".*"));
-        for (Warrior minion : CardFactory.getAllBuiltMinions()) {
-            if (Account.getActiveAccount().getCollection().getCardIDs().contains(minion.getID()) &&
-                    !minions.containsKey(minion) && minion.getName().matches(searchText + ".*")) {
-                long numberOfTheMinion = Account.getActiveAccount().getCollection().getCardIDs()
-                        .stream().filter(id -> id == minion.getID()).count();
-                for (int i = 0; i < numberOfTheMinion; i++) {
-                    addNewMinion(minion);
-                }
-            }
+        minions.entrySet().removeIf(entry -> !allMinions.containsKey(entry.getKey()));
+        minions.entrySet().removeIf(entry -> !entry.getKey().getName().toLowerCase()
+                .replaceAll("[ \t\\-_]+", "").matches
+                        (".*" + searchText.toLowerCase().replaceAll("[ \t\\-_]+", "") + ".*"));
+        for (Map.Entry<Warrior, AnchorPane> entry : allMinions.entrySet()) {
+            if (!minions.containsKey(entry.getKey()) && entry.getKey().getName().toLowerCase()
+                    .replaceAll("[ \t\\-_]+", "").matches
+                            (".*" + searchText.toLowerCase().replaceAll("[ \t\\-_]+", "") + ".*"))
+                minions.put(entry.getKey(), entry.getValue());
         }
-        minionsLeftVBox.getChildren().removeAll();
-        minionsRightVBox.getChildren().removeAll();
+        Platform.runLater(() -> {
+            minionsLeftVBox.getChildren().clear();
+            minionsMiddleVBox.getChildren().clear();
+            minionsRightVBox.getChildren().clear();
+        });
+        int counter = 0;
         for (Map.Entry<Warrior, AnchorPane> entry : minions.entrySet()) {
-            if (minionsLeftVBox.getChildren().size() == minionsRightVBox.getChildren().size())
-                minionsLeftVBox.getChildren().add(entry.getValue());
-            else minionsRightVBox.getChildren().add(entry.getValue());
+            if (counter % 3 == 0) {
+                Platform.runLater(() -> minionsLeftVBox.getChildren().add(entry.getValue()));
+            }
+            else if (counter % 3 == 1) {
+                Platform.runLater(() -> minionsMiddleVBox.getChildren().add(entry.getValue()));
+            }
+            else {
+                Platform.runLater(() -> minionsRightVBox.getChildren().add(entry.getValue()));
+            }
+            counter++;
         }
     }
 
-    private void addNewMinion(Warrior minion) {
-        AnchorPane anchorPane = null;
-        WarriorCardController warriorCardController = null;
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("warriorCart.fxml"));
-            anchorPane = fxmlLoader.load();
-            warriorCardController = fxmlLoader.getController();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        warriorCardController.setFields(minion);
-        minions.put(minion, anchorPane);
-    }
-
-    private synchronized void recalculateHeroes(KeyEvent ignored) {
-        String searchText = heroesSearchTextField.getText();
-        heroes.entrySet().removeIf(entry -> !entry.getKey().getName().matches(searchText + ".*"));
-        for (Hero hero : CardFactory.getAllBuiltHeroes()) {
-            if (Account.getActiveAccount().getCollection().getCardIDs().contains(hero.getID()) &&
-                    !heroes.containsKey(hero) && hero.getName().matches(searchText + ".*")) {
-                long numberOfTheHero = Account.getActiveAccount().getCollection().getCardIDs()
-                        .stream().filter(id -> id == hero.getID()).count();
-                for (int i = 0; i < numberOfTheHero; i++) {
-                    addNewHero(hero);
-                }
+    private void initializeAllMinions() {
+        for (Warrior minion : CardFactory.getAllBuiltMinions()) {
+            if (Account.getActiveAccount().getCollection().getHowManyCard().containsKey(minion.getName()) &&
+                    !allMinions.containsKey(minion)) {
+                loadMinion(minion);
             }
         }
-        heroesLeftVBox.getChildren().removeAll();
-        heroesRightVBox.getChildren().removeAll();
-        for (Map.Entry<Hero, AnchorPane> entry : heroes.entrySet()) {
-            if (heroesLeftVBox.getChildren().size() == heroesRightVBox.getChildren().size())
-                heroesLeftVBox.getChildren().add(entry.getValue());
-            else heroesRightVBox.getChildren().add(entry.getValue());
+        for (Iterator<Map.Entry<Warrior, AnchorPane>> iterator = allMinions.entrySet().iterator(); iterator.hasNext();) {
+            Warrior warrior = iterator.next().getKey();
+            if (!Account.getActiveAccount().getCollection().getHowManyCard().containsKey(warrior.getName()) ||
+                    Account.getActiveAccount().getCollection().getHowManyCard().get(warrior.getName()) <= 0) {
+                iterator.remove();
+            }
         }
     }
 
-    private void addNewHero(Hero hero) {
+    private void loadMinion(Warrior minion) {
         AnchorPane anchorPane = null;
         WarriorCardController warriorCardController = null;
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("warriorCart.fxml"));
-            anchorPane = fxmlLoader.load();
+            anchorPane = Utility.scaleCard(fxmlLoader.load());
             warriorCardController = fxmlLoader.getController();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        warriorCardController.setFields(hero);
+        warriorCardController.setFields(minion, true);
+        allMinions.put(minion, anchorPane);
+    }
+
+    private synchronized void recalculateHeroes(KeyEvent keyEvent) {
+        String searchText = heroesSearchTextField.getText();
+        heroes.entrySet().removeIf(entry -> !entry.getKey().getName().toLowerCase()
+                .replaceAll("[ \t\\-_]+", "").matches
+                        (".*" + searchText.toLowerCase().replaceAll("[ \t\\-_]+", "") + ".*"));
+        for (Map.Entry<Hero, AnchorPane> entry : allHeroes.entrySet()) {
+            if (!heroes.containsKey(entry.getKey()) && entry.getKey().getName().toLowerCase()
+                    .replaceAll("[ \t\\-_]+", "").matches
+                            (".*" + searchText.toLowerCase().replaceAll("[ \t\\-_]+", "") + ".*"))
+                heroes.put(entry.getKey(), entry.getValue());
+        }
+        Platform.runLater(() -> {
+            heroesLeftVBox.getChildren().clear();
+            heroesMiddleVBox.getChildren().clear();
+            heroesRightVBox.getChildren().clear();
+        });
+        int counter = 0;
+        for (Map.Entry<Hero, AnchorPane> entry : heroes.entrySet()) {
+            if (counter % 3 == 0) {
+                Platform.runLater(() -> heroesLeftVBox.getChildren().add(entry.getValue()));
+            }
+            else if (counter % 3 == 1) {
+                Platform.runLater(() -> heroesMiddleVBox.getChildren().add(entry.getValue()));
+            }
+            else {
+                Platform.runLater(() -> heroesRightVBox.getChildren().add(entry.getValue()));
+            }
+            counter++;
+        }
+    }
+
+    private void initializeAllHeroes() {
+        for (Hero hero : CardFactory.getAllBuiltHeroes()) {
+            if (Account.getActiveAccount().getCollection().getHowManyCard().containsKey(hero.getName()) && !allHeroes.containsKey(hero)) {
+                loadHero(hero);
+            }
+        }
+        for (Iterator<Map.Entry<Hero, AnchorPane>> iterator = allHeroes.entrySet().iterator(); iterator.hasNext();) {
+            Hero hero = iterator.next().getKey();
+            if (!Account.getActiveAccount().getCollection().getHowManyCard().containsKey(hero.getName()) ||
+                    Account.getActiveAccount().getCollection().getHowManyCard().get(hero.getName()) <= 0) {
+                iterator.remove();
+            }
+        }
+    }
+
+    private void loadHero(Hero hero) {
+        AnchorPane anchorPane = null;
+        WarriorCardController warriorCardController = null;
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("warriorCart.fxml"));
+            anchorPane = Utility.scaleCard(fxmlLoader.load());
+            warriorCardController = fxmlLoader.getController();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        warriorCardController.setFields(hero, true);
         heroes.put(hero, anchorPane);
     }
 
-    private synchronized void recalculateSpells(KeyEvent ignored) {
+    private synchronized void recalculateSpells(KeyEvent keyEvent) {
         String searchText = spellsSearchTextField.getText();
-        spells.entrySet().removeIf(entry -> !entry.getKey().getName().matches(searchText + ".*"));
-        for (Spell spell : CardFactory.getAllBuiltSpells()) {
-            if (Account.getActiveAccount().getCollection().getCardIDs().contains(spell.getID()) &&
-                    !spells.containsKey(spell) && spell.getName().matches(searchText + ".*")) {
-                long numberOfTheSpell = Account.getActiveAccount().getCollection().getCardIDs()
-                        .stream().filter(id -> id == spell.getID()).count();
-                for (int i = 0; i < numberOfTheSpell; i++) {
-                    addNewSpell(spell);
-                }
-            }
+        spells.entrySet().removeIf(entry -> !entry.getKey().getName().toLowerCase()
+                .replaceAll("[ \t\\-_]+", "").matches
+                        (".*" + searchText.toLowerCase().replaceAll("[ \t\\-_]+", "") + ".*"));
+        for (Map.Entry<Spell, AnchorPane> entry : allSpells.entrySet()) {
+            if (!spells.containsKey(entry.getKey()) && entry.getKey().getName().toLowerCase()
+                    .replaceAll("[ \t\\-_]+", "").matches
+                            (".*" + searchText.toLowerCase().replaceAll("[ \t\\-_]+", "") + ".*"))
+                spells.put(entry.getKey(), entry.getValue());
         }
-        spellsLeftVBox.getChildren().removeAll();
-        spellsRightVBox.getChildren().removeAll();
+        Platform.runLater(() -> {
+            spellsLeftVBox.getChildren().clear();
+            spellsMiddleVBox.getChildren().clear();
+            spellsRightVBox.getChildren().clear();
+        });
+        int counter = 0;
         for (Map.Entry<Spell, AnchorPane> entry : spells.entrySet()) {
-            if (spellsLeftVBox.getChildren().size() == spellsRightVBox.getChildren().size())
-                spellsLeftVBox.getChildren().add(entry.getValue());
-            else spellsRightVBox.getChildren().add(entry.getValue());
+            if (counter % 3 == 0) {
+                Platform.runLater(() -> spellsLeftVBox.getChildren().add(entry.getValue()));
+            }
+            else if (counter % 3 == 1) {
+                Platform.runLater(() -> spellsMiddleVBox.getChildren().add(entry.getValue()));
+            }
+            else {
+                Platform.runLater(() -> spellsRightVBox.getChildren().add(entry.getValue()));
+            }
+            counter++;
         }
     }
 
-    private void addNewSpell(Spell spell) {
+    private void initializeAllSpells() {
+        for (Spell spell : CardFactory.getAllBuiltSpells()) {
+            if (Account.getActiveAccount().getCollection().getHowManyCard().containsKey(spell.getName()) && !allSpells.containsKey(spell)) {
+                loadSpell(spell);
+            }
+        }
+        for (Iterator<Map.Entry<Spell, AnchorPane>> iterator = allSpells.entrySet().iterator(); iterator.hasNext();) {
+            Spell spell = iterator.next().getKey();
+            if (!Account.getActiveAccount().getCollection().getHowManyCard().containsKey(spell.getName()) ||
+                    Account.getActiveAccount().getCollection().getHowManyCard().get(spell.getName()) <= 0) {
+                iterator.remove();
+            }
+        }
+    }
+
+    private void loadSpell(Spell spell) {
         AnchorPane anchorPane = null;
         SpellCardController spellCardController = null;
         try {
@@ -186,33 +260,57 @@ public class CollectionOfShopController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        spellCardController.setFields(spell);
+        spellCardController.setFields(spell, true);
         spells.put(spell, anchorPane);
     }
 
-    private synchronized void recalculateItems(KeyEvent ignored) {
+    private synchronized void recalculateItems(KeyEvent keyEvent) {
         String searchText = itemsSearchTextField.getText();
-        items.entrySet().removeIf(entry -> !entry.getKey().getName().matches(searchText + ".*"));
-        for (Spell item : CardFactory.getAllBuiltItems()) {
-            if (Account.getActiveAccount().getCollection().getCardIDs().contains(item.getID()) &&
-                    item.getPrice() != 0 && !items.containsKey(item) && item.getName().matches(searchText + ".*")) {
-                long numberOfTheItem = Account.getActiveAccount().getCollection().getCardIDs()
-                        .stream().filter(id -> id == item.getID()).count();
-                for (int i = 0; i < numberOfTheItem; i++) {
-                    addNewItem(item);
-                }
-            }
+        items.entrySet().removeIf(entry -> !entry.getKey().getName().toLowerCase()
+                .replaceAll("[ \t\\-_]+", "").matches
+                        (".*" + searchText.toLowerCase().replaceAll("[ \t\\-_]+", "") + ".*"));
+        for (Map.Entry<Spell, AnchorPane> entry : allItems.entrySet()) {
+            if (!items.containsKey(entry.getKey()) && entry.getKey().getName().toLowerCase()
+                    .replaceAll("[ \t\\-_]+", "").matches
+                            (".*" + searchText.toLowerCase().replaceAll("[ \t\\-_]+", "") + ".*"))
+                items.put(entry.getKey(), entry.getValue());
         }
-        itemsLeftVBox.getChildren().removeAll();
-        itemsRightVBox.getChildren().removeAll();
+        Platform.runLater(() -> {
+            itemsLeftVBox.getChildren().clear();
+            itemsMiddleVBox.getChildren().clear();
+            itemsRightVBox.getChildren().clear();
+        });
+        int counter = 0;
         for (Map.Entry<Spell, AnchorPane> entry : items.entrySet()) {
-            if (itemsLeftVBox.getChildren().size() == itemsRightVBox.getChildren().size())
-                itemsLeftVBox.getChildren().add(entry.getValue());
-            else itemsRightVBox.getChildren().add(entry.getValue());
+            if (counter % 3 == 0) {
+                Platform.runLater(() -> itemsLeftVBox.getChildren().add(entry.getValue()));
+            }
+            else if (counter % 3 == 1) {
+                Platform.runLater(() -> itemsMiddleVBox.getChildren().add(entry.getValue()));
+            }
+            else {
+                Platform.runLater(() -> itemsRightVBox.getChildren().add(entry.getValue()));
+            }
+            counter++;
         }
     }
 
-    private void addNewItem(Spell item) {
+    private void initializeAllItems() {
+        for (Spell item : CardFactory.getAllBuiltItems()) {
+            if (Account.getActiveAccount().getCollection().getHowManyCard().containsKey(item.getName()) && !allItems.containsKey(item)) {
+                loadItem(item);
+            }
+        }
+        for (Iterator<Map.Entry<Spell, AnchorPane>> iterator = allItems.entrySet().iterator(); iterator.hasNext();) {
+            Spell item = iterator.next().getKey();
+            if (!Account.getActiveAccount().getCollection().getHowManyCard().containsKey(item.getName()) ||
+                    Account.getActiveAccount().getCollection().getHowManyCard().get(item.getName()) <= 0) {
+                iterator.remove();
+            }
+        }
+    }
+
+    private void loadItem(Spell item) {
         AnchorPane anchorPane = null;
         SpellCardController spellCardController = null;
         try {
@@ -222,7 +320,33 @@ public class CollectionOfShopController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        spellCardController.setFields(item);
+        spellCardController.setFields(item, true);
         items.put(item, anchorPane);
+    }
+
+    public static void sell(String cardName) {
+        Card card = getCardByItsName(cardName);
+        Account account = Account.getActiveAccount();
+
+        account.derrick = account.derrick + card.getPrice();
+        account.getCollection().getCardIDs().remove((Integer) card.getID());
+        for (String deckName : account.getCollection().getDecks()) {
+            Deck deck = Account.getActiveAccount().getCollection().getAllDecks().get(deckName);
+            if (deck.getCardIDs().contains(card.getID())) {
+                deck.getCardIDs().remove((Integer) card.getID());
+            }
+        }
+        account.getCollection().getCardIDs().remove((Integer) card.getID());
+
+        int keyValue = model.Collection.getCollection().getHowManyCard().get(card.getName());
+        Collection.getCollection().getHowManyCard().put(card.getName(), keyValue - 1);
+        AlertController.setAndShowAndWaitToGetResult
+                ("You sell the card successfully", false);
+        CollectionOfShopController.collectionOfShopController.calculateEverything();
+    }
+
+    private static Card getCardByItsName(String cardName) {
+        return Card.getAllCards().values().stream()
+                .filter(card -> card.getName().equals(cardName)).findFirst().orElse(null);
     }
 }

@@ -1,14 +1,16 @@
 package view.fxmlControllers;
 
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import model.Account;
-import view.WindowChanger;
+import view.Utility;
 import view.fxmls.LoadedScenes;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -40,6 +42,14 @@ public class LoginController implements Initializable {
             alertWindow.toFront();
             alert.setText("You logged in successfully");
             shouldClose = true;
+
+            FXMLLoader fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("collectionOfShop.fxml"));//todo don't change this
+            try {
+                LoadedScenes.collectionOfShop = Utility.scale(fxmlLoader.load());
+                CollectionOfShopController.collectionOfShopController = fxmlLoader.getController();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

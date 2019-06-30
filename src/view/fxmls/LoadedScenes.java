@@ -27,7 +27,6 @@ public class LoadedScenes {
             mainMenu = scale(FXMLLoader.load(getClass().getResource("mainMenu.fxml")));
             chooseBattleKind = scale(FXMLLoader.load(getClass().getResource("chooseBattleKind.fxml")));
             shop = scale(FXMLLoader.load(getClass().getResource("shop.fxml")));
-            collectionOfShop = scale(FXMLLoader.load(getClass().getResource("collectionOfShop.fxml")));
             arena = scale(FXMLLoader.load(getClass().getResource("arena.fxml")));
         } catch (IOException e) {
             e.printStackTrace();
