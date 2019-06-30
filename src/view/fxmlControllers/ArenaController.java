@@ -1,5 +1,6 @@
 package view.fxmlControllers;
 
+import controller.Main;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -14,6 +15,7 @@ import javafx.scene.effect.Glow;
 import javafx.scene.effect.PerspectiveTransform;
 import javafx.scene.effect.SepiaTone;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -147,6 +149,15 @@ public class ArenaController implements Initializable, PropertyChangeListener {
                     });
                 }
             }
+        });
+
+        Platform.runLater(() -> {
+            pane.requestFocus();
+            pane.setOnKeyTyped(event -> {
+                if (event.getCharacter().getBytes()[0]==27) {
+                    game.getSelectionManager().deselectAction();
+                }
+            });
         });
     }
 
@@ -550,12 +561,12 @@ public class ArenaController implements Initializable, PropertyChangeListener {
     }
 
     public void graveYard() {
-        ArrayList<ImageView>template = player2GraveYard;
-        if(getCurrentPlayer()==0) {
-            template=player1GraveYard;
+        ArrayList<ImageView> template = player2GraveYard;
+        if (getCurrentPlayer() == 0) {
+            template = player1GraveYard;
         }
         mainGraveYard.getChildren().clear();
-        for(ImageView imageView : template){
+        for (ImageView imageView : template) {
             mainGraveYard.getChildren().add(imageView);
         }
         graveYardPane.toFront();
@@ -584,12 +595,12 @@ public class ArenaController implements Initializable, PropertyChangeListener {
         WindowChanger.instance.setNewScene(LoadedScenes.mainMenu);
     }
 
-    int getCurrentPlayer(){
-        return ArenaController.ac.game.turn%2;
+    int getCurrentPlayer() {
+        return ArenaController.ac.game.turn % 2;
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
-        setActiveMana((int) propertyChangeEvent.getNewValue(),game.getPlayerNumber(game.getActivePlayer())+1);
+        setActiveMana((int) propertyChangeEvent.getNewValue(), game.getPlayerNumber(game.getActivePlayer()) + 1);
     }
 }

@@ -24,28 +24,7 @@ public class SelectionManager implements Serializable {
     }
 
     public void selectCell(Cell cell) {
-        if (cells.size() == 0) {
-            if (cardHandIndex != null) {
-                try {
-                    game.useCard(cardHandIndex, cell);
-                } catch (NotEnoughConditions notEnoughConditions) {
-                    Utility.showMessage(notEnoughConditions.getMessage());
-                }
-            } else if (specialPowerIsSelected) {
-                try {
-                    game.useSpecialPower(cell);
-                } catch (NotEnoughConditions notEnoughConditions) {
-                    Utility.showMessage(notEnoughConditions.getMessage());
-                }
-            } else if (collectibleItem != null) {
-                try {
-                    game.useCollectible(collectibleItem, cell);
-                } catch (NotEnoughConditions notEnoughConditions) {
-                    Utility.showMessage(notEnoughConditions.getMessage());
-                }
-            }
-            deselectAll();
-        }
+
 
         if (cell.getWarrior() != null) {
             if (game.getActivePlayer().getWarriors().contains(cell.getWarrior())) {
@@ -57,27 +36,53 @@ public class SelectionManager implements Serializable {
                 if (cells.size() == 1) {
                     try {
                         game.attack(cells.get(0), cell);
+                        deselectAll();
                     } catch (NotEnoughConditions notEnoughConditions) {
                         Utility.showMessage(notEnoughConditions.getMessage());
                     }
                 } else if (cells.size() > 1) {
                     try {
                         game.comboAttack(cells, cell);
+                        deselectAll();
                     } catch (NotEnoughConditions notEnoughConditions) {
                         Utility.showMessage(notEnoughConditions.getMessage());
                     }
                 }
-                deselectAll();
             }
         } else {
             if (cells.size() == 1) {
                 try {
                     game.move(cells.get(0), cell);
+                    deselectAll();
                 } catch (NotEnoughConditions notEnoughConditions) {
                     Utility.showMessage(notEnoughConditions.getMessage());
                 }
             }
-            deselectAll();
+        }
+
+        if (cells.size() == 0) {
+            if (cardHandIndex != null) {
+                try {
+                    game.useCard(cardHandIndex, cell);
+                    deselectAll();
+                } catch (NotEnoughConditions notEnoughConditions) {
+                    Utility.showMessage(notEnoughConditions.getMessage());
+                }
+            } else if (specialPowerIsSelected) {
+                try {
+                    game.useSpecialPower(cell);
+                    deselectAll();
+                } catch (NotEnoughConditions notEnoughConditions) {
+                    Utility.showMessage(notEnoughConditions.getMessage());
+                }
+            } else if (collectibleItem != null) {
+                try {
+                    game.useCollectible(collectibleItem, cell);
+                    deselectAll();
+                } catch (NotEnoughConditions notEnoughConditions) {
+                    Utility.showMessage(notEnoughConditions.getMessage());
+                }
+            }
         }
 
         ArenaController.ac.setSelectionEffect(this);

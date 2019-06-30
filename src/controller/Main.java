@@ -3,6 +3,7 @@ package controller;
 import controller.window.LoadWindow;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 import model.Account;
 import model.Deck;
@@ -24,7 +25,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         mainStage = primaryStage;
         mainStage.setFullScreen(true);
-        mainStage.setFullScreenExitHint("");
+        mainStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         mainStage.setOnCloseRequest(event -> {
             Platform.exit();
             System.exit(0);
