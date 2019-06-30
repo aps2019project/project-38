@@ -27,6 +27,7 @@ public class Account implements Comparable<Account>, java.io.Serializable {
         this.password = password;
         usernameToAccountObject.put(username, this);
         avatar= LoadedImages.avatars[new Random().nextInt(15)];
+        collection.setMainDeck(Deck.getAllDecks().get("level1"));
     }
 
     //***
@@ -140,5 +141,18 @@ public class Account implements Comparable<Account>, java.io.Serializable {
 
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Account account = (Account) o;
+        return Objects.equals(username, account.username);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(username);
     }
 }

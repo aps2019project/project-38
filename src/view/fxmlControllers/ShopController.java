@@ -14,6 +14,7 @@ import javafx.scene.text.Text;
 import model.Account;
 import model.cards.*;
 import view.Utility;
+import view.WindowChanger;
 import view.fxmls.LoadedScenes;
 
 import java.io.IOException;

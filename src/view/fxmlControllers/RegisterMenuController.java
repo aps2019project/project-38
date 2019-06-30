@@ -6,8 +6,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import model.Account;
-import view.WindowChanger;
 import view.Utility;
+import view.WindowChanger;
 import view.fxmls.LoadedScenes;
 import view.images.LoadedImages;
 

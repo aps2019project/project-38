@@ -13,12 +13,9 @@ import model.player.HumanPlayer;
 import model.player.Player;
 import model.triggers.CollectibleMine;
 import model.triggers.Trigger;
-import view.WindowChanger;
 import view.fxmlControllers.ArenaController;
-import view.fxmls.LoadedScenes;
 
 import java.io.Serializable;
-import java.sql.SQLOutput;
 import java.util.*;
 import java.util.stream.Collectors;
 

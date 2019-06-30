@@ -14,8 +14,8 @@ import model.Account;
 import model.Collection;
 import model.Deck;
 import model.cards.*;
-import view.Message;
 import view.Utility;
+import view.WindowChanger;
 import view.fxmls.LoadedScenes;
 
 import java.io.IOException;

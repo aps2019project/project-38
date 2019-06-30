@@ -1,14 +1,11 @@
 package view.fxmlControllers;
 
-import controller.window.Window;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import view.WindowChanger;
 import view.fxmls.LoadedScenes;

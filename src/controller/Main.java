@@ -5,13 +5,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
-import model.Account;
-import model.Deck;
-import model.Game;
-import model.Level;
 import view.WindowChanger;
-import view.fxmlControllers.ArenaController;
-import view.fxmlControllers.LoadingGamePreviewScenes;
 import view.fxmls.LoadedScenes;
 
 public class Main extends Application {
@@ -35,15 +29,15 @@ public class Main extends Application {
 
         WindowChanger.instance.setNewScene(LoadedScenes.registerMenu);
 
-        {//arena
-            Account account = new Account("test", "test");
-            account.getCollection().setMainDeck(Deck.getAllDecks().get("level1"));
-            Game game = Level.getAvailableLevels().get("1").getLevelGame(account);
-            ArenaController.ac.init(game);
-            game.initialiseGameFields();
-
-            WindowChanger.instance.setNewScene(LoadedScenes.arena);
-        }
+//        {//arena
+//            Account account = new Account("test", "test");
+//            account.getCollection().setMainDeck(Deck.getAllDecks().get("level1"));
+//            Game game = Level.getAvailableLevels().get("1").getLevelGame(account);
+//            ArenaController.ac.init(game);
+//            game.initialiseGameFields();
+//
+//            WindowChanger.instance.setNewScene(LoadedScenes.arena);
+//        }
 
         primaryStage.show();
     }
