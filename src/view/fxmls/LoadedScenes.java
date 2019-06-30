@@ -2,7 +2,6 @@ package view.fxmls;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
-import view.Utility;
 
 import java.io.IOException;
 
@@ -19,7 +18,6 @@ public class LoadedScenes {
     public static Pane shop;
     public static Pane collectionOfShop;
     public static Pane arena;
-    public static Pane createDeck;
 
     {
         try {
@@ -30,7 +28,6 @@ public class LoadedScenes {
             chooseBattleKind = scale(FXMLLoader.load(getClass().getResource("chooseBattleKind.fxml")));
             shop = scale(FXMLLoader.load(getClass().getResource("shop.fxml")));
             arena = scale(FXMLLoader.load(getClass().getResource("arena.fxml")));
-            createDeck = scale(FXMLLoader.load(getClass().getResource("createDeck.fxml")));
         } catch (IOException e) {
             e.printStackTrace();
         }

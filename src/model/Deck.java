@@ -1,5 +1,6 @@
 package model;
 
+import model.cards.Card;
 import model.cards.CardFactory;
 import model.cards.Hero;
 import model.cards.Spell;
@@ -12,8 +13,10 @@ public class Deck implements Serializable {
     private static HashMap<String, Deck> allDecks = new HashMap<>();
     private ArrayList<Integer> cardIDs = new ArrayList<>();
     private String name;
-    private Spell item;
-    private Hero hero;
+    public Spell item;
+    public Hero hero;
+    public ArrayList<Card> minions = new ArrayList<>();
+    public ArrayList<Card> spells = new ArrayList<>();
 
     //***
 

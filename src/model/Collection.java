@@ -3,9 +3,9 @@ package model;
 import model.cards.Card;
 import model.cards.Hero;
 import model.cards.Spell;
-import view.Message;
+import model.cards.Warrior;
 import view.Utility;
-import view.fxmlControllers.CreateDeckController;
+import view.fxmlControllers.DeckController;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -29,7 +29,8 @@ public class Collection implements Serializable {
         deck.setName(deckName);
         getDecks().add(deckName);
         getAllDecks().put(deckName, deck);
-        CreateDeckController.putANewDeckToList(deckName);
+        Deck.getAllDecks().put(deckName, deck);
+        DeckController.putADeckToList(deckName);
         Utility.showMessage("Deck created :)");
     }
 
@@ -50,7 +51,8 @@ public class Collection implements Serializable {
         }
         getDecks().remove(deckName);
         getAllDecks().remove(deckName);
-        CreateDeckController.removeADeckFromList(deckName);
+        Deck.getAllDecks().remove(deckName);
+        DeckController.removeADeckFromList(deckName);
         Utility.showMessage("Deck deleted :)");
     }
 
@@ -96,11 +98,16 @@ public class Collection implements Serializable {
                 numberOfCard++;
             }
         }
-        if (numberOfCard > Collection.getCollection().howManyCard.get(cardName)) {
+        if (numberOfCard >= Collection.getCollection().howManyCard.get(cardName)) {
             Utility.showMessage("You can't add this card to your deck. You haven't enough number of it in your collection");
             return;
         }
         deck.getCardIDs().add(cardID);
+        if (card instanceof Warrior) {
+            deck.minions.add(card);
+        } else {
+            deck.spells.add(card);
+        }
         Utility.showMessage("Card added to deck successfully :)");
     }
 
@@ -127,7 +134,7 @@ public class Collection implements Serializable {
                 return;
             }
         }
-        if (card instanceof Spell) {
+        if (Spell.checkIsItem(card)) {
             if (deck.getItem().equals((Spell) card)) {
                 deck.setItem(null);
                 Utility.showMessage("Card removed from deck successfully :)");
@@ -139,23 +146,34 @@ public class Collection implements Serializable {
         }
         if (deck.getCardIDs().contains(cardID)) {
             deck.getCardIDs().remove((Integer) cardID);
+            if (card instanceof Warrior) {
+                deck.minions.remove(card);
+            } else {
+                deck.spells.remove(card);
+            }
             Utility.showMessage("Card removed from deck successfully :)");
         } else {
             Utility.showMessage("There is no card with this name in this deck :(");
         }
     }
 
-    public boolean validateDeck(String deckName) {
+    public boolean validateDeck(String deckName, boolean showMessage) {
         if (!Account.getActiveAccount().getCollection().getAllDecks().containsKey(deckName)) {
-            Utility.showMessage("There is no deck with this name :(");
+            if (showMessage) {
+                Utility.showMessage("There is no deck with this name :(");
+            }
             return false;
         }
         Deck deck = Account.getActiveAccount().getCollection().getAllDecks().get(deckName);
         if (deck.getCardIDs().size() != 20 || deck.getHero() == null) {
-            Utility.showMessage("This deck is not valid :(");
+            if (showMessage) {
+                Utility.showMessage("This deck is not valid :(");
+            }
             return false;
         }
-        Utility.showMessage("This deck is valid :)");
+        if (showMessage) {
+            Utility.showMessage("This deck is valid :)");
+        }
         return true;
     }
 
@@ -164,7 +182,7 @@ public class Collection implements Serializable {
             Utility.showMessage("There is no deck with this name :(");
             return;
         }
-        if (validateDeck(deckName)) {
+        if (validateDeck(deckName, false)) {
             setMainDeck(Account.getActiveAccount().getCollection().getAllDecks().get(deckName));
             Utility.showMessage("This deck selected as main successfully :)");
         } else {
