@@ -2,6 +2,7 @@ package model.cards;
 
 import model.Cell;
 import model.QualityHaver;
+import model.Shop;
 import model.effects.Effect;
 import model.exceptions.NotEnoughConditions;
 import model.triggers.Trigger;
@@ -26,12 +27,13 @@ public abstract class Card extends QualityHaver implements Serializable {
         this.price = price;
     }
 
-    public static void getNewCardFromUser() {
-        //todo for phase2
-    }
-
-    public static void getCardsInfoFromFile() {
-        //todo for phase2
+    public static int getIDByName(String cardName) {
+        for (int ID : Shop.getShop().getCardIDs()) {
+            if (Card.getAllCards().get(ID).getName().equals(cardName)) {
+                return ID;
+            }
+        }
+        return -1;
     }
 
     public abstract void apply(Cell cell) throws NotEnoughConditions;

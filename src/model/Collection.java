@@ -3,7 +3,9 @@ package model;
 import model.cards.Card;
 import model.cards.Hero;
 import model.cards.Spell;
-import view.Message;
+import model.cards.Warrior;
+import view.Utility;
+import view.fxmlControllers.DeckController;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,53 +18,10 @@ public class Collection implements Serializable {
     private HashMap<String, Integer> howManyCard = new HashMap<>();
     private Deck mainDeck;
 
-//    {// todo for test + danger + set a default deck
-//        Deck deck = new Deck();
-//        deck.setName("DefaultDeck");
-//
-//        deck.setHero((Hero) CardFactory.getAllBuiltHeroes().get(6));
-//        deck.setItem((Spell) CardFactory.getAllBuiltItems().get(11));
-//        int[] spellIndex = {17, 17, 17, 4, 4, 4, 4};
-//        for (int i = 0; i < 7; i++) {
-//            deck.getCardIDs().add(CardFactory.getAllBuiltSpells().get(spellIndex[i] - 1).getID());
-//        }
-//        int[] minionIndex = {1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25};
-//        for (int i = 0; i < 13; i++) {
-//            deck.getCardIDs().add(CardFactory.getAllBuiltMinions().get(minionIndex[i] - 1).getID());
-//        }
-//        mainDeck = deck;
-//
-//        this.getDecks().add("DefaultDeck");
-//        this.getAllDecks().put("DefaultDeck", deck);
-//        this.getCardIDs().addAll(deck.getCardIDs());
-//        this.getCardIDs().add(deck.getHero().getID());
-//        this.getCardIDs().add(deck.getItem().getID());
-//    }
-//
-//    {//todo for test + danger
-//        this.decks.add("level3");
-//        this.allDecks.put("level3", Deck.getAllDecks().get("level3"));
-//        this.getCardIDs().addAll(Deck.getAllDecks().get("level3").getCardIDs());
-//        this.getCardIDs().add(Deck.getAllDecks().get("level3").getHero().getID());
-//        this.getCardIDs().add(Deck.getAllDecks().get("level3").getItem().getID());
-//        this.decks.add("level2");
-//        this.allDecks.put("level2", Deck.getAllDecks().get("level2"));
-//        this.getCardIDs().addAll(Deck.getAllDecks().get("level2").getCardIDs());
-//        this.getCardIDs().add(Deck.getAllDecks().get("level2").getHero().getID());
-//        this.getCardIDs().add(Deck.getAllDecks().get("level2").getItem().getID());
-//        this.decks.add("allCombo");
-//        this.allDecks.put("allCombo", Deck.getAllDecks().get("allCombo"));
-//        this.getCardIDs().addAll(Deck.getAllDecks().get("allCombo").getCardIDs());
-//        this.getCardIDs().add(Deck.getAllDecks().get("allCombo").getHero().getID());
-//        this.getCardIDs().add(Deck.getAllDecks().get("allCombo").getItem().getID());
-//    }
-
-    //***
-
     public void createDeck(String deckName) {
         for (String template : getDecks()) {
             if (template.toLowerCase().equals(deckName.toLowerCase())) {
-                Message.thereIsAlreadyADeckWhitThisName();
+                Utility.showMessage("There is already a deck with this name");
                 return;
             }
         }
@@ -70,7 +29,9 @@ public class Collection implements Serializable {
         deck.setName(deckName);
         getDecks().add(deckName);
         getAllDecks().put(deckName, deck);
-        Message.deckCreated();
+        Deck.getAllDecks().put(deckName, deck);
+        DeckController.putADeckToList(deckName);
+        Utility.showMessage("Deck created :)");
     }
 
     public void deleteDeck(String deckName) {
@@ -81,56 +42,54 @@ public class Collection implements Serializable {
             }
         }
         if (!isDeckNameValid) {
-            Message.thereIsNoDeckWithThisName();
+            Utility.showMessage("There is no deck with this name :(");
             return;
         }
         Deck deck = Account.getActiveAccount().getCollection().getAllDecks().get(deckName);
-        if (this.getMainDeck()!=null && this.getMainDeck().equals(deck)) {
+        if (this.getMainDeck() != null && this.getMainDeck().equals(deck)) {
             this.setMainDeck(null);
         }
         getDecks().remove(deckName);
         getAllDecks().remove(deckName);
-        Message.deckDeleted();
+        Deck.getAllDecks().remove(deckName);
+        DeckController.removeADeckFromList(deckName);
+        Utility.showMessage("Deck deleted :)");
     }
 
     public void addCardToDeck(String cardName, String deckName) {
         if (!Account.getActiveAccount().getCollection().getAllDecks().containsKey(deckName)) {
-            Message.thereIsNoDeckWithThisName();
+            Utility.showMessage("There is no deck with this name :(");
             return;
         }
         Deck deck = Account.getActiveAccount().getCollection().getAllDecks().get(deckName);
         int cardID = getIDByName(cardName);
         if (!this.getCardIDs().contains(cardID)) {
-            Message.thereIsNoCardWithThisNameInCollection();
+            Utility.showMessage("There is no card with this name in collection cards :(");
             return;
         }
         Card card = Card.getAllCards().get(cardID);
-        if (deck.getCardIDs().contains(cardID)) {
-            Message.thereIsACardWithThisNameInThisDeck();
-            return;
-        }
         if (card instanceof Hero) {
             if (deck.getHero() != null) {
-                Message.thereIsAHeroInThisDeck();
+                Utility.showMessage("There is already a hero in this deck. You can't add any other");
                 return;
             } else {
                 deck.setHero((Hero) card);
-                Message.cardAddedToDeckSuccessfully();
+                Utility.showMessage("Card added to deck successfully :)");
                 return;
             }
         }
         if (Spell.checkIsItem(card)) {
             if (deck.getItem() != null) {
-                Message.thereIsAnItemInThisDeck();
+                Utility.showMessage("There is an item in this deck");
                 return;
             } else {
                 deck.setItem((Spell) card);
-                Message.cardAddedToDeckSuccessfully();
+                Utility.showMessage("Card added to deck successfully :)");
                 return;
             }
         }
         if (deck.getCardIDs().size() == 20) {
-            Message.have20CardsInThisDeck();
+            Utility.showMessage("You have 20 cards in your deck. You couldn't put any other card");
             return;
         }
         int numberOfCard = 0;
@@ -139,22 +98,27 @@ public class Collection implements Serializable {
                 numberOfCard++;
             }
         }
-        if (numberOfCard > Collection.getCollection().howManyCard.get(cardName)) {
-            Message.notEnoughCardNumber();
+        if (numberOfCard >= Collection.getCollection().howManyCard.get(cardName)) {
+            Utility.showMessage("You can't add this card to your deck. You haven't enough number of it in your collection");
             return;
         }
         deck.getCardIDs().add(cardID);
-        Message.cardAddedToDeckSuccessfully();
+        if (card instanceof Warrior) {
+            deck.minions.add(card);
+        } else {
+            deck.spells.add(card);
+        }
+        Utility.showMessage("Card added to deck successfully :)");
     }
 
     public void removeCardFromDeck(String cardName, String deckName) {
         int cardID = getIDByName(cardName);
         if (!Account.getActiveAccount().getCollection().getAllDecks().containsKey(deckName)) {
-            Message.thereIsNoDeckWithThisName();
+            Utility.showMessage("There is no deck with this name :(");
             return;
         }
         if (!Card.getAllCards().containsKey(cardID)) {
-            Message.thereIsNoCardWithThisNameInThisDeck();
+            Utility.showMessage("There is no card with this name in this deck :(");
             return;
         }
         Deck deck = Account.getActiveAccount().getCollection().getAllDecks().get(deckName);
@@ -163,55 +127,66 @@ public class Collection implements Serializable {
         if (card instanceof Hero) {
             if (deck.getHero().equals((Hero) card)) {
                 deck.setHero(null);
-                Message.cardRemovedFromDeckSuccessfully();
+                Utility.showMessage("Card removed from deck successfully :)");
                 return;
             } else {
-                Message.thereIsNoCardWithThisNameInThisDeck();
+                Utility.showMessage("There is no card with this name in this deck :(");
                 return;
             }
         }
-        if (card instanceof Spell) {
+        if (Spell.checkIsItem(card)) {
             if (deck.getItem().equals((Spell) card)) {
                 deck.setItem(null);
-                Message.cardRemovedFromDeckSuccessfully();
+                Utility.showMessage("Card removed from deck successfully :)");
                 return;
             } else {
-                Message.thereIsNoCardWithThisNameInThisDeck();
+                Utility.showMessage("There is no card with this name in this deck :(");
                 return;
             }
         }
         if (deck.getCardIDs().contains(cardID)) {
             deck.getCardIDs().remove((Integer) cardID);
-            Message.cardRemovedFromDeckSuccessfully();
+            if (card instanceof Warrior) {
+                deck.minions.remove(card);
+            } else {
+                deck.spells.remove(card);
+            }
+            Utility.showMessage("Card removed from deck successfully :)");
         } else {
-            Message.thereIsNoCardWithThisNameInThisDeck();
+            Utility.showMessage("There is no card with this name in this deck :(");
         }
     }
 
-    public boolean validateDeck(String deckName, boolean showResultsOrNot) {
+    public boolean validateDeck(String deckName, boolean showMessage) {
         if (!Account.getActiveAccount().getCollection().getAllDecks().containsKey(deckName)) {
-            if (showResultsOrNot) Message.thereIsNoDeckWithThisName();
+            if (showMessage) {
+                Utility.showMessage("There is no deck with this name :(");
+            }
             return false;
         }
         Deck deck = Account.getActiveAccount().getCollection().getAllDecks().get(deckName);
         if (deck.getCardIDs().size() != 20 || deck.getHero() == null) {
-            if (showResultsOrNot) Message.deckIsNotValid();
+            if (showMessage) {
+                Utility.showMessage("This deck is not valid :(");
+            }
             return false;
         }
-        if (showResultsOrNot) Message.deckIsValid();
+        if (showMessage) {
+            Utility.showMessage("This deck is valid :)");
+        }
         return true;
     }
 
     public void selectMainDeck(String deckName) {
         if (!Account.getActiveAccount().getCollection().getAllDecks().containsKey(deckName)) {
-            Message.thereIsNoDeckWithThisName();
+            Utility.showMessage("There is no deck with this name :(");
             return;
         }
         if (validateDeck(deckName, false)) {
             setMainDeck(Account.getActiveAccount().getCollection().getAllDecks().get(deckName));
-            Message.deckSelectedAsMain();
+            Utility.showMessage("This deck selected as main successfully :)");
         } else {
-            Message.deckIsNotValid();
+            Utility.showMessage("This deck is not valid :(");
         }
     }
 

@@ -6,8 +6,11 @@ import model.Account;
 import view.WindowChanger;
 import view.fxmls.LoadedScenes;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import static view.Utility.scale;
 
 public class MainMenuController implements Initializable {
     public AnchorPane mainPane;
@@ -30,7 +33,12 @@ public class MainMenuController implements Initializable {
         WindowChanger.instance.setNewScene(LoadedScenes.registerMenu);
     }
 
-    public void collection() {
+    public void createDeck() {
+        try {
+            WindowChanger.instance.setNewScene(scale(FXMLLoader.load(LoadedScenes.class.getResource("deckManager.fxml"))));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void shop() {

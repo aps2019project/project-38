@@ -10,6 +10,7 @@ import view.fxmlControllers.ArenaController;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -40,11 +41,20 @@ public class VisualMinion {
         view.setOnMouseEntered(event -> {
             idle();
 //            if (ArenaController.ac.game != null) {
-//                Warrior theCard =(Warrior) Card.getAllCards().values().stream().filter(card -> card.getName().equals(name)).findAny().orElse(null);
-//                if(theCard==null){
+//                Warrior theCard = (Warrior) ArenaController.ac.game.getActivePlayer().getHand().values().stream().filter(Objects::nonNull).filter(card -> card.getName().equals(name)).findAny().orElse(null);
+//                if (theCard == null) {
+//                    if (ArenaController.ac.game.getActivePlayer().getPlayerHero().getName().equals(name)) {
+//                        theCard = ArenaController.ac.game.getActivePlayer().getPlayerHero();
+//                    }
+//                    if(theCard==null){
+//                    }
+//                }
+//
+//                if (theCard == null) {
+//                    System.err.println("didn't find the vm");
 //                    return;
 //                }
-//                ArenaController.ac.showInfoOfACard(name,theCard.description.getDescriptionOfCardSpecialAbility(),"Minion",view,animation.width,animation.height,theCard.getHp(),theCard.getAp());
+//                ArenaController.ac.showInfoOfACard(name, theCard.description.getDescriptionOfCardSpecialAbility(), "warrior", theCard.getHp(), theCard.getAp());
 //            }
         });
         view.setOnMouseExited(event -> {

@@ -25,6 +25,9 @@ public class GamePreviewButtonController {
     private String fatherSceneName, nextSceneName;
 
     public void doClickEvents(MouseEvent mouseEvent) {
+        Platform.runLater(() -> {
+
+
         LoadingGamePreviewScenes.selectedButtonsText.add(buttonText.getText());
         if (nextSceneName.equals("Game Window")) {
             Game game;
@@ -61,6 +64,7 @@ public class GamePreviewButtonController {
             WindowChanger.instance.setNewScene(LoadingGamePreviewScenes.starterScenes.get(nextSceneName));
             LoadingGamePreviewScenes.starterControllers.get(nextSceneName).run();
         }
+        });
     }
 
     private GameMode getMoodForStartingGame(int index) {

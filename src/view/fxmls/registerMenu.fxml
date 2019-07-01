@@ -6,7 +6,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane fx:id="mainPane" prefHeight="270.0" prefWidth="480.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.fxmlControllers.RegisterMenuController">
-    <ImageView fx:id="backGround" fitHeight="294.0" fitWidth="511.0" pickOnBounds="true" preserveRatio="true" />
+    <ImageView fx:id="backGround" fitHeight="302.0" fitWidth="511.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@../images/registerMenu/backGround.jpg" />
+      </image></ImageView>
     <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="431.0" layoutY="108.0">
         <Image url="@../../view/images/registerMenu/sign.png" />
     </ImageView>

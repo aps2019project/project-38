@@ -10,6 +10,8 @@ public class ShownSomethingInArenaController extends Holder {
     public Text typeText;
     public Text descriptionText;
 
+
+
     public void setName(String name) {
         this.nameText.setText(name);
     }

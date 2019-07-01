@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.Random;
 
 public class LoadedImages {
-    public static Image backGroundOfRegisterMenu = null;
     public static HashMap<String, ArrayList<Image>> notStaticBeforeGameImages = new HashMap<>();
 
     public static Image[] avatars = new Image[15];
@@ -25,7 +24,6 @@ public class LoadedImages {
     {
         Random random = new Random();
         try {
-            backGroundOfRegisterMenu = new Image(new FileInputStream("src/view/images/registerMenu/" + random.nextInt(5) + ".jpg"));
             //for arena:
             blueMana = new Image(new FileInputStream("src/view/images/arena/blueMana.png"));
             grayMana = new Image(new FileInputStream("src/view/images/arena/grayMana.png"));

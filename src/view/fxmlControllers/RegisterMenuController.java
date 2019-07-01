@@ -15,17 +15,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class RegisterMenuController implements Initializable {
+public class RegisterMenuController {
     public AnchorPane mainPane;
     public ImageView backGround;
 
     public static Pane getScene() {
         return LoadedScenes.registerMenu;
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        backGround.setImage(LoadedImages.backGroundOfRegisterMenu);
     }
 
     public void createAccount() {

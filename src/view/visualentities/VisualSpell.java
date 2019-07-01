@@ -3,6 +3,7 @@ package view.visualentities;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import model.cards.Card;
+import model.cards.CardFactory;
 import model.cards.Spell;
 import model.cards.Warrior;
 import view.fxmlControllers.ArenaController;
@@ -37,11 +38,11 @@ public class VisualSpell {
         view.setOnMouseEntered(event -> {
             idle();
 //            if (ArenaController.ac.game != null) {
-//                Spell theCard =(Spell) Card.getAllCards().values().stream().filter(card -> card.getName().equals(name)).findAny().orElse(null);
+//                Card theCard = Card.getAllCards().values().stream().filter(card -> card.getName().equals(name)).findAny().orElse(null);
 //                if(theCard==null){
-//                    return;
+//                    theCard = CardFactory.getAllBuiltHeroes().stream().filter(hero -> hero.getPower()!=null).filter(hero -> hero.getPower().getName().equals(name)).findAny().orElse(null);
 //                }
-//                ArenaController.ac.showInfoOfACard(name,theCard.description.getDescriptionOfCardSpecialAbility(),"Minion",view,animation.width,animation.height,0,0);
+//                ArenaController.ac.showInfoOfACard(name,theCard.description.getDescriptionOfCardSpecialAbility(),"spell",0,0);
 //
 //            }
         });

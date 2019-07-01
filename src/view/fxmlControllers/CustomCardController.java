@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import model.cards.CardCustomizer;
 import view.WindowChanger;
 import view.fxmls.LoadedScenes;
 
@@ -114,11 +115,10 @@ public class CustomCardController implements Initializable {
     }
 
     public void apply_btn() {
-        // todo for MOEINI
+        new CardCustomizer(this).build();
     }
 
     //--------.: GETTERS :.---------
-
 
     public String getCardName() {
         return cardName_tf.getText();

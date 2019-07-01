@@ -25,6 +25,7 @@ import model.Cell;
 import model.Game;
 import model.SelectionManager;
 import model.cards.Card;
+import model.cards.Spell;
 import model.cards.Warrior;
 import model.player.Player;
 import view.WindowChanger;
@@ -115,9 +116,9 @@ public class ArenaController implements Initializable, PropertyChangeListener {
         transferToGraveYard("Jen", 2);
 */
 
-        VisualMinion vm = new VisualMinion("Jen");
-
-        showInfoOfACard("ali", "alalalalala", "warrior", vm.view, vm.getWidth(), vm.getHeight(), 100, 100);
+//        VisualMinion vm = new VisualMinion("Jen");
+//
+//        showInfoOfACard("ali", "alalalalala", "warrior", vm.view, vm.getWidth(), vm.getHeight(), 100, 100);
         //--------------------------------------------------------------------
 
         ac = this;
@@ -126,7 +127,6 @@ public class ArenaController implements Initializable, PropertyChangeListener {
 
         //producing click boxes and fixing indexes of nodes of gridPane
         Platform.runLater(() ->
-
         {
             fixGridNodesIndexes();
 
@@ -172,7 +172,7 @@ public class ArenaController implements Initializable, PropertyChangeListener {
         this.game = game;
         visualMinions = new VisualMinion[5][9];
 
-        beforeStartTheGame(game.getPlayers()[0],game.getPlayers()[1]);// todo because hero powers do not have name or sprite yet. also remember that some heroes don't have power
+        beforeStartTheGame(game.getPlayers()[0], game.getPlayers()[1]);
     }
 
     public void put(int row, int col, String name) {
@@ -182,6 +182,15 @@ public class ArenaController implements Initializable, PropertyChangeListener {
 
             pane.getChildren().add(vm.view);
             visualMinions[row][col] = vm;
+
+            vm.view.setOnMouseEntered(event -> {
+                Warrior warrior = game.getBoard().getCell(row, col).getWarrior();
+                showInfoOfACard(warrior.getName(), warrior.description.getDescriptionOfCardSpecialAbility(), "warrior", warrior.getHp(), warrior.getAp());
+            });
+
+            vm.view.setOnMouseExited(event -> {
+                endShowInfoOfACard();
+            });
         });
     }
 
@@ -219,6 +228,11 @@ public class ArenaController implements Initializable, PropertyChangeListener {
                     vm.breathing();
                 }
             }, (long) duration.toMillis());
+
+            vm.view.setOnMouseEntered(event -> {
+                Warrior warrior = game.getBoard().getCell(tRow, tCol).getWarrior();
+                showInfoOfACard(warrior.getName(), warrior.description.getDescriptionOfCardSpecialAbility(), "warrior", warrior.getHp(), warrior.getAp());
+            });
         });
     }
 
@@ -393,7 +407,6 @@ public class ArenaController implements Initializable, PropertyChangeListener {
             } else {
                 hero2SpecialPower.getChildren().add(pane);
                 heroSpecialPowerControllers[i].setHeroSpecialPowerFirstInfo(player2);
-
             }
         }
 
@@ -506,12 +519,39 @@ public class ArenaController implements Initializable, PropertyChangeListener {
                         VisualMinion vm = new VisualMinion(name);
                         visualEntity = vm.view;
                         cardHolders[i].put(visualEntity, vm.getWidth(), vm.getHeight());
+
+                        visualEntity.setOnMouseEntered(event -> {//amir
+                            if(i==0){
+                                Warrior w= (Warrior)game.getActivePlayer().getNextCard();
+                                showInfoOfACard(w.getName(),w.description.getDescriptionOfCardSpecialAbility(),"warrior",w.getHp(),w.getAp());
+                            }else {
+                                Warrior w = (Warrior)game.getActivePlayer().getHand().get(i-1);
+                                showInfoOfACard(w.getName(),w.description.getDescriptionOfCardSpecialAbility(),"warrior",w.getHp(),w.getAp());
+                            }
+                        });
+                        visualEntity.setOnMouseExited(event -> {
+                            endShowInfoOfACard();
+                        });
                     } else {
                         VisualSpell vm = new VisualSpell(name);
                         visualEntity = vm.view;
                         cardHolders[i].put(visualEntity, vm.getWidth(), vm.getHeight());
+
+                        visualEntity.setOnMouseEntered(event -> {//amir
+                            if(i==0){
+                                Spell w= (Spell) game.getActivePlayer().getNextCard();
+                                showInfoOfACard(w.getName(),w.description.getDescriptionOfCardSpecialAbility(),"spell",0,0);
+                            }else {
+                                Spell w = (Spell)game.getActivePlayer().getHand().get(i-1);
+                                showInfoOfACard(w.getName(),w.description.getDescriptionOfCardSpecialAbility(),"spell",0,0);
+                            }
+                        });
+                        visualEntity.setOnMouseExited(event -> {
+                            endShowInfoOfACard();
+                        });
                     }
-                    if (i > 0) {
+
+                    if (i > 0) {//amir
                         visualEntity.setOnMouseClicked(event -> game.getSelectionManager().selectCard(i - 1));
                     }
                     break;
@@ -610,13 +650,11 @@ public class ArenaController implements Initializable, PropertyChangeListener {
     }
 
 
-    //for show information of cards: // todo for MOEINI
-
     public Pane shownCardInformationHolder_pn;
     private Pane shownSpell_pn;
     private Pane shownWarrior_pn;
 
-    public void showInfoOfACard(String name, String description, String type /* spell or warrior */, ImageView sprite, double widthOfSprite, double heightOfSprite, int HP, int AP /* put anything if the card isn't a warrior */) {
+    public void showInfoOfACard(String name, String description, String type /* spell or warrior */, int HP, int AP /* put anything if the card isn't a warrior */) {
         FXMLLoader spellFXML = new FXMLLoader(LoadedScenes.class.getResource("shownSpellInArena.fxml"));
         FXMLLoader warriorFXML = new FXMLLoader(LoadedScenes.class.getResource("shownWarriorInArena.fxml"));
         try {
@@ -635,13 +673,21 @@ public class ArenaController implements Initializable, PropertyChangeListener {
             shownWarriorInArenaController.setType("warrior");
             shownWarriorInArenaController.setAP(AP);
             shownWarriorInArenaController.setHP(HP);
-            shownWarriorInArenaController.put(sprite, widthOfSprite, heightOfSprite);
+
+            VisualMinion vm = new VisualMinion(name);
+            vm.view.setOnMouseEntered(null);
+            vm.view.setOnMouseExited(null);
+            shownWarriorInArenaController.put(vm.view, vm.animation.width, vm.animation.height);
         } else {
             shownCardInformationHolder_pn.getChildren().add(shownSpell_pn);
             shownSpellInArenaController.setName(name);
             shownSpellInArenaController.setDescription(description);
             shownSpellInArenaController.setType("spell");
-            shownSpellInArenaController.put(sprite, widthOfSprite, heightOfSprite);
+
+            VisualSpell vs = new VisualSpell(name);
+            vs.view.setOnMouseEntered(null);
+            vs.view.setOnMouseExited(null);
+            shownSpellInArenaController.put(vs.view, vs.animation.width, vs.animation.height);
         }
     }
 
