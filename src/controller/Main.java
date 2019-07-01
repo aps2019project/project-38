@@ -3,11 +3,15 @@ package controller;
 import controller.window.LoadWindow;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 import view.WindowChanger;
-import view.fxmlControllers.AlertController;
+import view.fxmlControllers.GamePreviewButtonController;
+import view.fxmlControllers.LoadingGamePreviewScenes;
 import view.fxmls.LoadedScenes;
+
+import java.io.IOException;
 
 public class Main extends Application {
     public static Stage mainStage;
@@ -39,6 +43,6 @@ public class Main extends Application {
 //            WindowChanger.instance.setNewScene(LoadedScenes.arena);
 //        }
 
-        primaryStage.show();
+        mainStage.show();
     }
 }

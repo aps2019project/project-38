@@ -13,13 +13,14 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import model.Account;
 import model.cards.*;
-import view.Utility;
 import view.WindowChanger;
 import view.fxmls.LoadedScenes;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.ResourceBundle;
 
 import static view.Utility.scaleCard;
 

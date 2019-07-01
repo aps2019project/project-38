@@ -17,9 +17,9 @@
                </image>
             </ImageView>
             <Label layoutX="126.0" layoutY="167.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#close" prefHeight="44.0" prefWidth="59.0" />
-            <Text fx:id="text" fill="#b59898" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="300.0">
+            <Text fx:id="text" fill="#b9a5a5" layoutX="10.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="280.0">
                <font>
-                  <Font size="15.0" />
+                  <Font size="12.0" />
                </font>
             </Text>
             <ImageView fitHeight="44.0" fitWidth="300.0">

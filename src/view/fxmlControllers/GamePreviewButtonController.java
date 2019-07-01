@@ -1,5 +1,6 @@
 package view.fxmlControllers;
 
+import javafx.application.Platform;
 import javafx.scene.control.Label;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
@@ -15,7 +16,6 @@ import model.gamemodes.KillingEnemyHero;
 import view.WindowChanger;
 import view.fxmls.LoadedScenes;
 
-import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -41,7 +41,7 @@ public class GamePreviewButtonController {
                 else {
                     Matcher matcher = Pattern.compile("Deck: (?<deckName>.+) Hero: .+")
                             .matcher(LoadingGamePreviewScenes.selectedButtonsText.get(2));
-                    assert matcher.matches();
+                    matcher.matches();
                     Deck deck = Account.getActiveAccount().getCollection().getAllDecks().get(matcher.group("deckName"));
                     game = new Game(getMoodForStartingGame(2), Account.getActiveAccount(), deck);
                 }
@@ -50,7 +50,9 @@ public class GamePreviewButtonController {
                 Account account = Account.getUsernameToAccountObject().get(LoadingGamePreviewScenes.selectedButtonsText.get(1));
                 game = new Game(getMoodForStartingGame(2), Account.getActiveAccount(), account);
             }
-            ArenaController.ac.init(game);
+            Platform.runLater(() -> {
+                ArenaController.ac.init(game);
+            });
             game.initialiseGameFields();
             WindowChanger.instance.setNewScene(LoadedScenes.arena);
         }

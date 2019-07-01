@@ -21,6 +21,7 @@ public class LoadedScenes {
     public static Pane shop;
     public static Pane collectionOfShop;
     public static Pane arena;
+    public static Pane customCard;
 
     {
         try {
@@ -29,9 +30,10 @@ public class LoadedScenes {
             login = twiceScale(FXMLLoader.load(getClass().getResource("login.fxml")));
             mainMenu = twiceScale(FXMLLoader.load(getClass().getResource("mainMenu.fxml")));
             chooseBattleKind = twiceScale(FXMLLoader.load(getClass().getResource("chooseBattleKind.fxml")));
-            shop = scale(FXMLLoader.load(getClass().getResource("shop.fxml")));
+            shop = FXMLLoader.load(getClass().getResource("shop.fxml"));
             arena = FXMLLoader.load(getClass().getResource("arena.fxml"));
             arena.getTransforms().add(new Scale(960d / 1248, 540d / 682, 0, 0));
+            customCard = FXMLLoader.load(LoadedScenes.class.getResource("customCard.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }

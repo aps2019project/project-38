@@ -30,8 +30,10 @@ public class SpellCardController {
     public void selectCard(MouseEvent mouseEvent) {
         if (forSell) {
             AlertController alertController = AlertController.setAndShowAndWaitToGetResult(
-                    String.format("Do you want to sell %s? Price: %s",
-                            nameText.getText(), priceText.getText()), true);
+                    String.format("Do you want to sell %s? Price: %s (You have %d number of this card) Your Derrick: %d",
+                            nameText.getText(), priceText.getText(),
+                            Account.getActiveAccount().getCollection().getHowManyCard().get(nameText.getText()),
+                            Account.getActiveAccount().derrick), true);
             new Thread(() -> {
                 try {
                     synchronized (alertController)  {
@@ -48,8 +50,10 @@ public class SpellCardController {
         else {
             if (Account.getActiveAccount().derrick >= Integer.parseInt(priceText.getText())) {
                 AlertController alertController = AlertController.setAndShowAndWaitToGetResult(
-                        String.format("Do you want to buy %s? Price: %s",
-                                nameText.getText(), priceText.getText()), true);
+                        String.format("Do you want to buy %s? Price: %s (You have %d number of this card) Your Derrick: %d)",
+                                nameText.getText(), priceText.getText(),
+                                Account.getActiveAccount().getCollection().getHowManyCard().get(nameText.getText()),
+                                Account.getActiveAccount().derrick), true);
                 new Thread(() -> {
                     try {
                         synchronized (alertController)  {

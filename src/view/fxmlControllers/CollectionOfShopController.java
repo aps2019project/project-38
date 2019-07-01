@@ -25,6 +25,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import static view.Utility.scaleCard;
+
 public class CollectionOfShopController implements Initializable {
     public static CollectionOfShopController collectionOfShopController;
     public VBox minionsLeftVBox;
@@ -116,15 +118,16 @@ public class CollectionOfShopController implements Initializable {
 
     private void initializeAllMinions() {
         for (Warrior minion : CardFactory.getAllBuiltMinions()) {
-            if (Account.getActiveAccount().getCollection().getHowManyCard().containsKey(minion.getName()) &&
+            if (Account.getActiveAccount().getCollection().getHowManyCard().containsKey(minion.getName())&&
+                    Account.getActiveAccount().getCollection().getHowManyCard().get(minion.getName()) > 0 &&
                     !allMinions.containsKey(minion)) {
                 loadMinion(minion);
             }
         }
         for (Iterator<Map.Entry<Warrior, AnchorPane>> iterator = allMinions.entrySet().iterator(); iterator.hasNext();) {
-            Warrior warrior = iterator.next().getKey();
-            if (!Account.getActiveAccount().getCollection().getHowManyCard().containsKey(warrior.getName()) ||
-                    Account.getActiveAccount().getCollection().getHowManyCard().get(warrior.getName()) <= 0) {
+            Warrior minion = iterator.next().getKey();
+            if (!Account.getActiveAccount().getCollection().getHowManyCard().containsKey(minion.getName()) ||
+                    Account.getActiveAccount().getCollection().getHowManyCard().get(minion.getName()) <= 0) {
                 iterator.remove();
             }
         }
@@ -135,7 +138,7 @@ public class CollectionOfShopController implements Initializable {
         WarriorCardController warriorCardController = null;
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("warriorCart.fxml"));
-            anchorPane = Utility.scaleCard(fxmlLoader.load());
+            anchorPane = scaleCard(fxmlLoader.load());
             warriorCardController = fxmlLoader.getController();
         } catch (IOException e) {
             e.printStackTrace();
@@ -146,6 +149,7 @@ public class CollectionOfShopController implements Initializable {
 
     private synchronized void recalculateHeroes(KeyEvent keyEvent) {
         String searchText = heroesSearchTextField.getText();
+        heroes.entrySet().removeIf(entry -> !allHeroes.containsKey(entry.getKey()));
         heroes.entrySet().removeIf(entry -> !entry.getKey().getName().toLowerCase()
                 .replaceAll("[ \t\\-_]+", "").matches
                         (".*" + searchText.toLowerCase().replaceAll("[ \t\\-_]+", "") + ".*"));
@@ -177,7 +181,9 @@ public class CollectionOfShopController implements Initializable {
 
     private void initializeAllHeroes() {
         for (Hero hero : CardFactory.getAllBuiltHeroes()) {
-            if (Account.getActiveAccount().getCollection().getHowManyCard().containsKey(hero.getName()) && !allHeroes.containsKey(hero)) {
+            if (Account.getActiveAccount().getCollection().getHowManyCard().containsKey(hero.getName())&&
+                    Account.getActiveAccount().getCollection().getHowManyCard().get(hero.getName()) > 0 &&
+                    !allHeroes.containsKey(hero)) {
                 loadHero(hero);
             }
         }
@@ -195,17 +201,18 @@ public class CollectionOfShopController implements Initializable {
         WarriorCardController warriorCardController = null;
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("warriorCart.fxml"));
-            anchorPane = Utility.scaleCard(fxmlLoader.load());
+            anchorPane = scaleCard(fxmlLoader.load());
             warriorCardController = fxmlLoader.getController();
         } catch (IOException e) {
             e.printStackTrace();
         }
         warriorCardController.setFields(hero, true);
-        heroes.put(hero, anchorPane);
+        allHeroes.put(hero, anchorPane);
     }
 
     private synchronized void recalculateSpells(KeyEvent keyEvent) {
         String searchText = spellsSearchTextField.getText();
+        spells.entrySet().removeIf(entry -> !allSpells.containsKey(entry.getKey()));
         spells.entrySet().removeIf(entry -> !entry.getKey().getName().toLowerCase()
                 .replaceAll("[ \t\\-_]+", "").matches
                         (".*" + searchText.toLowerCase().replaceAll("[ \t\\-_]+", "") + ".*"));
@@ -237,7 +244,9 @@ public class CollectionOfShopController implements Initializable {
 
     private void initializeAllSpells() {
         for (Spell spell : CardFactory.getAllBuiltSpells()) {
-            if (Account.getActiveAccount().getCollection().getHowManyCard().containsKey(spell.getName()) && !allSpells.containsKey(spell)) {
+            if (Account.getActiveAccount().getCollection().getHowManyCard().containsKey(spell.getName())&&
+                    Account.getActiveAccount().getCollection().getHowManyCard().get(spell.getName()) > 0 &&
+                    !allSpells.containsKey(spell)) {
                 loadSpell(spell);
             }
         }
@@ -255,17 +264,18 @@ public class CollectionOfShopController implements Initializable {
         SpellCardController spellCardController = null;
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("spellCart.fxml"));
-            anchorPane = fxmlLoader.load();
+            anchorPane = scaleCard(fxmlLoader.load());
             spellCardController = fxmlLoader.getController();
         } catch (IOException e) {
             e.printStackTrace();
         }
         spellCardController.setFields(spell, true);
-        spells.put(spell, anchorPane);
+        allSpells.put(spell, anchorPane);
     }
 
     private synchronized void recalculateItems(KeyEvent keyEvent) {
         String searchText = itemsSearchTextField.getText();
+        items.entrySet().removeIf(entry -> !allItems.containsKey(entry.getKey()));
         items.entrySet().removeIf(entry -> !entry.getKey().getName().toLowerCase()
                 .replaceAll("[ \t\\-_]+", "").matches
                         (".*" + searchText.toLowerCase().replaceAll("[ \t\\-_]+", "") + ".*"));
@@ -297,7 +307,9 @@ public class CollectionOfShopController implements Initializable {
 
     private void initializeAllItems() {
         for (Spell item : CardFactory.getAllBuiltItems()) {
-            if (item.getPrice() != 0 && Account.getActiveAccount().getCollection().getHowManyCard().containsKey(item.getName()) && !allItems.containsKey(item)) {
+            if (Account.getActiveAccount().getCollection().getHowManyCard().containsKey(item.getName())&&
+                    Account.getActiveAccount().getCollection().getHowManyCard().get(item.getName()) > 0 &&
+                    !allItems.containsKey(item)) {
                 loadItem(item);
             }
         }
@@ -315,19 +327,18 @@ public class CollectionOfShopController implements Initializable {
         SpellCardController spellCardController = null;
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("spellCart.fxml"));
-            anchorPane = fxmlLoader.load();
+            anchorPane = scaleCard(fxmlLoader.load());
             spellCardController = fxmlLoader.getController();
         } catch (IOException e) {
             e.printStackTrace();
         }
         spellCardController.setFields(item, true);
-        items.put(item, anchorPane);
+        allItems.put(item, anchorPane);
     }
 
     public static void sell(String cardName) {
         Card card = getCardByItsName(cardName);
         Account account = Account.getActiveAccount();
-
         account.derrick = account.derrick + card.getPrice();
         account.getCollection().getCardIDs().remove((Integer) card.getID());
         for (String deckName : account.getCollection().getDecks()) {
@@ -337,7 +348,6 @@ public class CollectionOfShopController implements Initializable {
             }
         }
         account.getCollection().getCardIDs().remove((Integer) card.getID());
-
         int keyValue = model.Collection.getCollection().getHowManyCard().get(card.getName());
         Collection.getCollection().getHowManyCard().put(card.getName(), keyValue - 1);
         AlertController.setAndShowAndWaitToGetResult

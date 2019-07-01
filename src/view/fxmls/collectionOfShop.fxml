@@ -27,11 +27,11 @@
                            <children>
                               <ScrollPane hbarPolicy="NEVER" layoutX="63.0" layoutY="70.0" prefHeight="470.0" prefWidth="780.0" stylesheets="@../images/shop/style.css" vbarPolicy="NEVER">
                                  <content>
-                                    <HBox prefWidth="780.0">
+                                    <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="780.0">
                                        <children>
-                                          <VBox fx:id="minionsLeftVBox" prefHeight="470.0" prefWidth="260.0" />
-                                          <VBox fx:id="minionsMiddleVBox" prefHeight="470.0" prefWidth="100.0" />
-                                          <VBox fx:id="minionsRightVBox" prefHeight="470.0" prefWidth="260.0" />
+                                          <VBox fx:id="minionsLeftVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="260.0" />
+                                          <VBox fx:id="minionsMiddleVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="260.0" />
+                                          <VBox fx:id="minionsRightVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="260.0" />
                                        </children>
                                     </HBox>
                                  </content>
@@ -52,11 +52,11 @@
                            <children>
                               <ScrollPane hbarPolicy="NEVER" layoutX="63.0" layoutY="70.0" prefHeight="470.0" prefWidth="780.0" stylesheets="@../images/shop/style.css" vbarPolicy="NEVER">
                                  <content>
-                                    <HBox prefWidth="780.0">
+                                    <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="780.0">
                                        <children>
-                                          <VBox fx:id="heroesLeftVBox" prefHeight="470.0" prefWidth="260.0" />
-                                          <VBox fx:id="heroesMiddleVBox" prefHeight="470.0" prefWidth="100.0" />
-                                          <VBox fx:id="heroesRightVBox" prefHeight="470.0" prefWidth="260.0" />
+                                          <VBox fx:id="heroesLeftVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="260.0" />
+                                          <VBox fx:id="heroesMiddleVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="260.0" />
+                                          <VBox fx:id="heroesRightVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="260.0" />
                                        </children>
                                     </HBox>
                                  </content>
@@ -77,11 +77,11 @@
                            <children>
                               <ScrollPane hbarPolicy="NEVER" layoutX="63.0" layoutY="70.0" prefHeight="470.0" prefWidth="780.0" stylesheets="@../images/shop/style.css" vbarPolicy="NEVER">
                                  <content>
-                                    <HBox prefWidth="780.0">
+                                    <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="780.0">
                                        <children>
-                                          <VBox fx:id="spellsLeftVBox" prefHeight="470.0" prefWidth="260.0" />
-                                          <VBox fx:id="spellsMiddleVBox" prefHeight="470.0" prefWidth="100.0" />
-                                          <VBox fx:id="spellsRightVBox" prefHeight="470.0" prefWidth="260.0" />
+                                          <VBox fx:id="spellsLeftVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="260.0" />
+                                          <VBox fx:id="spellsMiddleVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="260.0" />
+                                          <VBox fx:id="spellsRightVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="260.0" />
                                        </children>
                                     </HBox>
                                  </content>
@@ -102,11 +102,11 @@
                            <children>
                               <ScrollPane hbarPolicy="NEVER" layoutX="63.0" layoutY="70.0" prefHeight="470.0" prefWidth="780.0" stylesheets="@../images/shop/style.css" vbarPolicy="NEVER">
                                  <content>
-                                    <HBox prefWidth="780.0">
+                                    <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="780.0">
                                        <children>
-                                          <VBox fx:id="itemsLeftVBox" prefHeight="470.0" prefWidth="260.0" />
-                                          <VBox fx:id="itemsMiddleVBox" prefHeight="470.0" prefWidth="100.0" />
-                                          <VBox fx:id="itemsRightVBox" prefHeight="470.0" prefWidth="260.0" />
+                                          <VBox fx:id="itemsLeftVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="260.0" />
+                                          <VBox fx:id="itemsMiddleVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="260.0" />
+                                          <VBox fx:id="itemsRightVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="260.0" />
                                        </children>
                                     </HBox>
                                  </content>

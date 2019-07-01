@@ -18,7 +18,7 @@ public abstract class LoadingGamePreviewScenes {
     static HashMap<String, GamePreviewStarterController> starterControllers = new HashMap<>();
     static HashMap<String, AnchorPane> scenesAsAnchorPane = new HashMap<>();
     static HashMap<String, GamePreviewController> sceneControllers = new HashMap<>();
-    static ArrayList<String> selectedButtonsText = new ArrayList<>();
+    public static ArrayList<String> selectedButtonsText = new ArrayList<>();
 
     public static void load() {
         loadBattleScene();

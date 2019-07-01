@@ -61,7 +61,6 @@ public class WindowChanger {
                 additionalAnchorPane.setLayoutY(newLayoutY);
             }
             anchorPanes.get(0).setEffect(new SepiaTone(1));
-            anchorPanes.get(1).setEffect(new SepiaTone(1));
         });
     }
 
