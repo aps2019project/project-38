@@ -25,6 +25,7 @@ import model.Cell;
 import model.Game;
 import model.SelectionManager;
 import model.cards.Card;
+import model.cards.Spell;
 import model.cards.Warrior;
 import model.player.Player;
 import view.WindowChanger;
@@ -181,6 +182,15 @@ public class ArenaController implements Initializable, PropertyChangeListener {
 
             pane.getChildren().add(vm.view);
             visualMinions[row][col] = vm;
+
+            vm.view.setOnMouseEntered(event -> {
+                Warrior warrior = game.getBoard().getCell(row, col).getWarrior();
+                showInfoOfACard(warrior.getName(), warrior.description.getDescriptionOfCardSpecialAbility(), "warrior", warrior.getHp(), warrior.getAp());
+            });
+
+            vm.view.setOnMouseExited(event -> {
+                endShowInfoOfACard();
+            });
         });
     }
 
@@ -218,6 +228,11 @@ public class ArenaController implements Initializable, PropertyChangeListener {
                     vm.breathing();
                 }
             }, (long) duration.toMillis());
+
+            vm.view.setOnMouseEntered(event -> {
+                Warrior warrior = game.getBoard().getCell(tRow, tCol).getWarrior();
+                showInfoOfACard(warrior.getName(), warrior.description.getDescriptionOfCardSpecialAbility(), "warrior", warrior.getHp(), warrior.getAp());
+            });
         });
     }
 
@@ -504,12 +519,39 @@ public class ArenaController implements Initializable, PropertyChangeListener {
                         VisualMinion vm = new VisualMinion(name);
                         visualEntity = vm.view;
                         cardHolders[i].put(visualEntity, vm.getWidth(), vm.getHeight());
+
+                        visualEntity.setOnMouseEntered(event -> {//amir
+                            if(i==0){
+                                Warrior w= (Warrior)game.getActivePlayer().getNextCard();
+                                showInfoOfACard(w.getName(),w.description.getDescriptionOfCardSpecialAbility(),"warrior",w.getHp(),w.getAp());
+                            }else {
+                                Warrior w = (Warrior)game.getActivePlayer().getHand().get(i-1);
+                                showInfoOfACard(w.getName(),w.description.getDescriptionOfCardSpecialAbility(),"warrior",w.getHp(),w.getAp());
+                            }
+                        });
+                        visualEntity.setOnMouseExited(event -> {
+                            endShowInfoOfACard();
+                        });
                     } else {
                         VisualSpell vm = new VisualSpell(name);
                         visualEntity = vm.view;
                         cardHolders[i].put(visualEntity, vm.getWidth(), vm.getHeight());
+
+                        visualEntity.setOnMouseEntered(event -> {//amir
+                            if(i==0){
+                                Spell w= (Spell) game.getActivePlayer().getNextCard();
+                                showInfoOfACard(w.getName(),w.description.getDescriptionOfCardSpecialAbility(),"spell",0,0);
+                            }else {
+                                Spell w = (Spell)game.getActivePlayer().getHand().get(i-1);
+                                showInfoOfACard(w.getName(),w.description.getDescriptionOfCardSpecialAbility(),"spell",0,0);
+                            }
+                        });
+                        visualEntity.setOnMouseExited(event -> {
+                            endShowInfoOfACard();
+                        });
                     }
-                    if (i > 0) {
+
+                    if (i > 0) {//amir
                         visualEntity.setOnMouseClicked(event -> game.getSelectionManager().selectCard(i - 1));
                     }
                     break;
@@ -648,6 +690,7 @@ public class ArenaController implements Initializable, PropertyChangeListener {
             shownSpellInArenaController.put(vs.view, vs.animation.width, vs.animation.height);
         }
     }
+
     public void endShowInfoOfACard() {
         shownCardInformationHolder_pn.getChildren().clear();
     }

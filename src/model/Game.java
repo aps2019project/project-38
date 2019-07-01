@@ -71,7 +71,7 @@ public class Game implements Serializable {
             turn = 0;
         }
         {
-            CollectibleMine c1 = new CollectibleMine(-1, Dispelablity.UNDISPELLABLE, (Spell) CardFactory.getAllBuiltItems().get(7).deepCopy());
+            CollectibleMine c1 = new CollectibleMine(-1, Dispelablity.UNDISPELLABLE, CardFactory.getAllBuiltItems().get(7).deepCopy());
             board.getCell(2, 2).addTrigger(c1);
         }
         startTurn();
