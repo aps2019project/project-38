@@ -38,7 +38,7 @@ public interface Message {
         System.out.println("    0- Exit");
     }
 
-    // in shop
+    // in shopAndCollection
     static void showShopHelp() {
         System.out.println("___--Shop Menu--___");
         System.out.println("    1- Show Cards In Shop");
@@ -86,7 +86,7 @@ public interface Message {
     }
 
     static void thereIsNoCardWithThisNameInShop() {
-        System.out.println("There is no card with this name in shop cards :(");
+        System.out.println("There is no card with this name in shopAndCollection cards :(");
     }
 
     static void thereIsNoCardWithThisNameInCollection() {
@@ -118,7 +118,7 @@ public interface Message {
     }
 
     static void existACardWithThisNameInShop() {
-        System.out.println("There is a card with this name in shop :)");
+        System.out.println("There is a card with this name in shopAndCollection :)");
     }
 
     // in account:

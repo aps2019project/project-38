@@ -2,7 +2,6 @@ package view.fxmlControllers;
 
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
@@ -11,20 +10,25 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import model.Account;
-import model.cards.*;
+import model.Collection;
+import model.Deck;
+import model.cards.Card;
+import model.cards.Hero;
+import model.cards.Spell;
+import model.cards.Warrior;
 import view.WindowChanger;
 import view.fxmls.LoadedScenes;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.ResourceBundle;
 
+import static model.cards.Card.getCardByItsName;
 import static view.Utility.scaleCard;
 
-public class ShopController implements Initializable {
+public class ChoosingDeckCardsController {
+    public static ChoosingDeckCardsController choosingDeckCardsController;
+    public static AnchorPane choosingDeckCardsAnchorPane;
     public VBox minionsLeftVBox;
     public VBox minionsMiddleVBox;
     public VBox minionsRightVBox;
@@ -46,44 +50,67 @@ public class ShopController implements Initializable {
     public TextField itemsSearchTextField;
     private HashMap<Spell, AnchorPane> items = new HashMap<>(), allItems = new HashMap<>();
     public ImageView backButton;
-    public ImageView goldCircleOfCollectionButton;
-    public ImageView collectionButton;
-    public Text collectionText;
+    public ImageView goldCircleOfDeckButton;
+    public ImageView deckButton;
+    public Text deckButtonText;
+    HashMap<String, Integer> notSelectedCardsNameToNumberHashMap;
+    private Deck deck;
+
+    static {
+        FXMLLoader fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("ChoosingDeckCards.fxml"));
+        try {
+            choosingDeckCardsAnchorPane = fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        choosingDeckCardsController = fxmlLoader.getController();
+        choosingDeckCardsController.initialize();
+    }
 
     public void back(MouseEvent mouseEvent) {
-        WindowChanger.instance.setNewScene(LoadedScenes.mainMenu);
+        CollectionController.collectionController.calculateEveryThing();
+        WindowChanger.instance.setNewScene(LoadedScenes.collection);
     }
 
     public void shineBackBottom(MouseEvent mouseEvent) {
-        backButton.setEffect(new Glow(0.5));
+        backButton.setEffect(new Glow(1));
     }
 
     public void resetBackBottom(MouseEvent mouseEvent) {
         backButton.setEffect(null);
     }
 
-    public void goToCollection(MouseEvent mouseEvent) {
-        WindowChanger.instance.setNewScene(LoadedScenes.collectionOfShop);
+    public void goToDeck(MouseEvent mouseEvent) {
+        RemovingDeckCardsController.removingDeckCardsController.calculateEveryThing(deck);
+        WindowChanger.instance.setNewScene(LoadedScenes.removingDeckCards);
     }
 
-    public void shineCollectionBottom(MouseEvent mouseEvent) {
-        collectionButton.setEffect(new Glow(0.5));
-        goldCircleOfCollectionButton.setOpacity(1);
-        collectionText.setOpacity(1);
+    public void shineDeckBottom(MouseEvent mouseEvent) {
+        deckButton.setEffect(new Glow(1));
+        goldCircleOfDeckButton.setOpacity(1);
+        deckButtonText.setOpacity(1);
     }
 
-    public void resetCollectionBottom(MouseEvent mouseEvent) {
-        collectionButton.setEffect(null);
-        goldCircleOfCollectionButton.setOpacity(0.6);
-        collectionText.setOpacity(0.6);
+    public void resetDeckBottom(MouseEvent mouseEvent) {
+        deckButton.setEffect(null);
+        goldCircleOfDeckButton.setOpacity(0.6);
+        deckButtonText.setOpacity(0.6);
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        minionsSearchTextField.setOnKeyTyped(this::recalculateMinions);
-        heroesSearchTextField.setOnKeyTyped(this::recalculateHeroes);
-        spellsSearchTextField.setOnKeyTyped(this::recalculateSpells);
-        itemsSearchTextField.setOnKeyTyped(this::recalculateItems);
+    public void initialize() {
+        minionsSearchTextField.setOnKeyTyped(choosingDeckCardsController::recalculateMinions);
+        heroesSearchTextField.setOnKeyTyped(choosingDeckCardsController::recalculateHeroes);
+        spellsSearchTextField.setOnKeyTyped(choosingDeckCardsController::recalculateSpells);
+        itemsSearchTextField.setOnKeyTyped(choosingDeckCardsController::recalculateItems);
+    }
+
+    public void calculateEveryThing(Deck deck) {
+        this.deck = deck;
+        notSelectedCardsNameToNumberHashMap = new HashMap<>();
+        for (Map.Entry<String, Integer> entry : Collection.getCollection().getHowManyCard().entrySet()) {
+            int numberOfCardInDeck = (int) deck.getCardIDs().stream().filter(cardID -> cardID.equals(entry.getValue())).count();
+            notSelectedCardsNameToNumberHashMap.put(entry.getKey(), entry.getValue() - numberOfCardInDeck);
+        }
         initializeAllMinions();
         recalculateMinions(null);
         initializeAllHeroes();
@@ -94,8 +121,39 @@ public class ShopController implements Initializable {
         recalculateItems(null);
     }
 
+    private void initializeAllMinions() {
+        allMinions.entrySet().removeIf(entry -> !notSelectedCardsNameToNumberHashMap.containsKey(entry.getKey().getName()) ||
+                notSelectedCardsNameToNumberHashMap.get(entry.getKey().getName()) <= 0);
+        for (Map.Entry<String, Integer> entry : notSelectedCardsNameToNumberHashMap.entrySet()) {
+            if (entry.getValue() > 0) {
+                Card card = getCardByItsName(entry.getKey());
+                if (card.getClass().equals(Warrior.class)) {
+                    Warrior minion = (Warrior) card;
+                    if (!allMinions.containsKey(minion)) {
+                        loadMinion(minion);
+                    }
+                }
+            }
+        }
+    }
+
+    private void loadMinion(Warrior minion) {
+        AnchorPane anchorPane = null;
+        WarriorCardController warriorCardController = null;
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("warriorCart.fxml"));
+            anchorPane = scaleCard(fxmlLoader.load());
+            warriorCardController = fxmlLoader.getController();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        warriorCardController.setFields(minion, "outside deck " + deck.getName());//todo
+        allMinions.put(minion, anchorPane);
+    }
+
     private synchronized void recalculateMinions(KeyEvent keyEvent) {
         String searchText = minionsSearchTextField.getText();
+        minions.entrySet().removeIf(entry -> !allMinions.containsKey(entry.getKey()));
         minions.entrySet().removeIf(entry -> !entry.getKey().getName().toLowerCase()
                 .replaceAll("[ \t\\-_]+", "").matches
                         (".*" + searchText.toLowerCase().replaceAll("[ \t\\-_]+", "") + ".*"));
@@ -125,13 +183,23 @@ public class ShopController implements Initializable {
         }
     }
 
-    private void initializeAllMinions() {
-        for (Warrior minion : CardFactory.getAllBuiltMinions()) {
-            loadMinion(minion);
+    private void initializeAllHeroes() {
+        allHeroes.entrySet().removeIf(entry -> !notSelectedCardsNameToNumberHashMap.containsKey(entry.getKey().getName()) ||
+                notSelectedCardsNameToNumberHashMap.get(entry.getKey().getName()) <= 0);
+        for (Map.Entry<String, Integer> entry : notSelectedCardsNameToNumberHashMap.entrySet()) {
+            if (entry.getValue() > 0) {
+                Card card = getCardByItsName(entry.getKey());
+                if (card instanceof Hero) {
+                    Hero hero = (Hero) card;
+                    if (!allHeroes.containsKey(hero)) {
+                        loadHero(hero);
+                    }
+                }
+            }
         }
     }
 
-    private void loadMinion(Warrior minion) {
+    private void loadHero(Hero hero) {
         AnchorPane anchorPane = null;
         WarriorCardController warriorCardController = null;
         try {
@@ -141,12 +209,13 @@ public class ShopController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        warriorCardController.setFields(minion, "for buy");
-        allMinions.put(minion, anchorPane);
+        warriorCardController.setFields(hero, "outside deck " + deck.getName());
+        allHeroes.put(hero, anchorPane);
     }
 
     private synchronized void recalculateHeroes(KeyEvent keyEvent) {
         String searchText = heroesSearchTextField.getText();
+        heroes.entrySet().removeIf(entry -> !allHeroes.containsKey(entry.getKey()));
         heroes.entrySet().removeIf(entry -> !entry.getKey().getName().toLowerCase()
                 .replaceAll("[ \t\\-_]+", "").matches
                         (".*" + searchText.toLowerCase().replaceAll("[ \t\\-_]+", "") + ".*"));
@@ -176,28 +245,39 @@ public class ShopController implements Initializable {
         }
     }
 
-    private void initializeAllHeroes() {
-        for (Hero hero : CardFactory.getAllBuiltHeroes()) {
-            loadHero(hero);
+    private void initializeAllSpells() {
+        allSpells.entrySet().removeIf(entry -> !notSelectedCardsNameToNumberHashMap.containsKey(entry.getKey().getName()) ||
+                notSelectedCardsNameToNumberHashMap.get(entry.getKey().getName()) <= 0);
+        for (Map.Entry<String, Integer> entry : notSelectedCardsNameToNumberHashMap.entrySet()) {
+            if (entry.getValue() > 0) {
+                Card card = getCardByItsName(entry.getKey());
+                if (card instanceof Spell && !Spell.checkIsItem(card)) {
+                    Spell spell = (Spell) card;
+                    if (!allSpells.containsKey(spell)) {
+                        loadSpell(spell);
+                    }
+                }
+            }
         }
     }
 
-    private void loadHero(Hero hero) {
+    private void loadSpell(Spell spell) {
         AnchorPane anchorPane = null;
-        WarriorCardController warriorCardController = null;
+        SpellCardController spellCardController = null;
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("warriorCart.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("spellCart.fxml"));
             anchorPane = scaleCard(fxmlLoader.load());
-            warriorCardController = fxmlLoader.getController();
+            spellCardController = fxmlLoader.getController();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        warriorCardController.setFields(hero, "for buy");
-        heroes.put(hero, anchorPane);
+        spellCardController.setFields(spell, "outside deck " + deck.getName());
+        allSpells.put(spell, anchorPane);
     }
 
     private synchronized void recalculateSpells(KeyEvent keyEvent) {
         String searchText = spellsSearchTextField.getText();
+        spells.entrySet().removeIf(entry -> !allSpells.containsKey(entry.getKey()));
         spells.entrySet().removeIf(entry -> !entry.getKey().getName().toLowerCase()
                 .replaceAll("[ \t\\-_]+", "").matches
                         (".*" + searchText.toLowerCase().replaceAll("[ \t\\-_]+", "") + ".*"));
@@ -227,13 +307,23 @@ public class ShopController implements Initializable {
         }
     }
 
-    private void initializeAllSpells() {
-        for (Spell spell : CardFactory.getAllBuiltSpells()) {
-            loadSpell(spell);
+    private void initializeAllItems() {
+        allItems.entrySet().removeIf(entry -> !notSelectedCardsNameToNumberHashMap.containsKey(entry.getKey().getName()) ||
+                notSelectedCardsNameToNumberHashMap.get(entry.getKey().getName()) <= 0);
+        for (Map.Entry<String, Integer> entry : notSelectedCardsNameToNumberHashMap.entrySet()) {
+            if (entry.getValue() > 0) {
+                Card card = getCardByItsName(entry.getKey());
+                if (Spell.checkIsItem(card)) {
+                    Spell item = (Spell) card;
+                    if (!allItems.containsKey(item)) {
+                        loadItem(item);
+                    }
+                }
+            }
         }
     }
 
-    private void loadSpell(Spell spell) {
+    private void loadItem(Spell item) {
         AnchorPane anchorPane = null;
         SpellCardController spellCardController = null;
         try {
@@ -243,12 +333,13 @@ public class ShopController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        spellCardController.setFields(spell, "for buy");
-        spells.put(spell, anchorPane);
+        spellCardController.setFields(item, "outside deck " + deck.getName());
+        allItems.put(item, anchorPane);
     }
 
     private synchronized void recalculateItems(KeyEvent keyEvent) {
         String searchText = itemsSearchTextField.getText();
+        items.entrySet().removeIf(entry -> !allItems.containsKey(entry.getKey()));
         items.entrySet().removeIf(entry -> !entry.getKey().getName().toLowerCase()
                 .replaceAll("[ \t\\-_]+", "").matches
                         (".*" + searchText.toLowerCase().replaceAll("[ \t\\-_]+", "") + ".*"));
@@ -276,55 +367,5 @@ public class ShopController implements Initializable {
             }
             counter++;
         }
-    }
-
-    private void initializeAllItems() {
-        for (Spell item : CardFactory.getAllBuiltItems()) {
-            if (item.getPrice() != 0) {
-                loadItem(item);
-            }
-        }
-    }
-
-    private void loadItem(Spell item) {
-        AnchorPane anchorPane = null;
-        SpellCardController spellCardController = null;
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("spellCart.fxml"));
-            anchorPane = scaleCard(fxmlLoader.load());
-            spellCardController = fxmlLoader.getController();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        spellCardController.setFields(item, "for buy");
-        items.put(item, anchorPane);
-    }
-
-    public static void buy(String cardName) {
-        Card card = Card.getCardByItsName(cardName);
-        Account account = Account.getActiveAccount();
-        if (Spell.checkIsItem(card)) {
-            int numberOfItems = 0;
-            for (int ID : account.getCollection().getCardIDs()) {
-                Card card1 = Card.getAllCards().get(ID);
-                if (Spell.checkIsItem(card1)) numberOfItems++;
-            }
-            if (numberOfItems >= 3) {
-                AlertController.setAndShowAndGetResultByAnAlertController
-                        ("You have 3 items. You couldn't buy any other item", false);
-                return;
-            }
-        }
-        account.derrick = account.derrick - card.getPrice();
-        account.getCollection().getCardIDs().add(card.getID());
-        if (model.Collection.getCollection().getHowManyCard().containsKey(cardName)) {
-            int keyValue = model.Collection.getCollection().getHowManyCard().get(cardName);
-            model.Collection.getCollection().getHowManyCard().put(card.getName(), keyValue + 1);
-        } else {
-            model.Collection.getCollection().getHowManyCard().put(card.getName(), 1);
-        }
-        AlertController.setAndShowAndGetResultByAnAlertController
-                ("You bought the card successfully", false);
-        CollectionOfShopController.collectionOfShopController.calculateEverything();
     }
 }
