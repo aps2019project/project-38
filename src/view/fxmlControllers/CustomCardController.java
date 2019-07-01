@@ -120,7 +120,6 @@ public class CustomCardController implements Initializable {
 
     //--------.: GETTERS :.---------
 
-
     public String getCardName() {
         return cardName_tf.getText();
     }
