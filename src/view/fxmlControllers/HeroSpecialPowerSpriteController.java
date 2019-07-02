@@ -38,10 +38,12 @@ public class HeroSpecialPowerSpriteController extends Holder {
             });
 
             vs.view.setOnMouseEntered(event -> {
+                vs.idle();
                 ArenaController.ac.showInfoOfACard(spell.getName(),spell.description.getDescriptionOfCardSpecialAbility(),"spell",0,0);
             });
 
             vs.view.setOnMouseExited(event -> {
+                vs.breathing();
                 ArenaController.ac.endShowInfoOfACard();
             });
         }

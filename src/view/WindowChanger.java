@@ -3,12 +3,14 @@ package view;
 import controller.Main;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.effect.SepiaTone;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import view.fxmlControllers.MainAnchorPaneController;
+import view.fxmls.LoadedScenes;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,20 +39,30 @@ public class WindowChanger {
     }
 
     public void setNewScene(Pane pane) {
-        Platform.runLater(() -> {
-            anchorPanes.get(1).getChildren().removeAll(anchorPanes.get(1).getChildren());
-            anchorPanes.get(1).getChildren().add(pane);
-            while (anchorPanes.get(1).getLayoutY() > 0 || anchorPanes.get(0).getLayoutY() > -1 * Screen.getPrimary().getVisualBounds().getHeight()) {
-                double newPaneY = anchorPanes.get(1).getLayoutY() - 10 > 0 ? anchorPanes.get(1).getLayoutY() - 10 : 0;
-                double oldPaneY = anchorPanes.get(0).getLayoutY() - 10 > -1 * Screen.getPrimary().getVisualBounds().getHeight() ? anchorPanes.get(0).getLayoutY() - 10 : -1 * Screen.getPrimary().getVisualBounds().getHeight();
-                anchorPanes.get(1).setLayoutY(newPaneY);
-                anchorPanes.get(0).setLayoutY(oldPaneY);
-            }
-            anchorPanes.get(0).setLayoutY(Screen.getPrimary().getVisualBounds().getHeight());
-            anchorPanes.add(anchorPanes.get(0));
-            anchorPanes.remove(0);
-        });
-//        Main.mainStage.getScene().setRoot(pane);
+//        Platform.runLater(() -> {
+//            anchorPanes.get(1).getChildren().removeAll(anchorPanes.get(1).getChildren());
+//            anchorPanes.get(1).getChildren().add(pane);
+//            while (anchorPanes.get(1).getLayoutY() > 0 || anchorPanes.get(0).getLayoutY() > -1 * Screen.getPrimary().getVisualBounds().getHeight()) {
+//                double newPaneY = anchorPanes.get(1).getLayoutY() - 10 > 0 ? anchorPanes.get(1).getLayoutY() - 10 : 0;
+//                double oldPaneY = anchorPanes.get(0).getLayoutY() - 10 > -1 * Screen.getPrimary().getVisualBounds().getHeight() ? anchorPanes.get(0).getLayoutY() - 10 : -1 * Screen.getPrimary().getVisualBounds().getHeight();
+//                anchorPanes.get(1).setLayoutY(newPaneY);
+//                anchorPanes.get(0).setLayoutY(oldPaneY);
+//            }
+//            anchorPanes.get(0).setLayoutY(Screen.getPrimary().getVisualBounds().getHeight());
+//            anchorPanes.add(anchorPanes.get(0));
+//            anchorPanes.remove(0);
+//        });
+        Main.mainStage.getScene().setRoot(pane);
+    }
+
+    Parent backup = null;
+    public void adjustGameScene(boolean enter) {
+        if (enter) {
+            backup = Main.mainStage.getScene().getRoot();
+            Main.mainStage.getScene().setRoot(LoadedScenes.arena);
+        } else {
+            Main.mainStage.getScene().setRoot(backup);
+        }
     }
 
     public void addNewScene(Pane pane) {
@@ -64,7 +76,7 @@ public class WindowChanger {
         });
     }
 
-    public void  removeAdditionalScene() {
+    public void removeAdditionalScene() {
         Platform.runLater(() -> {
             while (additionalAnchorPane.getLayoutY() < Screen.getPrimary().getVisualBounds().getHeight()) {
                 double newLayoutY = additionalAnchorPane.getLayoutY() + 10 < Screen.getPrimary().getVisualBounds().getHeight() ?

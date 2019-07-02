@@ -343,6 +343,8 @@ public class Game implements Serializable {
 
                 Cell heroCell = getActivePlayer().getPlayerHero().getCell();
                 ArenaController.ac.cast(heroCell.getRow(), heroCell.getColumn());
+                ArenaController.ac.setCoolDown(getActivePlayer().getPlayerHero().getPower().coolDownRemaining, getPlayerNumber(getActivePlayer()) + 1);
+
             } finally {
                 checkGameEndAndThenKillAllDiedWarriors();
             }

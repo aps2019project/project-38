@@ -25,7 +25,6 @@ public class GamePreviewButtonController {
     private String fatherSceneName, nextSceneName;
 
     public void doClickEvents(MouseEvent mouseEvent) {
-        Platform.runLater(() -> {
 
 
         LoadingGamePreviewScenes.selectedButtonsText.add(buttonText.getText());
@@ -40,31 +39,26 @@ public class GamePreviewButtonController {
                     System.out.println(matcher.matches());
                     int level = Integer.parseInt(matcher.group("prize")) / 500;
                     game = Level.getAvailableLevels().get(String.valueOf(level)).getLevelGame(Account.getActiveAccount());
-                }
-                else {
+                } else {
                     Matcher matcher = Pattern.compile("Deck: (?<deckName>.+) Hero: .+")
                             .matcher(LoadingGamePreviewScenes.selectedButtonsText.get(2));
                     matcher.matches();
                     Deck deck = Account.getActiveAccount().getCollection().getAllDecks().get(matcher.group("deckName"));
                     game = new Game(getMoodForStartingGame(2), Account.getActiveAccount(), deck);
                 }
-            }
-            else {
+            } else {
                 Account account = Account.getUsernameToAccountObject().get(LoadingGamePreviewScenes.selectedButtonsText.get(1));
                 game = new Game(getMoodForStartingGame(2), Account.getActiveAccount(), account);
             }
-            Platform.runLater(() -> {
-                ArenaController.ac.init(game);
-            });
+
+            ArenaController.ac.init(game);
             game.initialiseGameFields();
             WindowChanger.instance.setNewScene(LoadedScenes.arena);
-        }
-        else {
+        } else {
             LoadingGamePreviewScenes.sceneControllers.get(nextSceneName).setPreviewSceneName(fatherSceneName);
             WindowChanger.instance.setNewScene(LoadingGamePreviewScenes.starterScenes.get(nextSceneName));
             LoadingGamePreviewScenes.starterControllers.get(nextSceneName).run();
         }
-        });
     }
 
     private GameMode getMoodForStartingGame(int index) {
@@ -86,7 +80,7 @@ public class GamePreviewButtonController {
     }
 
 
-    public void setFields(String text,String fatherSceneName, String nextSceneName) {
+    public void setFields(String text, String fatherSceneName, String nextSceneName) {
         buttonText.setText(text);
         this.fatherSceneName = fatherSceneName;
         this.nextSceneName = nextSceneName;
