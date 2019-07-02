@@ -11,8 +11,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static view.Utility.scale;
-
 public class MainMenuController implements Initializable {
     public AnchorPane mainPane;
 
@@ -24,7 +22,7 @@ public class MainMenuController implements Initializable {
         if (Account.getActiveAccount().getCollection().getMainDeck() != null) {
             LoadingGamePreviewScenes.load();
         } else {
-            AlertController.setAndShowAndWaitToGetResult("You have not a main deck", false);
+            AlertController.setAndShowAndGetResultByAnAlertController("You have not a main deck", false);
         }
     }
 
@@ -35,11 +33,8 @@ public class MainMenuController implements Initializable {
     }
 
     public void createDeck() {
-        try {
-            WindowChanger.instance.setNewScene(scale(FXMLLoader.load(LoadedScenes.class.getResource("deckManager.fxml"))));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        CollectionController.collectionController.calculateEveryThing();
+        WindowChanger.instance.setNewScene(CollectionController.collectionAnchorPane);
     }
 
     public void shop() {
@@ -47,6 +42,10 @@ public class MainMenuController implements Initializable {
     }
 
     public void customCard_btn() {
-        WindowChanger.instance.setNewScene(LoadedScenes.customCard);
+        try {
+            WindowChanger.instance.setNewScene(FXMLLoader.load(LoadedScenes.class.getResource("customCard.fxml")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

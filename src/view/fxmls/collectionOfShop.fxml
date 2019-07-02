@@ -16,7 +16,12 @@
          <children>
             <ImageView fitHeight="555.0" fitWidth="900.0">
                <image>
-                  <Image url="@../images/shop/shopCollection.jpg" />
+                  <Image url="@../images/shopAndCollection/shopCollection.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="72.0" fitWidth="360.0" layoutX="300.0">
+               <image>
+                  <Image url="@../images/shopAndCollection/blueTextField.png" />
                </image>
             </ImageView>
             <TabPane prefHeight="555.0" prefWidth="960.0" side="RIGHT" tabClosingPolicy="UNAVAILABLE">
@@ -25,7 +30,7 @@
                      <content>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <ScrollPane hbarPolicy="NEVER" layoutX="63.0" layoutY="70.0" prefHeight="470.0" prefWidth="780.0" stylesheets="@../images/shop/style.css" vbarPolicy="NEVER">
+                              <ScrollPane hbarPolicy="NEVER" layoutX="63.0" layoutY="70.0" prefHeight="470.0" prefWidth="780.0" stylesheets="@../images/shopAndCollection/style.css" vbarPolicy="NEVER">
                                  <content>
                                     <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="780.0">
                                        <children>
@@ -36,11 +41,6 @@
                                     </HBox>
                                  </content>
                               </ScrollPane>
-                              <ImageView fitHeight="72.0" fitWidth="360.0" layoutX="300.0">
-                                 <image>
-                                    <Image url="@../images/shop/blueTextField.png" />
-                                 </image>
-                              </ImageView>
                               <TextField fx:id="minionsSearchTextField" layoutX="319.0" layoutY="13.0" prefHeight="45.0" prefWidth="322.0" style="-fx-background-color: transparent;" />
                            </children>
                         </AnchorPane>
@@ -50,7 +50,7 @@
                      <content>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <ScrollPane hbarPolicy="NEVER" layoutX="63.0" layoutY="70.0" prefHeight="470.0" prefWidth="780.0" stylesheets="@../images/shop/style.css" vbarPolicy="NEVER">
+                              <ScrollPane hbarPolicy="NEVER" layoutX="63.0" layoutY="70.0" prefHeight="470.0" prefWidth="780.0" stylesheets="@../images/shopAndCollection/style.css" vbarPolicy="NEVER">
                                  <content>
                                     <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="780.0">
                                        <children>
@@ -61,11 +61,6 @@
                                     </HBox>
                                  </content>
                               </ScrollPane>
-                              <ImageView fitHeight="72.0" fitWidth="360.0" layoutX="300.0">
-                                 <image>
-                                    <Image url="@../images/shop/blueTextField.png" />
-                                 </image>
-                              </ImageView>
                               <TextField fx:id="heroesSearchTextField" layoutX="319.0" layoutY="13.0" prefHeight="45.0" prefWidth="322.0" style="-fx-background-color: transparent;" />
                            </children>
                         </AnchorPane>
@@ -75,7 +70,7 @@
                      <content>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <ScrollPane hbarPolicy="NEVER" layoutX="63.0" layoutY="70.0" prefHeight="470.0" prefWidth="780.0" stylesheets="@../images/shop/style.css" vbarPolicy="NEVER">
+                              <ScrollPane hbarPolicy="NEVER" layoutX="63.0" layoutY="70.0" prefHeight="470.0" prefWidth="780.0" stylesheets="@../images/shopAndCollection/style.css" vbarPolicy="NEVER">
                                  <content>
                                     <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="780.0">
                                        <children>
@@ -86,11 +81,6 @@
                                     </HBox>
                                  </content>
                               </ScrollPane>
-                              <ImageView fitHeight="72.0" fitWidth="360.0" layoutX="300.0">
-                                 <image>
-                                    <Image url="@../images/shop/blueTextField.png" />
-                                 </image>
-                              </ImageView>
                               <TextField fx:id="spellsSearchTextField" layoutX="319.0" layoutY="13.0" prefHeight="45.0" prefWidth="322.0" style="-fx-background-color: transparent;" />
                            </children>
                         </AnchorPane>
@@ -100,7 +90,7 @@
                      <content>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <ScrollPane hbarPolicy="NEVER" layoutX="63.0" layoutY="70.0" prefHeight="470.0" prefWidth="780.0" stylesheets="@../images/shop/style.css" vbarPolicy="NEVER">
+                              <ScrollPane hbarPolicy="NEVER" layoutX="63.0" layoutY="70.0" prefHeight="470.0" prefWidth="780.0" stylesheets="@../images/shopAndCollection/style.css" vbarPolicy="NEVER">
                                  <content>
                                     <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="780.0">
                                        <children>
@@ -111,11 +101,6 @@
                                     </HBox>
                                  </content>
                               </ScrollPane>
-                              <ImageView fitHeight="72.0" fitWidth="360.0" layoutX="300.0">
-                                 <image>
-                                    <Image url="@../images/shop/blueTextField.png" />
-                                 </image>
-                              </ImageView>
                               <TextField fx:id="itemsSearchTextField" layoutX="319.0" layoutY="13.0" prefHeight="45.0" prefWidth="322.0" style="-fx-background-color: transparent;" />
                            </children>
                         </AnchorPane>
@@ -125,7 +110,7 @@
             </TabPane>
             <ImageView fx:id="backButton" fitHeight="54.0" fitWidth="54.0" onMouseClicked="#back" onMouseEntered="#shineBackBottom" onMouseExited="#resetBackBottom">
                <image>
-                  <Image url="@../images/shop/backBottom.png" />
+                  <Image url="@../images/shopAndCollection/backBottom.png" />
                </image>
             </ImageView>
          </children>

@@ -74,4 +74,9 @@ public abstract class Card extends QualityHaver implements Serializable {
     public int hashCode() {
         return Objects.hash(name);
     }
+
+    public static Card getCardByItsName(String cardName) {
+        return Card.getAllCards().values().stream()
+                .filter(card -> card.getName().equals(cardName)).findFirst().orElse(null);
+    }
 }

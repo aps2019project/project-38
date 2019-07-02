@@ -8,6 +8,7 @@ import model.cards.Spell;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class Deck implements Serializable {
     private static HashMap<String, Deck> allDecks = new HashMap<>();
@@ -115,5 +116,18 @@ public class Deck implements Serializable {
 
     public static HashMap<String, Deck> getAllDecks() {
         return allDecks;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Deck deck = (Deck) o;
+        return Objects.equals(name, deck.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

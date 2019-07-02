@@ -54,7 +54,7 @@ public class AlertController {
         }
     }
 
-    public static AlertController setAndShowAndWaitToGetResult (String text, boolean haveAcceptButton) {
+    public static AlertController setAndShowAndGetResultByAnAlertController(String text, boolean haveAcceptButton) {
         FXMLLoader fxmlLoader = new FXMLLoader(AlertController.class.getResource("../fxmls/alert.fxml"));
         AnchorPane alertPane = null;
         try {

@@ -14,7 +14,6 @@ import model.Account;
 import model.Collection;
 import model.Deck;
 import model.cards.*;
-import view.Utility;
 import view.WindowChanger;
 import view.fxmls.LoadedScenes;
 
@@ -143,7 +142,7 @@ public class CollectionOfShopController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        warriorCardController.setFields(minion, true);
+        warriorCardController.setFields(minion, "for sell");
         allMinions.put(minion, anchorPane);
     }
 
@@ -206,7 +205,7 @@ public class CollectionOfShopController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        warriorCardController.setFields(hero, true);
+        warriorCardController.setFields(hero, "for sell");
         allHeroes.put(hero, anchorPane);
     }
 
@@ -269,7 +268,7 @@ public class CollectionOfShopController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        spellCardController.setFields(spell, true);
+        spellCardController.setFields(spell, "for sell");
         allSpells.put(spell, anchorPane);
     }
 
@@ -332,12 +331,12 @@ public class CollectionOfShopController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        spellCardController.setFields(item, true);
+        spellCardController.setFields(item, "for sell");
         allItems.put(item, anchorPane);
     }
 
     public static void sell(String cardName) {
-        Card card = getCardByItsName(cardName);
+        Card card = Card.getCardByItsName(cardName);
         Account account = Account.getActiveAccount();
         account.derrick = account.derrick + card.getPrice();
         account.getCollection().getCardIDs().remove((Integer) card.getID());
@@ -350,13 +349,8 @@ public class CollectionOfShopController implements Initializable {
         account.getCollection().getCardIDs().remove((Integer) card.getID());
         int keyValue = model.Collection.getCollection().getHowManyCard().get(card.getName());
         Collection.getCollection().getHowManyCard().put(card.getName(), keyValue - 1);
-        AlertController.setAndShowAndWaitToGetResult
+        AlertController.setAndShowAndGetResultByAnAlertController
                 ("You sell the card successfully", false);
         CollectionOfShopController.collectionOfShopController.calculateEverything();
-    }
-
-    private static Card getCardByItsName(String cardName) {
-        return Card.getAllCards().values().stream()
-                .filter(card -> card.getName().equals(cardName)).findFirst().orElse(null);
     }
 }
