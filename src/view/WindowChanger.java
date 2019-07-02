@@ -167,7 +167,6 @@ public class WindowChanger {
         });
         newStages.remove(0);
     }
-}
 
     Parent backup = null;
     public void adjustGameScene(boolean enter) {
@@ -178,3 +177,4 @@ public class WindowChanger {
             Main.mainStage.getScene().setRoot(backup);
         }
     }
+}
