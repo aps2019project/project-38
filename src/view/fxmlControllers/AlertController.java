@@ -7,6 +7,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
+import view.Utility;
 import view.WindowChanger;
 
 import java.io.IOException;
@@ -15,6 +16,7 @@ public class AlertController {
     private static double yLayout = Screen.getPrimary().getVisualBounds().getHeight() * 100 / 540;
     public AnchorPane carrier;
     public Text text;
+    public ImageView closeButton;
     public ImageView button;
     public ImageView glowButton;
     public Boolean result;
@@ -23,20 +25,26 @@ public class AlertController {
     public synchronized void close(MouseEvent mouseEvent) {
         resetAlertInPosition();
         result = false;
-        WindowChanger.instance.removeAdditionalScene();
         notify();
+    }
+
+    public void shineCloseButton(MouseEvent mouseEvent) {
+        Platform.runLater(() -> closeButton.setOpacity(0.4));
+    }
+
+    public void resetCloseButton(MouseEvent mouseEvent) {
+        Platform.runLater(() -> closeButton.setOpacity(0));
     }
 
     public synchronized void accept(MouseEvent mouseEvent) {
         if (haveAcceptButton) {
             resetAlertInPosition();
             result = true;
-            WindowChanger.instance.removeAdditionalScene();
             notify();
         }
     }
 
-    public void glowButton(MouseEvent mouseEvent) {
+    public void shineAcceptButton(MouseEvent mouseEvent) {
         if (haveAcceptButton) {
             Platform.runLater(() -> {
                 glowButton.setOpacity(1);
@@ -45,7 +53,7 @@ public class AlertController {
         }
     }
 
-    public void resetButton(MouseEvent mouseEvent) {
+    public void resetAcceptButton(MouseEvent mouseEvent) {
         if (haveAcceptButton) {
             Platform.runLater(() -> {
                 button.setOpacity(1);
@@ -54,11 +62,11 @@ public class AlertController {
         }
     }
 
-    public static AlertController setAndShowAndGetResultByAnAlertController(String text, boolean haveAcceptButton) {
+    public synchronized static AlertController setAndShowAndGetResultByAnAlertController(String text, boolean haveAcceptButton) {
         FXMLLoader fxmlLoader = new FXMLLoader(AlertController.class.getResource("../fxmls/alert.fxml"));
         AnchorPane alertPane = null;
         try {
-            alertPane = fxmlLoader.load();
+            alertPane = (AnchorPane) Utility.scale(fxmlLoader.load());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -73,30 +81,34 @@ public class AlertController {
     }
 
     private void setAlertInPosition() {
-        Platform.runLater(() -> {
+        new Thread(() -> {
             while (carrier.getLayoutY() > yLayout) {
-                carrier.setLayoutY(carrier.getLayoutY() - 1 > yLayout ? carrier.getLayoutY() - 1: yLayout);
+                double newYLayout = carrier.getLayoutY() - 10 > yLayout ? carrier.getLayoutY() - 10: yLayout;
+                Platform.runLater(() -> carrier.setLayoutY(newYLayout));
                 try {
-                    Thread.sleep(0);
+                    Thread.sleep(1);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
-        });
+        }).start();
     }
 
     private void resetAlertInPosition() {
-        Platform.runLater(() -> {
-            while (carrier.getLayoutY() < Screen.getPrimary().getVisualBounds().getHeight()) {
-                double newYLayout = carrier.getLayoutY() + 1 < Screen.getPrimary().getVisualBounds().getHeight() ?
-                        carrier.getLayoutY() + 1: Screen.getPrimary().getVisualBounds().getHeight();
-                carrier.setLayoutY(newYLayout);
-                try {
-                    Thread.sleep(0);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+        new Thread(() -> {
+            synchronized (AlertController.class) {
+                while (carrier.getLayoutY() < Screen.getPrimary().getVisualBounds().getHeight()) {
+                    double newYLayout = carrier.getLayoutY() + 10 < Screen.getPrimary().getVisualBounds().getHeight() ?
+                            carrier.getLayoutY() + 10: Screen.getPrimary().getVisualBounds().getHeight();
+                    Platform.runLater(() -> carrier.setLayoutY(newYLayout));
+                    try {
+                        Thread.sleep(1);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
+                WindowChanger.instance.removeAdditionalScene();
             }
-        });
+        }).start();
     }
 }

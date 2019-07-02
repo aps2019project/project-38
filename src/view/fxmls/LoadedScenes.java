@@ -29,14 +29,13 @@ public class LoadedScenes {
 
     {
         try {
-            registerMenu = twiceScale(FXMLLoader.load(getClass().getResource("registerMenu.fxml")));
-            createAccount = twiceScale(FXMLLoader.load(getClass().getResource("createAccount.fxml")));
-            login = twiceScale(FXMLLoader.load(getClass().getResource("login.fxml")));
-            mainMenu = twiceScale(FXMLLoader.load(getClass().getResource("mainMenu.fxml")));
-            chooseBattleKind = twiceScale(FXMLLoader.load(getClass().getResource("chooseBattleKind.fxml")));
-            shop = FXMLLoader.load(getClass().getResource("shop.fxml"));
-            arena = FXMLLoader.load(getClass().getResource("arena.fxml"));
-            arena.getTransforms().add(new Scale(960d / 1248, 540d / 682, 0, 0));
+            registerMenu = scale(FXMLLoader.load(getClass().getResource("registerMenu.fxml")));
+            createAccount = scale(FXMLLoader.load(getClass().getResource("createAccount.fxml")));
+            login = scale(FXMLLoader.load(getClass().getResource("login.fxml")));
+            mainMenu = scale(FXMLLoader.load(getClass().getResource("mainMenu.fxml")));
+            chooseBattleKind = scale(FXMLLoader.load(getClass().getResource("chooseBattleKind.fxml")));
+            shop = scale(FXMLLoader.load(getClass().getResource("shop.fxml")));
+            arena = scale(FXMLLoader.load(getClass().getResource("arena.fxml")));
         } catch (IOException e) {
             e.printStackTrace();
         }

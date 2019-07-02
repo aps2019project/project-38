@@ -6,6 +6,7 @@ import javafx.application.Platform;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 import view.WindowChanger;
+import view.fxmlControllers.AlertController;
 import view.fxmls.LoadedScenes;
 
 public class Main extends Application {
@@ -28,6 +29,7 @@ public class Main extends Application {
         new LoadWindow().main();
 
         WindowChanger.instance.setNewScene(LoadedScenes.registerMenu);
+        AlertController.setAndShowAndGetResultByAnAlertController("dfse", false);
 
 //        {//arena
 //            Account account = new Account("test", "test");
