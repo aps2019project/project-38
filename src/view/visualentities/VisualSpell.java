@@ -37,20 +37,9 @@ public class VisualSpell {
 
         view.setOnMouseEntered(event -> {
             idle();
-//            if (ArenaController.ac.game != null) {
-//                Card theCard = Card.getAllCards().values().stream().filter(card -> card.getName().equals(name)).findAny().orElse(null);
-//                if(theCard==null){
-//                    theCard = CardFactory.getAllBuiltHeroes().stream().filter(hero -> hero.getPower()!=null).filter(hero -> hero.getPower().getName().equals(name)).findAny().orElse(null);
-//                }
-//                ArenaController.ac.showInfoOfACard(name,theCard.description.getDescriptionOfCardSpecialAbility(),"spell",0,0);
-//
-//            }
         });
         view.setOnMouseExited(event -> {
             breathing();
-//            if (ArenaController.ac.game != null) {
-//                ArenaController.ac.endShowInfoOfACard();
-//            }
         });
     }
 

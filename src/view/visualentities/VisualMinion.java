@@ -40,28 +40,9 @@ public class VisualMinion {
 
         view.setOnMouseEntered(event -> {
             idle();
-//            if (ArenaController.ac.game != null) {
-//                Warrior theCard = (Warrior) ArenaController.ac.game.getActivePlayer().getHand().values().stream().filter(Objects::nonNull).filter(card -> card.getName().equals(name)).findAny().orElse(null);
-//                if (theCard == null) {
-//                    if (ArenaController.ac.game.getActivePlayer().getPlayerHero().getName().equals(name)) {
-//                        theCard = ArenaController.ac.game.getActivePlayer().getPlayerHero();
-//                    }
-//                    if(theCard==null){
-//                    }
-//                }
-//
-//                if (theCard == null) {
-//                    System.err.println("didn't find the vm");
-//                    return;
-//                }
-//                ArenaController.ac.showInfoOfACard(name, theCard.description.getDescriptionOfCardSpecialAbility(), "warrior", theCard.getHp(), theCard.getAp());
-//            }
         });
         view.setOnMouseExited(event -> {
             breathing();
-//            if (ArenaController.ac.game != null) {
-//                ArenaController.ac.endShowInfoOfACard();
-//            }
         });
     }
 

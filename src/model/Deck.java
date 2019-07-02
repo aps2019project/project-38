@@ -26,7 +26,7 @@ public class Deck implements Serializable {
             Deck deck1 = new Deck();
             deck1.name = "level1";
             deck1.setHero((Hero) CardFactory.getAllBuiltHeroes().get(1));
-            deck1.setItem((Spell) CardFactory.getAllBuiltItems().get(1));
+            deck1.setItem((Spell) CardFactory.getAllBuiltItems().get(11));
             //***
             int[] spellIndex = {1, 7, 10, 11, 12, 18, 20};
             for (int i = 0; i < 7; i++) {

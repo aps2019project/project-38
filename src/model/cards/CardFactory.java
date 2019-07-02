@@ -1015,7 +1015,7 @@ public class CardFactory {
             Spell item = new Spell(417, "ShockHammer", 0, 15000, true);
 
             Trigger trigger = new Trigger(-1, Dispelablity.UNDISPELLABLE);
-            trigger.getConditions().add(new HasAttacked());
+            trigger.getConditions().add(new IsAttacking());
             trigger.getActions().put(new Applier(), new AttackedGetter());
             trigger.getTriggers().add(new Disarm(1, Dispelablity.BAD));
 

@@ -3,6 +3,7 @@ package view;
 import controller.Main;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
@@ -167,3 +168,13 @@ public class WindowChanger {
         newStages.remove(0);
     }
 }
+
+    Parent backup = null;
+    public void adjustGameScene(boolean enter) {
+        if (enter) {
+            backup = Main.mainStage.getScene().getRoot();
+            Main.mainStage.getScene().setRoot(LoadedScenes.arena);
+        } else {
+            Main.mainStage.getScene().setRoot(backup);
+        }
+    }

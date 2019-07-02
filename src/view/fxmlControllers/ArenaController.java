@@ -49,130 +49,58 @@ public class ArenaController implements Initializable, PropertyChangeListener {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-//        hashem
-/*
-
-
-        for (int i = 0; i < 6; i++) {
-            fxmlLoaders[i] = new FXMLLoader(LoadedScenes.class.getResource("cardHolder.fxml"));
-            try {
-                Pane pane = fxmlLoaders[i].load();
-                cardHolders[i] = fxmlLoaders[i].getController();
-                hand.getChildren().add(pane);
-                if (i == 0) {
-                    cardHolders[i].backGround.setEffect(new SepiaTone());
-                    cardHolders[i].border.setEffect(new SepiaTone());
-                    cardHolders[i].manaBackGround.setEffect(new SepiaTone());
-                    cardHolders[i].isThisCardComingCard = true;
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-
-        for (int i = 0; i < 2; i++) {
-            fxmlLoaders1[i] = new FXMLLoader(LoadedScenes.class.getResource("heroSpecialPower.fxml"));
-            Pane pane = null;
-            try {
-                pane = fxmlLoaders1[i].load();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            heroSpecialPowerControllers[i] = fxmlLoaders1[i].getController();
-            if (i == 0) {
-                hero1SpecialPower.getChildren().add(pane);
-//                heroSpecialPowerControllers[i].setHeroSpecialPowerFirstInfo(player1);
-            } else {
-                hero2SpecialPower.getChildren().add(pane);
-//                heroSpecialPowerControllers[i].setHeroSpecialPowerFirstInfo(player2);
-            }
-        }
-
-        player1_avatar.setImage(LoadedImages.avatars[3]);
-        player2_avatar.setImage(LoadedImages.avatars[9]);
-
-        setActiveMana(8, 2);
-
-        setActiveMana(6, 2);
-        player1_username.setText("Hashem");
-        player2_username.setText("Rima");
-
-        setActivePlayer(1);
-
-        setActiveMana(1, 1);
-
-//        showCollectedCollectibleItems("TotalDisarm", 1);
-//        showCollectedCollectibleItems("TotalDisarm", 2);
-
-        setCoolDown(4, 2);
-        setCoolDown(0, 1);
-
-        HashMap<Integer, String> hashMap = new HashMap<>();
-        hashMap.put(2, "Jen");
-
-        buildPlayerHand(hashMap, 1);
-
-        transferToGraveYard("Jen", 2);
-*/
-
-//        VisualMinion vm = new VisualMinion("Jen");
-//
-//        showInfoOfACard("ali", "alalalalala", "warrior", vm.view, vm.getWidth(), vm.getHeight(), 100, 100);
-        //--------------------------------------------------------------------
-
         ac = this;
-
-        transformGrid();
-
-        //producing click boxes and fixing indexes of nodes of gridPane
-        Platform.runLater(() ->
-        {
-            fixGridNodesIndexes();
-
-            for (int i = 0; i < 5; i++) {
-                for (int j = 0; j < 9; j++) {
-                    ///////////////dirty code ahead//////////////////////
-                    int height = (int) (10 * (i * .65f + 6));
-                    int width = (int) (60 - 2.5f * (4 - i));
-                    Rectangle rect = new Rectangle(width, height);
-                    rect.setFill(Color.TRANSPARENT);
-                    rect.relocate(getXFromIndexes(i, j, width - 40, height - 80), getYFromIndexes(i, j, width - 40, height - 80));
-                    //////////////////////////////////////////////
-                    pane.getChildren().add(rect);
-
-                    int finalI = i;
-                    int finalJ = j;
-                    rect.setOnMouseClicked(event -> {
-                        cellOnMouseEvent(finalI, finalJ);
-                    });
-                    rect.setOnMouseEntered(event -> {
-                        getGridNodeFromIndexes(finalI, finalJ).setEffect(new Glow(1));
-                    });
-                    rect.setOnMouseExited(event -> {
-                        setDefaultEffect(getGridNodeFromIndexes(finalI, finalJ));
-                    });
-                }
-            }
-        });
-
-        Platform.runLater(() -> {
-            pane.requestFocus();
-            pane.setOnKeyTyped(event -> {
-                if (event.getCharacter().getBytes()[0] == 27) {
-                    game.getSelectionManager().deselectAction();
-                }
-            });
-        });
     }
 
     VisualMinion[][] visualMinions;
 
     public void init(Game game) {
+        transformGrid();
+        fixGridNodesIndexes();
+        produceClickBoxes();
+        setEscapeAsDeselector();
+
+        //initializing essential fields
         this.game = game;
         visualMinions = new VisualMinion[5][9];
 
         beforeStartTheGame(game.getPlayers()[0], game.getPlayers()[1]);
+    }
+
+    private void setEscapeAsDeselector() {
+        pane.requestFocus();
+        pane.setOnKeyTyped(event -> {
+            if (event.getCharacter().getBytes()[0] == 27) {
+                game.getSelectionManager().deselectAction();
+            }
+        });
+    }
+
+    private void produceClickBoxes() {
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 9; j++) {
+                ///////////////dirty code ahead//////////////////////
+                int height = (int) (10 * (i * .65f + 6));
+                int width = (int) (60 - 2.5f * (4 - i));
+                Rectangle rect = new Rectangle(width, height);
+                rect.setFill(Color.TRANSPARENT);
+                rect.relocate(getXFromIndexes(i, j, width - 40, height - 80), getYFromIndexes(i, j, width - 40, height - 80));
+                //////////////////////////////////////////////
+                pane.getChildren().add(rect);
+
+                int finalI = i;
+                int finalJ = j;
+                rect.setOnMouseClicked(event -> {
+                    cellOnMouseEvent(finalI, finalJ);
+                });
+                rect.setOnMouseEntered(event -> {
+                    getGridNodeFromIndexes(finalI, finalJ).setEffect(new Glow(1));
+                });
+                rect.setOnMouseExited(event -> {
+                    setDefaultEffect(getGridNodeFromIndexes(finalI, finalJ));
+                });
+            }
+        }
     }
 
     public void put(int row, int col, String name) {
@@ -184,27 +112,28 @@ public class ArenaController implements Initializable, PropertyChangeListener {
             visualMinions[row][col] = vm;
 
             vm.view.setOnMouseEntered(event -> {
+                vm.idle();
                 Warrior warrior = game.getBoard().getCell(row, col).getWarrior();
                 showInfoOfACard(warrior.getName(), warrior.description.getDescriptionOfCardSpecialAbility(), "warrior", warrior.getHp(), warrior.getAp());
             });
 
             vm.view.setOnMouseExited(event -> {
+                vm.breathing();
                 endShowInfoOfACard();
             });
         });
     }
 
     double getXFromIndexes(int row, int col, int width, int height) {
-        Bounds bounds = grid.getCellBounds(0, 0);
-//        return bounds.getMinX()/3 + grid.getLayoutX() + bounds.getWidth()*Math.pow(col,1.5)/5.5 + 40 +(130 - vm.animation.width);
-        return bounds.getMinX() + grid.getLayoutX() + bounds.getWidth() * col * (row / 20f + .85) - 13 * row - width / 4 + 60;
-
+//        Bounds bounds = grid.getCellBounds(0, 0);
+//        return bounds.getMinX() + grid.getLayoutX() + bounds.getWidth() * col * (row / 20f + .85) - 13 * row - width / 4 + 60;
+        return grid.getLayoutX() + 63 * col * (row / 20f + .85) - 13 * row - width / 4 + 60;
     }
 
     double getYFromIndexes(int row, int col, int width, int height) {
-        Bounds bounds = grid.getCellBounds(0, 0);
-//        return bounds.getMinY()/4 + grid.getLayoutY() + bounds.getHeight()*Math.pow(row,1.8)/10 + 50 +(130 - vm.animation.height);
-        return bounds.getMinY() + grid.getLayoutY() + bounds.getHeight() * Math.pow(row, 1.1) - height / 2.5 - 50;
+//        Bounds bounds = grid.getCellBounds(0, 0);
+//        return bounds.getMinY() + grid.getLayoutY() + bounds.getHeight() * Math.pow(row, 1.1) - height / 2.5 - 50;
+        return  + grid.getLayoutY() + 67 * Math.pow(row, 1.1) - height / 2.5 - 50;
     }
 
     public void move(int sRow, int sCol, int tRow, int tCol) {
@@ -230,6 +159,7 @@ public class ArenaController implements Initializable, PropertyChangeListener {
             }, (long) duration.toMillis());
 
             vm.view.setOnMouseEntered(event -> {
+                vm.idle();
                 Warrior warrior = game.getBoard().getCell(tRow, tCol).getWarrior();
                 showInfoOfACard(warrior.getName(), warrior.description.getDescriptionOfCardSpecialAbility(), "warrior", warrior.getHp(), warrior.getAp());
             });
@@ -255,7 +185,7 @@ public class ArenaController implements Initializable, PropertyChangeListener {
     public void kill(int row, int col) {
         new Thread(() -> {
             try {
-                Thread.sleep(300);
+                Thread.sleep(400);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -521,32 +451,36 @@ public class ArenaController implements Initializable, PropertyChangeListener {
                         cardHolders[i].put(visualEntity, vm.getWidth(), vm.getHeight());
 
                         visualEntity.setOnMouseEntered(event -> {//amir
-                            if(i==0){
-                                Warrior w= (Warrior)game.getActivePlayer().getNextCard();
-                                showInfoOfACard(w.getName(),w.description.getDescriptionOfCardSpecialAbility(),"warrior",w.getHp(),w.getAp());
-                            }else {
-                                Warrior w = (Warrior)game.getActivePlayer().getHand().get(i-1);
-                                showInfoOfACard(w.getName(),w.description.getDescriptionOfCardSpecialAbility(),"warrior",w.getHp(),w.getAp());
+                            vm.idle();
+                            if (i == 0) {
+                                Warrior w = (Warrior) game.getActivePlayer().getNextCard();
+                                showInfoOfACard(w.getName(), w.description.getDescriptionOfCardSpecialAbility(), "warrior", w.getHp(), w.getAp());
+                            } else {
+                                Warrior w = (Warrior) game.getActivePlayer().getHand().get(i - 1);
+                                showInfoOfACard(w.getName(), w.description.getDescriptionOfCardSpecialAbility(), "warrior", w.getHp(), w.getAp());
                             }
                         });
                         visualEntity.setOnMouseExited(event -> {
+                            vm.breathing();
                             endShowInfoOfACard();
                         });
                     } else {
-                        VisualSpell vm = new VisualSpell(name);
-                        visualEntity = vm.view;
-                        cardHolders[i].put(visualEntity, vm.getWidth(), vm.getHeight());
+                        VisualSpell vs = new VisualSpell(name);
+                        visualEntity = vs.view;
+                        cardHolders[i].put(visualEntity, vs.getWidth(), vs.getHeight());
 
                         visualEntity.setOnMouseEntered(event -> {//amir
-                            if(i==0){
-                                Spell w= (Spell) game.getActivePlayer().getNextCard();
-                                showInfoOfACard(w.getName(),w.description.getDescriptionOfCardSpecialAbility(),"spell",0,0);
-                            }else {
-                                Spell w = (Spell)game.getActivePlayer().getHand().get(i-1);
-                                showInfoOfACard(w.getName(),w.description.getDescriptionOfCardSpecialAbility(),"spell",0,0);
+                            vs.idle();
+                            if (i == 0) {
+                                Spell w = (Spell) game.getActivePlayer().getNextCard();
+                                showInfoOfACard(w.getName(), w.description.getDescriptionOfCardSpecialAbility(), "spell", 0, 0);
+                            } else {
+                                Spell w = (Spell) game.getActivePlayer().getHand().get(i - 1);
+                                showInfoOfACard(w.getName(), w.description.getDescriptionOfCardSpecialAbility(), "spell", 0, 0);
                             }
                         });
                         visualEntity.setOnMouseExited(event -> {
+                            vs.breathing();
                             endShowInfoOfACard();
                         });
                     }
@@ -675,8 +609,6 @@ public class ArenaController implements Initializable, PropertyChangeListener {
             shownWarriorInArenaController.setHP(HP);
 
             VisualMinion vm = new VisualMinion(name);
-            vm.view.setOnMouseEntered(null);
-            vm.view.setOnMouseExited(null);
             shownWarriorInArenaController.put(vm.view, vm.animation.width, vm.animation.height);
         } else {
             shownCardInformationHolder_pn.getChildren().add(shownSpell_pn);
@@ -685,8 +617,6 @@ public class ArenaController implements Initializable, PropertyChangeListener {
             shownSpellInArenaController.setType("spell");
 
             VisualSpell vs = new VisualSpell(name);
-            vs.view.setOnMouseEntered(null);
-            vs.view.setOnMouseExited(null);
             shownSpellInArenaController.put(vs.view, vs.animation.width, vs.animation.height);
         }
     }
