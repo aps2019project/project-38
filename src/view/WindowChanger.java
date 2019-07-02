@@ -169,12 +169,12 @@ public class WindowChanger {
     }
 }
 
-    Parent backup = null;
-    public void adjustGameScene(boolean enter) {
-        if (enter) {
-            backup = Main.mainStage.getScene().getRoot();
-            Main.mainStage.getScene().setRoot(LoadedScenes.arena);
-        } else {
-            Main.mainStage.getScene().setRoot(backup);
-        }
-    }
+//    Parent backup = null;
+//    public void adjustGameScene(boolean enter) {
+//        if (enter) {
+//            backup = Main.mainStage.getScene().getRoot();
+//            Main.mainStage.getScene().setRoot(LoadedScenes.arena);
+//        } else {
+//            Main.mainStage.getScene().setRoot(backup);
+//        }
+//    }

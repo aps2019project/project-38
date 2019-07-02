@@ -40,4 +40,12 @@ public class LoadedScenes {
             e.printStackTrace();
         }
     }
+
+    public static void cleanArena(){
+        try {
+            arena = scale(FXMLLoader.load(LoadedScenes.class.getResource("arena.fxml")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
