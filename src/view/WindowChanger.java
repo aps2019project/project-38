@@ -50,7 +50,7 @@ public class WindowChanger {
         mainStage = Main.mainStage;
     }
 
-    public void setNewScene(Pane pane) {
+    public void setNewScene(Parent pane) {
 //        new Thread(() -> {
 //            Platform.runLater(() -> {
 //                anchorPanes.get(1).getChildren().clear();

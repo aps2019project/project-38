@@ -115,7 +115,7 @@ public class CustomCardController implements Initializable {
     }
 
     public void apply_btn() {
-        new CardCustomizer(this).build();
+//        new CardCustomizer(this).build();
     }
 
     //--------.: GETTERS :.---------

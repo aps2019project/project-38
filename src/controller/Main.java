@@ -3,6 +3,7 @@ package controller;
 import controller.window.LoadWindow;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 import model.Account;
@@ -13,6 +14,8 @@ import view.WindowChanger;
 import view.fxmlControllers.ArenaController;
 import view.fxmls.LoadedScenes;
 
+import java.io.IOException;
+
 public class Main extends Application {
     public static Stage mainStage;
 
@@ -21,7 +24,7 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws IOException {
         mainStage = primaryStage;
         mainStage.setFullScreen(true);
         mainStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
@@ -33,7 +36,8 @@ public class Main extends Application {
         new LoadWindow().main();
 
         WindowChanger.instance.setNewScene(LoadedScenes.registerMenu);
-
+//        WindowChanger.instance.setNewScene(LoadedScenes.customCard);
+//
 //        {//arena
 //            Account account = new Account("test", "test");
 //            account.getCollection().setMainDeck(Deck.getAllDecks().get("level1"));

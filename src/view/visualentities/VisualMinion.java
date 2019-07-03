@@ -30,7 +30,12 @@ public class VisualMinion {
     public VisualMinion(String name) {
         this.name = name;
         try {
-            ImageView temp = new ImageView(new Image(new FileInputStream("src/view/images/sprites/" + name + ".png")));
+            ImageView temp;
+            if (Card.getAllCards().values().stream().filter(Objects::nonNull).anyMatch(card -> String.valueOf(card.getID()).startsWith("5"))) {
+                temp = new ImageView(new Image(new FileInputStream("src/view/images/sprites/cw.png")));
+            } else {
+                temp = new ImageView(new Image(new FileInputStream("src/view/images/sprites/" + name + ".png")));
+            }
             temp.setVisible(false);
             view = temp;
             animation = new SpriteAnimation(view, SpriteType.breathing, name, -1);

@@ -42,10 +42,6 @@ public class MainMenuController implements Initializable {
     }
 
     public void customCard_btn() {
-        try {
-            WindowChanger.instance.setNewScene(FXMLLoader.load(LoadedScenes.class.getResource("customCard.fxml")));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        WindowChanger.instance.setNewScene(LoadedScenes.customCard);
     }
 }
