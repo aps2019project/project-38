@@ -1,22 +1,16 @@
 package controller;
 
-import controller.window.LoadWindow;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
-import model.Account;
-import model.Deck;
-import model.Game;
-import model.Level;
+import view.LoadWindows;
 import view.WindowChanger;
-import view.fxmlControllers.ArenaController;
 import view.fxmls.LoadedScenes;
 
 import java.io.IOException;
 
-public class Main extends Application {
+public class Client extends Application {
     public static Stage mainStage;
 
     public static void main(String[] args) {
@@ -33,7 +27,7 @@ public class Main extends Application {
             System.exit(0);
         });
 
-        new LoadWindow().main();
+        new LoadWindows().main();
 
         WindowChanger.instance.setNewScene(LoadedScenes.registerMenu);
 //        WindowChanger.instance.setNewScene(LoadedScenes.customCard);

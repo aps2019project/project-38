@@ -71,7 +71,7 @@ public abstract class LoadingGamePreviewScenes {
         starterControllers.get("Battle").setFields(imagesNumber, "Battle");
         sceneControllers.get("Battle").setFields("Battle", imagesNumber);
         sceneControllers.get("Battle").addButton(singlePlayerButton, multiPlayerButton);
-        sceneControllers.get("Battle").setPreviewSceneName("Main Menu");
+        sceneControllers.get("Battle").setPreviewSceneName("Client Menu");
     }
 
     private static void loadSinglePlayerScene() {

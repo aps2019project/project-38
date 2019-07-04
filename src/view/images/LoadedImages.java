@@ -15,21 +15,14 @@ public class LoadedImages {
     public static Image[] avatars = new Image[15];
     public static Image blueMana = null;
     public static Image grayMana = null;
-    public static Image activeCard = null;
-    public static Image activePlayer = null;
-    public static Image inactivePlayer = null;
     public static Image blueCircle = null;
     public static Image grayCircle;
 
     {
-        Random random = new Random();
         try {
             //for arena:
             blueMana = new Image(new FileInputStream("src/view/images/arena/blueMana.png"));
             grayMana = new Image(new FileInputStream("src/view/images/arena/grayMana.png"));
-            activeCard = new Image(new FileInputStream("src/view/images/arena/activeCard.png"));
-            activePlayer = new Image(new FileInputStream("src/view/images/arena/activePlayer.png"));
-            inactivePlayer = new Image(new FileInputStream("src/view/images/arena/inactivePlayer.png"));
             blueCircle = new Image(new FileInputStream("src/view/images/arena/blueCircle.png"));
             grayCircle = new Image(new FileInputStream("src/view/images/arena/grayCircle.png"));
             for (int i = 0; i < 15; i++) {

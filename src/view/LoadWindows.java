@@ -1,4 +1,4 @@
-package controller.window;
+package view;
 
 import model.Account;
 import model.Deck;
@@ -6,9 +6,8 @@ import model.cards.CardFactory;
 import view.fxmls.LoadedScenes;
 import view.images.LoadedImages;
 
-public class LoadWindow extends Window {
+public class LoadWindows {
 
-    @Override
     public void main() {
         //todo after making files
         CardFactory.main();
