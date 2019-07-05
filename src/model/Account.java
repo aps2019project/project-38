@@ -1,7 +1,5 @@
 package model;
 
-import view.Message;
-
 import java.io.*;
 import java.util.*;
 
@@ -33,7 +31,6 @@ public class Account implements Comparable<Account>, java.io.Serializable {
             return "There's an account with this name";
         }
         if (!password.equals(againPassword)) {
-            Message.noIdenticalPassword();
             return "Your passwords aren't same";
         }
         new Account(username, password);
@@ -46,7 +43,6 @@ public class Account implements Comparable<Account>, java.io.Serializable {
         }
         Account account = usernameToAccountObject.get(username);
         if (!account.password.equals(password)) {
-            Message.incorrectPassword();
             return "Your password is incorrect";
         }
         Account.activeAccount = account;

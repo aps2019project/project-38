@@ -2,7 +2,6 @@ package model;
 
 import model.cards.Card;
 import model.cards.Spell;
-import view.Message;
 
 import java.util.ArrayList;
 
@@ -19,13 +18,12 @@ public class Shop {
         for (int ID : shop.getCardIDs()) {
             Card card = Card.getAllCards().get(ID);
             if (card.getName().toLowerCase().equals(cardName.toLowerCase())) {
-
-                Message.existACardWithThisNameInShop();
-                Message.printSomeThing("It's ID is " + ID);
+//                Message.existACardWithThisNameInShop();
+//                Message.printSomeThing("It's ID is " + ID);
                 return;
             }
         }
-        Message.thereIsNoCardWithThisNameInShop();
+//        Message.thereIsNoCardWithThisNameInShop();
     }
 
     public void searchInCollectionCards(String cardName) {
@@ -39,9 +37,9 @@ public class Shop {
             }
         }
         if (numberOfFoundIDs == 0) {
-            Message.thereIsNoCardWithThisNameInCollection();
+//            Message.thereIsNoCardWithThisNameInCollection();
         } else {
-            Message.haveXNumberOfCardIDInYourCollection(numberOfFoundIDs);
+//            Message.haveXNumberOfCardIDInYourCollection(numberOfFoundIDs);
         }
     }
 
@@ -50,7 +48,7 @@ public class Shop {
         Account account = Account.getActiveAccount();
 
         if (card == null) {
-            Message.thereIsNoCardWithThisNameInShop();
+//            Message.thereIsNoCardWithThisNameInShop();
             return;
         }
 
@@ -62,7 +60,7 @@ public class Shop {
                     if (Spell.checkIsItem(card1)) numberOfItems++;
                 }
                 if (numberOfItems >= 3) {
-                    Message.haveAlready3Items();
+//                    Message.haveAlready3Items();
                     return;
                 }
             }
@@ -76,9 +74,9 @@ public class Shop {
                 Collection.getCollection().getHowManyCard().put(card.getName(), 1);
             }
 
-            Message.buyWasSuccessful();
+//            Message.buyWasSuccessful();
         } else {
-            Message.haveNotEnoughMoney();
+//            Message.haveNotEnoughMoney();
         }
     }
 
@@ -87,12 +85,12 @@ public class Shop {
         Account account = Account.getActiveAccount();
 
         if (card == null) {
-            Message.thereIsNoCardWithThisNameInCollection();
+//            Message.thereIsNoCardWithThisNameInCollection();
             return;
         }
 
         if (!account.getCollection().getCardIDs().contains(card.getID())) {
-            Message.haveNotThisCardInYourCollection();
+//            Message.haveNotThisCardInYourCollection();
             return;
         }
         account.derrick = account.derrick + card.getPrice();
@@ -109,7 +107,7 @@ public class Shop {
         int keyValue = Collection.getCollection().getHowManyCard().get(card.getName());
         Collection.getCollection().getHowManyCard().put(card.getName(), keyValue - 1);
 
-        Message.sellWasSuccessful();
+//        Message.sellWasSuccessful();
     }
 
     private Card getCardByItsName(String cardName) {

@@ -1,22 +1,17 @@
 package view;
 
-import controller.Main;
+import controller.Client;
 import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.transform.Scale;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import view.fxmlControllers.AlertController;
-import view.fxmls.LoadedScenes;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class WindowChanger {
@@ -29,8 +24,8 @@ public class WindowChanger {
     private WindowChanger() {
 //        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxmls/mainWindow.fxml"));
 //        try {
-//            Main.mainStage.setScene(new Scene(scale(fxmlLoader.load())));
-//            Main.mainStage.setFullScreen(true);
+//            Client.mainStage.setScene(new Scene(scale(fxmlLoader.load())));
+//            Client.mainStage.setFullScreen(true);
 //            MainAnchorPaneController mainAnchorPaneController = fxmlLoader.getController();
 //            anchorPanes.add(mainAnchorPaneController.anchorPaneOne);
 //            anchorPanes.add(mainAnchorPaneController.anchorPaneTwo);
@@ -46,8 +41,8 @@ public class WindowChanger {
             mainAnchorPane.setMaxSize(Screen.getPrimary().getVisualBounds().getWidth(), Screen.getPrimary().getVisualBounds().getHeight());
             mainAnchorPane.setMinSize(Screen.getPrimary().getVisualBounds().getWidth(), Screen.getPrimary().getVisualBounds().getHeight());
         });
-        Main.mainStage.setScene(new Scene(mainAnchorPane));
-        mainStage = Main.mainStage;
+        Client.mainStage.setScene(new Scene(mainAnchorPane));
+        mainStage = Client.mainStage;
     }
 
     public void setNewScene(Parent pane) {
@@ -76,7 +71,7 @@ public class WindowChanger {
 //            anchorPanes.add(anchorPanes.get(0));
 //            anchorPanes.remove(0);
 //        }).start();
-        Main.mainStage.getScene().setRoot(pane);
+        Client.mainStage.getScene().setRoot(pane);
     }
 
     public synchronized void addNewScene(Pane pane) {
@@ -171,10 +166,10 @@ public class WindowChanger {
 //    Parent backup = null;
 //    public void adjustGameScene(boolean enter) {
 //        if (enter) {
-//            backup = Main.mainStage.getScene().getRoot();
-//            Main.mainStage.getScene().setRoot(LoadedScenes.arena);
+//            backup = Client.mainStage.getScene().getRoot();
+//            Client.mainStage.getScene().setRoot(LoadedScenes.arena);
 //        } else {
-//            Main.mainStage.getScene().setRoot(backup);
+//            Client.mainStage.getScene().setRoot(backup);
 //        }
 //    }
 }

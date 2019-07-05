@@ -1,9 +1,8 @@
 package view;
 
-import controller.Main;
+import controller.Client;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
-import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.*;
@@ -61,6 +60,6 @@ public class Utility {
                 Platform.runLater(popup::hide);
             }
         }, 2000);
-        popup.show(Main.mainStage);
+        popup.show(Client.mainStage);
     }
 }

@@ -67,7 +67,7 @@ public class CollectionController implements Initializable {
 
     public void removeSelectedDeck(MouseEvent mouseEvent) {
         if (selectedDeck != null)
-            if (deckToTypeHashMap.get(selectedDeck).equals("Main Deck")) {
+            if (deckToTypeHashMap.get(selectedDeck).equals("Client Deck")) {
                 AlertController alertController = AlertController.setAndShowAndGetResultByAnAlertController
                         ("This is your main deck. Are you sure about removing it?", true);
                 new Thread(() -> {
@@ -105,7 +105,7 @@ public class CollectionController implements Initializable {
 
     public void enterChoosingDeckCards(MouseEvent mouseEvent) {
         if (selectedDeck != null)
-            if (deckToTypeHashMap.get(selectedDeck).equals("Main Deck")) {
+            if (deckToTypeHashMap.get(selectedDeck).equals("Client Deck")) {
                 AlertController alertController = AlertController.setAndShowAndGetResultByAnAlertController
                         ("This is your main deck and changing it will reset it. Are you sure about changing it?",
                                 true);
@@ -144,7 +144,7 @@ public class CollectionController implements Initializable {
         deckToTypeHashMap = new HashMap<>();
         for (Deck deck : Collection.getCollection().getAllDecks().values()) {
             if (Collection.getCollection().getMainDeck() == deck) {
-                deckToTypeHashMap.put(deck, "Main Deck");
+                deckToTypeHashMap.put(deck, "Client Deck");
             } else if (Collection.getCollection().validateDeck(deck.getName(), false)) {
                 deckToTypeHashMap.put(deck, "Ready");
             } else {
