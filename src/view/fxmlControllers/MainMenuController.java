@@ -34,7 +34,7 @@ public class MainMenuController implements Initializable {
 
     public void createDeck() {
         CollectionController.collectionController.calculateEveryThing();
-        WindowChanger.instance.setNewScene(CollectionController.collectionAnchorPane);
+        WindowChanger.instance.setNewScene(LoadedScenes.collectionAnchorPane);
     }
 
     public void shop() {

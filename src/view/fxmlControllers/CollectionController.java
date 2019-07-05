@@ -2,6 +2,7 @@ package view.fxmlControllers;
 
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.Bloom;
 import javafx.scene.effect.DropShadow;
@@ -18,12 +19,13 @@ import view.WindowChanger;
 import view.fxmls.LoadedScenes;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ResourceBundle;
 
-public class CollectionController {
+public class CollectionController implements Initializable {
     public static CollectionController collectionController;
-    public  static AnchorPane collectionAnchorPane;
     public TextField decksSearchTextField;
     public ImageView renameSelectedDeckButton;
     public Text renameSelectedDeckText;
@@ -38,15 +40,10 @@ public class CollectionController {
     private HashMap<Deck, DeckButtonController> deckToDeckButtonControllerHashMap = new HashMap<>();
     private Deck selectedDeck;
 
-    static {
-        FXMLLoader fxmlLoader = new FXMLLoader(CollectionController.class.getResource("../fxmls/Collection.fxml"));
-        try {
-            collectionAnchorPane = fxmlLoader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        collectionController = fxmlLoader.getController();
-        collectionController.initialize();
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        collectionController = this;
+        decksSearchTextField.setOnKeyTyped(collectionController::recalculateDecks);
     }
 
     public void renameSelectedDeck(MouseEvent mouseEvent) {
@@ -141,10 +138,6 @@ public class CollectionController {
     public void resetSelectedDeckButton(MouseEvent mouseEvent) {
         selectedDeckButton.setEffect(null);
         selectedDeckText.setEffect(null);
-    }
-
-    public void initialize() {
-        decksSearchTextField.setOnKeyTyped(collectionController::recalculateDecks);
     }
 
     public void calculateEveryThing() {
