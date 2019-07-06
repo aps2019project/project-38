@@ -1,8 +1,6 @@
 package view.fxmlControllers;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -31,6 +29,7 @@ import model.player.Player;
 import view.WindowChanger;
 import view.fxmls.LoadedScenes;
 import view.images.LoadedImages;
+import view.visualentities.SpriteType;
 import view.visualentities.VisualMinion;
 import view.visualentities.VisualSpell;
 
@@ -40,7 +39,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
-public class ArenaController implements Initializable{
+public class ArenaController implements Initializable {
     public static ArenaController ac;
     public Game game;
     public GridPane grid;
@@ -104,23 +103,23 @@ public class ArenaController implements Initializable{
     }
 
     public void put(int row, int col, String name) {
+        VisualMinion vm = new VisualMinion(name);
+        visualMinions[row][col] = vm;
+
         Platform.runLater(() -> {
-            VisualMinion vm = new VisualMinion(name);
             vm.view.relocate(getXFromIndexes(row, col, vm.animation.width, vm.animation.height), getYFromIndexes(row, col, vm.animation.width, vm.animation.height));
-
             pane.getChildren().add(vm.view);
-            visualMinions[row][col] = vm;
+        });
 
-            vm.view.setOnMouseEntered(event -> {
-                vm.idle();
-                Warrior warrior = game.getBoard().getCell(row, col).getWarrior();
-                showInfoOfACard(warrior.getName(), warrior.description.getDescriptionOfCardSpecialAbility(), "warrior", warrior.getHp(), warrior.getAp());
-            });
+        vm.view.setOnMouseEntered(event -> {
+            vm.isSelected.set(true);
+            Warrior warrior = game.getBoard().getCell(row, col).getWarrior();
+            showInfoOfACard(warrior.getName(), warrior.description.getDescriptionOfCardSpecialAbility(), "warrior", warrior.getHp(), warrior.getAp());
+        });
 
-            vm.view.setOnMouseExited(event -> {
-                vm.breathing();
-                endShowInfoOfACard();
-            });
+        vm.view.setOnMouseExited(event -> {
+            vm.isSelected.set(false);
+            endShowInfoOfACard();
         });
     }
 
@@ -137,14 +136,15 @@ public class ArenaController implements Initializable{
     }
 
     public void move(int sRow, int sCol, int tRow, int tCol) {
+        VisualMinion vm = visualMinions[sRow][sCol];
+        visualMinions[sRow][sCol] = null;
+        visualMinions[tRow][tCol] = vm;
+
         Platform.runLater(() -> {
-            VisualMinion vm = visualMinions[sRow][sCol];
-            visualMinions[sRow][sCol] = null;
-            visualMinions[tRow][tCol] = vm;
             if ((tCol - sCol) * vm.view.getScaleX() < 0) {
                 vm.view.setScaleX(-vm.view.getScaleX());
             }
-            vm.run();
+            vm.isRunning.set(true);
             Duration duration = Duration.millis((Math.abs(sRow - tRow) + Math.abs(sCol - tCol)) * 400);
             KeyValue xValue = new KeyValue(vm.view.xProperty(), getXFromIndexes(tRow, tCol, vm.animation.width, vm.animation.height) - vm.view.getLayoutX());
             KeyValue yValue = new KeyValue(vm.view.yProperty(), getYFromIndexes(tRow, tCol, vm.animation.width, vm.animation.height) - vm.view.getLayoutY());
@@ -154,55 +154,56 @@ public class ArenaController implements Initializable{
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    vm.breathing();
+                    vm.isRunning.set(false);
                 }
             }, (long) duration.toMillis());
+        });
 
-            vm.view.setOnMouseEntered(event -> {
-                vm.idle();
-                Warrior warrior = game.getBoard().getCell(tRow, tCol).getWarrior();
-                showInfoOfACard(warrior.getName(), warrior.description.getDescriptionOfCardSpecialAbility(), "warrior", warrior.getHp(), warrior.getAp());
-            });
+        vm.view.setOnMouseEntered(event -> {
+            vm.isSelected.set(true);
+            Warrior warrior = game.getBoard().getCell(tRow, tCol).getWarrior();
+            showInfoOfACard(warrior.getName(), warrior.description.getDescriptionOfCardSpecialAbility(), "warrior", warrior.getHp(), warrior.getAp());
         });
     }
 
     public void attack(int sRow, int sCol, int tRow, int tCol) {
-        Platform.runLater(() -> {
-            VisualMinion vm = visualMinions[sRow][sCol];
-            if ((tCol - sCol) * vm.view.getScaleX() < 0) {
-                vm.view.setScaleX(-vm.view.getScaleX());
-            }
-            vm.attack();
-        });
+        VisualMinion vm = visualMinions[sRow][sCol];
+        if ((tCol - sCol) * vm.view.getScaleX() < 0) {
+            vm.view.setScaleX(-vm.view.getScaleX());
+        }
+        vm.actionQueue.offer(SpriteType.attack);
     }
 
     public void cast(int row, int col) {
-        Platform.runLater(() -> {
-            visualMinions[row][col].cast();
-        });
+        visualMinions[row][col].actionQueue.offer(SpriteType.cast);
     }
 
     public void kill(int row, int col) {
-        new Thread(() -> {
-            try {
-                Thread.sleep(400);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            Platform.runLater(() -> {
-                visualMinions[row][col].death();
-                new Timer().schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        Platform.runLater(() -> {
-                            pane.getChildren().remove(visualMinions[row][col].view);
-                            visualMinions[row][col] = null;
-                        });
-                    }
-                }, visualMinions[row][col].animation.realDuration);
-            });
-        }).start();
+        VisualMinion vm = visualMinions[row][col];
+        vm.actionQueue.offer(SpriteType.death);
 
+        new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                if (vm.lastState == SpriteType.death) {
+                    Timer t = new Timer();
+                    t.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            removeFromBoard(row, col);
+                        }
+                    },vm.animation.realDuration);
+                    stop();
+                }
+            }
+        }.start();
+    }
+
+    public void removeFromBoard(int row, int col) {
+        Platform.runLater(() -> {
+            pane.getChildren().remove(visualMinions[row][col].view);
+            visualMinions[row][col] = null;
+        });
     }
 
     private void fixGridNodesIndexes() {
@@ -448,7 +449,7 @@ public class ArenaController implements Initializable{
                         cardHolders[i].put(visualEntity, vm.getWidth(), vm.getHeight());
 
                         visualEntity.setOnMouseEntered(event -> {//amir
-                            vm.idle();
+                            vm.isSelected.set(true);
                             if (i == 0) {
                                 Warrior w = (Warrior) game.getActivePlayer().getNextCard();
                                 showInfoOfACard(w.getName(), w.description.getDescriptionOfCardSpecialAbility(), "warrior", w.getHp(), w.getAp());
@@ -458,7 +459,7 @@ public class ArenaController implements Initializable{
                             }
                         });
                         visualEntity.setOnMouseExited(event -> {
-                            vm.breathing();
+                            vm.isSelected.set(false);
                             endShowInfoOfACard();
                         });
                     } else {
@@ -537,7 +538,7 @@ public class ArenaController implements Initializable{
 
     public void graveYard() {
         ArrayList<ImageView> template = player2GraveYard;
-        if (game.getActivePlayerIndex()== 0) {
+        if (game.getActivePlayerIndex() == 0) {
             template = player1GraveYard;
         }
         mainGraveYard.getChildren().clear();
