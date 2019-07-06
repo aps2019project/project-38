@@ -51,7 +51,7 @@ public class DBMethods {
     private static String DBMethods(String DBName, String whatDoWeWantToDo, String key, String value) {
         final String baseAddress = "http://127.0.0.1:8080/";
         final String path = whatDoWeWantToDo;
-        HttpResponse<String> response;
+            HttpResponse<String> response;
         HashMap<String, Object> parameters = new HashMap<>();
 
         parameters.put("name", DBName);

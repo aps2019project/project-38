@@ -9,6 +9,7 @@ import model.cards.Card;
 import model.cards.Hero;
 import model.cards.Spell;
 import model.cards.Warrior;
+import view.fxmlControllers.ArenaController;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -20,7 +21,6 @@ import java.util.Random;
 
 
 public abstract class Player implements Serializable {
-    private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
     private int mana;
     protected Deck mainDeck;
     protected HashMap<Integer, Card> hand = new HashMap<>();
@@ -31,17 +31,15 @@ public abstract class Player implements Serializable {
     private Card nextCard;
     public Image avatar;
     public String username;
+    private Game game;
 
-    public Player(Deck deck) {
+    public Player(Deck deck, Game game) {
         this.mainDeck = deck;
+        this.game = game;
         for (int i = 0; i < Constant.GameConstants.handSize; i++) {
             hand.put(i, null);
         }
         initializeNextCard();
-    }
-
-    public void addListener(PropertyChangeListener listener) {
-        pcs.addPropertyChangeListener(listener);
     }
 
     public int getMana() {
@@ -50,12 +48,12 @@ public abstract class Player implements Serializable {
 
     public void setMana(int amount) {
         mana = amount;
-        pcs.firePropertyChange("mana", -1, mana);
+        ArenaController.ac.setActiveMana(mana,getGame().getPlayerNumber(this)+1);
     }
 
     public void addMana(int amount) {
         mana += amount;
-        pcs.firePropertyChange("mana", -1, mana);
+        ArenaController.ac.setActiveMana(mana,getGame().getPlayerNumber(this)+1);
     }
 
     public void initializeNextCard() {
@@ -93,6 +91,6 @@ public abstract class Player implements Serializable {
     }
 
     public Game getGame() {
-        return warriors.get(0).getCell().getBoard().getGame();
+        return game;
     }
 }

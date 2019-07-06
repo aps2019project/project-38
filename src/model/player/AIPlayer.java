@@ -13,8 +13,8 @@ import java.util.Map;
 import java.util.Random;
 
 public class AIPlayer extends Player {
-    public AIPlayer(Deck deck) {
-        super(deck);
+    public AIPlayer(Deck deck,Game game) {
+        super(deck,game);
         avatar = LoadedImages.avatars[new Random().nextInt(15)];
         username = "AI_Player";
     }

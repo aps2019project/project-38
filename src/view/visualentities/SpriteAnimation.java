@@ -5,6 +5,7 @@ import javafx.animation.Transition;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
+import view.images.LoadedImages;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -61,7 +62,7 @@ public class SpriteAnimation extends Transition {
     private void getFramesFromPlist() {
         String dataS = null;
         try {
-            dataS = new String(Files.readAllBytes(Paths.get("src/view/images/sprites/" + fileName + ".plist")));
+            dataS = new String(Files.readAllBytes(LoadedImages.plists.get(fileName)));
         } catch (IOException e) {
             e.printStackTrace();
         }

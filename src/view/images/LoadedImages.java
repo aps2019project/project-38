@@ -2,8 +2,13 @@ package view.images;
 
 import javafx.scene.image.Image;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +22,8 @@ public class LoadedImages {
     public static Image grayMana = null;
     public static Image blueCircle = null;
     public static Image grayCircle;
+    public static HashMap<String,Image> sprites = new HashMap<>();
+    public static HashMap<String,Path> plists = new HashMap<>();
 
     {
         try {
@@ -28,7 +35,16 @@ public class LoadedImages {
             for (int i = 0; i < 15; i++) {
                 avatars[i] = new Image(new FileInputStream("src/view/images/accounts/circular/" + i + ".png"));
             }
-        } catch (FileNotFoundException e) {
+            for (Path path : Files.newDirectoryStream(Paths.get("src/view/images/sprites"))) {
+                if(path.toString().endsWith(".plist")){
+                    plists.put(path.getFileName().toString().replace(".plist",""),path);
+                }else {
+                    sprites.put(path.getFileName().toString().replace(".png",""),new Image(path.toUri().toURL().toString()));
+                }
+            }
+            System.out.println(sprites);
+            System.out.println(plists);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

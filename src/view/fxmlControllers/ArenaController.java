@@ -40,7 +40,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
-public class ArenaController implements Initializable, PropertyChangeListener {
+public class ArenaController implements Initializable{
     public static ArenaController ac;
     public Game game;
     public GridPane grid;
@@ -133,7 +133,7 @@ public class ArenaController implements Initializable, PropertyChangeListener {
     double getYFromIndexes(int row, int col, int width, int height) {
 //        Bounds bounds = grid.getCellBounds(0, 0);
 //        return bounds.getMinY() + grid.getLayoutY() + bounds.getHeight() * Math.pow(row, 1.1) - height / 2.5 - 50;
-        return  + grid.getLayoutY() + 67 * Math.pow(row, 1.1) - height / 2.5 - 50;
+        return +grid.getLayoutY() + 67 * Math.pow(row, 1.1) - height / 2.5 - 50;
     }
 
     public void move(int sRow, int sCol, int tRow, int tCol) {
@@ -313,9 +313,6 @@ public class ArenaController implements Initializable, PropertyChangeListener {
 
 
     private void beforeStartTheGame(Player player1, Player player2) {
-        player1.addListener(this);
-        player2.addListener(this);
-
         player1_avatar.setImage(player1.avatar);
         player2_avatar.setImage(player2.avatar);
 
@@ -500,7 +497,7 @@ public class ArenaController implements Initializable, PropertyChangeListener {
         cardHolders[i + 1].neededMana.setText("");
         for (int j = 1; j < 6; j++) {
             if (cardHolders[j].neededMana.getText().equals("")) continue;
-            if (Integer.parseInt(cardHolders[j].neededMana.getText()) > playersMana[getCurrentPlayer()]) {
+            if (Integer.parseInt(cardHolders[j].neededMana.getText()) > playersMana[game.getActivePlayerIndex()]) {
                 cardHolders[j].manaBackGround.setEffect(new SepiaTone());
             }
         }
@@ -540,7 +537,7 @@ public class ArenaController implements Initializable, PropertyChangeListener {
 
     public void graveYard() {
         ArrayList<ImageView> template = player2GraveYard;
-        if (getCurrentPlayer() == 0) {
+        if (game.getActivePlayerIndex()== 0) {
             template = player1GraveYard;
         }
         mainGraveYard.getChildren().clear();
@@ -552,6 +549,7 @@ public class ArenaController implements Initializable, PropertyChangeListener {
 
     //menu:
     public void menu() {
+        System.gc();
         menu.toFront();
     }
 
@@ -574,16 +572,6 @@ public class ArenaController implements Initializable, PropertyChangeListener {
         LoadedScenes.cleanArena();
         WindowChanger.instance.setNewScene(LoadedScenes.mainMenu);
     }
-
-    private int getCurrentPlayer() {
-        return ArenaController.ac.game.turn % 2;
-    }
-
-    @Override
-    public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
-        setActiveMana((int) propertyChangeEvent.getNewValue(), game.getPlayerNumber(game.getActivePlayer()) + 1);
-    }
-
 
     public Pane shownCardInformationHolder_pn;
     private Pane shownSpell_pn;

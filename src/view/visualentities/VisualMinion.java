@@ -7,6 +7,7 @@ import model.cards.Card;
 import model.cards.CardFactory;
 import model.cards.Warrior;
 import view.fxmlControllers.ArenaController;
+import view.images.LoadedImages;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -29,19 +30,16 @@ public class VisualMinion {
 
     public VisualMinion(String name) {
         this.name = name;
-        try {
-            ImageView temp;
-            if (Card.getAllCards().values().stream().filter(Objects::nonNull).anyMatch(card -> String.valueOf(card.getID()).startsWith("5"))) {
-                temp = new ImageView(new Image(new FileInputStream("src/view/images/sprites/cw.png")));
-            } else {
-                temp = new ImageView(new Image(new FileInputStream("src/view/images/sprites/" + name + ".png")));
-            }
-            temp.setVisible(false);
-            view = temp;
-            animation = new SpriteAnimation(view, SpriteType.breathing, name, -1);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+
+        ImageView temp;
+        if (Card.getAllCards().values().stream().filter(Objects::nonNull).anyMatch(card -> String.valueOf(card.getID()).startsWith("5"))) {
+            temp = new ImageView(LoadedImages.sprites.get("cw"));
+        } else {
+            temp = new ImageView(LoadedImages.sprites.get(name));
         }
+        temp.setVisible(false);
+        view = temp;
+        animation = new SpriteAnimation(view, SpriteType.breathing, name, -1);
 
         view.setOnMouseEntered(event -> {
             idle();
