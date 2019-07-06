@@ -22,7 +22,7 @@ public class MainMenuController implements Initializable {
         if (Account.getActiveAccount().getCollection().getMainDeck() != null) {
             LoadingGamePreviewScenes.load();
         } else {
-            AlertController.setAndShowAndGetResultByAnAlertController("You have not a main deck", false);
+            AlertController.setAndShow("You have not a main deck");
         }
     }
 
@@ -34,7 +34,7 @@ public class MainMenuController implements Initializable {
 
     public void createDeck() {
         CollectionController.collectionController.calculateEveryThing();
-        WindowChanger.instance.setNewScene(CollectionController.collectionAnchorPane);
+        WindowChanger.instance.setNewScene(LoadedScenes.collection);
     }
 
     public void shop() {

@@ -5,6 +5,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.transform.Scale;
 import view.Utility;
 import view.fxmlControllers.ChoosingDeckCardsController;
+import view.fxmlControllers.CollectionController;
+import view.fxmlControllers.CollectionOfShopController;
 import view.fxmlControllers.RemovingDeckCardsController;
 
 import java.io.IOException;
@@ -36,6 +38,15 @@ public class LoadedScenes {
             chooseBattleKind = scale(FXMLLoader.load(getClass().getResource("chooseBattleKind.fxml")));
             shop = scale(FXMLLoader.load(getClass().getResource("shop.fxml")));
             arena = scale(FXMLLoader.load(getClass().getResource("arena.fxml")));
+            fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("Collection.fxml"));
+            collection = scale(fxmlLoader.load());
+            CollectionController.collectionController = fxmlLoader.getController();
+            fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("ChoosingDeckCards.fxml"));
+            choosingDeckCards = scale(fxmlLoader.load());
+            ChoosingDeckCardsController.choosingDeckCardsController = fxmlLoader.getController();
+            fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("RemovingDeckCards.fxml"));
+            removingDeckCards = scale(fxmlLoader.load());
+            RemovingDeckCardsController.removingDeckCardsController = fxmlLoader.getController();
         } catch (IOException e) {
             e.printStackTrace();
         }

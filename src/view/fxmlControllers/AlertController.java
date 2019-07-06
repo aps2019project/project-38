@@ -2,6 +2,7 @@ package view.fxmlControllers;
 
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -21,6 +22,7 @@ public class AlertController {
     public ImageView glowButton;
     public Boolean result;
     private boolean haveAcceptButton;
+    private Scene alertScene;
 
     public synchronized void close(MouseEvent mouseEvent) {
         resetAlertInPosition();
@@ -62,7 +64,26 @@ public class AlertController {
         }
     }
 
-    public synchronized static AlertController setAndShowAndGetResultByAnAlertController(String text, boolean haveAcceptButton) {
+    public static synchronized void setAndShowAndDo(String text, Runnable runnable) {
+        AlertController alertController = setAndShowAndGetResultByAnAlertController(text, true);
+        new Thread(() -> {
+            synchronized (alertController) {
+                try {
+                    alertController.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (alertController.result) runnable.run();
+        }).start();
+
+    }
+
+    public static synchronized void setAndShow(String text) {
+        setAndShowAndGetResultByAnAlertController(text, false);
+    }
+
+    private static AlertController setAndShowAndGetResultByAnAlertController(String text, boolean haveAcceptButton) {
         FXMLLoader fxmlLoader = new FXMLLoader(AlertController.class.getResource("../fxmls/alert.fxml"));
         AnchorPane alertPane = null;
         try {
@@ -75,7 +96,7 @@ public class AlertController {
         alertController.haveAcceptButton = haveAcceptButton;
         if (!haveAcceptButton) alertController.button.setOpacity(0);
         alertController.carrier.setLayoutY(Screen.getPrimary().getVisualBounds().getHeight());
-        WindowChanger.instance.addNewScene(alertPane);
+        alertController.alertScene = WindowChanger.instance.addNewScene(alertPane);
         alertController.setAlertInPosition();
         return alertController;
     }
@@ -107,7 +128,7 @@ public class AlertController {
                         e.printStackTrace();
                     }
                 }
-                WindowChanger.instance.removeAdditionalScene();
+                WindowChanger.instance.removeAdditionalScene(alertScene);
             }
         }).start();
     }

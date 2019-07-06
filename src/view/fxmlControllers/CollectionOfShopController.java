@@ -338,19 +338,37 @@ public class CollectionOfShopController implements Initializable {
     public static void sell(String cardName) {
         Card card = Card.getCardByItsName(cardName);
         Account account = Account.getActiveAccount();
-        account.derrick = account.derrick + card.getPrice();
-        account.getCollection().getCardIDs().remove((Integer) card.getID());
+        if (account.getCollection().getMainDeck() != null &&
+                account.getCollection().getMainDeck().getCardIDs()
+                        .stream().filter(cardID -> cardID.equals(card.getID())).count() ==
+                        Collection.getCollection().getHowManyCard().get(cardName)) {
+            AlertController.setAndShowAndDo
+                    ("If you selling this card, yur main deck will be invalid. Are you sure about selling it?",
+                            () -> doAfterSellingJobs(card));
+        }
+        else {
+            doAfterSellingJobs(card);
+        }
+    }
+
+    private static void doAfterSellingJobs(Card card) {
+        Account account = Account.getActiveAccount();
         for (String deckName : account.getCollection().getDecks()) {
             Deck deck = Account.getActiveAccount().getCollection().getAllDecks().get(deckName);
-            if (deck.getCardIDs().contains(card.getID())) {
+            if (deck.getCardIDs().stream().filter(cardID -> cardID.equals(card.getID())).count() ==
+                    Collection.getCollection().getHowManyCard().get(card.getName())) {
                 deck.getCardIDs().remove((Integer) card.getID());
+                deck.setHero(deck.getHero() == card ? null : deck.getHero());
+                deck.setItem(deck.getItem() == card ? null : deck.getItem());
+                deck.minions.remove(card);//todo dose it have any problem?
+                deck.spells.remove(card);
             }
         }
+        account.derrick = account.derrick + card.getPrice();
         account.getCollection().getCardIDs().remove((Integer) card.getID());
         int keyValue = model.Collection.getCollection().getHowManyCard().get(card.getName());
         Collection.getCollection().getHowManyCard().put(card.getName(), keyValue - 1);
-        AlertController.setAndShowAndGetResultByAnAlertController
-                ("You sell the card successfully", false);
+        AlertController.setAndShow("You sell the card successfully");
         CollectionOfShopController.collectionOfShopController.calculateEverything();
     }
 }

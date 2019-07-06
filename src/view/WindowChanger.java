@@ -47,6 +47,7 @@ public class WindowChanger {
             mainAnchorPane.setMinSize(Screen.getPrimary().getVisualBounds().getWidth(), Screen.getPrimary().getVisualBounds().getHeight());
         });
         Main.mainStage.setScene(new Scene(mainAnchorPane));
+        Main.mainStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         mainStage = Main.mainStage;
     }
 
@@ -79,7 +80,7 @@ public class WindowChanger {
         Main.mainStage.getScene().setRoot(pane);
     }
 
-    public synchronized void addNewScene(Pane pane) {
+    public synchronized Scene addNewScene(Pane pane) {
 //        new Thread(() -> {
 //            Platform.runLater(() -> {
 //                additionalAnchorPane.getChildren().clear();
@@ -96,10 +97,10 @@ public class WindowChanger {
 //            }
 //            Platform.runLater(() -> anchorPanes.get(0).setEffect(new SepiaTone(1)));
 //        }).start();
-
+        Scene scene = new Scene(pane);
         Platform.runLater(() -> {
             Stage stage = new Stage();
-            Scene scene = new Scene(pane);
+            newStages.add(stage);
             stage.initStyle(StageStyle.TRANSPARENT);
             scene.setFill(Color.TRANSPARENT);
             stage.setScene(scene);
@@ -108,7 +109,7 @@ public class WindowChanger {
             newStages.add(stage);
             stage.show();
         });
-
+        return scene;
 //        Platform.runLater(() -> {
 //            Stage stage = new Stage();
 //
@@ -143,7 +144,7 @@ public class WindowChanger {
 //        });
     }
 
-    public synchronized void removeAdditionalScene() {
+    public synchronized void removeAdditionalScene(Scene scene) {
 //        new Thread(() -> {
 //            while (additionalAnchorPane.getLayoutY() < Screen.getPrimary().getVisualBounds().getHeight()) {
 //                double newLayoutY = additionalAnchorPane.getLayoutY() + 10 < Screen.getPrimary().getVisualBounds().getHeight() ?
@@ -160,12 +161,15 @@ public class WindowChanger {
 //                anchorPanes.get(0).setEffect(null);
 //            });
 //        }).start();
-        Stage stage = newStages.get(0);
+        Stage stage = newStages.stream().filter(theStage -> theStage.getScene().equals(scene)).findAny().get();
         Platform.runLater(() -> {
             stage.close();
             mainStage.setFullScreen(true);
+            for (Stage newStage : newStages) {
+                newStage.setFullScreen(true);
+            }
         });
-        newStages.remove(0);
+        newStages.remove(stage);
     }
 
     Parent backup = null;

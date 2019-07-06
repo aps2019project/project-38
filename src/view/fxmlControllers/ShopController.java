@@ -310,8 +310,7 @@ public class ShopController implements Initializable {
                 if (Spell.checkIsItem(card1)) numberOfItems++;
             }
             if (numberOfItems >= 3) {
-                AlertController.setAndShowAndGetResultByAnAlertController
-                        ("You have 3 items. You couldn't buy any other item", false);
+                AlertController.setAndShow("You have 3 items. You couldn't buy any other item");
                 return;
             }
         }
@@ -323,8 +322,7 @@ public class ShopController implements Initializable {
         } else {
             model.Collection.getCollection().getHowManyCard().put(card.getName(), 1);
         }
-        AlertController.setAndShowAndGetResultByAnAlertController
-                ("You bought the card successfully", false);
+        AlertController.setAndShow("You bought the card successfully");
         CollectionOfShopController.collectionOfShopController.calculateEverything();
     }
 }
