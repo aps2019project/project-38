@@ -41,7 +41,7 @@ public class GamePreviewController {
     public void back(MouseEvent mouseEvent) {
         if (LoadingGamePreviewScenes.selectedButtonsText.size() > 0)
             LoadingGamePreviewScenes.selectedButtonsText.remove(LoadingGamePreviewScenes.selectedButtonsText.size() - 1);
-        if (previewSceneName.equals("Main Menu")) {
+        if (previewSceneName.equals("Client Menu")) {
             WindowChanger.instance.setNewScene(LoadedScenes.mainMenu);
         }
         else {

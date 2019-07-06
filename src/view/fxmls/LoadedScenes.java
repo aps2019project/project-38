@@ -1,6 +1,9 @@
 package view.fxmls;
 
+import com.sun.javafx.scene.SceneHelper;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.transform.Scale;
 import view.Utility;
@@ -11,8 +14,7 @@ import view.fxmlControllers.RemovingDeckCardsController;
 
 import java.io.IOException;
 
-import static view.Utility.scale;
-import static view.Utility.twiceScale;
+import static view.Utility.*;
 
 public class LoadedScenes {
     private static FXMLLoader fxmlLoader;
@@ -28,6 +30,8 @@ public class LoadedScenes {
     public static Pane collection;
     public static Pane choosingDeckCards;
     public static Pane removingDeckCards;
+    public  static AnchorPane collectionAnchorPane;
+    public static Parent customCard;
 
     {
         try {
@@ -47,6 +51,24 @@ public class LoadedScenes {
             fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("RemovingDeckCards.fxml"));
             removingDeckCards = scale(fxmlLoader.load());
             RemovingDeckCardsController.removingDeckCardsController = fxmlLoader.getController();
+            customCard = tScale(FXMLLoader.load(getClass().getResource("moreCustomCard.fxml")));
+            collectionAnchorPane = FXMLLoader.load(LoadedScenes.class.getResource("Collection.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void cleanArena(){
+        try {
+            arena = scale(FXMLLoader.load(LoadedScenes.class.getResource("arena.fxml")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void cleanCustomCard(){
+        try {
+            customCard = tScale(FXMLLoader.load(LoadedScenes.class.getResource("moreCustomCard.fxml")));
         } catch (IOException e) {
             e.printStackTrace();
         }

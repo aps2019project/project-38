@@ -571,6 +571,7 @@ public class ArenaController implements Initializable, PropertyChangeListener {
     public void endGame(Player winner) {
         //todo a banner or sth
         game = null;
+        LoadedScenes.cleanArena();
         WindowChanger.instance.setNewScene(LoadedScenes.mainMenu);
     }
 

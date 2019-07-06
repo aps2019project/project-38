@@ -1,9 +1,10 @@
 package view;
 
-import controller.Main;
+import controller.Client;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -17,6 +18,14 @@ import java.util.TimerTask;
 
 public class Utility {
     public static Pane scale(Pane pane) {
+        double xScale = Screen.getPrimary().getVisualBounds().getWidth() / pane.getPrefWidth();
+        double yScale = Screen.getPrimary().getVisualBounds().getHeight() / pane.getPrefHeight();
+        Scale scale = new Scale(xScale, yScale, 0, 0);
+        pane.getTransforms().add(scale);
+        return pane;
+    }
+
+    public static TabPane tScale(TabPane pane){//could overload but then i should have casted all loads in loadedScenes.
         double xScale = Screen.getPrimary().getVisualBounds().getWidth() / pane.getPrefWidth();
         double yScale = Screen.getPrimary().getVisualBounds().getHeight() / pane.getPrefHeight();
         Scale scale = new Scale(xScale, yScale, 0, 0);
@@ -51,6 +60,6 @@ public class Utility {
                 Platform.runLater(popup::hide);
             }
         }, 2000);
-        popup.show(Main.mainStage);
+        popup.show(Client.mainStage);
     }
 }

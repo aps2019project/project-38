@@ -51,9 +51,11 @@ public class GamePreviewButtonController {
                 game = new Game(getMoodForStartingGame(2), Account.getActiveAccount(), account);
             }
 
-            ArenaController.ac.init(game);
-            game.initialiseGameFields();
-            WindowChanger.instance.setNewScene(LoadedScenes.arena);
+            Platform.runLater(() -> {
+                ArenaController.ac.init(game);
+                game.initialiseGameFields();
+                WindowChanger.instance.setNewScene(LoadedScenes.arena);
+            });
         } else {
             LoadingGamePreviewScenes.sceneControllers.get(nextSceneName).setPreviewSceneName(fatherSceneName);
             WindowChanger.instance.setNewScene(LoadingGamePreviewScenes.starterScenes.get(nextSceneName));
