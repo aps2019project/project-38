@@ -42,8 +42,6 @@ public class LoadedImages {
                     sprites.put(path.getFileName().toString().replace(".png",""),new Image(path.toUri().toURL().toString()));
                 }
             }
-            System.out.println(sprites);
-            System.out.println(plists);
         } catch (IOException e) {
             e.printStackTrace();
         }
