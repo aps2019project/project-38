@@ -9,8 +9,8 @@ import java.util.ArrayList;
 
 
 public class Cell extends QualityHaver implements Serializable {
-    private Board board;
-    private Warrior warrior;
+    transient private Board board;
+    transient private Warrior warrior;
     private int row;
     private int column;
 

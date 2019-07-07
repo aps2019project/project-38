@@ -270,6 +270,7 @@ public class Game implements Serializable {
         ArenaController.ac.endGame(gameMode.winner);
     }
 
+    ///////////////////////////////////////actions
     public void move(Cell originCell, Cell targetCell) throws NotEnoughConditions {
 //        if (getActivePlayer().getWarriors().contains(originCell.getWarrior()) && targetCell.getWarrior() == null) {
         try {
@@ -323,6 +324,7 @@ public class Game implements Serializable {
 //        }
     }
 
+/*
     public void replaceCard(int handMapKey) throws NotEnoughConditions {
 //        if (getActivePlayer().getHand().get(handMapKey) != null) {
         try {
@@ -332,6 +334,7 @@ public class Game implements Serializable {
         }
 //        }
     }
+*/
 
     public void useCard(int handMapKey, Cell cell) throws NotEnoughConditions {
 //        if (getActivePlayer().getHand().get(handMapKey) != null) {
@@ -380,6 +383,11 @@ public class Game implements Serializable {
         } finally {
             checkGameEndAndThenKillAllDiedWarriors();
         }
+    }
+
+    public void quit(){
+        getGameMode().winner = getOtherPlayer(getActivePlayer());
+        endGame();
     }
 
     public void endTurn() {
