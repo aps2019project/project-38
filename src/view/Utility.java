@@ -1,6 +1,6 @@
 package view;
 
-import controller.Client;
+import client.controller.ClientInit;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
@@ -60,6 +60,6 @@ public class Utility {
                 Platform.runLater(popup::hide);
             }
         }, 2000);
-        popup.show(Client.mainStage);
+        popup.show(ClientInit.mainStage);
     }
 }

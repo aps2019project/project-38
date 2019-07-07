@@ -11,8 +11,6 @@ import view.fxmls.LoadedScenes;
 import java.io.IOException;
 import java.util.*;
 
-import static view.Utility.scale;
-
 public abstract class LoadingGamePreviewScenes {
     static HashMap<String, AnchorPane> starterScenes = new HashMap<>();
     static HashMap<String, GamePreviewStarterController> starterControllers = new HashMap<>();
@@ -71,7 +69,7 @@ public abstract class LoadingGamePreviewScenes {
         starterControllers.get("Battle").setFields(imagesNumber, "Battle");
         sceneControllers.get("Battle").setFields("Battle", imagesNumber);
         sceneControllers.get("Battle").addButton(singlePlayerButton, multiPlayerButton);
-        sceneControllers.get("Battle").setPreviewSceneName("Client Menu");
+        sceneControllers.get("Battle").setPreviewSceneName("ClientInit Menu");
     }
 
     private static void loadSinglePlayerScene() {
@@ -133,7 +131,7 @@ public abstract class LoadingGamePreviewScenes {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        for (Map.Entry<String, Account> entry : Account.getUsernameToAccountObject().entrySet()) {
+        for (Map.Entry<String, Account> entry : Account.getUsernameToAccountMap().entrySet()) {
             if (!Account.getActiveAccount().equals(entry.getValue()) && entry.getValue().getCollection().getMainDeck() != null) {
                 try {
                     FXMLLoader fxmlLoader = new FXMLLoader

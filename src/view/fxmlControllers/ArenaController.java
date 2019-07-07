@@ -185,7 +185,7 @@ public class ArenaController implements Initializable {
         new AnimationTimer() {
             @Override
             public void handle(long now) {
-                if (vm.lastState == SpriteType.death) {
+                if (vm.animation.type == SpriteType.death) {
                     Timer t = new Timer();
                     t.schedule(new TimerTask() {
                         @Override
@@ -272,7 +272,7 @@ public class ArenaController implements Initializable {
 
             selectedNodes.add(node);
         }
-        //todo other sm fields
+
     }
 
     void rmSelectionEffects() {
@@ -307,7 +307,6 @@ public class ArenaController implements Initializable {
     //players special power mana:
     private FXMLLoader[] fxmlLoaders1 = new FXMLLoader[2];
     private HeroSpecialPowerSpriteController[] heroSpecialPowerControllers = new HeroSpecialPowerSpriteController[2];
-    // todo: MOEINI, use ^this^ heroSpecialPowerControllers.gif to control hero special powers.
     public Pane hero1SpecialPower;
     public Pane hero2SpecialPower;
     private int[] playersMana = {0, 0};

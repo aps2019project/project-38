@@ -1,4 +1,4 @@
-package controller;
+package client.controller;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -8,14 +8,14 @@ import model.Account;
 import model.Deck;
 import model.Game;
 import model.Level;
-import view.LoadWindows;
+import view.Loader;
 import view.WindowChanger;
 import view.fxmlControllers.ArenaController;
 import view.fxmls.LoadedScenes;
 
 import java.io.IOException;
 
-public class Client extends Application {
+public class ClientInit extends Application {
     public static Stage mainStage;
 
     public static void main(String[] args) {
@@ -32,7 +32,7 @@ public class Client extends Application {
             System.exit(0);
         });
 
-        new LoadWindows().main();
+        Loader.loadAll();
 
         WindowChanger.instance.setNewScene(LoadedScenes.registerMenu);
 //        WindowChanger.instance.setNewScene(LoadedScenes.customCard);

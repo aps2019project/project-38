@@ -6,9 +6,9 @@ import model.cards.CardFactory;
 import view.fxmls.LoadedScenes;
 import view.images.LoadedImages;
 
-public class LoadWindows {
+public interface Loader {
 
-    public void main() {
+    static void loadAll() {
         //todo after making files
         CardFactory.main();
         Deck.deckLevelBuilder();

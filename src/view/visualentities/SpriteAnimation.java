@@ -16,9 +16,9 @@ import java.util.regex.Pattern;
 
 public class SpriteAnimation extends Transition {
     ImageView imageView;
-    SpriteType type;
     String fileName;
     int prefDuration;
+    public SpriteType type;
     public int height, width;
     public int realDuration;
 

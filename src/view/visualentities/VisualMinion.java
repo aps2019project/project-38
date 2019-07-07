@@ -60,34 +60,39 @@ public class VisualMinion {
         new AnimationTimer() {
             @Override
             public void handle(long now) {
-                SpriteType st;
+                SpriteType st; //yes we have type in animation but that changes in platform runLater but this one is immediate
                 if (isRunning.get()) {
                     if (lastState != SpriteType.run && lastState != SpriteType.death) {
                         run();
+                        lastState = SpriteType.run;
                     }
                 } else if (isSelected.get()) {
-                    if (lastState != SpriteType.idle && lastState != SpriteType.cast && lastState != SpriteType.death && lastState != SpriteType.attack) {
+                    if (lastState != SpriteType.idle && lastState != SpriteType.cast && lastState != SpriteType.death && lastState != SpriteType.attack) {//run maybe added
                         idle();
+                        lastState = SpriteType.idle;
                     }
                 } else if (!actionQueue.isEmpty()) {
-                    if (!((lastState == SpriteType.cast || lastState == SpriteType.attack) && animation.getStatus() == Animation.Status.RUNNING) && (st = actionQueue.poll()) != null) {
+                    if (!((lastState == SpriteType.cast || lastState == SpriteType.attack) && animation.getStatus() == Animation.Status.RUNNING) && lastState != SpriteType.death && (st = actionQueue.poll()) != null) {
                         switch (st) {
                             case cast:
                                 cast();
+                                lastState = SpriteType.cast;
                                 break;
                             case death:
                                 death();
+                                lastState = SpriteType.death;
                                 stop();
                                 break;
                             case attack:
                                 attack();
-
+                                lastState = SpriteType.attack;
                                 break;
                         }
                     }
                 } else {
                     if (lastState != SpriteType.breathing && !((lastState == SpriteType.cast || lastState == SpriteType.attack) && animation.getStatus() == Animation.Status.RUNNING) && lastState != SpriteType.death) {
                         breathing();
+                        lastState = SpriteType.breathing;
                     }
                 }
             }
@@ -98,7 +103,6 @@ public class VisualMinion {
         Platform.runLater(() -> {
             animation.stop();
             animation = new SpriteAnimation(view, SpriteType.attack, name, 0);
-            lastState = SpriteType.attack;
         });
     }
 
@@ -107,7 +111,6 @@ public class VisualMinion {
         Platform.runLater(() -> {
             animation.stop();
             animation = new SpriteAnimation(view, SpriteType.run, name, -1);
-            lastState = SpriteType.run;
         });
     }
 
@@ -115,7 +118,6 @@ public class VisualMinion {
         Platform.runLater(() -> {
             animation.stop();
             animation = new SpriteAnimation(view, SpriteType.death, name, 0);
-            lastState = SpriteType.death;
         });
     }
 
@@ -160,7 +162,7 @@ public class VisualMinion {
                     }
                 }
             }, sp1.realDuration);
-            lastState = SpriteType.cast;
+
         });
     }
 
@@ -168,7 +170,6 @@ public class VisualMinion {
         Platform.runLater(() -> {
             animation.stop();
             animation = new SpriteAnimation(view, SpriteType.breathing, name, -1);
-            lastState = SpriteType.breathing;
         });
     }
 
@@ -176,7 +177,7 @@ public class VisualMinion {
         Platform.runLater(() -> {
             animation.stop();
             animation = new SpriteAnimation(view, SpriteType.idle, name, -1);
-            lastState = SpriteType.idle;
+
         });
     }
 }

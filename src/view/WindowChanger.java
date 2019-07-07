@@ -1,6 +1,6 @@
 package view;
 
-import controller.Client;
+import client.controller.ClientInit;
 import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -24,8 +24,8 @@ public class WindowChanger {
     private WindowChanger() {
 //        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxmls/mainWindow.fxml"));
 //        try {
-//            Client.mainStage.setScene(new Scene(scale(fxmlLoader.load())));
-//            Client.mainStage.setFullScreen(true);
+//            ClientInit.mainStage.setScene(new Scene(scale(fxmlLoader.load())));
+//            ClientInit.mainStage.setFullScreen(true);
 //            MainAnchorPaneController mainAnchorPaneController = fxmlLoader.getController();
 //            anchorPanes.add(mainAnchorPaneController.anchorPaneOne);
 //            anchorPanes.add(mainAnchorPaneController.anchorPaneTwo);
@@ -41,8 +41,8 @@ public class WindowChanger {
             mainAnchorPane.setMaxSize(Screen.getPrimary().getVisualBounds().getWidth(), Screen.getPrimary().getVisualBounds().getHeight());
             mainAnchorPane.setMinSize(Screen.getPrimary().getVisualBounds().getWidth(), Screen.getPrimary().getVisualBounds().getHeight());
         });
-        Client.mainStage.setScene(new Scene(mainAnchorPane));
-        mainStage = Client.mainStage;
+        ClientInit.mainStage.setScene(new Scene(mainAnchorPane));
+        mainStage = ClientInit.mainStage;
     }
 
     public void setNewScene(Parent pane) {
@@ -71,7 +71,7 @@ public class WindowChanger {
 //            anchorPanes.add(anchorPanes.get(0));
 //            anchorPanes.remove(0);
 //        }).start();
-        Client.mainStage.getScene().setRoot(pane);
+        ClientInit.mainStage.getScene().setRoot(pane);
     }
 
     public synchronized void addNewScene(Pane pane) {
@@ -166,10 +166,10 @@ public class WindowChanger {
 //    Parent backup = null;
 //    public void adjustGameScene(boolean enter) {
 //        if (enter) {
-//            backup = Client.mainStage.getScene().getRoot();
-//            Client.mainStage.getScene().setRoot(LoadedScenes.arena);
+//            backup = ClientInit.mainStage.getScene().getRoot();
+//            ClientInit.mainStage.getScene().setRoot(LoadedScenes.arena);
 //        } else {
-//            Client.mainStage.getScene().setRoot(backup);
+//            ClientInit.mainStage.getScene().setRoot(backup);
 //        }
 //    }
 }

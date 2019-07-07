@@ -7,7 +7,7 @@ import java.util.*;
 public class Account implements Comparable<Account>, java.io.Serializable {
 
     private static Account activeAccount = null;
-    private static HashMap<String, Account> usernameToAccountObject = new HashMap<>();
+    private static HashMap<String, Account> usernameToAccountMap = new HashMap<>();
     //***
     public int derrick = 15000;
     private ArrayList<MatchHistory> history = new ArrayList<>();
@@ -20,14 +20,14 @@ public class Account implements Comparable<Account>, java.io.Serializable {
         super();
         this.username = username;
         this.password = password;
-        usernameToAccountObject.put(username, this);
+        usernameToAccountMap.put(username, this);
         avatarNumber = new Random().nextInt(15);
         collection.setMainDeck(Deck.getAllDecks().get("level1"));
     }
 
     //***
     public static String createAccount(String username, String password, String againPassword) {
-        if (Account.getUsernameToAccountObject().containsKey(username)) {
+        if (Account.getUsernameToAccountMap().containsKey(username)) {
             return "There's an account with this name";
         }
         if (!password.equals(againPassword)) {
@@ -38,10 +38,10 @@ public class Account implements Comparable<Account>, java.io.Serializable {
     }
 
     public static String login(String username, String password) {
-        if (!Account.getUsernameToAccountObject().containsKey(username)) {
+        if (!Account.getUsernameToAccountMap().containsKey(username)) {
             return "There is no account with this name";
         }
-        Account account = usernameToAccountObject.get(username);
+        Account account = usernameToAccountMap.get(username);
         if (!account.password.equals(password)) {
             return "Your password is incorrect";
         }
@@ -62,10 +62,10 @@ public class Account implements Comparable<Account>, java.io.Serializable {
         return Integer.compare(numberOfMyWins, numberOFOWins);
     }
 
-    public static ArrayList<Account> sortAccounts() {
+    public static ArrayList<Account> getSortedAccounts() {
         ArrayList<Account> allAccounts = new ArrayList<>();
-        for (String username : getUsernameToAccountObject().keySet()) {
-            allAccounts.add(getUsernameToAccountObject().get(username));
+        for (String username : getUsernameToAccountMap().keySet()) {
+            allAccounts.add(getUsernameToAccountMap().get(username));
         }
         Collections.sort(allAccounts);
         Collections.reverse(allAccounts);
@@ -79,7 +79,7 @@ public class Account implements Comparable<Account>, java.io.Serializable {
             file.mkdirs();
             FileOutputStream fos = new FileOutputStream(file.getPath() + "/acc");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(usernameToAccountObject);
+            oos.writeObject(usernameToAccountMap);
             fos.close();
             oos.close();
         } catch (IOException e) {
@@ -94,7 +94,7 @@ public class Account implements Comparable<Account>, java.io.Serializable {
             file.mkdirs();
             FileInputStream fis = new FileInputStream(file.getPath() + "/acc");
             ObjectInputStream ois = new ObjectInputStream(fis);
-            usernameToAccountObject = (HashMap<String, Account>) ois.readObject();
+            usernameToAccountMap = (HashMap<String, Account>) ois.readObject();
             fis.close();
             ois.close();
         } catch (Exception e) {
@@ -116,8 +116,8 @@ public class Account implements Comparable<Account>, java.io.Serializable {
         return activeAccount;
     }
 
-    public static HashMap<String, Account> getUsernameToAccountObject() {
-        return usernameToAccountObject;
+    public static HashMap<String, Account> getUsernameToAccountMap() {
+        return usernameToAccountMap;
     }
 
     public ArrayList<MatchHistory> getHistory() {
