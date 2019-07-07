@@ -11,6 +11,8 @@ import view.fxmls.LoadedScenes;
 import java.io.IOException;
 import java.util.*;
 
+import static view.Utility.scale;
+
 public abstract class LoadingGamePreviewScenes {
     static HashMap<String, AnchorPane> starterScenes = new HashMap<>();
     static HashMap<String, GamePreviewStarterController> starterControllers = new HashMap<>();

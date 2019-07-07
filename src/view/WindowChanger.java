@@ -1,6 +1,6 @@
 package view;
 
-import controller.Client;
+import client.controller.ClientInit;
 import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -23,8 +23,8 @@ public class WindowChanger {
             mainAnchorPane.setMaxSize(Screen.getPrimary().getVisualBounds().getWidth(), Screen.getPrimary().getVisualBounds().getHeight());
             mainAnchorPane.setMinSize(Screen.getPrimary().getVisualBounds().getWidth(), Screen.getPrimary().getVisualBounds().getHeight());
         });
-        Client.mainStage.setScene(new Scene(mainAnchorPane));
-        Client.mainStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+        ClientInit.mainStage.setScene(new Scene(mainAnchorPane));
+        ClientInit.mainStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
     }
 
     public void setMainParent(Parent pane) {

@@ -4,13 +4,8 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
-import model.Account;
-import model.Deck;
-import model.Game;
-import model.Level;
 import view.Loader;
 import view.WindowChanger;
-import view.fxmlControllers.ArenaController;
 import view.fxmls.LoadedScenes;
 
 import java.io.IOException;
