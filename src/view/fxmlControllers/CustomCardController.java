@@ -7,7 +7,6 @@ import javafx.scene.Node;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import model.cards.CardCustomizer;
 import view.WindowChanger;
 import view.fxmls.LoadedScenes;
 
@@ -111,7 +110,7 @@ public class CustomCardController implements Initializable {
     // buttons :
 
     public void back_btn() {
-        WindowChanger.instance.setNewScene(LoadedScenes.mainMenu);
+        WindowChanger.instance.setMainParent(LoadedScenes.mainMenu);
     }
 
     public void apply_btn() {

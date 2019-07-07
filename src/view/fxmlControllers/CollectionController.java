@@ -5,7 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.Bloom;
-import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -36,28 +36,28 @@ public class CollectionController implements Initializable {
     private static HashMap<Deck, AnchorPane> decks = new HashMap<>(), allDecks = new HashMap<>();
     public VBox decksLeftVBox;
     public VBox decksRightVBox;
+    public ImageView decksSearchTextFieldImage;
+    public ImageView backButtonImage;
     private HashMap<Deck, String> deckToTypeHashMap;
     private HashMap<Deck, DeckButtonController> deckToDeckButtonControllerHashMap = new HashMap<>();
     private Deck selectedDeck;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        collectionController = this;
-        decksSearchTextField.setOnKeyTyped(collectionController::recalculateDecks);
-    }
-
     public void renameSelectedDeck(MouseEvent mouseEvent) {
-        if (selectedDeck != null)
-            if (Collection.getCollection().renameDeck(selectedDeck.getName(), decksSearchTextField.getText())) {
-                selectedDeck.setName(decksSearchTextField.getText());
-                calculateEveryThing();
+        if (selectedDeck != null) {
+            if (!decksSearchTextField.getText().equals("")) {
+                if (Collection.getCollection().renameDeck(selectedDeck.getName(), decksSearchTextField.getText())) {
+                    calculateEveryThing();
+                }
             }
-        else AlertController.setAndShowAndGetResultByAnAlertController("Select a deck", false);
+            else AlertController.setAndShow("Enter a deck name");
+        }
+
+        else AlertController.setAndShow("Select a deck");
     }
 
     public void shineRenameSelectedDeckButton(MouseEvent mouseEvent) {
-        renameSelectedDeckButton.setEffect(new DropShadow());
-        renameSelectedDeckText.setEffect(new DropShadow());
+        renameSelectedDeckButton.setEffect(new Bloom(0.4));
+        renameSelectedDeckText.setEffect(new Bloom(0));
     }
 
     public void resetRenameSelectedDeckButton(MouseEvent mouseEvent) {
@@ -66,68 +66,50 @@ public class CollectionController implements Initializable {
     }
 
     public void removeSelectedDeck(MouseEvent mouseEvent) {
-        if (selectedDeck != null)
+        if (selectedDeck != null) {
             if (deckToTypeHashMap.get(selectedDeck).equals("ClientInit Deck")) {
-                AlertController alertController = AlertController.setAndShowAndGetResultByAnAlertController
-                        ("This is your main deck. Are you sure about removing it?", true);
-                new Thread(() -> {
-                    synchronized (alertController) {
-                        try {
-                            alertController.wait();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        if (alertController.result) {
+                AlertController.setAndShowAndDo
+                        ("This is your main deck. Are you sure about removing it?", () -> {
                             if (Collection.getCollection().deleteDeck(selectedDeck.getName())) {
-                                selectedDeck.setName(decksSearchTextField.getText());
+                                selectedDeck = null;
                                 calculateEveryThing();
                             }
-                        }
-                    }
-                }).start();
+                        });
             }
             else if (Collection.getCollection().deleteDeck(selectedDeck.getName())) {
-                selectedDeck.setName(decksSearchTextField.getText());
+                selectedDeck = null;
                 calculateEveryThing();
             }
-        else AlertController.setAndShowAndGetResultByAnAlertController("Select a deck", false);
+        }
+        else AlertController.setAndShow("Select a deck");
     }
 
     public void shineRemoveSelectedDeckButton(MouseEvent mouseEvent) {
-        removeSelectedDeckButton.setEffect(new DropShadow());
-        renameSelectedDeckText.setEffect(new DropShadow());
+        removeSelectedDeckButton.setEffect(new Bloom(0.4));
+        removeSelectedDeckText.setEffect(new Bloom(0));
     }
 
     public void resetRemoveSelectedDeckButton(MouseEvent mouseEvent) {
         removeSelectedDeckButton.setEffect(null);
-        renameSelectedDeckText.setEffect(null);
+        removeSelectedDeckText.setEffect(null);
     }
 
     public void enterChoosingDeckCards(MouseEvent mouseEvent) {
-        if (selectedDeck != null)
+        if (selectedDeck != null) {
             if (deckToTypeHashMap.get(selectedDeck).equals("ClientInit Deck")) {
-                AlertController alertController = AlertController.setAndShowAndGetResultByAnAlertController
+                AlertController.setAndShowAndDo
                         ("This is your main deck and changing it will reset it. Are you sure about changing it?",
-                                true);
-                new Thread(() -> {
-                    synchronized (alertController) {
-                        try {
-                            alertController.wait();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        if (alertController.result) {
-                            Collection.getCollection().setMainDeck(null);
-                            ChoosingDeckCardsController.choosingDeckCardsController.calculateEveryThing(selectedDeck);
-                            WindowChanger.instance.setNewScene(LoadedScenes.choosingDeckCards);
-                        }
-                    }
-                }).start();
+                                () -> {
+                                    Collection.getCollection().setMainDeck(null);
+                                    ChoosingDeckCardsController.choosingDeckCardsController.calculateEveryThing(selectedDeck);
+                                    WindowChanger.instance.setMainParent(LoadedScenes.choosingDeckCards);
+                                });
             } else {
                 ChoosingDeckCardsController.choosingDeckCardsController.calculateEveryThing(selectedDeck);
-                WindowChanger.instance.setNewScene(LoadedScenes.choosingDeckCards);
+                WindowChanger.instance.setMainParent(LoadedScenes.choosingDeckCards);
             }
-        else AlertController.setAndShowAndGetResultByAnAlertController("Select a deck", false);
+        }
+        else AlertController.setAndShow("Select a deck");
     }
 
     public void shineSelectedDeckButton(MouseEvent mouseEvent) {
@@ -138,6 +120,45 @@ public class CollectionController implements Initializable {
     public void resetSelectedDeckButton(MouseEvent mouseEvent) {
         selectedDeckButton.setEffect(null);
         selectedDeckText.setEffect(null);
+    }
+
+    public void createDeck(MouseEvent mouseEvent) {
+        if (mouseEvent.getClickCount() > 1) {
+            if (!decksSearchTextField.getText().equals("")) {
+                AlertController.setAndShowAndDo
+                        (String.format("Do you want to create a deck with name %s", decksSearchTextField.getText()), () -> {
+                            if (Collection.getCollection().createDeck(decksSearchTextField.getText())) {
+                                calculateEveryThing();
+                            }
+                        });
+            }
+            else AlertController.setAndShow("Enter deck name");
+        }
+    }
+
+    public void shineSearchTextField(MouseEvent mouseEvent) {
+        decksSearchTextFieldImage.setEffect(new Bloom(0.5));
+    }
+
+    public void resetSearchTextField(MouseEvent mouseEvent) {
+        decksSearchTextFieldImage.setEffect(null);
+    }
+
+    public void back(MouseEvent mouseEvent) {
+        WindowChanger.instance.setMainParent(LoadedScenes.mainMenu);
+    }
+
+    public void shineBackButton(MouseEvent mouseEvent) {
+        backButtonImage.setEffect(new Glow(1));
+    }
+
+    public void resetBackButton(MouseEvent mouseEvent) {
+        backButtonImage.setEffect(null);
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        decksSearchTextField.setOnKeyTyped(this::recalculateDecks);
     }
 
     public void calculateEveryThing() {
@@ -153,11 +174,13 @@ public class CollectionController implements Initializable {
         }
         initializeAllDecks();
         recalculateDecks(null);
+        selectedDeckText.setText(selectedDeck == null ?
+                "Select A Deck" : selectedDeck.getName() + ": " + deckToTypeHashMap.get(selectedDeck));
     }
 
     private void initializeAllDecks() {
         allDecks.entrySet().removeIf(entry -> !deckToTypeHashMap.containsKey(entry.getKey()));
-        deckToDeckButtonControllerHashMap.entrySet().removeIf(entry -> !allDecks.containsKey(entry.getKey()));
+        deckToDeckButtonControllerHashMap.entrySet().removeIf(entry -> !deckToTypeHashMap.containsKey(entry.getKey()));
         for (Map.Entry<Deck, String> entry : deckToTypeHashMap.entrySet()) {
             if (!allDecks.containsKey(entry.getKey())) {
                 loadDeckButton(entry.getKey(), entry.getValue());
@@ -166,13 +189,14 @@ public class CollectionController implements Initializable {
         for (Map.Entry<Deck, DeckButtonController> entry : deckToDeckButtonControllerHashMap.entrySet()) {
             entry.getValue().setFields(entry.getKey(), deckToTypeHashMap.get(entry.getKey()));
         }
+        System.out.println();
     }
 
     private void loadDeckButton(Deck deck, String type) {
         AnchorPane anchorPane = null;
         DeckButtonController deckButtonController = null;
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("DeckButtonController.java"));
+            FXMLLoader fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("DeckButton.fxml"));
             anchorPane = fxmlLoader.load();
             double scaleDouble = 480d / anchorPane.getPrefWidth();
             anchorPane.getTransforms().add(new Scale(scaleDouble, scaleDouble, 0, 0));

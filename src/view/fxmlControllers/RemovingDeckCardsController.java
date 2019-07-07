@@ -2,6 +2,7 @@ package view.fxmlControllers;
 
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
@@ -20,15 +21,16 @@ import view.WindowChanger;
 import view.fxmls.LoadedScenes;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import static model.cards.Card.getCardByItsName;
 import static view.Utility.scaleCard;
 
-public class RemovingDeckCardsController {
+public class RemovingDeckCardsController implements Initializable {
     public static RemovingDeckCardsController removingDeckCardsController;
-    public static AnchorPane removingDeckCardsAnchorPane;
     public VBox minionsLeftVBox;
     public VBox minionsMiddleVBox;
     public VBox minionsRightVBox;
@@ -56,20 +58,9 @@ public class RemovingDeckCardsController {
     public Text setAsMainDeckText;
     private Deck deck;
 
-    static {
-        FXMLLoader fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("RemovingDeckCards.fxml"));
-        try {
-            removingDeckCardsAnchorPane = fxmlLoader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        removingDeckCardsController = fxmlLoader.getController();
-        removingDeckCardsController.initialize();
-    }
-
     public void back(MouseEvent mouseEvent) {
         ChoosingDeckCardsController.choosingDeckCardsController.calculateEveryThing(deck);
-        WindowChanger.instance.setNewScene(LoadedScenes.choosingDeckCards);
+        WindowChanger.instance.setMainParent(LoadedScenes.choosingDeckCards);
     }
 
     public void shineBackBottom(MouseEvent mouseEvent) {
@@ -81,6 +72,7 @@ public class RemovingDeckCardsController {
     }
 
     public void setThisDeckAsMainDeck(MouseEvent mouseEvent) {
+        Collection.getCollection().selectMainDeck(deck.getName());
     }
 
     public void shineSetAsMainDeckButton(MouseEvent mouseEvent) {
@@ -95,19 +87,20 @@ public class RemovingDeckCardsController {
         setAsMainDeckText.setOpacity(0.6);
     }
 
-    public void initialize() {
-        minionsSearchTextField.setOnKeyTyped(removingDeckCardsController::recalculateMinions);
-        heroesSearchTextField.setOnKeyTyped(removingDeckCardsController::recalculateHeroes);
-        spellsSearchTextField.setOnKeyTyped(removingDeckCardsController::recalculateSpells);
-        itemsSearchTextField.setOnKeyTyped(removingDeckCardsController::recalculateItems);
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        minionsSearchTextField.setOnKeyTyped(this::recalculateMinions);
+        heroesSearchTextField.setOnKeyTyped(this::recalculateHeroes);
+        spellsSearchTextField.setOnKeyTyped(this::recalculateSpells);
+        itemsSearchTextField.setOnKeyTyped(this::recalculateItems);
     }
 
     public void calculateEveryThing(Deck deck) {
         this.deck = deck;
         selectedCardsNameToNumberHashMap = new HashMap<>();
         for (Map.Entry<String, Integer> entry : Collection.getCollection().getHowManyCard().entrySet()) {
-            int numberOfCardInDeck = (int) deck.getCardIDs().stream().filter(cardID -> cardID.equals(entry.getValue())).count();
-            selectedCardsNameToNumberHashMap.put(entry.getKey(), entry.getValue() - numberOfCardInDeck);
+            int numberOfCardInDeck = (int) deck.getCardIDs().stream().filter(cardID -> cardID.equals(Card.getIDByName(entry.getKey()))).count();
+            selectedCardsNameToNumberHashMap.put(entry.getKey(), numberOfCardInDeck);
         }
         initializeAllMinions();
         recalculateMinions(null);

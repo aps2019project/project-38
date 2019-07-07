@@ -52,7 +52,7 @@ public class CreateAccountController implements Initializable {
     }
 
     public void back() {
-        WindowChanger.instance.setNewScene(RegisterMenuController.getScene());
+        WindowChanger.instance.setMainParent(RegisterMenuController.getScene());
         username.clear();
         password.clear();
         again.clear();
@@ -61,7 +61,7 @@ public class CreateAccountController implements Initializable {
     public void ok() {
         alertWindow.toBack();
         if (shouldClose) {
-            WindowChanger.instance.setNewScene(LoadedScenes.registerMenu);
+            WindowChanger.instance.setMainParent(LoadedScenes.registerMenu);
             shouldClose = false;
             username.clear();
             password.clear();

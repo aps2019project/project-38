@@ -1,5 +1,6 @@
 package view.fxmlControllers;
 
+import javafx.application.Platform;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -27,6 +28,6 @@ public class DeckButtonController {
 
     public void setFields(Deck deck, String type) {
         this.deck = deck;
-        buttonText.setText(deck.getName() + ": " + type);
+        Platform.runLater(() -> buttonText.setText(deck.getName() + ": " + type));
     }
 }

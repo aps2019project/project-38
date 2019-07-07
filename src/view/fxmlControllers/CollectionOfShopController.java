@@ -51,8 +51,8 @@ public class CollectionOfShopController implements Initializable {
     public ImageView backButton;
 
     public void back(MouseEvent mouseEvent) {
-        WindowChanger.instance.setNewScene(LoadedScenes.shop);
-
+        ShopController.shopController.calculateEverything();
+        WindowChanger.instance.setMainParent(LoadedScenes.shop);
     }
 
     public void shineBackBottom(MouseEvent mouseEvent) {
@@ -69,7 +69,6 @@ public class CollectionOfShopController implements Initializable {
         heroesSearchTextField.setOnKeyTyped(this::recalculateHeroes);
         spellsSearchTextField.setOnKeyTyped(this::recalculateSpells);
         itemsSearchTextField.setOnKeyTyped(this::recalculateItems);
-        calculateEverything();
     }
 
     public void calculateEverything() {
@@ -338,19 +337,37 @@ public class CollectionOfShopController implements Initializable {
     public static void sell(String cardName) {
         Card card = Card.getCardByItsName(cardName);
         Account account = Account.getActiveAccount();
-        account.derrick = account.derrick + card.getPrice();
-        account.getCollection().getCardIDs().remove((Integer) card.getID());
+        if (account.getCollection().getMainDeck() != null &&
+                account.getCollection().getMainDeck().getCardIDs()
+                        .stream().filter(cardID -> cardID.equals(card.getID())).count() ==
+                        Collection.getCollection().getHowManyCard().get(cardName)) {
+            AlertController.setAndShowAndDo
+                    ("If you selling this card, yur main deck will be invalid. Are you sure about selling it?",
+                            () -> doAfterSellingJobs(card));
+        }
+        else {
+            doAfterSellingJobs(card);
+        }
+    }
+
+    private static void doAfterSellingJobs(Card card) {
+        Account account = Account.getActiveAccount();
         for (String deckName : account.getCollection().getDecks()) {
             Deck deck = Account.getActiveAccount().getCollection().getAllDecks().get(deckName);
-            if (deck.getCardIDs().contains(card.getID())) {
+            if (deck.getCardIDs().stream().filter(cardID -> cardID.equals(card.getID())).count() ==
+                    Collection.getCollection().getHowManyCard().get(card.getName())) {
                 deck.getCardIDs().remove((Integer) card.getID());
+                deck.setHero(deck.getHero() == card ? null : deck.getHero());
+                deck.setItem(deck.getItem() == card ? null : deck.getItem());
+                deck.minions.remove(card);
+                deck.spells.remove(card);
             }
         }
+        account.derrick = account.derrick + card.getPrice();
         account.getCollection().getCardIDs().remove((Integer) card.getID());
         int keyValue = model.Collection.getCollection().getHowManyCard().get(card.getName());
         Collection.getCollection().getHowManyCard().put(card.getName(), keyValue - 1);
-        AlertController.setAndShowAndGetResultByAnAlertController
-                ("You sell the card successfully", false);
-        CollectionOfShopController.collectionOfShopController.calculateEverything();
+        AlertController.setAndShow("You sell the card successfully");
+        collectionOfShopController.calculateEverything();
     }
 }
