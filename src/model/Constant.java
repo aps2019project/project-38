@@ -15,6 +15,8 @@ public interface Constant {
         int winnerPriceForLevel2 = 1000;
         int winnerPriceForLevel3 = 1500;
 
+        long delayAfterGameEnd = 4000;//ms
+
         static int getTurnMana(int turn) {
             int mana = (turn + 5) / 2;
             return mana > 9 ? 9 : mana;

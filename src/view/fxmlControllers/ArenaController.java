@@ -19,6 +19,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import model.Cell;
+import model.Constant;
 import model.Game;
 import model.SelectionManager;
 import model.cards.Card;
@@ -568,11 +569,16 @@ public class ArenaController implements Initializable {
         game.quit();
     }
 
-    public void endGame(Player winner) {
-        //todo a banner or sth
-        game = null;
-        LoadedScenes.cleanArena();
-        WindowChanger.instance.setMainParent(LoadedScenes.mainMenu);
+    public void endGame(Player winner) {//todo a banner or sth
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                game = null;
+                LoadedScenes.cleanArena();
+                WindowChanger.instance.setMainParent(LoadedScenes.mainMenu);
+            }
+        }, Constant.GameConstants.delayAfterGameEnd);
     }
 
     public Pane shownCardInformationHolder_pn;
