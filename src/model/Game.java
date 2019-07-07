@@ -229,20 +229,28 @@ public class Game implements Serializable {
     }
 
     private void checkGameEndAndThenKillAllDiedWarriors() {
-        killPlayerDiedWarriors(players[0]);
-        killPlayerDiedWarriors(players[1]);
+        if(killPlayerDiedWarriors(players[0])){
+            checkGameEndAndThenKillAllDiedWarriors();
+        }
+        if(killPlayerDiedWarriors(players[1])){
+            checkGameEndAndThenKillAllDiedWarriors();
+        }
+
         gameMode.checkGameEnd(this);
         if (gameMode.winner != null) {
             endGame();
         }
     }
 
-    private void killPlayerDiedWarriors(Player player) {
+    private boolean killPlayerDiedWarriors(Player player) {
+        boolean didSth = false;
         for (int i = 0; i < player.getWarriors().size(); i++) {
             if (player.getWarriors().get(i).getHp() <= 0) {
                 Killer.kill(player.getWarriors().get(i));
+                didSth = true;
             }
         }
+        return didSth;
     }
 
     public void endGame() {
