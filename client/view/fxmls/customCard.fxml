@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.fxmlControllers.CustomCardController">
+   <children>
+      <ImageView fitHeight="580.0" fitWidth="968.0" layoutX="-4.0" layoutY="-3.0">
+         <image>
+            <Image url="@../images/customCard/backGround.png" />
+         </image>
+      </ImageView>
+      <Text layoutX="671.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Custom Card">
+         <font>
+            <Font size="40.0" />
+         </font>
+      </Text>
+      <GridPane fx:id="generalGrid" layoutX="76.0" layoutY="89.0" prefHeight="376.0" prefWidth="416.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="309.3333435058594" minWidth="10.0" prefWidth="270.3333435058594" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="222.0" minWidth="10.0" prefWidth="145.66665649414062" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <ChoiceBox fx:id="type_chb" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CardName:">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Type:" GridPane.rowIndex="1">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Spell Target:" GridPane.rowIndex="2">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Warrior AP:" GridPane.rowIndex="3">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Warrior HP:" GridPane.rowIndex="4">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Warrior AttackType:" GridPane.rowIndex="5">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Warrior Range:" GridPane.rowIndex="6">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Warrior SpecialPower:" GridPane.rowIndex="7">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Minion SpecialPowerActivation:" GridPane.rowIndex="8">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Hero SpecialPowerCooldown:" GridPane.rowIndex="9">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Card Cost:" GridPane.rowIndex="10">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <TextField fx:id="cardName_tf" prefHeight="25.0" prefWidth="151.0" GridPane.columnIndex="1" />
+            <ChoiceBox fx:id="spellTarget_chb" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="warriorAP_tf" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="warriorHP_tf" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <ChoiceBox fx:id="warriorAttackType_chb" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField fx:id="warriorRange_tf" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <ChoiceBox fx:id="warriorSpecialPower_chb" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <ChoiceBox fx:id="minionSpecialPowerActivation_chb" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+            <TextField fx:id="heroSpecialPowerCoolDown_tf" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+            <TextField fx:id="cardCost_tf" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+         </children>
+      </GridPane>
+      <GridPane fx:id="buffGrid" layoutX="566.0" layoutY="195.0" prefHeight="198.0" prefWidth="319.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="176.0" minWidth="10.0" prefWidth="176.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="152.3333740234375" minWidth="10.0" prefWidth="143.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Type:">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Effect Value:" GridPane.rowIndex="1">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Delay:" GridPane.rowIndex="2">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Last:" GridPane.rowIndex="3">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Friend Or Enemy:" GridPane.rowIndex="4">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <ChoiceBox fx:id="buffType_chb" prefWidth="150.0" GridPane.columnIndex="1" />
+            <TextField fx:id="buffEffectValue_tf" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="buffDelay_tf" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="buffLast_tf" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <ChoiceBox fx:id="buffFriendOrEnemy_chb" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+         </children>
+      </GridPane>
+      <Text layoutX="553.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Just For Buffs:">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Text>
+      <ImageView fx:id="apply_btn" fitHeight="80.0" fitWidth="200.0" layoutX="738.0" layoutY="439.0">
+         <image>
+            <Image url="@../images/customCard/button.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="100.0" fitWidth="100.0" onMouseClicked="#back_btn">
+         <image>
+            <Image url="@../images/customCard/backButton.png" />
+         </image>
+      </ImageView>
+      <Label alignment="CENTER" layoutX="755.0" layoutY="451.0" onMouseClicked="#apply_btn" prefHeight="53.0" prefWidth="152.0" text="Apply" textAlignment="CENTER">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>

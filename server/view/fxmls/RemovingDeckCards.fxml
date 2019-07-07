@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.fxmlControllers.RemovingDeckCardsController">
+   <children>
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="555.0" prefWidth="960.0">
+         <children>
+            <ImageView fitHeight="555.0" fitWidth="900.0">
+               <image>
+                  <Image url="@../images/shopAndCollection/removingDeckCardsBackground.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="72.0" fitWidth="360.0" layoutX="300.0">
+               <image>
+                  <Image url="@../images/shopAndCollection/blueTextField.png" />
+               </image>
+            </ImageView>
+            <TabPane prefHeight="555.0" prefWidth="960.0" side="RIGHT" tabClosingPolicy="UNAVAILABLE">
+               <tabs>
+                  <Tab text="Minions">
+                     <content>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <ScrollPane hbarPolicy="NEVER" layoutX="63.0" layoutY="70.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="780.0" stylesheets="@../images/shopAndCollection/style.css" vbarPolicy="NEVER">
+                                 <content>
+                                    <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="780.0">
+                                       <children>
+                                          <VBox fx:id="minionsLeftVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="260.0" />
+                                          <VBox fx:id="minionsMiddleVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="260.0" />
+                                          <VBox fx:id="minionsRightVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="260.0" />
+                                       </children>
+                                    </HBox>
+                                 </content>
+                              </ScrollPane>
+                              <TextField fx:id="minionsSearchTextField" layoutX="319.0" layoutY="13.0" prefHeight="45.0" prefWidth="322.0" style="-fx-background-color: transparent;" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab text="Heros">
+                     <content>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <ScrollPane hbarPolicy="NEVER" layoutX="63.0" layoutY="70.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="780.0" stylesheets="@../images/shopAndCollection/style.css" vbarPolicy="NEVER">
+                                 <content>
+                                    <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="780.0">
+                                       <children>
+                                          <VBox fx:id="heroesLeftVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="260.0" />
+                                          <VBox fx:id="heroesMiddleVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="260.0" />
+                                          <VBox fx:id="heroesRightVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="260.0" />
+                                       </children>
+                                    </HBox>
+                                 </content>
+                              </ScrollPane>
+                              <TextField fx:id="heroesSearchTextField" layoutX="319.0" layoutY="13.0" prefHeight="45.0" prefWidth="322.0" style="-fx-background-color: transparent;" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab text="Spells">
+                     <content>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <ScrollPane hbarPolicy="NEVER" layoutX="63.0" layoutY="70.0" prefHeight="470.0" prefWidth="780.0" stylesheets="@../images/shopAndCollection/style.css" vbarPolicy="NEVER">
+                                 <content>
+                                    <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="780.0">
+                                       <children>
+                                          <VBox fx:id="spellsLeftVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="260.0" />
+                                          <VBox fx:id="spellsMiddleVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="260.0" />
+                                          <VBox fx:id="spellsRightVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="260.0" />
+                                       </children>
+                                    </HBox>
+                                 </content>
+                              </ScrollPane>
+                              <TextField fx:id="spellsSearchTextField" layoutX="319.0" layoutY="13.0" prefHeight="45.0" prefWidth="322.0" style="-fx-background-color: transparent;" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab text="Items">
+                     <content>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <ScrollPane hbarPolicy="NEVER" layoutX="63.0" layoutY="70.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="780.0" stylesheets="@../images/shopAndCollection/style.css" vbarPolicy="NEVER">
+                                 <content>
+                                    <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="780.0">
+                                       <children>
+                                          <VBox fx:id="itemsLeftVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="260.0" />
+                                          <VBox fx:id="itemsMiddleVBox" layoutX="260.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="260.0" />
+                                          <VBox fx:id="itemsRightVBox" layoutX="520.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="260.0" />
+                                       </children>
+                                    </HBox>
+                                 </content>
+                              </ScrollPane>
+                              <TextField fx:id="itemsSearchTextField" layoutX="319.0" layoutY="13.0" prefHeight="45.0" prefWidth="322.0" style="-fx-background-color: transparent;" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+               </tabs>
+            </TabPane>
+            <ImageView fx:id="backButton" fitHeight="54.0" fitWidth="54.0" onMouseClicked="#back" onMouseEntered="#shineBackBottom" onMouseExited="#resetBackBottom">
+               <image>
+                  <Image url="@../images/shopAndCollection/backBottom.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="goldCircleOfSetAsMainDeckButton" fitHeight="57.0" fitWidth="57.0" layoutX="902.0" layoutY="479.0" onMouseClicked="#setThisDeckAsMainDeck" onMouseEntered="#shineSetAsMainDeckButton" onMouseExited="#resetSetAsMainDeckButton" opacity="0.6">
+               <image>
+                  <Image url="@../images/shopAndCollection/goldenCircle.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="setAsMainDeckButton" fitHeight="47.0" fitWidth="47.0" layoutX="907.0" layoutY="484.0" onMouseClicked="#setThisDeckAsMainDeck" onMouseEntered="#shineSetAsMainDeckButton" onMouseExited="#resetSetAsMainDeckButton">
+               <image>
+                  <Image url="@../images/shopAndCollection/silverCircleBottom.png" />
+               </image>
+            </ImageView>
+            <Text fx:id="setAsMainDeckText" layoutX="893.0" layoutY="504.0" onMouseClicked="#setThisDeckAsMainDeck" onMouseEntered="#shineSetAsMainDeckButton" opacity="0.6" strokeType="OUTSIDE" strokeWidth="0.0" text="        Set As        Main Deck" textAlignment="CENTER" wrappingWidth="74.0">
+               <font>
+                  <Font size="7.0" />
+               </font>
+               <fill>
+                  <LinearGradient endX="0.6538461538461539" endY="0.360576923076923" startX="0.10576923076923084" startY="0.6586538461538463">
+                     <stops>
+                        <Stop color="BLACK" />
+                        <Stop color="BLACK" offset="0.24333333333333335" />
+                        <Stop color="BLACK" offset="0.3466666666666668" />
+                        <Stop color="BLACK" offset="0.43666666666666665" />
+                        <Stop color="BLACK" offset="0.5466666666666666" />
+                        <Stop color="BLACK" offset="0.64" />
+                        <Stop color="#4b5417" offset="0.6933333333333336" />
+                        <Stop color="#2b2b1f" offset="0.7851851851851852" />
+                        <Stop color="#4a0a00" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </fill>
+            </Text>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

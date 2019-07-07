@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.SepiaTone?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="142.0" prefWidth="125.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.fxmlControllers.HandSpriteHolderController">
+   <children>
+      <ImageView fx:id="backGround" fitHeight="150.0" fitWidth="150.0" layoutX="-11.0" layoutY="-11.0">
+         <image>
+            <Image url="@../images/arena/replace_background@2x.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="border" fitHeight="150.0" fitWidth="150.0" layoutX="-12.0" layoutY="-11.0" rotate="80.0">
+         <image>
+            <Image url="@../images/arena/card_background_highlight@2x.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="manaBackGround" fitHeight="49.0" fitWidth="45.0" layoutX="41.0" layoutY="90.0">
+         <image>
+            <Image url="@../images/arena/blueMana.png" />
+         </image>
+         <effect>
+            <SepiaTone />
+         </effect>
+      </ImageView>
+      <Label fx:id="neededMana" alignment="CENTER" layoutX="41.0" layoutY="93.0" prefHeight="43.0" prefWidth="45.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Pane fx:id="gif" layoutX="13.0" layoutY="14.0" onMouseEntered="#changeBackGround_Enter" onMouseExited="#changeBackGround_Exit" prefHeight="100.0" prefWidth="100.0" />
+   </children>
+</Pane>
