@@ -13,7 +13,7 @@ public class SelectionManager implements Serializable {
     public Integer cardHandIndex;
     public boolean specialPowerIsSelected;
     public String collectibleItem;
-    Game game;
+    transient Game game;
 
     public SelectionManager(Game game) {
         this.game = game;
@@ -24,7 +24,6 @@ public class SelectionManager implements Serializable {
     }
 
     public void selectCell(Cell cell) {
-
         if (cardHandIndex != null) {
             try {
                 game.useCard(cardHandIndex, cell);
@@ -102,7 +101,6 @@ public class SelectionManager implements Serializable {
     }
 
     public void selectCollectibleItem(String collectableItem) {
-
         deselectAll();
         this.collectibleItem = collectableItem;
 

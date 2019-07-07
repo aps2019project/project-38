@@ -114,7 +114,11 @@ public class ArenaController implements Initializable {
         vm.view.setOnMouseEntered(event -> {
             vm.isSelected.set(true);
             Warrior warrior = game.getBoard().getCell(row, col).getWarrior();
-            showInfoOfACard(warrior.getName(), warrior.description.getDescriptionOfCardSpecialAbility(), "warrior", warrior.getHp(), warrior.getAp());
+            try {
+                showInfoOfACard(warrior.getName(), warrior.description.getDescriptionOfCardSpecialAbility(), "warrior", warrior.getHp(), warrior.getAp());
+            }catch (NullPointerException e){
+                //ignore because it's so frequent
+            }
         });
 
         vm.view.setOnMouseExited(event -> {
@@ -562,8 +566,7 @@ public class ArenaController implements Initializable {
     }
 
     public void quit() {
-        game.getGameMode().winner = game.getOtherPlayer(game.getActivePlayer());
-        game.endGame();
+        game.quit();
     }
 
     public void endGame(Player winner) {
