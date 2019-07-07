@@ -47,7 +47,7 @@ public class GamePreviewButtonController {
                     game = new Game(getMoodForStartingGame(2), Account.getActiveAccount(), deck);
                 }
             } else {
-                Account account = Account.getUsernameToAccountObject().get(LoadingGamePreviewScenes.selectedButtonsText.get(1));
+                Account account = Account.getUsernameToAccountMap().get(LoadingGamePreviewScenes.selectedButtonsText.get(1));
                 game = new Game(getMoodForStartingGame(2), Account.getActiveAccount(), account);
             }
 

@@ -27,7 +27,7 @@ public class LeaderBoardController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ArrayList<Account> allAccounts = Account.sortAccounts();
+        ArrayList<Account> allAccounts = Account.getSortedAccounts();
         for (int i = 1; i < rate.getChildren().size(); i++) {
             rate.getChildren().remove(rate.getChildren().get(i));
             username.getChildren().remove(username.getChildren().get(i));

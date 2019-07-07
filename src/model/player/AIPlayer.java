@@ -13,8 +13,8 @@ import java.util.Map;
 import java.util.Random;
 
 public class AIPlayer extends Player {
-    public AIPlayer(Deck deck) {
-        super(deck);
+    public AIPlayer(Deck deck,Game game) {
+        super(deck,game);
         avatar = LoadedImages.avatars[new Random().nextInt(15)];
         username = "AI_Player";
     }
@@ -29,7 +29,7 @@ public class AIPlayer extends Player {
                         getGame().useCard(cardEntry.getKey(), cell);
                         break;
                     } catch (NotEnoughConditions notEnoughConditions) {
-//                        no problem he's stupid
+//                        np
                     }
                 }
             }
@@ -46,7 +46,7 @@ public class AIPlayer extends Player {
                         getGame().attack(warrior.getCell(),cell);
                         continue outer;
                     } catch (NotEnoughConditions notEnoughConditions) {
-                        //np
+//                        np
                     }
                 }
             }
@@ -55,7 +55,7 @@ public class AIPlayer extends Player {
                     try {
                         getGame().move(warrior.getCell(),cell);
                     } catch (NotEnoughConditions notEnoughConditions) {
-                        //np
+//                        np
                     }
                 }
             }
@@ -65,7 +65,7 @@ public class AIPlayer extends Player {
                         getGame().attack(warrior.getCell(),cell);
                         continue outer;
                     } catch (NotEnoughConditions notEnoughConditions) {
-                        //np
+//                        np
                     }
                 }
             }

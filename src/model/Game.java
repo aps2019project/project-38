@@ -31,16 +31,16 @@ public class Game implements Serializable {
     public Game(GameMode gameMode, Account accountOne, Account accountTwo) {
         this.gameMode = gameMode;
         int randomIndex = (new Random(System.currentTimeMillis())).nextInt(2);
-        this.players[randomIndex] = new HumanPlayer(accountOne, accountOne.getCollection().getMainDeck());
-        this.players[(randomIndex + 1) % 2] = new HumanPlayer(accountTwo, accountTwo.getCollection().getMainDeck());
+        this.players[randomIndex] = new HumanPlayer(accountOne, accountOne.getCollection().getMainDeck(),this);
+        this.players[(randomIndex + 1) % 2] = new HumanPlayer(accountTwo, accountTwo.getCollection().getMainDeck(),this);
     }
 
     public Game(GameMode gameMode, Account account, Deck aIDeck) {
         this.gameMode = gameMode;
         int randomIndex = /*(new Random(System.currentTimeMillis())).nextInt(2)*/0;//todo test only
 
-        players[randomIndex] = new HumanPlayer(account, account.getCollection().getMainDeck());
-        players[(randomIndex + 1) % 2] = new AIPlayer(aIDeck);
+        players[randomIndex] = new HumanPlayer(account, account.getCollection().getMainDeck(),this);
+        players[(randomIndex + 1) % 2] = new AIPlayer(aIDeck,this);
     }
 
     public void initialiseGameFields() {
@@ -229,20 +229,28 @@ public class Game implements Serializable {
     }
 
     private void checkGameEndAndThenKillAllDiedWarriors() {
-        killPlayerDiedWarriors(players[0]);
-        killPlayerDiedWarriors(players[1]);
+        if(killPlayerDiedWarriors(players[0])){
+            checkGameEndAndThenKillAllDiedWarriors();
+        }
+        if(killPlayerDiedWarriors(players[1])){
+            checkGameEndAndThenKillAllDiedWarriors();
+        }
+
         gameMode.checkGameEnd(this);
         if (gameMode.winner != null) {
             endGame();
         }
     }
 
-    private void killPlayerDiedWarriors(Player player) {
+    private boolean killPlayerDiedWarriors(Player player) {
+        boolean didSth = false;
         for (int i = 0; i < player.getWarriors().size(); i++) {
             if (player.getWarriors().get(i).getHp() <= 0) {
                 Killer.kill(player.getWarriors().get(i));
+                didSth = true;
             }
         }
+        return didSth;
     }
 
     public void endGame() {

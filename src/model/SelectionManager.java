@@ -51,7 +51,9 @@ public class SelectionManager implements Serializable {
                 cardHandIndex = null;
                 specialPowerIsSelected = false;
                 collectibleItem = null;
-                cells.add(cell);
+                if(cells.stream().noneMatch(cell1 -> cell1.equals(cell))) {
+                    cells.add(cell);
+                }
             } else {
                 if (cells.size() == 1) {
                     try {
