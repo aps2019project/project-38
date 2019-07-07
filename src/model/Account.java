@@ -22,7 +22,6 @@ public class Account implements Comparable<Account>, java.io.Serializable {
         this.password = password;
         usernameToAccountObject.put(username, this);
         avatarNumber = new Random().nextInt(15);
-        collection.setMainDeck(Deck.getAllDecks().get("level1"));
     }
 
     //***

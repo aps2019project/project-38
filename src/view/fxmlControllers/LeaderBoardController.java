@@ -50,6 +50,6 @@ public class LeaderBoardController implements Initializable {
     }
 
     public void back() {
-        WindowChanger.instance.setNewScene(RegisterMenuController.getScene());
+        WindowChanger.instance.setMainParent(RegisterMenuController.getScene());
     }
 }

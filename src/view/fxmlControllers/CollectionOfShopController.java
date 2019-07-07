@@ -51,8 +51,8 @@ public class CollectionOfShopController implements Initializable {
     public ImageView backButton;
 
     public void back(MouseEvent mouseEvent) {
-        WindowChanger.instance.setNewScene(LoadedScenes.shop);
-
+        ShopController.shopController.calculateEverything();
+        WindowChanger.instance.setMainParent(LoadedScenes.shop);
     }
 
     public void shineBackBottom(MouseEvent mouseEvent) {
@@ -69,7 +69,6 @@ public class CollectionOfShopController implements Initializable {
         heroesSearchTextField.setOnKeyTyped(this::recalculateHeroes);
         spellsSearchTextField.setOnKeyTyped(this::recalculateSpells);
         itemsSearchTextField.setOnKeyTyped(this::recalculateItems);
-        calculateEverything();
     }
 
     public void calculateEverything() {
@@ -360,7 +359,7 @@ public class CollectionOfShopController implements Initializable {
                 deck.getCardIDs().remove((Integer) card.getID());
                 deck.setHero(deck.getHero() == card ? null : deck.getHero());
                 deck.setItem(deck.getItem() == card ? null : deck.getItem());
-                deck.minions.remove(card);//todo dose it have any problem?
+                deck.minions.remove(card);
                 deck.spells.remove(card);
             }
         }
@@ -369,6 +368,6 @@ public class CollectionOfShopController implements Initializable {
         int keyValue = model.Collection.getCollection().getHowManyCard().get(card.getName());
         Collection.getCollection().getHowManyCard().put(card.getName(), keyValue - 1);
         AlertController.setAndShow("You sell the card successfully");
-        CollectionOfShopController.collectionOfShopController.calculateEverything();
+        collectionOfShopController.calculateEverything();
     }
 }

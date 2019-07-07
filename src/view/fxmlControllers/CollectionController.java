@@ -67,7 +67,7 @@ public class CollectionController implements Initializable {
 
     public void removeSelectedDeck(MouseEvent mouseEvent) {
         if (selectedDeck != null) {
-            if (deckToTypeHashMap.get(selectedDeck).equals("Main Deck")) {
+            if (deckToTypeHashMap.get(selectedDeck).equals("Client Deck")) {
                 AlertController.setAndShowAndDo
                         ("This is your main deck. Are you sure about removing it?", () -> {
                             if (Collection.getCollection().deleteDeck(selectedDeck.getName())) {
@@ -96,17 +96,17 @@ public class CollectionController implements Initializable {
 
     public void enterChoosingDeckCards(MouseEvent mouseEvent) {
         if (selectedDeck != null) {
-            if (deckToTypeHashMap.get(selectedDeck).equals("Main Deck")) {
+            if (deckToTypeHashMap.get(selectedDeck).equals("Client Deck")) {
                 AlertController.setAndShowAndDo
                         ("This is your main deck and changing it will reset it. Are you sure about changing it?",
                                 () -> {
                                     Collection.getCollection().setMainDeck(null);
                                     ChoosingDeckCardsController.choosingDeckCardsController.calculateEveryThing(selectedDeck);
-                                    WindowChanger.instance.setNewScene(LoadedScenes.choosingDeckCards);
+                                    WindowChanger.instance.setMainParent(LoadedScenes.choosingDeckCards);
                                 });
             } else {
                 ChoosingDeckCardsController.choosingDeckCardsController.calculateEveryThing(selectedDeck);
-                WindowChanger.instance.setNewScene(LoadedScenes.choosingDeckCards);
+                WindowChanger.instance.setMainParent(LoadedScenes.choosingDeckCards);
             }
         }
         else AlertController.setAndShow("Select a deck");
@@ -145,7 +145,7 @@ public class CollectionController implements Initializable {
     }
 
     public void back(MouseEvent mouseEvent) {
-        WindowChanger.instance.setNewScene(LoadedScenes.mainMenu);
+        WindowChanger.instance.setMainParent(LoadedScenes.mainMenu);
     }
 
     public void shineBackButton(MouseEvent mouseEvent) {
@@ -165,7 +165,7 @@ public class CollectionController implements Initializable {
         deckToTypeHashMap = new HashMap<>();
         for (Deck deck : Collection.getCollection().getAllDecks().values()) {
             if (Collection.getCollection().getMainDeck() == deck) {
-                deckToTypeHashMap.put(deck, "Main Deck");
+                deckToTypeHashMap.put(deck, "Client Deck");
             } else if (Collection.getCollection().validateDeck(deck.getName(), false)) {
                 deckToTypeHashMap.put(deck, "Ready");
             } else {

@@ -1,13 +1,11 @@
 package view.fxmlControllers;
 
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 import model.Account;
 import view.WindowChanger;
 import view.fxmls.LoadedScenes;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -29,19 +27,20 @@ public class MainMenuController implements Initializable {
     public void logout() {
         Account.saveAccounts();
         Account.setActiveAccount(null);
-        WindowChanger.instance.setNewScene(LoadedScenes.registerMenu);
+        WindowChanger.instance.setMainParent(LoadedScenes.registerMenu);
     }
 
     public void createDeck() {
         CollectionController.collectionController.calculateEveryThing();
-        WindowChanger.instance.setNewScene(LoadedScenes.collection);
+        WindowChanger.instance.setMainParent(LoadedScenes.collection);
     }
 
     public void shop() {
-        WindowChanger.instance.setNewScene(LoadedScenes.shop);
+        ShopController.shopController.calculateEverything();
+        WindowChanger.instance.setMainParent(LoadedScenes.shop);
     }
 
     public void customCard_btn() {
-        WindowChanger.instance.setNewScene(LoadedScenes.customCard);
+        WindowChanger.instance.setMainParent(LoadedScenes.customCard);
     }
 }

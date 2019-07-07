@@ -55,6 +55,6 @@ public class ChooseBattleKindController {
     //---------------
 
     public void back() {
-        WindowChanger.instance.setNewScene(LoadedScenes.mainMenu);
+        WindowChanger.instance.setMainParent(LoadedScenes.mainMenu);
     }
 }

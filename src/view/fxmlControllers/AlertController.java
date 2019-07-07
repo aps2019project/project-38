@@ -2,7 +2,6 @@ package view.fxmlControllers;
 
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -22,7 +21,7 @@ public class AlertController {
     public ImageView glowButton;
     public Boolean result;
     private boolean haveAcceptButton;
-    private Scene alertScene;
+    private AnchorPane alertAnchorPane;
 
     public synchronized void close(MouseEvent mouseEvent) {
         resetAlertInPosition();
@@ -92,11 +91,12 @@ public class AlertController {
             e.printStackTrace();
         }
         AlertController alertController = fxmlLoader.getController();
+        alertController.alertAnchorPane = alertPane;
         alertController.text.setText(text);
         alertController.haveAcceptButton = haveAcceptButton;
         if (!haveAcceptButton) alertController.button.setOpacity(0);
         alertController.carrier.setLayoutY(Screen.getPrimary().getVisualBounds().getHeight());
-        alertController.alertScene = WindowChanger.instance.addNewScene(alertPane);
+        WindowChanger.instance.addAnAdditionalParent(alertPane);
         alertController.setAlertInPosition();
         return alertController;
     }
@@ -128,7 +128,7 @@ public class AlertController {
                         e.printStackTrace();
                     }
                 }
-                WindowChanger.instance.removeAdditionalScene(alertScene);
+                WindowChanger.instance.removeAdditionalParent(alertAnchorPane);
             }
         }).start();
     }

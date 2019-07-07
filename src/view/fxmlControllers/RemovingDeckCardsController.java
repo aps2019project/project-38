@@ -60,7 +60,7 @@ public class RemovingDeckCardsController implements Initializable {
 
     public void back(MouseEvent mouseEvent) {
         ChoosingDeckCardsController.choosingDeckCardsController.calculateEveryThing(deck);
-        WindowChanger.instance.setNewScene(LoadedScenes.choosingDeckCards);
+        WindowChanger.instance.setMainParent(LoadedScenes.choosingDeckCards);
     }
 
     public void shineBackBottom(MouseEvent mouseEvent) {

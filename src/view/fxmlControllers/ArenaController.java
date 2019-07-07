@@ -6,7 +6,6 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.effect.ColorAdjust;
@@ -572,7 +571,7 @@ public class ArenaController implements Initializable, PropertyChangeListener {
         //todo a banner or sth
         game = null;
         LoadedScenes.cleanArena();
-        WindowChanger.instance.setNewScene(LoadedScenes.mainMenu);
+        WindowChanger.instance.setMainParent(LoadedScenes.mainMenu);
     }
 
     private int getCurrentPlayer() {

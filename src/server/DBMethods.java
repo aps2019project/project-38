@@ -1,7 +1,7 @@
 package server;
 
-import io.joshworks.restclient.http.HttpResponse;
-import io.joshworks.restclient.http.Unirest;
+//import io.joshworks.restclient.http.HttpResponse;
+//import io.joshworks.restclient.http.Unirest;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,21 +51,23 @@ public class DBMethods {
     private static String DBMethods(String DBName, String whatDoWeWantToDo, String key, String value) {
         final String baseAddress = "http://127.0.0.1:8080/";
         final String path = whatDoWeWantToDo;
-        HttpResponse<String> response;
+//        HttpResponse<String> response;
         HashMap<String, Object> parameters = new HashMap<>();
 
         parameters.put("name", DBName);
         parameters.put("key", key);
         parameters.put("value", value);
-        response = Unirest.post(baseAddress + path).fields(parameters).asString();
+//        response = Unirest.post(baseAddress + path).fields(parameters).asString();
 
-        if (response.getStatus() != 200) {
+//        if (response.getStatus() != 200) {
+        if (false) {
             try {
                 throw new Exception("There is a problem about: \"" + whatDoWeWantToDo + "\"");
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        return response.getBody();
+//        return response.getBody();
+        return null;
     }
 }

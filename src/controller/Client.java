@@ -29,16 +29,15 @@ public class Client extends Application {
 
         new LoadWindows().main();
 
-        WindowChanger.instance.setNewScene(LoadedScenes.registerMenu);
-//        WindowChanger.instance.setNewScene(LoadedScenes.customCard);
-//
+        WindowChanger.instance.setMainParent(LoadedScenes.registerMenu);
+
 //        {//arena
 //            Account account = new Account("test", "test");
 //            account.getCollection().setMainDeck(Deck.getAllDecks().get("level1"));
 //            Game game = Level.getAvailableLevels().get("1").getLevelGame(account);
 //            ArenaController.ac.init(game);
 //            game.initialiseGameFields();//
-//            WindowChanger.instance.setNewScene(LoadedScenes.arena);
+//            WindowChanger.instance.setMainParent(LoadedScenes.arena);
 //        }
 
         mainStage.show();

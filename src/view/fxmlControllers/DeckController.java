@@ -14,7 +14,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.transform.Scale;
 import model.Account;
-import model.Collection;
 import model.Deck;
 import model.cards.Card;
 import model.cards.Warrior;
@@ -73,7 +72,7 @@ public class DeckController implements Initializable {
     }
 
     public void back() {
-        WindowChanger.instance.setNewScene(LoadedScenes.mainMenu);
+        WindowChanger.instance.setMainParent(LoadedScenes.mainMenu);
     }
 
     public void createDeck() {

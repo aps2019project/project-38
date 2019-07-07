@@ -42,10 +42,10 @@ public class GamePreviewController {
         if (LoadingGamePreviewScenes.selectedButtonsText.size() > 0)
             LoadingGamePreviewScenes.selectedButtonsText.remove(LoadingGamePreviewScenes.selectedButtonsText.size() - 1);
         if (previewSceneName.equals("Client Menu")) {
-            WindowChanger.instance.setNewScene(LoadedScenes.mainMenu);
+            WindowChanger.instance.setMainParent(LoadedScenes.mainMenu);
         }
         else {
-            WindowChanger.instance.setNewScene(LoadingGamePreviewScenes.starterScenes.get(previewSceneName));
+            WindowChanger.instance.setMainParent(LoadingGamePreviewScenes.starterScenes.get(previewSceneName));
             LoadingGamePreviewScenes.starterControllers.get(previewSceneName).run();
         }
     }

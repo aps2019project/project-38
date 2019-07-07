@@ -60,7 +60,7 @@ public class ChoosingDeckCardsController implements Initializable {
 
     public void back(MouseEvent mouseEvent) {
         CollectionController.collectionController.calculateEveryThing();
-        WindowChanger.instance.setNewScene(LoadedScenes.collection);
+        WindowChanger.instance.setMainParent(LoadedScenes.collection);
     }
 
     public void shineBackBottom(MouseEvent mouseEvent) {
@@ -73,7 +73,7 @@ public class ChoosingDeckCardsController implements Initializable {
 
     public void goToDeck(MouseEvent mouseEvent) {
         RemovingDeckCardsController.removingDeckCardsController.calculateEveryThing(deck);
-        WindowChanger.instance.setNewScene(LoadedScenes.removingDeckCards);
+        WindowChanger.instance.setMainParent(LoadedScenes.removingDeckCards);
     }
 
     public void shineDeckBottom(MouseEvent mouseEvent) {
