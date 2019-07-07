@@ -8,6 +8,7 @@ import javafx.scene.text.Text;
 import javafx.scene.transform.Scale;
 import model.Account;
 import model.Collection;
+import model.Deck;
 import model.cards.Spell;
 import view.visualentities.VisualSpell;
 
@@ -27,95 +28,53 @@ public class SpellCardController {
     public ImageView blueDiamond;
     public Text manaText;
     private String type;
-    private String deckName;
+    private Deck deck;
 
     public void selectCard(MouseEvent mouseEvent) {
         if (type.equals("for sell")) {
-            AlertController alertController = AlertController.setAndShowAndGetResultByAnAlertController(
+            AlertController.setAndShowAndDo(
                     String.format("Do you want to sell %s? Price: %s (You have %d number of this card) Your Derrick: %d",
                             nameText.getText(), priceText.getText(),
                             Account.getActiveAccount().getCollection().getHowManyCard().get(nameText.getText()),
-                            Account.getActiveAccount().derrick), true);
-            new Thread(() -> {
-                try {
-                    synchronized (alertController)  {
-                        alertController.wait();
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                if (alertController.result) {
-                    CollectionOfShopController.sell(nameText.getText());
-                }
-            }).start();
+                            Account.getActiveAccount().derrick), () -> CollectionOfShopController.sell(nameText.getText()));
         }
         else if (type.equals("for buy")){
             if (Account.getActiveAccount().derrick >= Integer.parseInt(priceText.getText())) {
-                AlertController alertController = AlertController.setAndShowAndGetResultByAnAlertController(
+                AlertController.setAndShowAndDo(
                         String.format("Do you want to buy %s? Price: %s (You have %d number of this card) Your Derrick: %d)",
                                 nameText.getText(), priceText.getText(),
                                 Account.getActiveAccount().getCollection().getHowManyCard().get(nameText.getText()),
-                                Account.getActiveAccount().derrick), true);
-                new Thread(() -> {
-                    try {
-                        synchronized (alertController)  {
-                            alertController.wait();
-                        }
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    if (alertController.result) {
-                        ShopController.buy(nameText.getText());
-                    }
-                }).start();
+                                Account.getActiveAccount().derrick), () -> ShopController.buy(nameText.getText()));
             }
             else {
-                AlertController.setAndShowAndGetResultByAnAlertController("You have not enough Derrick", false);
+                AlertController.setAndShow("You have not enough Derrick");
             }
         }
         else if (type.equals("inside deck")) {
-            AlertController alertController = AlertController.setAndShowAndGetResultByAnAlertController(String.format
+            int numberInside = RemovingDeckCardsController.removingDeckCardsController
+                    .selectedCardsNameToNumberHashMap.get(nameText.getText()) == null ? 0 :
+                    RemovingDeckCardsController.removingDeckCardsController
+                            .selectedCardsNameToNumberHashMap.get(nameText.getText());
+            int numberOutside = Collection.getCollection().getHowManyCard().get(nameText.getText()) - numberInside;
+            AlertController.setAndShowAndDo(String.format
                     ("Do you want to remove %s from %s? (You have %d of this inside %d of this outside this deck)",
-                            nameText.getText(), deckName, RemovingDeckCardsController.removingDeckCardsController
-                                    .selectedCardsNameToNumberHashMap.get(nameText.getText()),
-                            ChoosingDeckCardsController.choosingDeckCardsController
-                                    .notSelectedCardsNameToNumberHashMap.get(nameText.getText())), true);
-            new Thread(() -> {
-                try {
-                    synchronized (alertController)  {
-                        alertController.wait();
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                if (alertController.result) {
-                    if (Collection.getCollection().removeCardFromDeck(nameText.getText(), deckName))
-                        RemovingDeckCardsController.removingDeckCardsController.calculateEveryThing
-                                (Collection.getCollection().getAllDecks().get(deckName));
-                }
-            }).start();
+                            nameText.getText(), deck.getName(), numberInside, numberOutside), () -> {
+                if (Collection.getCollection().removeCardFromDeck(nameText.getText(), deck.getName()))
+                    RemovingDeckCardsController.removingDeckCardsController.calculateEveryThing(deck);
+            });
         }
         else {
-            AlertController alertController = AlertController.setAndShowAndGetResultByAnAlertController(String.format
-                    ("Do you want to remove %s from %s? (You have %d of this inside %d of this outside this deck)",
-                            nameText.getText(), deckName, RemovingDeckCardsController.removingDeckCardsController
-                                    .selectedCardsNameToNumberHashMap.get(nameText.getText()),
-                            ChoosingDeckCardsController.choosingDeckCardsController
-                                    .notSelectedCardsNameToNumberHashMap.get(nameText.getText())), true);
-            new Thread(() -> {
-                try {
-                    synchronized (alertController)  {
-                        alertController.wait();
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                if (alertController.result) {
-                    if (Collection.getCollection().addCardToDeck(nameText.getText(), deckName))
-                        ChoosingDeckCardsController.choosingDeckCardsController.calculateEveryThing
-                                (Collection.getCollection().getAllDecks().get(deckName));
-                }
-            }).start();
+            int numberOutside = ChoosingDeckCardsController.choosingDeckCardsController
+                    .notSelectedCardsNameToNumberHashMap.get(nameText.getText()) == null ? 0 :
+                    ChoosingDeckCardsController.choosingDeckCardsController
+                            .notSelectedCardsNameToNumberHashMap.get(nameText.getText());
+            int numberInside = Collection.getCollection().getHowManyCard().get(nameText.getText()) - numberOutside;
+            AlertController.setAndShowAndDo(String.format
+                    ("Do you want to add %s to %s? (You have %d of this inside %d of this outside this deck)",
+                            nameText.getText(), deck.getName(), numberInside, numberOutside), () -> {
+                if (Collection.getCollection().addCardToDeck(nameText.getText(), deck.getName()))
+                    ChoosingDeckCardsController.choosingDeckCardsController.calculateEveryThing(deck);
+            });
         }
     }
 
@@ -151,8 +110,8 @@ public class SpellCardController {
         descriptionText.setText(spell.description.descriptionOfCardSpecialAbility);//todo
         Matcher matcher = Pattern.compile("(?<type>(inside|outside) deck) (?<deckName>.+)").matcher(type);
         if (matcher.matches()) {
-            type = matcher.group("type");
-            deckName = matcher.group("deckName");
+            this.type = matcher.group("type");
+            deck = Collection.getCollection().getAllDecks().get(matcher.group("deckName"));
         }
         else this.type = type;
     }

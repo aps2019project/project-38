@@ -115,6 +115,6 @@ public class MoreCustomCardController implements Initializable {
 
     public void can() {
         LoadedScenes.cleanCustomCard();
-        WindowChanger.instance.setNewScene(LoadedScenes.mainMenu);
+        WindowChanger.instance.setMainParent(LoadedScenes.mainMenu);
     }
 }

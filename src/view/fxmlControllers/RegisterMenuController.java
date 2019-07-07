@@ -1,7 +1,6 @@
 package view.fxmlControllers;
 
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -9,11 +8,8 @@ import model.Account;
 import view.Utility;
 import view.WindowChanger;
 import view.fxmls.LoadedScenes;
-import view.images.LoadedImages;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class RegisterMenuController {
     public AnchorPane mainPane;
@@ -24,18 +20,18 @@ public class RegisterMenuController {
     }
 
     public void createAccount() {
-        WindowChanger.instance.setNewScene(LoadedScenes.createAccount);
+        WindowChanger.instance.setMainParent(LoadedScenes.createAccount);
 
     }
 
     public void login() {
-        WindowChanger.instance.setNewScene(LoadedScenes.login);
+        WindowChanger.instance.setMainParent(LoadedScenes.login);
 
     }
 
     public void leatherBoard() {
         try {
-            WindowChanger.instance.setNewScene(Utility.scale(FXMLLoader.load(LoadedScenes.class.getResource("leaderBoard.fxml"))));
+            WindowChanger.instance.setMainParent(Utility.scale(FXMLLoader.load(LoadedScenes.class.getResource("leaderBoard.fxml"))));
         } catch (IOException e) {
             e.printStackTrace();
         }

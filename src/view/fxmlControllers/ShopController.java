@@ -19,12 +19,14 @@ import view.fxmls.LoadedScenes;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.ResourceBundle;
 
 import static view.Utility.scaleCard;
 
 public class ShopController implements Initializable {
+    public static ShopController shopController;
     public VBox minionsLeftVBox;
     public VBox minionsMiddleVBox;
     public VBox minionsRightVBox;
@@ -51,7 +53,7 @@ public class ShopController implements Initializable {
     public Text collectionText;
 
     public void back(MouseEvent mouseEvent) {
-        WindowChanger.instance.setNewScene(LoadedScenes.mainMenu);
+        WindowChanger.instance.setMainParent(LoadedScenes.mainMenu);
     }
 
     public void shineBackBottom(MouseEvent mouseEvent) {
@@ -63,7 +65,8 @@ public class ShopController implements Initializable {
     }
 
     public void goToCollection(MouseEvent mouseEvent) {
-        WindowChanger.instance.setNewScene(LoadedScenes.collectionOfShop);
+        CollectionOfShopController.collectionOfShopController.calculateEverything();
+        WindowChanger.instance.setMainParent(LoadedScenes.collectionOfShop);
     }
 
     public void shineCollectionBottom(MouseEvent mouseEvent) {
@@ -79,11 +82,14 @@ public class ShopController implements Initializable {
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize(URL location, ResourceBundle resources) {
         minionsSearchTextField.setOnKeyTyped(this::recalculateMinions);
         heroesSearchTextField.setOnKeyTyped(this::recalculateHeroes);
         spellsSearchTextField.setOnKeyTyped(this::recalculateSpells);
         itemsSearchTextField.setOnKeyTyped(this::recalculateItems);
+    }
+
+    public void calculateEverything() {
         initializeAllMinions();
         recalculateMinions(null);
         initializeAllHeroes();
@@ -96,6 +102,7 @@ public class ShopController implements Initializable {
 
     private synchronized void recalculateMinions(KeyEvent keyEvent) {
         String searchText = minionsSearchTextField.getText();
+        minions.entrySet().removeIf(entry -> !allMinions.containsKey(entry.getKey()));
         minions.entrySet().removeIf(entry -> !entry.getKey().getName().toLowerCase()
                 .replaceAll("[ \t\\-_]+", "").matches
                         (".*" + searchText.toLowerCase().replaceAll("[ \t\\-_]+", "") + ".*"));
@@ -126,8 +133,16 @@ public class ShopController implements Initializable {
     }
 
     private void initializeAllMinions() {
+        for (Iterator<Map.Entry<Warrior, AnchorPane>> iterator = allMinions.entrySet().iterator(); iterator.hasNext();) {
+            Warrior minion = iterator.next().getKey();
+            if (!CardFactory.getAllBuiltMinions().contains(minion)) {
+                iterator.remove();
+            }
+        }
         for (Warrior minion : CardFactory.getAllBuiltMinions()) {
-            loadMinion(minion);
+            if (!allMinions.containsKey(minion)) {
+                loadMinion(minion);
+            }
         }
     }
 
@@ -147,6 +162,7 @@ public class ShopController implements Initializable {
 
     private synchronized void recalculateHeroes(KeyEvent keyEvent) {
         String searchText = heroesSearchTextField.getText();
+        heroes.entrySet().removeIf(entry -> !allHeroes.containsKey(entry.getKey()));
         heroes.entrySet().removeIf(entry -> !entry.getKey().getName().toLowerCase()
                 .replaceAll("[ \t\\-_]+", "").matches
                         (".*" + searchText.toLowerCase().replaceAll("[ \t\\-_]+", "") + ".*"));
@@ -177,8 +193,16 @@ public class ShopController implements Initializable {
     }
 
     private void initializeAllHeroes() {
+        for (Iterator<Map.Entry<Hero, AnchorPane>> iterator = allHeroes.entrySet().iterator(); iterator.hasNext();) {
+            Hero hero = iterator.next().getKey();
+            if (!CardFactory.getAllBuiltHeroes().contains(hero)) {
+                iterator.remove();
+            }
+        }
         for (Hero hero : CardFactory.getAllBuiltHeroes()) {
-            loadHero(hero);
+            if (!allHeroes.containsKey(hero)) {
+                loadHero(hero);
+            }
         }
     }
 
@@ -193,11 +217,12 @@ public class ShopController implements Initializable {
             e.printStackTrace();
         }
         warriorCardController.setFields(hero, "for buy");
-        heroes.put(hero, anchorPane);
+        allHeroes.put(hero, anchorPane);
     }
 
     private synchronized void recalculateSpells(KeyEvent keyEvent) {
         String searchText = spellsSearchTextField.getText();
+        spells.entrySet().removeIf(entry -> !allSpells.containsKey(entry.getKey()));
         spells.entrySet().removeIf(entry -> !entry.getKey().getName().toLowerCase()
                 .replaceAll("[ \t\\-_]+", "").matches
                         (".*" + searchText.toLowerCase().replaceAll("[ \t\\-_]+", "") + ".*"));
@@ -228,8 +253,16 @@ public class ShopController implements Initializable {
     }
 
     private void initializeAllSpells() {
+        for (Iterator<Map.Entry<Spell, AnchorPane>> iterator = allSpells.entrySet().iterator(); iterator.hasNext();) {
+            Spell spell = iterator.next().getKey();
+            if (!CardFactory.getAllBuiltSpells().contains(spell)) {
+                iterator.remove();
+            }
+        }
         for (Spell spell : CardFactory.getAllBuiltSpells()) {
-            loadSpell(spell);
+            if (!allSpells.containsKey(spell)) {
+                loadSpell(spell);
+            }
         }
     }
 
@@ -244,11 +277,12 @@ public class ShopController implements Initializable {
             e.printStackTrace();
         }
         spellCardController.setFields(spell, "for buy");
-        spells.put(spell, anchorPane);
+        allSpells.put(spell, anchorPane);
     }
 
     private synchronized void recalculateItems(KeyEvent keyEvent) {
         String searchText = itemsSearchTextField.getText();
+        items.entrySet().removeIf(entry -> !allItems.containsKey(entry.getKey()));
         items.entrySet().removeIf(entry -> !entry.getKey().getName().toLowerCase()
                 .replaceAll("[ \t\\-_]+", "").matches
                         (".*" + searchText.toLowerCase().replaceAll("[ \t\\-_]+", "") + ".*"));
@@ -279,8 +313,14 @@ public class ShopController implements Initializable {
     }
 
     private void initializeAllItems() {
+        for (Iterator<Map.Entry<Spell, AnchorPane>> iterator = allItems.entrySet().iterator(); iterator.hasNext();) {
+            Spell item = iterator.next().getKey();
+            if (!CardFactory.getAllBuiltItems().contains(item)) {
+                iterator.remove();
+            }
+        }
         for (Spell item : CardFactory.getAllBuiltItems()) {
-            if (item.getPrice() != 0) {
+            if (!allItems.containsKey(item)) {
                 loadItem(item);
             }
         }
@@ -297,7 +337,7 @@ public class ShopController implements Initializable {
             e.printStackTrace();
         }
         spellCardController.setFields(item, "for buy");
-        items.put(item, anchorPane);
+        allItems.put(item, anchorPane);
     }
 
     public static void buy(String cardName) {
@@ -310,8 +350,7 @@ public class ShopController implements Initializable {
                 if (Spell.checkIsItem(card1)) numberOfItems++;
             }
             if (numberOfItems >= 3) {
-                AlertController.setAndShowAndGetResultByAnAlertController
-                        ("You have 3 items. You couldn't buy any other item", false);
+                AlertController.setAndShow("You have 3 items. You couldn't buy any other item");
                 return;
             }
         }
@@ -323,8 +362,6 @@ public class ShopController implements Initializable {
         } else {
             model.Collection.getCollection().getHowManyCard().put(card.getName(), 1);
         }
-        AlertController.setAndShowAndGetResultByAnAlertController
-                ("You bought the card successfully", false);
-        CollectionOfShopController.collectionOfShopController.calculateEverything();
+        AlertController.setAndShow("You bought the card successfully");
     }
 }

@@ -22,6 +22,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class VisualMinion {
     String name;
+    String fileName;
     public AtomicBoolean isSelected = new AtomicBoolean(false);
     public AtomicBoolean isRunning = new AtomicBoolean(false);
     public ArrayBlockingQueue<SpriteType> actionQueue = new ArrayBlockingQueue<>(10);
@@ -39,16 +40,16 @@ public class VisualMinion {
 
     public VisualMinion(String name) {
         this.name = name;
+        fileName = name;
 
-        ImageView temp;
-        if (Card.getAllCards().values().stream().filter(Objects::nonNull).anyMatch(card -> String.valueOf(card.getID()).startsWith("5"))) {
-            temp = new ImageView(LoadedImages.sprites.get("cw"));
-        } else {
-            temp = new ImageView(LoadedImages.sprites.get(name));
+        if (Card.getAllCards().values().stream().filter(Objects::nonNull).anyMatch(card -> String.valueOf(card.getID()).startsWith("5") && card.getName().equals(name))) {
+            fileName = "cw";
         }
+
+        ImageView temp = new ImageView(LoadedImages.sprites.get(fileName));
         temp.setVisible(false);
         view = temp;
-        animation = new SpriteAnimation(view, SpriteType.breathing, name, -1);
+        animation = new SpriteAnimation(view, SpriteType.breathing, fileName, -1);
 
         view.setOnMouseEntered(event -> {
             isSelected.set(true);
@@ -82,10 +83,12 @@ public class VisualMinion {
                                 death();
                                 lastState = SpriteType.death;
                                 stop();
+                                System.out.println("death");
                                 break;
                             case attack:
                                 attack();
                                 lastState = SpriteType.attack;
+                                System.out.println("attack");
                                 break;
                         }
                     }
@@ -102,7 +105,7 @@ public class VisualMinion {
     private void attack() {
         Platform.runLater(() -> {
             animation.stop();
-            animation = new SpriteAnimation(view, SpriteType.attack, name, 0);
+            animation = new SpriteAnimation(view, SpriteType.attack, fileName, 0);
         });
     }
 
@@ -110,14 +113,14 @@ public class VisualMinion {
     private void run() {
         Platform.runLater(() -> {
             animation.stop();
-            animation = new SpriteAnimation(view, SpriteType.run, name, -1);
+            animation = new SpriteAnimation(view, SpriteType.run, fileName, -1);
         });
     }
 
     private void death() {
         Platform.runLater(() -> {
             animation.stop();
-            animation = new SpriteAnimation(view, SpriteType.death, name, 0);
+            animation = new SpriteAnimation(view, SpriteType.death, fileName, 0);
         });
     }
 
@@ -140,7 +143,7 @@ public class VisualMinion {
     private void cast() {
         Platform.runLater(() -> {
             animation.stop();
-            SpriteAnimation sp1 = new SpriteAnimation(view, SpriteType.caststart, name, 0);
+            SpriteAnimation sp1 = new SpriteAnimation(view, SpriteType.caststart, fileName, 0);
             animation = sp1;
 
             Timer timer = new Timer();
@@ -148,14 +151,14 @@ public class VisualMinion {
                 @Override
                 public void run() {
                     if (sp1.equals(animation)) {
-                        SpriteAnimation sp2 = new SpriteAnimation(view, SpriteType.cast, name, 0);
+                        SpriteAnimation sp2 = new SpriteAnimation(view, SpriteType.cast, fileName, 0);
                         animation = sp2;
 
                         timer.schedule(new TimerTask() {
                             @Override
                             public void run() {
                                 if (sp2.equals(animation)) {
-                                    animation = new SpriteAnimation(view, SpriteType.castend, name, 0);
+                                    animation = new SpriteAnimation(view, SpriteType.castend, fileName, 0);
                                 }
                             }
                         }, sp2.realDuration);
@@ -169,14 +172,14 @@ public class VisualMinion {
     private void breathing() {
         Platform.runLater(() -> {
             animation.stop();
-            animation = new SpriteAnimation(view, SpriteType.breathing, name, -1);
+            animation = new SpriteAnimation(view, SpriteType.breathing, fileName, -1);
         });
     }
 
     private void idle() {
         Platform.runLater(() -> {
             animation.stop();
-            animation = new SpriteAnimation(view, SpriteType.idle, name, -1);
+            animation = new SpriteAnimation(view, SpriteType.idle, fileName, -1);
 
         });
     }

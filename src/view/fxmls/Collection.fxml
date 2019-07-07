@@ -19,28 +19,31 @@
                   <Image url="@../images/shopAndCollection/collectionBackground.jpg" />
                </image>
             </ImageView>
-            <ImageView fitHeight="72.0" fitWidth="360.0" layoutX="300.0">
+            <ImageView fx:id="decksSearchTextFieldImage" fitHeight="72.0" fitWidth="300.0" layoutX="360.0" onMouseClicked="#createDeck" onMouseEntered="#shineSearchTextField" onMouseExited="#resetSearchTextField">
                <image>
                   <Image url="@../images/shopAndCollection/blueTextField.png" />
                </image>
             </ImageView>
-            <TextField fx:id="decksSearchTextField" layoutX="319.0" layoutY="13.0" prefHeight="45.0" prefWidth="322.0" style="-fx-background-color: transparent;" />
-            <ImageView fx:id="renameSelectedDeckButton" fitHeight="72.0" fitWidth="322.0" onMouseClicked="#renameSelectedDeck" onMouseEntered="#shineRenameSelectedDeckButton" onMouseExited="#resetRenameSelectedDeckButton">
+            <TextField fx:id="decksSearchTextField" alignment="CENTER" layoutX="376.0" layoutY="13.0" onMouseClicked="#createDeck" onMouseEntered="#shineSearchTextField" onMouseExited="#resetSearchTextField" prefHeight="45.0" prefWidth="269.0" promptText="Enter Deck Name" style="-fx-background-color: transparent;">
+               <font>
+                  <Font size="18.0" />
+               </font></TextField>
+            <ImageView fx:id="renameSelectedDeckButton" fitHeight="72.0" fitWidth="300.0" layoutX="60.0" onMouseClicked="#renameSelectedDeck" onMouseEntered="#shineRenameSelectedDeckButton" onMouseExited="#resetRenameSelectedDeckButton">
                <image>
                   <Image url="@../images/shopAndCollection/leftButton.png" />
                </image>
             </ImageView>
-            <Text fx:id="renameSelectedDeckText" fill="#8bc3ff" layoutX="35.0" layoutY="43.0" onMouseClicked="#renameSelectedDeck" onMouseEntered="#shineRenameSelectedDeckButton" strokeType="OUTSIDE" strokeWidth="0.0" text="Rename Selected Deck" textAlignment="CENTER" wrappingWidth="257.7294921875">
+            <Text fx:id="renameSelectedDeckText" fill="#8bc3ff" layoutX="87.0" layoutY="44.0" onMouseClicked="#renameSelectedDeck" onMouseEntered="#shineRenameSelectedDeckButton" strokeType="OUTSIDE" strokeWidth="0.0" text="Rename Selected Deck" textAlignment="CENTER" wrappingWidth="257.7294921875">
                <font>
                   <Font size="20.0" />
                </font>
             </Text>
-            <ImageView fx:id="removeSelectedDeckButton" fitHeight="72.0" fitWidth="322.0" layoutX="638.0" onMouseClicked="#removeSelectedDeck" onMouseEntered="#shineRemoveSelectedDeckButton" onMouseExited="#resetRemoveSelectedDeckButton">
+            <ImageView fx:id="removeSelectedDeckButton" fitHeight="72.0" fitWidth="300.0" layoutX="660.0" onMouseClicked="#removeSelectedDeck" onMouseEntered="#shineRemoveSelectedDeckButton" onMouseExited="#resetRemoveSelectedDeckButton">
                <image>
                   <Image url="@../images/shopAndCollection/rightButton.png" />
                </image>
             </ImageView>
-            <Text fx:id="removeSelectedDeckText" fill="#8bc3ff" layoutX="670.0" layoutY="43.0" onMouseClicked="#removeSelectedDeck" onMouseEntered="#shineRemoveSelectedDeckButton" strokeType="OUTSIDE" strokeWidth="0.0" text="Remove Selected Deck" textAlignment="CENTER" wrappingWidth="257.7294921875">
+            <Text fx:id="removeSelectedDeckText" fill="#8bc3ff" layoutX="675.0" layoutY="43.0" onMouseClicked="#removeSelectedDeck" onMouseEntered="#shineRemoveSelectedDeckButton" strokeType="OUTSIDE" strokeWidth="0.0" text="Remove Selected Deck" textAlignment="CENTER" wrappingWidth="257.7294921875">
                <font>
                   <Font size="20.0" />
                </font>
@@ -50,7 +53,7 @@
                   <Image url="@../images/shopAndCollection/selectedDeckButton.png" />
                </image>
             </ImageView>
-            <Text fx:id="selectedDeckText" fill="#00a7cd" layoutX="260.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="No Selected Deck" textAlignment="CENTER" wrappingWidth="440.0">
+            <Text fx:id="selectedDeckText" fill="#00a7cd" layoutX="260.0" layoutY="113.0" onMouseClicked="#enterChoosingDeckCards" onMouseEntered="#shineSelectedDeckButton" onMouseExited="#resetSelectedDeckButton" strokeType="OUTSIDE" strokeWidth="0.0" text="No Selected Deck" textAlignment="CENTER" wrappingWidth="440.0">
                <font>
                   <Font size="20.0" />
                </font>
@@ -65,6 +68,11 @@
                   </HBox>
                </content>
             </ScrollPane>
+            <ImageView fx:id="backButtonImage" fitHeight="58.0" fitWidth="58.0" onMouseClicked="#back" onMouseEntered="#shineBackButton" onMouseExited="#resetBackButton">
+               <image>
+                  <Image url="@../images/shopAndCollection/backBottom.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </children>

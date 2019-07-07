@@ -1,17 +1,14 @@
 package view.fxmlControllers;
 
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import model.Account;
-import view.Utility;
 import view.WindowChanger;
 import view.fxmls.LoadedScenes;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -43,19 +40,11 @@ public class LoginController implements Initializable {
             alertWindow.toFront();
             alert.setText("You logged in successfully");
             shouldClose = true;
-
-            FXMLLoader fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("collectionOfShop.fxml"));//todo don't change this
-            try {
-                LoadedScenes.collectionOfShop = fxmlLoader.load();
-                CollectionOfShopController.collectionOfShopController = fxmlLoader.getController();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
     public void back() {
-        WindowChanger.instance.setNewScene(RegisterMenuController.getScene());
+        WindowChanger.instance.setMainParent(RegisterMenuController.getScene());
         username.clear();
         password.clear();
     }
@@ -63,7 +52,7 @@ public class LoginController implements Initializable {
     public void ok() {
         alertWindow.toBack();
         if (shouldClose) {
-            WindowChanger.instance.setNewScene(LoadedScenes.mainMenu);
+            WindowChanger.instance.setMainParent(LoadedScenes.mainMenu);
             shouldClose = false;
             username.clear();
             password.clear();

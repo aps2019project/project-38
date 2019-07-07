@@ -1,5 +1,4 @@
-package client.net;
+package controller;
 
 public class ClientConnector {
-
 }

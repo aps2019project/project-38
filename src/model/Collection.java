@@ -20,7 +20,7 @@ public class Collection implements Serializable {
 
     public boolean createDeck(String deckName) {
         if (decks.contains(deckName)) {
-            AlertController.setAndShowAndGetResultByAnAlertController("There is already a deck with this name", false);
+            AlertController.setAndShow("There is already a deck with this name");
             return false;
         }
         Deck deck = new Deck();
@@ -28,15 +28,15 @@ public class Collection implements Serializable {
         getDecks().add(deckName);
         getAllDecks().put(deckName, deck);
         Deck.getAllDecks().put(deckName, deck);
-        DeckController.putADeckToList(deckName);
-        AlertController.setAndShowAndGetResultByAnAlertController("Deck created", false);
+//        DeckController.putADeckToList(deckName);
+        AlertController.setAndShow("Deck created");
         return true;
     }
 
     public boolean deleteDeck(String deckName) {
         //todo
         if (!getDecks().contains(deckName)) {
-            AlertController.setAndShowAndGetResultByAnAlertController("There is no deck with this name", false);
+            AlertController.setAndShow("There is no deck with this name");
             return false;
         }
         //todo
@@ -47,15 +47,15 @@ public class Collection implements Serializable {
         getDecks().remove(deckName);
         getAllDecks().remove(deckName);
         Deck.getAllDecks().remove(deckName);
-        DeckController.removeADeckFromList(deckName);
-        AlertController.setAndShowAndGetResultByAnAlertController("Deck deleted", false);
+//        DeckController.removeADeckFromList(deckName);
+        AlertController.setAndShow("Deck deleted");
         return true;
     }
 
     public boolean addCardToDeck(String cardName, String deckName) {
         //todo
         if (!Account.getActiveAccount().getCollection().getAllDecks().containsKey(deckName)) {
-            AlertController.setAndShowAndGetResultByAnAlertController("There is no deck with this name", false);
+            AlertController.setAndShow("There is no deck with this name");
             return false;
         }
         //todo
@@ -63,33 +63,35 @@ public class Collection implements Serializable {
         int cardID = getIDByName(cardName);
         //todo
         if (!this.getCardIDs().contains(cardID)) {
-            AlertController.setAndShowAndGetResultByAnAlertController("There is no card with this name in collection cards", false);
+            AlertController.setAndShow("There is no card with this name in collection cards");
             return false;
         }
         //todo
         Card card = Card.getAllCards().get(cardID);
         if (card instanceof Hero) {
             if (deck.getHero() != null) {
-                AlertController.setAndShowAndGetResultByAnAlertController("There is already a hero in this deck. You can't add any other", false);
+                AlertController.setAndShow("There is already a hero in this deck. You can't add any other");
                 return false;
             } else {
                 deck.setHero((Hero) card);
-                AlertController.setAndShowAndGetResultByAnAlertController("Card added to deck successfully", false);
+                deck.getCardIDs().add(cardID);
+                AlertController.setAndShow("Card added to deck successfully");
                 return true;
             }
         }
         if (Spell.checkIsItem(card)) {
             if (deck.getItem() != null) {
-                AlertController.setAndShowAndGetResultByAnAlertController("There is an item in this deck", false);
+                AlertController.setAndShow("There is an item in this deck");
                 return false;
             } else {
                 deck.setItem((Spell) card);
-                AlertController.setAndShowAndGetResultByAnAlertController("Card added to deck successfully", false);
+                deck.getCardIDs().add(cardID);
+                AlertController.setAndShow("Card added to deck successfully");
                 return true;
             }
         }
         if (deck.getCardIDs().size() == 20) {
-            AlertController.setAndShowAndGetResultByAnAlertController("You have 20 cards in your deck. You couldn't put any other card", false);
+            AlertController.setAndShow("You have 20 cards in your deck. You couldn't put any other card");
             return false;
         }
         //todo
@@ -100,7 +102,7 @@ public class Collection implements Serializable {
             }
         }
         if (numberOfCard >= Collection.getCollection().howManyCard.get(cardName)) {
-            AlertController.setAndShowAndGetResultByAnAlertController("You can't add this card to your deck. You haven't enough number of it in your collection", false);
+            AlertController.setAndShow("You can't add this card to your deck. You haven't enough number of it in your collection");
             return false;
         }
         //todo
@@ -110,7 +112,7 @@ public class Collection implements Serializable {
         } else {
             deck.spells.add(card);
         }
-        AlertController.setAndShowAndGetResultByAnAlertController("Card added to deck successfully", false);
+        AlertController.setAndShow("Card added to deck successfully");
         return true;
     }
 
@@ -118,11 +120,11 @@ public class Collection implements Serializable {
         int cardID = getIDByName(cardName);
         //todo
         if (!Account.getActiveAccount().getCollection().getAllDecks().containsKey(deckName)) {
-            AlertController.setAndShowAndGetResultByAnAlertController("There is no deck with this name", false);
+            AlertController.setAndShow("There is no deck with this name");
             return false;
         }
         if (!Card.getAllCards().containsKey(cardID)) {
-            AlertController.setAndShowAndGetResultByAnAlertController("There is no card with this name in this deck", false);
+            AlertController.setAndShow("There is no card with this name in this deck");
             return false;
         }
         //todo
@@ -131,20 +133,20 @@ public class Collection implements Serializable {
         if (card instanceof Hero) {
             if (deck.getHero().equals((Hero) card)) {
                 deck.setHero(null);
-                AlertController.setAndShowAndGetResultByAnAlertController("Card removed from deck successfully", false);
+                AlertController.setAndShow("Card removed from deck successfully");
                 return true;
             } else {
-                AlertController.setAndShowAndGetResultByAnAlertController("There is no card with this name in this deck", false);
+                AlertController.setAndShow("There is no card with this name in this deck");
                 return false;
             }
         }
         if (Spell.checkIsItem(card)) {
             if (deck.getItem().equals((Spell) card)) {
                 deck.setItem(null);
-                AlertController.setAndShowAndGetResultByAnAlertController("Card removed from deck successfully", false);
+                AlertController.setAndShow("Card removed from deck successfully");
                 return true;
             } else {
-                AlertController.setAndShowAndGetResultByAnAlertController("There is no card with this name in this deck", false);
+                AlertController.setAndShow("There is no card with this name in this deck");
                 return false;
             }
         }
@@ -155,10 +157,10 @@ public class Collection implements Serializable {
             } else {
                 deck.spells.remove(card);
             }
-            AlertController.setAndShowAndGetResultByAnAlertController("Card removed from deck successfully", false);
+            AlertController.setAndShow("Card removed from deck successfully");
             return true;
         } else {
-            AlertController.setAndShowAndGetResultByAnAlertController("There is no card with this name in this deck", false);
+            AlertController.setAndShow("There is no card with this name in this deck");
             return false;
         }
     }
@@ -167,7 +169,7 @@ public class Collection implements Serializable {
         //todo
         if (!Account.getActiveAccount().getCollection().getAllDecks().containsKey(deckName)) {
             if (showMessage) {
-                AlertController.setAndShowAndGetResultByAnAlertController("There is no deck with this name", false);
+                AlertController.setAndShow("There is no deck with this name");
             }
             return false;
         }
@@ -175,12 +177,12 @@ public class Collection implements Serializable {
         Deck deck = Account.getActiveAccount().getCollection().getAllDecks().get(deckName);
         if (deck.getCardIDs().size() != 20 || deck.getHero() == null) {
             if (showMessage) {
-                AlertController.setAndShowAndGetResultByAnAlertController("This deck is not valid", false);
+                AlertController.setAndShow("This deck is not valid");
             }
             return false;
         }
         if (showMessage) {
-            AlertController.setAndShowAndGetResultByAnAlertController("This deck is valid", false);
+            AlertController.setAndShow("This deck is valid");
         }
         return true;
     }
@@ -188,16 +190,16 @@ public class Collection implements Serializable {
     public boolean selectMainDeck(String deckName) {
         //todo
         if (!Account.getActiveAccount().getCollection().getAllDecks().containsKey(deckName)) {
-            AlertController.setAndShowAndGetResultByAnAlertController("There is no deck with this name", false);
+            AlertController.setAndShow("There is no deck with this name");
             return false;
         }
         //todo
         if (validateDeck(deckName, false)) {
             setMainDeck(Account.getActiveAccount().getCollection().getAllDecks().get(deckName));
-            AlertController.setAndShowAndGetResultByAnAlertController("This deck selected as main successfully", false);
+            AlertController.setAndShow("This deck selected as main successfully");
             return true;
         } else {
-            AlertController.setAndShowAndGetResultByAnAlertController("This deck is not valid", false);
+            AlertController.setAndShow("This deck is not valid");
             return false;
         }
     }
@@ -205,12 +207,12 @@ public class Collection implements Serializable {
     public boolean renameDeck(String deckName, String newName) {
         //todo
         if (!Account.getActiveAccount().getCollection().getAllDecks().containsKey(deckName)) {
-            AlertController.setAndShowAndGetResultByAnAlertController("There is no deck with this name", false);
+            AlertController.setAndShow("There is no deck with this name");
             return false;
         }
         //todo
         if (Account.getActiveAccount().getCollection().getAllDecks().containsKey(newName)) {
-            AlertController.setAndShowAndGetResultByAnAlertController("You have an another deck with this name", false);
+            AlertController.setAndShow("You have an another deck with this name");
             return false;
         }
         Deck deck = Account.getActiveAccount().getCollection().getAllDecks().get(deckName);
@@ -218,6 +220,7 @@ public class Collection implements Serializable {
         allDecks.remove(deckName);
         decks.remove(deckName);
         allDecks.put(newName, deck);
+        decks.add(newName);
         return true;
     }
 

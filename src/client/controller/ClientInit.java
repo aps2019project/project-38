@@ -4,13 +4,8 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
-import model.Account;
-import model.Deck;
-import model.Game;
-import model.Level;
 import view.Loader;
 import view.WindowChanger;
-import view.fxmlControllers.ArenaController;
 import view.fxmls.LoadedScenes;
 
 import java.io.IOException;
@@ -34,16 +29,15 @@ public class ClientInit extends Application {
 
         Loader.loadAll();
 
-        WindowChanger.instance.setNewScene(LoadedScenes.registerMenu);
-//        WindowChanger.instance.setNewScene(LoadedScenes.customCard);
-//
+        WindowChanger.instance.setMainParent(LoadedScenes.registerMenu);
+
 //        {//arena
 //            Account account = new Account("test", "test");
 //            account.getCollection().setMainDeck(Deck.getAllDecks().get("level1"));
 //            Game game = Level.getAvailableLevels().get("1").getLevelGame(account);
 //            ArenaController.ac.init(game);
 //            game.initialiseGameFields();//
-//            WindowChanger.instance.setNewScene(LoadedScenes.arena);
+//            WindowChanger.instance.setMainParent(LoadedScenes.arena);
 //        }
 
         mainStage.show();
