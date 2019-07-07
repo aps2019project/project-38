@@ -83,12 +83,10 @@ public class VisualMinion {
                                 death();
                                 lastState = SpriteType.death;
                                 stop();
-                                System.out.println("death");
                                 break;
                             case attack:
                                 attack();
                                 lastState = SpriteType.attack;
-                                System.out.println("attack");
                                 break;
                         }
                     }

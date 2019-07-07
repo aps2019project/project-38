@@ -36,7 +36,6 @@ public class GamePreviewButtonController {
                     System.out.println(LoadingGamePreviewScenes.selectedButtonsText.get(2));
                     Matcher matcher = Pattern.compile("Mode: .+\nHero: .+ Prize: (?<prize>\\d+)")
                             .matcher(LoadingGamePreviewScenes.selectedButtonsText.get(2));
-                    System.out.println(matcher.matches());
                     int level = Integer.parseInt(matcher.group("prize")) / 500;
                     game = Level.getAvailableLevels().get(String.valueOf(level)).getLevelGame(Account.getActiveAccount());
                 } else {
