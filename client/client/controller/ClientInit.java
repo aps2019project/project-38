@@ -1,5 +1,6 @@
 package client.controller;
 
+import client.net.ClientConnector;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.input.KeyCombination;
@@ -14,6 +15,7 @@ public class ClientInit extends Application {
     public static Stage mainStage;
 
     public static void main(String[] args) {
+        ClientConnector.main();
         launch(args);
     }
 

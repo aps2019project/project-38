@@ -1,18 +1,15 @@
 package view.fxmlControllers;
 
-import javafx.fxml.Initializable;
+import client.Messages;
+import client.net.ClientConnector;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import model.Account;
 import view.WindowChanger;
 import view.fxmls.LoadedScenes;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
-public class LoginController implements Initializable {
+public class LoginController {
     public AnchorPane mainPane;
     public TextField username;
     public TextField password;
@@ -20,14 +17,16 @@ public class LoginController implements Initializable {
     public Label alert;
     private boolean shouldClose = false;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-    }
 
     public void login() {
         String stringUsername = username.getText();
         String stringPassword = password.getText();
-        String result = Account.login(stringUsername, stringPassword);
+
+        ClientConnector.printer.print(stringUsername);
+        ClientConnector.printer.print(stringPassword);
+        ClientConnector.printer.print(Messages.login);
+        String result = ClientConnector.scanner.next();
+
         if (result.equals("There is no account with this name")) {
             alertWindow.toFront();
             alert.setText("There is no account with this name");
@@ -44,7 +43,7 @@ public class LoginController implements Initializable {
     }
 
     public void back() {
-        WindowChanger.instance.setMainParent(RegisterMenuController.getScene());
+        WindowChanger.instance.setMainParent(LoadedScenes.registerMenu);
         username.clear();
         password.clear();
     }

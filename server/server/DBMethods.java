@@ -15,6 +15,7 @@ public class DBMethods {
     }
 
     public static void put(String DBName, String key, String value) {
+        initDB(DBName);
         delete(DBName, key);
         DBMethods(DBName, "put", key, value);
     }
@@ -51,7 +52,7 @@ public class DBMethods {
     private static String DBMethods(String DBName, String whatDoWeWantToDo, String key, String value) {
         final String baseAddress = "http://127.0.0.1:8080/";
         final String path = whatDoWeWantToDo;
-            HttpResponse<String> response;
+        HttpResponse<String> response;
         HashMap<String, Object> parameters = new HashMap<>();
 
         parameters.put("name", DBName);
@@ -60,11 +61,7 @@ public class DBMethods {
         response = Unirest.post(baseAddress + path).fields(parameters).asString();
 
         if (response.getStatus() != 200) {
-            try {
-                throw new Exception("There is a problem about: \"" + whatDoWeWantToDo + "\"");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            System.err.println("There is a problem about: \"" + whatDoWeWantToDo + "\"");
         }
         return response.getBody();
     }

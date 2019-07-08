@@ -1,5 +1,9 @@
 package model;
 
+import com.google.gson.Gson;
+import model.cards.Warrior;
+import server.DBMethods;
+
 import java.io.*;
 import java.util.*;
 
@@ -7,7 +11,7 @@ import java.util.*;
 public class Account implements Comparable<Account>, java.io.Serializable {
 
     private static Account activeAccount = null;
-    private static HashMap<String, Account> usernameToAccountMap = new HashMap<>();
+    private static HashMap<String, Account> usernameToAccount = new HashMap<>();
     //***
     public int derrick = 15000;
     private ArrayList<MatchHistory> history = new ArrayList<>();
@@ -20,14 +24,14 @@ public class Account implements Comparable<Account>, java.io.Serializable {
         super();
         this.username = username;
         this.password = password;
-        usernameToAccountMap.put(username, this);
+        usernameToAccount.put(username, this);
         avatarNumber = new Random().nextInt(15);
         collection.setMainDeck(Deck.getAllDecks().get("level1"));//todo for test game preview.
     }
 
     //***
     public static String createAccount(String username, String password, String againPassword) {
-        if (Account.getUsernameToAccountMap().containsKey(username)) {
+        if (Account.getUsernameToAccount().containsKey(username)) {
             return "There's an account with this name";
         }
         if (!password.equals(againPassword)) {
@@ -38,10 +42,10 @@ public class Account implements Comparable<Account>, java.io.Serializable {
     }
 
     public static String login(String username, String password) {
-        if (!Account.getUsernameToAccountMap().containsKey(username)) {
+        if (!Account.getUsernameToAccount().containsKey(username)) {
             return "There is no account with this name";
         }
-        Account account = usernameToAccountMap.get(username);
+        Account account = usernameToAccount.get(username);
         if (!account.password.equals(password)) {
             return "Your password is incorrect";
         }
@@ -64,8 +68,8 @@ public class Account implements Comparable<Account>, java.io.Serializable {
 
     public static ArrayList<Account> getSortedAccounts() {
         ArrayList<Account> allAccounts = new ArrayList<>();
-        for (String username : getUsernameToAccountMap().keySet()) {
-            allAccounts.add(getUsernameToAccountMap().get(username));
+        for (String username : getUsernameToAccount().keySet()) {
+            allAccounts.add(getUsernameToAccount().get(username));
         }
         Collections.sort(allAccounts);
         Collections.reverse(allAccounts);
@@ -74,32 +78,17 @@ public class Account implements Comparable<Account>, java.io.Serializable {
 
     //***
     public static void saveAccounts() {
-        try {
-            File file = new File(System.getProperty("user.home") + "/Selistdar");
-            file.mkdirs();
-            FileOutputStream fos = new FileOutputStream(file.getPath() + "/acc");
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(usernameToAccountMap);
-            fos.close();
-            oos.close();
-        } catch (IOException e) {
-            System.err.println("could save accounts");
-            e.printStackTrace();
-        }
+        Gson gson = new Gson();
+        String accounts = gson.toJson(usernameToAccount);
+        System.out.println(accounts);
+        DBMethods.put("accounts", "accounts", accounts);
     }
 
     public static void loadAccounts() {
-        try {
-            File file = new File(System.getProperty("user.home") + "/Selistdar");
-            file.mkdirs();
-            FileInputStream fis = new FileInputStream(file.getPath() + "/acc");
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            usernameToAccountMap = (HashMap<String, Account>) ois.readObject();
-            fis.close();
-            ois.close();
-        } catch (Exception e) {
-            System.err.println("couldn't read accounts.");
-        }
+        Gson gson = new Gson();
+        String accounts = DBMethods.get("accounts", "accounts");
+        System.out.println(accounts);
+        Account.usernameToAccount = (HashMap<String, Account>) gson.fromJson(accounts, HashMap.class);
     }
 
     public void putGameInHistory(String opponentName, boolean didWin) {
@@ -116,8 +105,8 @@ public class Account implements Comparable<Account>, java.io.Serializable {
         return activeAccount;
     }
 
-    public static HashMap<String, Account> getUsernameToAccountMap() {
-        return usernameToAccountMap;
+    public static HashMap<String, Account> getUsernameToAccount() {
+        return usernameToAccount;
     }
 
     public ArrayList<MatchHistory> getHistory() {
