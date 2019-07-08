@@ -1,11 +1,12 @@
 package view.fxmlControllers;
 
+import client.Messages;
+import client.net.ClientConnector;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import model.Account;
 import view.WindowChanger;
 import view.fxmls.LoadedScenes;
 
@@ -35,7 +36,13 @@ public class CreateAccountController implements Initializable {
             alert.setText("Please fill up your fields");
             return;
         }
-        String result = Account.createAccount(userNameString, passwordString, againPasswordString);
+
+        ClientConnector.printer.println(Messages.createAccount);
+        ClientConnector.printer.println(userNameString);
+        ClientConnector.printer.println(passwordString);
+        ClientConnector.printer.println(againPasswordString);
+        String result = ClientConnector.scanner.next();
+
         if (result.equals("There's an account with this name")) {
             alertWindow.toFront();
             alert.setText("There's an account with this name");
@@ -52,7 +59,7 @@ public class CreateAccountController implements Initializable {
     }
 
     public void back() {
-        WindowChanger.instance.setMainParent(RegisterMenuController.getScene());
+        WindowChanger.instance.setMainParent(LoadedScenes.registerMenu);
         username.clear();
         password.clear();
         again.clear();

@@ -1,12 +1,14 @@
 package view.fxmlControllers;
 
+import client.Messages;
+import client.net.ClientConnector;
+import com.google.gson.Gson;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import model.Account;
-import model.MatchHistory;
+import javafx.util.Pair;
 import view.WindowChanger;
 import view.fxmls.LoadedScenes;
 
@@ -27,22 +29,26 @@ public class LeaderBoardController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ArrayList<Account> allAccounts = Account.getSortedAccounts();
+        ClientConnector.printer.print(Messages.showLeaderBoard);
+
         for (int i = 1; i < rate.getChildren().size(); i++) {
             rate.getChildren().remove(rate.getChildren().get(i));
             username.getChildren().remove(username.getChildren().get(i));
             numOfWin.getChildren().remove(numOfWin.getChildren().get(i));
         }
+
+        ArrayList<Pair<String, Integer>> ranking;
+        Gson gson = new Gson();
+        String result = ClientConnector.scanner.next();
+        ranking = (ArrayList<Pair<String, Integer>>) gson.fromJson(result, ArrayList.class);
+
         int i = 1;
-        for (Account account : allAccounts) {
-            int numberOfWins = 0;
-            for (MatchHistory matchHistory : account.getHistory()) {
-                if (matchHistory.getDidWin()) numberOfWins++;
-            }
+        for (Pair<String, Integer> account : ranking) {
+
+            Label labelUsername = new Label(account.getKey());
             Label labelRate = new Label(i + " )");
-            Label labelUsername = new Label(account.getUsername());
-            Label labelNumOfWin = new Label(String.valueOf(numberOfWins));
             rate.getChildren().add(labelRate);
+            Label labelNumOfWin = new Label(String.valueOf(account.getValue()));
             username.getChildren().add(labelUsername);
             numOfWin.getChildren().add(labelNumOfWin);
             i++;
@@ -50,6 +56,6 @@ public class LeaderBoardController implements Initializable {
     }
 
     public void back() {
-        WindowChanger.instance.setMainParent(RegisterMenuController.getScene());
+        WindowChanger.instance.setMainParent(LoadedScenes.registerMenu);
     }
 }
