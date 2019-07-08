@@ -1,11 +1,10 @@
 package client.net;
 
-import model.Cell;
-import model.cards.HeroPower;
-import model.cards.Warrior;
+import view.fxmlControllers.GlobalChatController;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+
 public class Decoder {
     public static void decode(Message m) {
         switch (m) {
@@ -33,10 +32,14 @@ public class Decoder {
             case ActivePlayerIndex:
                 fillBoxAndNotify(Digikala.activePlayerIndex);
                 break;
+            case updateMessages: {
+                GlobalChatController.updateMessages();
+                break;
+            }
         }
     }
 
-    public static <T> void fillBoxAndNotify(Box<T> box){
+    public static <T> void fillBoxAndNotify(Box<T> box) {
         box.obj = (T) readObject();
         synchronized (box.waitStone) {
             box.waitStone.notify();

@@ -9,6 +9,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import model.Account;
 import view.WindowChanger;
+import view.fxmlControllers.AlertController;
+import view.fxmlControllers.CollectionController;
+import view.fxmlControllers.LoadingGamePreviewScenes;
+import view.fxmlControllers.ShopController;
 import view.fxmls.LoadedScenes;
 
 import java.io.IOException;
@@ -20,17 +24,10 @@ public class MainMenuController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Encoder.sendCode(Message.IamActiveNow);
-        Encoder.sendString(Account.activeAccount.username);
-        try {
-            Account.activeAccount.authToken = ClientSession.dis.readUTF();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void startGame() {
-        Encoder.sendCode(Message.startTheGame);
+        Encoder.sendMessage(Message.startTheGame);
         Encoder.sendString(Account.activeAccount.username);
 
         int messageIndex = 0;
@@ -49,7 +46,7 @@ public class MainMenuController implements Initializable {
     }
 
     public void logout() {
-        Encoder.sendCode(Message.IamOfflineNow);
+        Encoder.sendMessage(Message.logOut);
         Encoder.sendString(Account.activeAccount.username);
         Account.activeAccount.authToken = "";
         Account.activeAccount.username = null;

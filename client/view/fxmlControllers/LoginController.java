@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import model.Account;
 import view.WindowChanger;
 import view.fxmls.LoadedScenes;
 
@@ -25,7 +26,7 @@ public class LoginController {
         String stringUsername = username.getText();
         String stringPassword = password.getText();
 
-        Encoder.sendCode(Message.login);
+        Encoder.sendMessage(Message.login);
         Encoder.sendString(stringUsername);
         Encoder.sendString(stringPassword);
         String result = null;
@@ -44,6 +45,12 @@ public class LoginController {
             alert.setText("Your password is incorrect");
         }
         if (result.equals("You logged in successfully")) {
+            try {
+                Account.activeAccount.username = stringUsername;
+                Account.activeAccount.authToken = ClientSession.dis.readUTF();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             alertWindow.toFront();
             alert.setText("You logged in successfully");
             shouldClose = true;

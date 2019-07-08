@@ -32,7 +32,7 @@ public class LeaderBoardController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Encoder.sendCode(Message.showLeaderBoard);
+        Encoder.sendMessage(Message.updateRanking);
 
         for (int i = 1; i < rate.getChildren().size(); i++) {
             rate.getChildren().remove(rate.getChildren().get(i));
@@ -53,20 +53,21 @@ public class LeaderBoardController implements Initializable {
         int i = 1;
         for (Pair<Pair<String, Boolean>, Integer> account : ranking) {
 
-            Label labelUsername = new Label(account.getKey().getKey());
             Label labelRate = new Label(i + " )");
-            rate.getChildren().add(labelRate);
+            Label labelUsername = new Label(account.getKey().getKey());
             Label labelNumOfWin = new Label(String.valueOf(account.getValue()));
+            rate.getChildren().add(labelRate);
+            username.getChildren().add(labelUsername);
+            numOfWin.getChildren().add(labelNumOfWin);
             if (account.getKey().getValue()) {
                 labelUsername.setEffect(new SepiaTone());
                 labelNumOfWin.setEffect(new SepiaTone());
                 labelRate.setEffect(new SepiaTone());
             }
-            username.getChildren().add(labelUsername);
-            numOfWin.getChildren().add(labelNumOfWin);
             i++;
         }
     }
+
 
     public void back() {
         WindowChanger.instance.setMainParent(LoadedScenes.registerMenu);
