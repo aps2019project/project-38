@@ -41,13 +41,13 @@ public class Decoder {
             }
             case showLeaderBoard: {
                 ArrayList<Account> allAccounts = Account.getSortedAccounts();
-                ArrayList<Pair<String, Integer>> ranking = new ArrayList<>();
+                ArrayList<Pair<Pair<String, Boolean>, Integer>> ranking = new ArrayList<>();
                 for (Account account : allAccounts) {
                     int numberOfWins = 0;
                     for (MatchHistory matchHistory : account.getHistory()) {
                         if (matchHistory.getDidWin()) numberOfWins++;
                     }
-                    Pair<String, Integer> pair = new Pair<>(ss.username, numberOfWins);
+                    Pair<Pair<String, Boolean>, Integer> pair = new Pair<>(new Pair<>(ss.username, account.isActiveNow), numberOfWins);
                     ranking.add(pair);
                 }
                 Gson gson = new Gson();
@@ -75,6 +75,16 @@ public class Decoder {
                 String messageText = ss.dis.readUTF();
                 Pair<String, String> message = new Pair<>(username, messageText);
                 GlobalChat.globalChat.messages.add(message);
+                break;
+            }
+            case IamActiveNow: {
+                String username = ss.dis.readUTF();
+                Account.getUsernameToAccount().get(username).isActiveNow = true;
+                break;
+            }
+            case IamOfflineNow: {
+                String username = ss.dis.readUTF();
+                Account.getUsernameToAccount().get(username).isActiveNow = false;
                 break;
             }
         }

@@ -20,6 +20,8 @@ public class MainMenuController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        Encoder.sendMessage(Message.IamActiveNow);
+        Encoder.sendString(Account.activeAccount.username);
     }
 
     public void startGame() {
@@ -42,7 +44,8 @@ public class MainMenuController implements Initializable {
     }
 
     public void logout() {
-        Account.activeAccount = null;
+        Encoder.sendMessage(Message.IamOfflineNow);
+        Encoder.sendString(Account.activeAccount.username);
         WindowChanger.instance.setMainParent(LoadedScenes.registerMenu);
     }
 

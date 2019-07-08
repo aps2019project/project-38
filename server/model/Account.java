@@ -16,6 +16,7 @@ public class Account implements Comparable<Account>, java.io.Serializable {
     private String username;
     private String password;
     public int avatarNumber;
+    public boolean isActiveNow = false;
 
     public Account(String username, String password) {
         super();
