@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class ServerSession {
     private static ArrayList<ServerSession> serverSessions = new ArrayList<>();
@@ -18,7 +19,9 @@ public class ServerSession {
     Encoder encoder;
     public DataOutputStream dos;
     public DataInputStream dis;
-    String username = "loading...";
+
+    String username;
+    String authToken = "";
 
     public ServerSession(Socket socket) {
         this.socket = socket;
@@ -33,7 +36,11 @@ public class ServerSession {
         new Thread(() -> {
             try {
                 while (true) {
+                    String gotAuthToken = dis.readUTF();
                     int messageIndex = dis.readInt();
+                    if (!gotAuthToken.equals(authToken)) {
+                        continue;
+                    }
                     decoder.decode(Message.values()[messageIndex]);
                 }
             } catch (IOException e) {
@@ -51,5 +58,15 @@ public class ServerSession {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+
+    public String randomString() {
+        Random random = new Random();
+        String randomString = "";
+        randomString = randomString + (char) (random.nextInt(100));
+        randomString = randomString + (char) (random.nextInt(100));
+        randomString = randomString + (char) (random.nextInt(100));
+        return randomString;
     }
 }

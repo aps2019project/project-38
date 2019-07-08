@@ -80,11 +80,16 @@ public class Decoder {
             case IamActiveNow: {
                 String username = ss.dis.readUTF();
                 Account.getUsernameToAccount().get(username).isActiveNow = true;
+                ss.username = username;
+                ss.authToken = ss.randomString();
+                ss.encoder.sendString(ss.authToken);
                 break;
             }
             case IamOfflineNow: {
                 String username = ss.dis.readUTF();
                 Account.getUsernameToAccount().get(username).isActiveNow = false;
+                ss.authToken = "";
+                ss.username = null;
                 break;
             }
         }

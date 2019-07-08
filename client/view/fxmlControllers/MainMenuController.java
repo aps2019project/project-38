@@ -22,6 +22,11 @@ public class MainMenuController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         Encoder.sendMessage(Message.IamActiveNow);
         Encoder.sendString(Account.activeAccount.username);
+        try {
+            Account.activeAccount.authToken = ClientSession.dis.readUTF();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void startGame() {
@@ -46,6 +51,8 @@ public class MainMenuController implements Initializable {
     public void logout() {
         Encoder.sendMessage(Message.IamOfflineNow);
         Encoder.sendString(Account.activeAccount.username);
+        Account.activeAccount.authToken = "";
+        Account.activeAccount.username = null;
         WindowChanger.instance.setMainParent(LoadedScenes.registerMenu);
     }
 
