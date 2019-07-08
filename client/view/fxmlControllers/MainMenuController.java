@@ -3,8 +3,10 @@ package view.fxmlControllers;
 import client.net.ClientSession;
 import client.net.Encoder;
 import client.net.Message;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import model.Account;
 import view.WindowChanger;
 import view.fxmls.LoadedScenes;
@@ -60,6 +62,12 @@ public class MainMenuController implements Initializable {
 
 
     public void globalChat_btn() {
-        WindowChanger.instance.setMainParent(LoadedScenes.globalChat);
+        Pane pane = null;
+        try {
+            pane = FXMLLoader.load(LoadedScenes.class.getResource("globalChat.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        WindowChanger.instance.setMainParent(pane);
     }
 }

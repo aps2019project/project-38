@@ -3,6 +3,7 @@ package server.net;
 import com.google.gson.Gson;
 import javafx.util.Pair;
 import model.Account;
+import model.GlobalChat;
 import model.MatchHistory;
 
 import java.io.IOException;
@@ -61,6 +62,20 @@ public class Decoder {
                 } else {
                     ss.encoder.sendMessage(Message.accountDeckIsNotValid);
                 }
+                break;
+            }
+            case showPreviousMessages: {
+                Gson gson = new Gson();
+                String messages = gson.toJson(GlobalChat.globalChat.messages);
+                ss.encoder.sendString(messages);
+                break;
+            }
+            case sendMessage: {
+                String username = ss.dis.readUTF();
+                String messageText = ss.dis.readUTF();
+                Pair<String, String> message = new Pair<>(username, messageText);
+                GlobalChat.globalChat.messages.add(message);
+                break;
             }
         }
     }
