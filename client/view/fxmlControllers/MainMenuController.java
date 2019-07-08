@@ -2,6 +2,7 @@ package view.fxmlControllers;
 
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
+import model.Account;
 import view.WindowChanger;
 import view.fxmls.LoadedScenes;
 

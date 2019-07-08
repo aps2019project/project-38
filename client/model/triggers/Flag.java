@@ -1,7 +1,6 @@
 package model.triggers;
 
 import model.Cell;
-import model.Game;
 import model.QualityHaver;
 import model.cards.Warrior;
 import model.conditions.HasDied;

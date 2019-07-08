@@ -1,6 +1,5 @@
 package model.actions;
 
-import model.Game;
 import model.QualityHaver;
 import model.cards.Warrior;
 import model.gamestate.DeathState;

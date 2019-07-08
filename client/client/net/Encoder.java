@@ -22,4 +22,11 @@ public class Encoder {
             e.printStackTrace();
         }
     }
+
+    public static synchronized void sendPackage(Message m,Object... datas){
+        sendCode(m);
+        for (Object data : datas) {
+            sendData(data);
+        }
+    }
 }

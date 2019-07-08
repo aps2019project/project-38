@@ -2,6 +2,7 @@ package view.fxmlControllers;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
+import model.Account;
 import model.Deck;
 import model.Level;
 import view.WindowChanger;

@@ -11,7 +11,7 @@ import view.fxmlControllers.ArenaController;
 import java.io.*;
 
 public class Warrior extends Card {
-    private Cell cell;
+    transient private Cell cell;
     private int hp;
     private int ap;
 

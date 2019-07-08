@@ -1,6 +1,5 @@
 package model.actions;
 
-import model.Game;
 import model.cards.Card;
 import model.exceptions.NotEnoughConditions;
 import model.gamestate.ReplaceCardState;

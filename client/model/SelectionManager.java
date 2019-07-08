@@ -13,7 +13,7 @@ public class SelectionManager implements Serializable {
     public Integer cardHandIndex;
     public boolean specialPowerIsSelected;
     public String collectibleItem;
-    transient Game game;
+    Game game;//active player - warriors
 
     public SelectionManager(Game game) {
         this.game = game;
@@ -50,7 +50,7 @@ public class SelectionManager implements Serializable {
                 cardHandIndex = null;
                 specialPowerIsSelected = false;
                 collectibleItem = null;
-                if(cells.stream().noneMatch(cell1 -> cell1.equals(cell))) {
+                if (cells.stream().noneMatch(cell1 -> cell1.equals(cell))) {
                     cells.add(cell);
                 }
             } else {
@@ -102,6 +102,7 @@ public class SelectionManager implements Serializable {
 
     public void selectCollectibleItem(String collectableItem) {
         deselectAll();
+        //todo check if that collectible is ours!
         this.collectibleItem = collectableItem;
 
         ArenaController.ac.setSelectionEffect(this);

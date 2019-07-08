@@ -1,15 +1,12 @@
 package model.actions;
 
 import model.Cell;
-import model.Game;
 import model.cards.Warrior;
 import model.effects.*;
 import model.exceptions.NotEnoughConditions;
 import model.gamestate.AttackState;
-import model.triggers.HolyBuff;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import static model.actions.Attack.checkWarriorsEffectsForAttack;
 

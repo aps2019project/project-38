@@ -1,13 +1,10 @@
 package model.actions;
 
 import model.Cell;
-import model.Game;
 import model.cards.Warrior;
 import model.effects.*;
 import model.exceptions.NotEnoughConditions;
 import model.gamestate.AttackState;
-
-import java.util.stream.Stream;
 
 public class Attack {
     public static void doIt(Cell attackerCell, Cell defenderCell, boolean counterAttack) throws NotEnoughConditions {

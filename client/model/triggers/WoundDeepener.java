@@ -1,7 +1,6 @@
 package model.triggers;
 
 import model.Constant;
-import model.Game;
 import model.QualityHaver;
 import model.conditions.HasAttacked;
 import model.effects.Dispelablity;

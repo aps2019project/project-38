@@ -29,7 +29,7 @@ public abstract class Player implements Serializable {
     private ArrayList<Spell> collectibleItems = new ArrayList<>();
     public boolean ableToReplaceCard;
     private Card nextCard;
-    public Image avatar;
+    public int avatarIndex;
     public String username;
     private Game game;
 

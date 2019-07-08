@@ -1,7 +1,6 @@
 package model.gamemodes;
 
 
-import model.Game;
 import model.cards.Hero;
 import model.player.Player;
 

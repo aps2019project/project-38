@@ -1,6 +1,5 @@
 package model.gamemodes;
 
-import model.Game;
 import model.player.Player;
 
 import java.io.Serializable;

@@ -4,7 +4,6 @@ package model.player;
 import model.*;
 import model.cards.Card;
 import model.cards.Warrior;
-import view.images.LoadedImages;
 import model.exceptions.NotEnoughConditions;
 
 import java.util.ArrayList;
@@ -15,7 +14,7 @@ import java.util.Random;
 public class AIPlayer extends Player {
     public AIPlayer(Deck deck,Game game) {
         super(deck,game);
-        avatar = LoadedImages.avatars[new Random().nextInt(15)];
+        avatarIndex = new Random().nextInt(15);
         username = "AI_Player";
     }
 
