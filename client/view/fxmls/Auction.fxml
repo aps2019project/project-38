@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.fxmlControllers.Auction">
+   <children>
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="555.0" prefWidth="960.0">
+         <children>
+            <ImageView fitHeight="555.0" fitWidth="960.0">
+               <image>
+                  <Image url="@../images/shopAndCollection/auction.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="100.0" fitWidth="400.0" layoutX="450.0" layoutY="50.0">
+               <image>
+                  <Image url="@../images/shopAndCollection/blueTextField.png" />
+               </image>
+            </ImageView>
+            <TextField fx:id="priceTextField" alignment="CENTER" layoutX="470.0" layoutY="67.0" prefHeight="65.0" prefWidth="360.0" promptText="Enter Your Proposed Price" style="-fx-background-color: transparent;">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </TextField>
+            <ImageView fx:id="sendProposedPriceButton" fitHeight="100.0" fitWidth="400.0" layoutX="450.0" layoutY="200.0" onMouseClicked="#sendProposedPrice" onMouseEntered="#shineSendProposedPriceButton" onMouseExited="#resetSendProposedPriceButton">
+               <image>
+                  <Image url="@../images/shopAndCollection/blueButton.png" />
+               </image>
+            </ImageView>
+            <Text fx:id="sendProposedPriceText" fill="#01b0d3" layoutX="500.0" layoutY="259.0" onMouseClicked="#sendProposedPriceButton" onMouseEntered="#shineSendProposedPriceButton" strokeType="OUTSIDE" strokeWidth="0.0" text="Send Proposed Price" textAlignment="CENTER" wrappingWidth="300.0">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="59.0" fitWidth="59.0">
+               <image>
+                  <Image url="@../images/shopAndCollection/backBottom.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="80.0" fitWidth="400.0" layoutX="550.0" layoutY="450.0">
+               <image>
+                  <Image url="@../images/shopAndCollection/selectedDeckButton.png" />
+               </image>
+            </ImageView>
+            <Text fill="#08959a" layoutX="600.0" layoutY="510.0" strokeType="OUTSIDE" strokeWidth="0.0" text="99:99" textAlignment="CENTER" wrappingWidth="300.0">
+               <font>
+                  <Font size="50.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="cardPlace" layoutX="65.0" layoutY="60.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="430.0" prefWidth="330.0" />
+   </children>
+</AnchorPane>
