@@ -1,16 +1,13 @@
 package model;
 
 import com.google.gson.Gson;
-import model.cards.Warrior;
 import server.DBMethods;
 
-import java.io.*;
 import java.util.*;
 
 
 public class Account implements Comparable<Account>, java.io.Serializable {
 
-    private static Account activeAccount = null;
     private static HashMap<String, Account> usernameToAccount = new HashMap<>();
     //***
     public int derrick = 15000;
@@ -49,7 +46,6 @@ public class Account implements Comparable<Account>, java.io.Serializable {
         if (!account.password.equals(password)) {
             return "Your password is incorrect";
         }
-        Account.activeAccount = account;
         return "You logged in successfully";
     }
 
@@ -77,6 +73,7 @@ public class Account implements Comparable<Account>, java.io.Serializable {
     }
 
     //***
+
     public static void saveAccounts() {
         Gson gson = new Gson();
         String accounts = gson.toJson(usernameToAccount);
@@ -97,14 +94,6 @@ public class Account implements Comparable<Account>, java.io.Serializable {
     }
 
     //***
-    public static void setActiveAccount(Account activeAccount) {
-        Account.activeAccount = activeAccount;
-    }
-
-    public static Account getActiveAccount() {
-        return activeAccount;
-    }
-
     public static HashMap<String, Account> getUsernameToAccount() {
         return usernameToAccount;
     }

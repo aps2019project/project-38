@@ -32,19 +32,14 @@ public class ServerSession {
         }
         new Thread(() -> {
             try {
-                listen();
+                while (true) {
+                    int messageIndex = dis.readInt();
+                    decoder.decode(Message.values()[messageIndex]);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }).start();
-    }
-
-    private void listen() throws IOException {
-        System.out.println(":))");
-        while (true) {
-            int messageIndex = dis.readInt();
-            decoder.decode(Message.values()[messageIndex]);
-        }
     }
 
     public void logout() {

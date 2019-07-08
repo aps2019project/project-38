@@ -23,7 +23,7 @@ public class RegisterMenuController {
         WindowChanger.instance.setMainParent(LoadedScenes.login);
     }
 
-    public void leatherBoard() {
+    public void leaderBoard() {
         try {
             WindowChanger.instance.setMainParent(Utility.scale(FXMLLoader.load(LoadedScenes.class.getResource("leaderBoard.fxml"))));
         } catch (IOException e) {
@@ -32,7 +32,7 @@ public class RegisterMenuController {
     }
 
     public void exit() {
-        Encoder.sendCode(Message.quitTheGame);
+        Encoder.sendMessage(Message.quitTheGame);
         System.exit(0);
     }
 }

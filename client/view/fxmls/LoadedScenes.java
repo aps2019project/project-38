@@ -25,7 +25,8 @@ public class LoadedScenes {
     public static Pane collection;
     public static Pane choosingDeckCards;
     public static Pane removingDeckCards;
-    public  static AnchorPane collectionAnchorPane;
+    public static Pane globalChat;
+    public static AnchorPane collectionAnchorPane;
     public static Parent customCard;
 
     {
@@ -53,12 +54,13 @@ public class LoadedScenes {
             RemovingDeckCardsController.removingDeckCardsController = fxmlLoader.getController();
             customCard = tScale(FXMLLoader.load(getClass().getResource("moreCustomCard.fxml")));
             collectionAnchorPane = FXMLLoader.load(LoadedScenes.class.getResource("Collection.fxml"));
+            globalChat = scale(FXMLLoader.load(LoadedScenes.class.getResource("globalChat.fxml")));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void cleanArena(){
+    public static void cleanArena() {
         try {
             arena = scale(FXMLLoader.load(LoadedScenes.class.getResource("arena.fxml")));
         } catch (IOException e) {
@@ -66,7 +68,7 @@ public class LoadedScenes {
         }
     }
 
-    public static void cleanCustomCard(){
+    public static void cleanCustomCard() {
         try {
             customCard = tScale(FXMLLoader.load(LoadedScenes.class.getResource("moreCustomCard.fxml")));
         } catch (IOException e) {

@@ -25,9 +25,9 @@ public class LoginController {
         String stringUsername = username.getText();
         String stringPassword = password.getText();
 
-        Encoder.sendData(stringUsername);
-        Encoder.sendData(stringPassword);
-        Encoder.sendCode(Message.login);
+        Encoder.sendMessage(Message.login);
+        Encoder.sendString(stringUsername);
+        Encoder.sendString(stringPassword);
         String result = null;
         try {
             result = ClientSession.dis.readUTF();

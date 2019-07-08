@@ -5,7 +5,6 @@ import model.cards.Hero;
 import model.cards.Spell;
 import model.cards.Warrior;
 import view.fxmlControllers.AlertController;
-import view.fxmlControllers.DeckController;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -33,8 +33,6 @@ import view.visualentities.SpriteType;
 import view.visualentities.VisualMinion;
 import view.visualentities.VisualSpell;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;

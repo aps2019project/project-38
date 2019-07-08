@@ -3,17 +3,10 @@ package view.visualentities;
 import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import model.Collection;
 import model.cards.Card;
-import model.cards.CardFactory;
-import model.cards.Warrior;
-import view.fxmlControllers.ArenaController;
 import view.images.LoadedImages;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;

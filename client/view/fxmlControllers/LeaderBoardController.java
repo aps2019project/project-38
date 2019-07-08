@@ -31,7 +31,7 @@ public class LeaderBoardController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Encoder.sendCode(Message.showLeaderBoard);
+        Encoder.sendMessage(Message.showLeaderBoard);
 
         for (int i = 1; i < rate.getChildren().size(); i++) {
             rate.getChildren().remove(rate.getChildren().get(i));

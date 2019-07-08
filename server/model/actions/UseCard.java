@@ -7,7 +7,6 @@ import model.cards.Card;
 import model.cards.HeroPower;
 import model.cards.Spell;
 import model.cards.Warrior;
-import model.effects.Attacked;
 import model.exceptions.NotEnoughConditions;
 import model.gamestate.GameState;
 import model.gamestate.PutMinionState;

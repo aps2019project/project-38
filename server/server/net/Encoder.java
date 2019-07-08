@@ -10,7 +10,7 @@ public class Encoder {
         this.ss = ss;
     }
 
-    public synchronized void sendCode(Message m){
+    public synchronized void sendMessage(Message m) {
         try {
             ss.dos.writeInt(m.ordinal());
             ss.dos.flush();
@@ -19,7 +19,16 @@ public class Encoder {
         }
     }
 
-    public synchronized void sendData(Object o){
+    public synchronized void sendString(String s) {
+        try {
+            ss.dos.writeUTF(s);
+            ss.dos.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public synchronized void sendObject(Object o) {
         try {
             ObjectOutputStream oos = new ObjectOutputStream(ss.dos);
             oos.writeObject(o);

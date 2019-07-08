@@ -15,8 +15,8 @@ public class Decoder {
         this.ss = ss;
     }
 
-    public void decode(Message m) throws IOException {//اینا رو با توجه به encoder کلاینت درست کن. همه فرستادنی ها رو باید کلاینت بخونه
-        switch (m){
+    public void decode(Message m) throws IOException {
+        switch (m) {
             case saveTheGame:
                 Account.saveAccounts();
                 break;
@@ -35,9 +35,10 @@ public class Decoder {
                 String username = ss.dis.readUTF();
                 String password = ss.dis.readUTF();
                 String result = Account.login(username, password);
+                ss.dos.writeUTF(result);
                 break;
             }
-            case showLeaderBoard:
+            case showLeaderBoard: {
                 ArrayList<Account> allAccounts = Account.getSortedAccounts();
                 ArrayList<Pair<String, Integer>> ranking = new ArrayList<>();
                 for (Account account : allAccounts) {
@@ -52,6 +53,15 @@ public class Decoder {
                 String result = gson.toJson(ranking);
                 ss.dos.writeUTF(result);
                 break;
+            }
+            case startTheGame: {
+                String username = ss.dis.readUTF();
+                if (Account.getUsernameToAccount().get(username).getCollection().getMainDeck() != null) {
+                    ss.encoder.sendMessage(Message.accountDeckIsValid);
+                } else {
+                    ss.encoder.sendMessage(Message.accountDeckIsNotValid);
+                }
+            }
         }
     }
 }
