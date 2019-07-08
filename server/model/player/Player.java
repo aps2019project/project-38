@@ -1,6 +1,5 @@
 package model.player;
 
-import javafx.scene.image.Image;
 import model.Constant;
 import model.Deck;
 import model.Game;
@@ -8,7 +7,6 @@ import model.cards.Card;
 import model.cards.Hero;
 import model.cards.Spell;
 import model.cards.Warrior;
-import view.fxmlControllers.ArenaController;
 
 import java.io.Serializable;
 import java.util.ArrayList;

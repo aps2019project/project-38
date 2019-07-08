@@ -39,7 +39,7 @@ public class CreateAccountController implements Initializable {
             return;
         }
 
-        Encoder.sendMessage(Message.createAccount);
+        Encoder.sendCode(Message.createAccount);
         Encoder.sendString(userNameString);
         Encoder.sendString(passwordString);
         Encoder.sendString(againPasswordString);

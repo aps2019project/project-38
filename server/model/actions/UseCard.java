@@ -11,7 +11,6 @@ import model.exceptions.NotEnoughConditions;
 import model.gamestate.GameState;
 import model.gamestate.PutMinionState;
 import model.gamestate.UseSpellState;
-import view.fxmlControllers.ArenaController;
 
 public class UseCard {
     public static void useCard(int handMapKey, Cell cell) throws NotEnoughConditions {//todo badana

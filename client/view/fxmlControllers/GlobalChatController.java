@@ -25,7 +25,7 @@ public class GlobalChatController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Encoder.sendMessage(Message.showPreviousMessages);
+        Encoder.sendCode(Message.showPreviousMessages);
         Gson gson = new Gson();
         ArrayList<Pair<String, String>> messages = null;
         try {
@@ -48,7 +48,7 @@ public class GlobalChatController implements Initializable {
     }
 
     public void send() {
-        Encoder.sendMessage(Message.sendMessage);
+        Encoder.sendCode(Message.sendMessage);
         Encoder.sendString(Account.activeAccount.username);
         Encoder.sendString(message.getText());
     }

@@ -7,7 +7,6 @@ import model.effects.Dispelablity;
 import model.exceptions.NotEnoughConditions;
 import model.gamestate.AttackState;
 import model.gamestate.GameState;
-import view.fxmlControllers.ArenaController;
 
 //special because it's so common. also the action attack doesn't implement AutoAction.
 //this triggers should be added to all minions, with -1 duration.

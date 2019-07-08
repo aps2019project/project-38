@@ -20,7 +20,7 @@ public class MainMenuController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Encoder.sendMessage(Message.IamActiveNow);
+        Encoder.sendCode(Message.IamActiveNow);
         Encoder.sendString(Account.activeAccount.username);
         try {
             Account.activeAccount.authToken = ClientSession.dis.readUTF();
@@ -30,7 +30,7 @@ public class MainMenuController implements Initializable {
     }
 
     public void startGame() {
-        Encoder.sendMessage(Message.startTheGame);
+        Encoder.sendCode(Message.startTheGame);
         Encoder.sendString(Account.activeAccount.username);
 
         int messageIndex = 0;
@@ -49,7 +49,7 @@ public class MainMenuController implements Initializable {
     }
 
     public void logout() {
-        Encoder.sendMessage(Message.IamOfflineNow);
+        Encoder.sendCode(Message.IamOfflineNow);
         Encoder.sendString(Account.activeAccount.username);
         Account.activeAccount.authToken = "";
         Account.activeAccount.username = null;

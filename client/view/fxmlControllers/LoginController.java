@@ -25,7 +25,7 @@ public class LoginController {
         String stringUsername = username.getText();
         String stringPassword = password.getText();
 
-        Encoder.sendMessage(Message.login);
+        Encoder.sendCode(Message.login);
         Encoder.sendString(stringUsername);
         Encoder.sendString(stringPassword);
         String result = null;

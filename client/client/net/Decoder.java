@@ -1,29 +1,45 @@
 package client.net;
 
+import model.Cell;
 import model.cards.HeroPower;
 import model.cards.Warrior;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.util.Objects;
-import java.util.Optional;
-
 public class Decoder {
     public static void decode(Message m) {
         switch (m) {
             case HeroPowerOfPlayer:
-                Digikala.hp.obj = (HeroPower) readObject();
-                synchronized (Digikala.hp) {
-                    Digikala.hp.notify();
-                }
+                fillBoxAndNotify(Digikala.hp);
                 break;
             case WarriorOfACell:
-                Digikala.warriorBox.obj = (Warrior)readObject();
-                synchronized (Digikala.warriorBox){
-                    Digikala.warriorBox.notify();
-                }
+                fillBoxAndNotify(Digikala.warriorBox);
                 break;
+            case IndexofAvatar:
+                fillBoxAndNotify(Digikala.avatarIndex);
+                break;
+            case PlayerUsername:
+                fillBoxAndNotify(Digikala.playerUsername);
+                break;
+            case SpecificCell:
+                fillBoxAndNotify(Digikala.specificCell);
+                break;
+            case NextCard:
+                fillBoxAndNotify(Digikala.nextCard);
+                break;
+            case HandCard:
+                fillBoxAndNotify(Digikala.handCard);
+                break;
+            case ActivePlayerIndex:
+                fillBoxAndNotify(Digikala.activePlayerIndex);
+                break;
+        }
+    }
 
+    public static <T> void fillBoxAndNotify(Box<T> box){
+        box.obj = (T) readObject();
+        synchronized (box.waitStone) {
+            box.waitStone.notify();
         }
     }
 

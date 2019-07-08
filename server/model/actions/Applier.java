@@ -8,7 +8,6 @@ import model.gamestate.EffTriggApplyState;
 import model.player.Player;
 import model.triggers.CollectibleMine;
 import model.triggers.Trigger;
-import view.fxmlControllers.ArenaController;
 
 import static model.QualityHaver.getGameFromQualityHaver;
 

@@ -38,7 +38,7 @@ import java.util.*;
 
 public class ArenaController implements Initializable {
     public static ArenaController ac;
-//    public Game game;//active player: spell,warrior,his index - board:warrior of a special cell , special cell
+    //    public Game game;//active player: spell,warrior,his index - board:warrior of a special cell , special cell
     public SelectionManager sm;
     public GridPane grid;
     public Pane pane;
@@ -114,7 +114,7 @@ public class ArenaController implements Initializable {
             Warrior warrior = Digikala.getWarriorOfACell(row, col);
             try {
                 showInfoOfACard(warrior.getName(), warrior.description.getDescriptionOfCardSpecialAbility(), "warrior", warrior.getHp(), warrior.getAp());
-            }catch (NullPointerException e){
+            } catch (NullPointerException e) {
                 //ignore because it's so frequent
             }
         });
@@ -163,7 +163,7 @@ public class ArenaController implements Initializable {
 
         vm.view.setOnMouseEntered(event -> {
             vm.isSelected.set(true);
-            Warrior warrior = Digikala.getWarriorOfACell(tRow,tCol);
+            Warrior warrior = Digikala.getWarriorOfACell(tRow, tCol);
             showInfoOfACard(warrior.getName(), warrior.description.getDescriptionOfCardSpecialAbility(), "warrior", warrior.getHp(), warrior.getAp());
         });
     }
@@ -194,7 +194,7 @@ public class ArenaController implements Initializable {
                         public void run() {
                             removeFromBoard(row, col);
                         }
-                    },vm.animation.realDuration);
+                    }, vm.animation.realDuration);
                     stop();
                 }
             }
@@ -242,7 +242,7 @@ public class ArenaController implements Initializable {
     }
 
     void cellOnMouseEvent(int row, int col) {
-        game.getSelectionManager().selectCell(game.getBoard().getCell(row, col));
+        sm.selectCell(Digikala.getSpecificCell(row, col));
     }
 
     ArrayList<Node> selectedNodes = new ArrayList<>();
@@ -315,11 +315,11 @@ public class ArenaController implements Initializable {
 
 
     private void beforeStartTheGame() {
-        player1_avatar.setImage(player1.getAvatar());
-        player2_avatar.setImage(player2.getAvatar());
+        player1_avatar.setImage(LoadedImages.avatars[Digikala.getIndexofAvatar(1)]);
+        player2_avatar.setImage(LoadedImages.avatars[Digikala.getIndexofAvatar(2)]);
 
-        player1_username.setText(player1.username);
-        player2_username.setText(player2.username);
+        player1_username.setText(Digikala.getPlayerUsername(1));
+        player2_username.setText(Digikala.getPlayerUsername(2));
 
         for (int i = 0; i < 2; i++) {
             fxmlLoaders1[i] = new FXMLLoader(LoadedScenes.class.getResource("heroSpecialPower.fxml"));
@@ -393,7 +393,7 @@ public class ArenaController implements Initializable {
             }
 
             pane.setOnMouseClicked(event -> {
-                game.getSelectionManager().selectCollectibleItem(itemName);
+                sm.selectCollectibleItem(itemName);
             });
         } catch (IOException e) {
             e.printStackTrace();
@@ -452,10 +452,10 @@ public class ArenaController implements Initializable {
                         visualEntity.setOnMouseEntered(event -> {//amir
                             vm.isSelected.set(true);
                             if (i == 0) {
-                                Warrior w = (Warrior) game.getActivePlayer().getNextCard();
+                                Warrior w = (Warrior) Digikala.getNextCard();
                                 showInfoOfACard(w.getName(), w.description.getDescriptionOfCardSpecialAbility(), "warrior", w.getHp(), w.getAp());
                             } else {
-                                Warrior w = (Warrior) game.getActivePlayer().getHand().get(i - 1);
+                                Warrior w = (Warrior)Digikala.getHandCard(i-1);
                                 showInfoOfACard(w.getName(), w.description.getDescriptionOfCardSpecialAbility(), "warrior", w.getHp(), w.getAp());
                             }
                         });
@@ -471,10 +471,10 @@ public class ArenaController implements Initializable {
                         visualEntity.setOnMouseEntered(event -> {//amir
                             vs.idle();
                             if (i == 0) {
-                                Spell w = (Spell) game.getActivePlayer().getNextCard();
+                                Spell w = (Spell) Digikala.getNextCard();
                                 showInfoOfACard(w.getName(), w.description.getDescriptionOfCardSpecialAbility(), "spell", 0, 0);
                             } else {
-                                Spell w = (Spell) game.getActivePlayer().getHand().get(i - 1);
+                                Spell w = (Spell) Digikala.getHandCard(i-1);
                                 showInfoOfACard(w.getName(), w.description.getDescriptionOfCardSpecialAbility(), "spell", 0, 0);
                             }
                         });
@@ -485,7 +485,7 @@ public class ArenaController implements Initializable {
                     }
 
                     if (i > 0) {//amir
-                        visualEntity.setOnMouseClicked(event -> game.getSelectionManager().selectCard(i - 1));
+                        visualEntity.setOnMouseClicked(event -> sm.selectCard(i - 1));
                     }
                     break;
                 }
@@ -499,7 +499,7 @@ public class ArenaController implements Initializable {
         cardHolders[i + 1].neededMana.setText("");
         for (int j = 1; j < 6; j++) {
             if (cardHolders[j].neededMana.getText().equals("")) continue;
-            if (Integer.parseInt(cardHolders[j].neededMana.getText()) > playersMana[game.getActivePlayerIndex()]) {
+            if (Integer.parseInt(cardHolders[j].neededMana.getText()) > playersMana[Digikala.getActivePlayerIndex()]) {
                 cardHolders[j].manaBackGround.setEffect(new SepiaTone());
             }
         }
@@ -529,7 +529,7 @@ public class ArenaController implements Initializable {
 
     //arena buttons:
     public void endTurn() {
-        game.getSelectionManager().deselectAction();
+        sm.deselectAction();
         game.endTurn();
     }
 
@@ -540,7 +540,7 @@ public class ArenaController implements Initializable {
 
     public void graveYard() {
         ArrayList<ImageView> template = player2GraveYard;
-        if (game.getActivePlayerIndex() == 0) {
+        if (Digikala.getActivePlayerIndex() == 0) {
             template = player1GraveYard;
         }
         mainGraveYard.getChildren().clear();
@@ -568,12 +568,11 @@ public class ArenaController implements Initializable {
         game.quit();
     }
 
-    public void endGame(Player winner) {//todo a banner or sth
+    public void endGame(String winnerUsername) {//todo a banner or sth
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                game = null;
                 LoadedScenes.cleanArena();
                 WindowChanger.instance.setMainParent(LoadedScenes.mainMenu);
             }
