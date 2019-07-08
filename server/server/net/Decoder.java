@@ -3,6 +3,7 @@ package server.net;
 import com.google.gson.Gson;
 import javafx.util.Pair;
 import model.Account;
+import model.GlobalChat;
 import model.MatchHistory;
 
 import java.io.IOException;
@@ -15,8 +16,8 @@ public class Decoder {
         this.ss = ss;
     }
 
-    public void decode(Message m) throws IOException {//اینا رو با توجه به encoder کلاینت درست کن. همه فرستادنی ها رو باید کلاینت بخونه
-        switch (m){
+    public void decode(Message m) throws IOException {
+        switch (m) {
             case saveTheGame:
                 Account.saveAccounts();
                 break;
@@ -35,23 +36,62 @@ public class Decoder {
                 String username = ss.dis.readUTF();
                 String password = ss.dis.readUTF();
                 String result = Account.login(username, password);
+                ss.dos.writeUTF(result);
                 break;
             }
-            case showLeaderBoard:
+            case showLeaderBoard: {
                 ArrayList<Account> allAccounts = Account.getSortedAccounts();
-                ArrayList<Pair<String, Integer>> ranking = new ArrayList<>();
+                ArrayList<Pair<Pair<String, Boolean>, Integer>> ranking = new ArrayList<>();
                 for (Account account : allAccounts) {
                     int numberOfWins = 0;
                     for (MatchHistory matchHistory : account.getHistory()) {
                         if (matchHistory.getDidWin()) numberOfWins++;
                     }
-                    Pair<String, Integer> pair = new Pair<>(ss.username, numberOfWins);
+                    Pair<Pair<String, Boolean>, Integer> pair = new Pair<>(new Pair<>(ss.username, account.isActiveNow), numberOfWins);
                     ranking.add(pair);
                 }
                 Gson gson = new Gson();
                 String result = gson.toJson(ranking);
                 ss.dos.writeUTF(result);
                 break;
+            }
+            case startTheGame: {
+                String username = ss.dis.readUTF();
+                if (Account.getUsernameToAccount().get(username).getCollection().getMainDeck() != null) {
+                    ss.encoder.sendMessage(Message.accountDeckIsValid);
+                } else {
+                    ss.encoder.sendMessage(Message.accountDeckIsNotValid);
+                }
+                break;
+            }
+            case showPreviousMessages: {
+                Gson gson = new Gson();
+                String messages = gson.toJson(GlobalChat.globalChat.messages);
+                ss.encoder.sendString(messages);
+                break;
+            }
+            case sendMessage: {
+                String username = ss.dis.readUTF();
+                String messageText = ss.dis.readUTF();
+                Pair<String, String> message = new Pair<>(username, messageText);
+                GlobalChat.globalChat.messages.add(message);
+                break;
+            }
+            case IamActiveNow: {
+                String username = ss.dis.readUTF();
+                Account.getUsernameToAccount().get(username).isActiveNow = true;
+                ss.username = username;
+                ss.authToken = ss.randomString();
+                ss.encoder.sendString(ss.authToken);
+                break;
+            }
+            case IamOfflineNow: {
+                String username = ss.dis.readUTF();
+                Account.getUsernameToAccount().get(username).isActiveNow = false;
+                ss.authToken = "";
+                ss.username = null;
+                break;
+            }
         }
     }
 }

@@ -39,6 +39,6 @@
     </ImageView>
     <Label alignment="CENTER" layoutX="308.0" layoutY="108.0" onMouseClicked="#createAccount" prefHeight="20.0" prefWidth="111.0" text="Create Account" />
     <Label alignment="CENTER" layoutX="308.0" layoutY="144.0" onMouseClicked="#login" prefHeight="20.0" prefWidth="111.0" text="Login" />
-    <Label alignment="CENTER" layoutX="308.0" layoutY="180.0" onMouseClicked="#leatherBoard" prefHeight="20.0" prefWidth="111.0" text="Ranking" />
+    <Label alignment="CENTER" layoutX="308.0" layoutY="180.0" onMouseClicked="#leaderBoard" prefHeight="20.0" prefWidth="111.0" text="Ranking" />
     <Label alignment="CENTER" layoutX="311.0" layoutY="216.0" onMouseClicked="#exit" prefHeight="20.0" prefWidth="111.0" text="Exit" />
 </AnchorPane>

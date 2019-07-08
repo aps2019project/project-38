@@ -39,10 +39,11 @@ public class CreateAccountController implements Initializable {
             return;
         }
 
-        Encoder.sendCode(Message.createAccount);
-        Encoder.sendData(userNameString);
-        Encoder.sendData(passwordString);
-        Encoder.sendData(againPasswordString);
+        Encoder.sendMessage(Message.createAccount);
+        Encoder.sendString(userNameString);
+        Encoder.sendString(passwordString);
+        Encoder.sendString(againPasswordString);
+
         String result = null;
         try {
             result = ClientSession.dis.readUTF();

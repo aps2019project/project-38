@@ -1,6 +1,5 @@
 package model;
 
-import model.cards.Spell;
 import model.exceptions.NotEnoughConditions;
 import view.Utility;
 import view.fxmlControllers.ArenaController;

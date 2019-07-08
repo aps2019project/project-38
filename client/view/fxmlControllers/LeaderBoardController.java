@@ -6,6 +6,7 @@ import client.net.ClientSession;
 import com.google.gson.Gson;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.effect.SepiaTone;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -31,7 +32,7 @@ public class LeaderBoardController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Encoder.sendCode(Message.showLeaderBoard);
+        Encoder.sendMessage(Message.showLeaderBoard);
 
         for (int i = 1; i < rate.getChildren().size(); i++) {
             rate.getChildren().remove(rate.getChildren().get(i));
@@ -39,7 +40,7 @@ public class LeaderBoardController implements Initializable {
             numOfWin.getChildren().remove(numOfWin.getChildren().get(i));
         }
 
-        ArrayList<Pair<String, Integer>> ranking;
+        ArrayList<Pair<Pair<String, Boolean>, Integer>> ranking;
         Gson gson = new Gson();
         String result = null;
         try {
@@ -47,15 +48,20 @@ public class LeaderBoardController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        ranking = (ArrayList<Pair<String, Integer>>) gson.fromJson(result, ArrayList.class);
+        ranking = (ArrayList<Pair<Pair<String, Boolean>, Integer>>) gson.fromJson(result, ArrayList.class);
 
         int i = 1;
-        for (Pair<String, Integer> account : ranking) {
+        for (Pair<Pair<String, Boolean>, Integer> account : ranking) {
 
-            Label labelUsername = new Label(account.getKey());
+            Label labelUsername = new Label(account.getKey().getKey());
             Label labelRate = new Label(i + " )");
             rate.getChildren().add(labelRate);
             Label labelNumOfWin = new Label(String.valueOf(account.getValue()));
+            if (account.getKey().getValue()) {
+                labelUsername.setEffect(new SepiaTone());
+                labelNumOfWin.setEffect(new SepiaTone());
+                labelRate.setEffect(new SepiaTone());
+            }
             username.getChildren().add(labelUsername);
             numOfWin.getChildren().add(labelNumOfWin);
             i++;
