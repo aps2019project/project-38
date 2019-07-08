@@ -1,7 +1,6 @@
 package model.player;
 
 
-import model.Account;
 import model.Deck;
 import model.Game;
 import view.images.LoadedImages;

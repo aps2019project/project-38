@@ -1,5 +1,7 @@
 package server;
 
+import server.net.ServerSession;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -9,7 +11,7 @@ public class ServerInit {
         ServerSocket sc = new ServerSocket(8000); //todo : get port from config.txt
         while (true) {
             Socket socket = sc.accept();
-            new ClientSession(socket);
+            new ServerSession(socket);
         }
     }
 }

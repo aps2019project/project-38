@@ -1,11 +1,10 @@
 package view.fxmlControllers;
 
-import client.Messages;
-import client.net.ClientConnector;
+import client.net.Message;
+import client.net.Encoder;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import view.Utility;
 import view.WindowChanger;
 import view.fxmls.LoadedScenes;
@@ -33,7 +32,7 @@ public class RegisterMenuController {
     }
 
     public void exit() {
-        ClientConnector.printer.println(Messages.quitTheGame);
+        Encoder.sendCode(Message.quitTheGame);
         System.exit(0);
     }
 }

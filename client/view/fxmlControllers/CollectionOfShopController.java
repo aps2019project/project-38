@@ -10,7 +10,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import model.Account;
 import model.Collection;
 import model.Deck;
 import model.cards.*;

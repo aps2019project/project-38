@@ -1,7 +1,8 @@
 package view.fxmlControllers;
 
-import client.Messages;
-import client.net.ClientConnector;
+import client.net.Message;
+import client.net.Encoder;
+import client.net.ClientSession;
 import com.google.gson.Gson;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -12,6 +13,7 @@ import javafx.util.Pair;
 import view.WindowChanger;
 import view.fxmls.LoadedScenes;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -29,7 +31,7 @@ public class LeaderBoardController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ClientConnector.printer.print(Messages.showLeaderBoard);
+        Encoder.sendCode(Message.showLeaderBoard);
 
         for (int i = 1; i < rate.getChildren().size(); i++) {
             rate.getChildren().remove(rate.getChildren().get(i));
@@ -39,7 +41,12 @@ public class LeaderBoardController implements Initializable {
 
         ArrayList<Pair<String, Integer>> ranking;
         Gson gson = new Gson();
-        String result = ClientConnector.scanner.next();
+        String result = null;
+        try {
+            result = ClientSession.dis.readUTF();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         ranking = (ArrayList<Pair<String, Integer>>) gson.fromJson(result, ArrayList.class);
 
         int i = 1;

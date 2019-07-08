@@ -13,7 +13,6 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.transform.Scale;
-import model.Account;
 import model.Deck;
 import model.cards.Card;
 import model.cards.Warrior;

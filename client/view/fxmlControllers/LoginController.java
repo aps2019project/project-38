@@ -1,13 +1,16 @@
 package view.fxmlControllers;
 
-import client.Messages;
-import client.net.ClientConnector;
+import client.net.Message;
+import client.net.Encoder;
+import client.net.ClientSession;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import view.WindowChanger;
 import view.fxmls.LoadedScenes;
+
+import java.io.IOException;
 
 public class LoginController {
     public AnchorPane mainPane;
@@ -22,10 +25,15 @@ public class LoginController {
         String stringUsername = username.getText();
         String stringPassword = password.getText();
 
-        ClientConnector.printer.print(stringUsername);
-        ClientConnector.printer.print(stringPassword);
-        ClientConnector.printer.print(Messages.login);
-        String result = ClientConnector.scanner.next();
+        Encoder.sendData(stringUsername);
+        Encoder.sendData(stringPassword);
+        Encoder.sendCode(Message.login);
+        String result = null;
+        try {
+            result = ClientSession.dis.readUTF();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         if (result.equals("There is no account with this name")) {
             alertWindow.toFront();

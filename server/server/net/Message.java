@@ -1,5 +1,5 @@
-package server;
+package server.net;
 
-public enum Messages {
+public enum Message {
     saveTheGame, quitTheGame, createAccount, showLeaderBoard,login;
 }

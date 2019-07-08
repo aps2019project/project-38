@@ -5,7 +5,6 @@ import javafx.scene.control.Label;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import model.Account;
 import model.Deck;
 import model.Game;
 import model.Level;
