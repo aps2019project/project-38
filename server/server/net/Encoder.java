@@ -1,5 +1,7 @@
 package server.net;
 
+import com.google.gson.Gson;
+
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
@@ -36,6 +38,11 @@ public class Encoder {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public synchronized void sendObjectJ(Object o){
+        Gson gson = new Gson();
+        sendString(gson.toJson(o));
     }
 
     public synchronized void sendPackage(Message m,Object... datas){

@@ -373,8 +373,6 @@ public class Game implements Serializable {
                 }
             }
 
-            if(index=)
-
             UseCard.useCollectible(spell, cell);
             ArenaController.ac.useCollectibleItem(index,getActivePlayerIndex()+1);
         } finally {

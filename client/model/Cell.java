@@ -3,7 +3,7 @@ package model;
 import java.io.Serializable;
 
 
-public class Cell extends QualityHaver implements Serializable {
+public class Cell implements Serializable {
     public int row;
     public int column;
 

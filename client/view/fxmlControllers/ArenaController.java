@@ -44,14 +44,14 @@ public class ArenaController implements Initializable {
     public SelectionManager sm;
     public GridPane grid;
     public Pane pane;
+    VisualMinion[][] visualMinions;
+
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ac = this;
     }
-
-    VisualMinion[][] visualMinions;
 
     public void init(SelectionManager selectionManager) {
         transformGrid();

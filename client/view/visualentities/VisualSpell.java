@@ -1,17 +1,7 @@
 package view.visualentities;
 
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import model.cards.Card;
-import model.cards.CardFactory;
-import model.cards.Spell;
-import model.cards.Warrior;
-import view.fxmlControllers.ArenaController;
 import view.images.LoadedImages;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.Objects;
 
 public class VisualSpell {
     String name;
@@ -31,7 +21,7 @@ public class VisualSpell {
         this.name = name;
         fileName = name;
 
-        if (Card.getAllCards().values().stream().filter(Objects::nonNull).anyMatch(card -> String.valueOf(card.getID()).startsWith("5") && card.getName().equals(name))) {
+        if (LoadedImages.sprites.get(fileName) == null) {
             fileName = "cs";
         }
 

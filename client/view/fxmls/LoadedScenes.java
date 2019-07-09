@@ -65,12 +65,4 @@ public class LoadedScenes {
             e.printStackTrace();
         }
     }
-
-    public static void cleanCustomCard() {
-        try {
-            customCard = tScale(FXMLLoader.load(LoadedScenes.class.getResource("moreCustomCard.fxml")));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }
