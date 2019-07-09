@@ -3,6 +3,7 @@ package view.fxmlControllers;
 import javafx.collections.FXCollections;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import model.cards.CardCustomizer;
 import model.exceptions.NotEnoughConditions;
 import view.Utility;
 import view.WindowChanger;

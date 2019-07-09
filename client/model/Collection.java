@@ -46,7 +46,6 @@ public class Collection implements Serializable {
         getDecks().remove(deckName);
         getAllDecks().remove(deckName);
         Deck.getAllDecks().remove(deckName);
-//        DeckController.removeADeckFromList(deckName);
         AlertController.setAndShow("Deck deleted");
         return true;
     }

@@ -50,7 +50,7 @@ public class AuctionController implements Initializable {
                     AlertController.setAndShow("You have not enough derrick");
                 }
             } else {
-                AlertController.setAndShow("Yor proposed price is too small");
+                AlertController.setAndShow("Your proposed price is too small");
             }
         } else {
           AlertController.setAndShow("Enter your proposed price");

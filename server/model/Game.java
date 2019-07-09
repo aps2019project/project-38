@@ -1,44 +1,49 @@
 package model;
 
 import model.actions.*;
-import model.actions.Killer;
 import model.cards.*;
 import model.effects.Dispelablity;
 import model.effects.Effect;
 import model.exceptions.NotEnoughConditions;
-import model.gamestate.*;
 import model.gamemodes.GameMode;
+import model.gamestate.GameState;
 import model.player.AIPlayer;
 import model.player.HumanPlayer;
 import model.player.Player;
 import model.triggers.CollectibleMine;
 import model.triggers.Trigger;
+import server.net.Message;
+import server.net.ServerSession;
 
 import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class Game implements Serializable {
-    GameMode gameMode;
+    private GameMode gameMode;
     public int turn;
-    Player[] players = new Player[2];
-    private Board board = new Board(this);
-    //    public Timer timer = new Timer(Constant.GameConstants.turnTime, ignored -> endTurn());
     public int prize;
+    private Player[] players = new Player[2];
+    private Board board = new Board(this);
+    private ServerSession[] serverSessions = new ServerSession[2];
+    //        public Timer timer = new Timer(Constant.GameConstants.turnTime, ignored -> endTurn());
 
     public Game(GameMode gameMode, Account accountOne, Account accountTwo) {
         this.gameMode = gameMode;
-        int randomIndex = (new Random(System.currentTimeMillis())).nextInt(2);
-        this.players[randomIndex] = new HumanPlayer(accountOne, accountOne.getCollection().getMainDeck(),this);
-        this.players[(randomIndex + 1) % 2] = new HumanPlayer(accountTwo, accountTwo.getCollection().getMainDeck(),this);
+        int randomIndex = (new Random()).nextInt(2);
+        this.players[randomIndex] = new HumanPlayer(accountOne, accountOne.getCollection().getMainDeck(), this);
+        this.players[(randomIndex + 1) % 2] = new HumanPlayer(accountTwo, accountTwo.getCollection().getMainDeck(), this);
+        serverSessions[randomIndex] = ServerSession.getSession(accountOne.getUsername());
+        serverSessions[(randomIndex + 1) % 2] = ServerSession.getSession(accountTwo.getUsername());
     }
 
     public Game(GameMode gameMode, Account account, Deck aIDeck) {
         this.gameMode = gameMode;
-        int randomIndex = /*(new Random(System.currentTimeMillis())).nextInt(2)*/0;//todo test only
+        int randomIndex = /*(new Random()).nextInt(2)*/0;//todo test only
 
-        players[randomIndex] = new HumanPlayer(account, account.getCollection().getMainDeck(),this);
-        players[(randomIndex + 1) % 2] = new AIPlayer(aIDeck,this);
+        players[randomIndex] = new HumanPlayer(account, account.getCollection().getMainDeck(), this);
+        players[(randomIndex + 1) % 2] = new AIPlayer(aIDeck, this);
+        serverSessions[randomIndex] = ServerSession.getSession(account.getUsername());
     }
 
     public void initialiseGameFields() {
@@ -54,8 +59,11 @@ public class Game implements Serializable {
                     0), players[0].getWarriors().get(0));
             putWarriorInCell(board.getCell(Constant.GameConstants.boardRow / 2,
                     Constant.GameConstants.boardColumn - 1), players[1].getWarriors().get(0));
-            ArenaController.ac.put(Constant.GameConstants.boardRow / 2,0,players[0].getWarriors().get(0).getName());
-            ArenaController.ac.put(Constant.GameConstants.boardRow / 2,Constant.GameConstants.boardColumn - 1,players[1].getWarriors().get(0).getName());
+
+            serverSessions[0].encoder.sendPackage(Message.put, Constant.GameConstants.boardRow / 2, 0, players[0].getWarriors().get(0).getName());
+            serverSessions[1].encoder.sendPackage(Message.put, Constant.GameConstants.boardRow / 2, 0, players[0].getWarriors().get(0).getName());
+            serverSessions[0].encoder.sendPackage(Message.put, Constant.GameConstants.boardRow / 2, Constant.GameConstants.boardColumn - 1, players[1].getWarriors().get(0).getName());
+            serverSessions[1].encoder.sendPackage(Message.put, Constant.GameConstants.boardRow / 2, Constant.GameConstants.boardColumn - 1, players[1].getWarriors().get(0).getName());
         }
         {
             initialisePlayerHand(players[0]);
@@ -223,13 +231,12 @@ public class Game implements Serializable {
     }
 
     private void checkGameEndAndThenKillAllDiedWarriors() {
-        if(killPlayerDiedWarriors(players[0])){
+        if (killPlayerDiedWarriors(players[0])) {
             checkGameEndAndThenKillAllDiedWarriors();
         }
-        if(killPlayerDiedWarriors(players[1])){
+        if (killPlayerDiedWarriors(players[1])) {
             checkGameEndAndThenKillAllDiedWarriors();
         }
-
         gameMode.checkGameEnd(this);
         if (gameMode.winner != null) {
             endGame();
@@ -261,7 +268,8 @@ public class Game implements Serializable {
         }
 
         //and update the graphics
-        ArenaController.ac.endGame(gameMode.winner);
+        serverSessions[0].encoder.sendPackage(Message.quitTheGame, gameMode.winner);
+        serverSessions[1].encoder.sendPackage(Message.quitTheGame, gameMode.winner);
     }
 
     ///////////////////////////////////////actions
@@ -269,7 +277,8 @@ public class Game implements Serializable {
 //        if (getActivePlayer().getWarriors().contains(originCell.getWarrior()) && targetCell.getWarrior() == null) {
         try {
             Move.doIt(originCell, targetCell);
-            ArenaController.ac.move(originCell.getRow(), originCell.getColumn(), targetCell.getRow(), targetCell.getColumn());
+            serverSessions[0].encoder.sendPackage(Message.move, originCell.getRow(), originCell.getColumn(), targetCell.getRow(), targetCell.getColumn());
+            serverSessions[1].encoder.sendPackage(Message.move, originCell.getRow(), originCell.getColumn(), targetCell.getRow(), targetCell.getColumn());
         } finally {
             checkGameEndAndThenKillAllDiedWarriors();
         }
@@ -298,7 +307,8 @@ public class Game implements Serializable {
             ComboAttack.doIt(attackersCell, defenderCell);
 
             for (Cell cell : attackersCell) {
-                ArenaController.ac.attack(cell.getRow(), cell.getColumn(), defenderCell.getRow(), defenderCell.getColumn());
+                serverSessions[0].encoder.sendPackage(Message.attack, cell.getRow(), cell.getColumn(), defenderCell.getRow(), defenderCell.getColumn());
+                serverSessions[1].encoder.sendPackage(Message.attack, cell.getRow(), cell.getColumn(), defenderCell.getRow(), defenderCell.getColumn());
             }
         } finally {
             checkGameEndAndThenKillAllDiedWarriors();
@@ -311,7 +321,8 @@ public class Game implements Serializable {
 //                !activePlayerWarriors.contains(defenderCell.getWarrior())) {
         try {
             Attack.doIt(attackerCell, defenderCell, false);
-            ArenaController.ac.attack(attackerCell.getRow(), attackerCell.getColumn(), defenderCell.getRow(), defenderCell.getColumn());
+            serverSessions[0].encoder.sendPackage(Message.attack, attackerCell.getRow(), attackerCell.getColumn(), defenderCell.getRow(), defenderCell.getColumn());
+            serverSessions[1].encoder.sendPackage(Message.attack, attackerCell.getRow(), attackerCell.getColumn(), defenderCell.getRow(), defenderCell.getColumn());
         } finally {
             checkGameEndAndThenKillAllDiedWarriors();
         }
@@ -334,7 +345,7 @@ public class Game implements Serializable {
 //        if (getActivePlayer().getHand().get(handMapKey) != null) {
         try {
             UseCard.useCard(handMapKey, cell);
-            ArenaController.ac.useCard(handMapKey);
+            serverSessions[getActivePlayerIndex()].encoder.sendPackage(Message.useCard, handMapKey);
         } finally {
             checkGameEndAndThenKillAllDiedWarriors();
         }
@@ -347,9 +358,11 @@ public class Game implements Serializable {
                 UseCard.useHeroPower(getActivePlayer().getPlayerHero().getPower(), cell);
 
                 Cell heroCell = getActivePlayer().getPlayerHero().getCell();
-                ArenaController.ac.cast(heroCell.getRow(), heroCell.getColumn());
-                ArenaController.ac.setCoolDown(getActivePlayer().getPlayerHero().getPower().coolDownRemaining, getPlayerNumber(getActivePlayer()) + 1);
 
+                serverSessions[0].encoder.sendPackage(Message.cast, heroCell.getRow(), heroCell.getColumn());
+                serverSessions[0].encoder.sendPackage(Message.setCoolDown, getActivePlayer().getPlayerHero().getPower().coolDownRemaining, getPlayerNumber(getActivePlayer()) + 1);
+                serverSessions[1].encoder.sendPackage(Message.cast, heroCell.getRow(), heroCell.getColumn());
+                serverSessions[1].encoder.sendPackage(Message.setCoolDown, getActivePlayer().getPlayerHero().getPower().coolDownRemaining, getPlayerNumber(getActivePlayer()) + 1);
             } finally {
                 checkGameEndAndThenKillAllDiedWarriors();
             }
@@ -360,29 +373,29 @@ public class Game implements Serializable {
 
     public void useCollectible(String spellName, Cell cell) throws NotEnoughConditions {
         try {
-            Spell spell=null;
+            Spell spell = null;
             int index = -1;
 
             ArrayList<Spell> collectibleItems = getActivePlayer().getCollectibleItems();
             for (int i = 0; i < collectibleItems.size(); i++) {
                 Spell item = collectibleItems.get(i);
-                if(item.getName().equals(spellName)){
+                if (item.getName().equals(spellName)) {
                     spell = item;
                     index = i;
                     break;
                 }
             }
-
-            if(index=)
+//            if(index=)
 
             UseCard.useCollectible(spell, cell);
-            ArenaController.ac.useCollectibleItem(index,getActivePlayerIndex()+1);
+            serverSessions[0].encoder.sendPackage(Message.useCollectible, index, getActivePlayerIndex() + 1);
+            serverSessions[1].encoder.sendPackage(Message.useCollectible, index, getActivePlayerIndex() + 1);
         } finally {
             checkGameEndAndThenKillAllDiedWarriors();
         }
     }
 
-    public void quit(){
+    public void quit() {
         getGameMode().winner = getOtherPlayer(getActivePlayer());
         endGame();
     }
