@@ -268,8 +268,8 @@ public class Game implements Serializable {
         }
 
         //and update the graphics
-        serverSessions[0].encoder.sendPackage(Message.quitTheGame, gameMode.winner);
-        serverSessions[1].encoder.sendPackage(Message.quitTheGame, gameMode.winner);
+        serverSessions[0].encoder.sendPackage(Message.quitTheGame, gameMode.winner.username);
+        serverSessions[1].encoder.sendPackage(Message.quitTheGame, gameMode.winner.username);
     }
 
     ///////////////////////////////////////actions

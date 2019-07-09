@@ -35,7 +35,7 @@ public class VisualMinion {
         this.name = name;
         fileName = name;
 
-        if (Card.getAllCards().values().stream().filter(Objects::nonNull).anyMatch(card -> String.valueOf(card.getID()).startsWith("5") && card.getName().equals(name))) {
+        if (LoadedImages.sprites.get(fileName) == null) {
             fileName = "cw";
         }
 

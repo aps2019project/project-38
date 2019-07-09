@@ -5,6 +5,7 @@ import model.Cell;
 import model.cards.HeroPower;
 import model.cards.Spell;
 import model.cards.Warrior;
+import view.fxmlControllers.ArenaController;
 import view.fxmlControllers.GlobalChatController;
 
 import java.io.IOException;
@@ -36,9 +37,9 @@ public class Decoder {
                 }
                 break;
             case HandCard:
-                if(readMessage().equals(Message.itsSpell)){
+                if (readMessage().equals(Message.itsSpell)) {
                     fillBoxAndNotifyJ(Digikala.handCard, Spell.class);
-                }else {
+                } else {
                     fillBoxAndNotifyJ(Digikala.handCard, Warrior.class);
                 }
                 break;
@@ -55,39 +56,59 @@ public class Decoder {
             case isThereWarrior:
                 fillBoxAndNotify(Digikala.isThereWarrior);
                 break;
-            //------------------
-            case put:{
-
+            //-----------------
+            case put: {
+                int hero_row = (int) readObject();
+                int hero_col = (int) readObject();
+                String name = (String) readObject();
+                ArenaController.ac.put(hero_row, hero_col, name);
                 break;
             }
-            case quitTheGame:{
-
+            case quitTheGame: {
+                String winnerName = (String) readObject();
+                ArenaController.ac.endGame(winnerName);
                 break;
             }
-            case move:{
-
+            case move: {
+                int original_row = (int) readObject();
+                int original_col = (int) readObject();
+                int target_row = (int) readObject();
+                int target_col = (int) readObject();
+                ArenaController.ac.move(original_row, original_col, target_row, target_col);
                 break;
             }
-            case attack:{
-
+            case attack: {
+                int attackerCell_row = (int) readObject();
+                int attackerCell_col = (int) readObject();
+                int defenderCell_row = (int) readObject();
+                int defenderCell_col = (int) readObject();
+                ArenaController.ac.attack(attackerCell_row, attackerCell_col, defenderCell_row, defenderCell_col);
                 break;
             }
-            case useCard:{
-
+            case useCard: {
+                int handMapKey = (int) readObject();
+                ArenaController.ac.useCard(handMapKey);
                 break;
             }
-            case cast:{
-
+            case cast: {
+                int heroCell_row = (int) readObject();
+                int heroCell_col = (int) readObject();
+                ArenaController.ac.cast(heroCell_row, heroCell_col);
                 break;
             }
-            case setCoolDown:{
-
+            case setCoolDown: {
+                int remainedTurnToCoolDown = (int) readObject();
+                int playerNumber = (int) readObject();
+                ArenaController.ac.setActiveMana(remainedTurnToCoolDown, playerNumber);
                 break;
             }
-            case useCollectible:{
-
+            case useCollectible: {
+                int indexOf = (int) readObject();
+                int playerNumber = (int) readObject();
+                ArenaController.ac.useCollectibleItem(indexOf, playerNumber);
                 break;
             }
+            //---------------
         }
     }
 

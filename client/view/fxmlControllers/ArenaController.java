@@ -47,7 +47,6 @@ public class ArenaController implements Initializable {
     VisualMinion[][] visualMinions;
 
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ac = this;
@@ -561,10 +560,11 @@ public class ArenaController implements Initializable {
     }
 
     public void quit() {
-        Encoder.sendMessage(Message.quit);
+        Encoder.sendMessage(Message.quitTheGame);
     }
 
-    public void endGame(String winnerUsername) {//todo a banner or sth
+    public void endGame(String winnerUsername) {
+        //todo a banner or sth
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
