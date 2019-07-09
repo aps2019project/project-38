@@ -63,6 +63,21 @@ public class AlertController {
         }
     }
 
+    public static synchronized void setAndShowAndDoOrNot(String text, Runnable doRunnable, Runnable orNotRunnable) {
+        AlertController alertController = setAndShowAndGetResultByAnAlertController(text, true);
+        new Thread(() -> {
+            synchronized (alertController) {
+                try {
+                    alertController.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (alertController.result) doRunnable.run();
+            else orNotRunnable.run();
+        }).start();
+    }
+
     public static synchronized void setAndShowAndDo(String text, Runnable runnable) {
         AlertController alertController = setAndShowAndGetResultByAnAlertController(text, true);
         new Thread(() -> {

@@ -54,4 +54,8 @@ public class WindowChanger {
             parents.remove(additionalParent);
         });
     }
+
+    public boolean equalsToMainParent(Parent parent) {
+        return mainAnchorPane.getChildren().get(0).equals(parent);
+    }
 }

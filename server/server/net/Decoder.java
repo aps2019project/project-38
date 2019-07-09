@@ -92,6 +92,7 @@ public class Decoder {
                 }
                 break;
             }
+            case startAuction:
 
         }
     }
