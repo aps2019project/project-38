@@ -1,11 +1,12 @@
-package view.fxmlControllers;
+package view.fxmlControllers.cardHolder;
 
 import client.net.Digikala;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import model.cards.HeroPower;
+import view.fxmlControllers.ArenaController;
 import view.images.LoadedImages;
-import view.visualEntities.VisualSpell;
+import view.visualentities.VisualSpell;
 
 public class HeroSpecialPowerSpriteController extends Holder {
     public Label neededMana;

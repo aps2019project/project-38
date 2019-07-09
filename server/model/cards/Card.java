@@ -13,12 +13,12 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public abstract class Card extends QualityHaver implements Serializable {
-    public static HashMap<Integer, Card> allCards = new HashMap<>();
+    private static HashMap<Integer, Card> allCards = new HashMap<>();
     public Description description = new Description();
-    protected int ID;
     protected String name;
     protected int requiredMana;
     protected int price;
+    private int ID;
 
     public Card(Integer ID, String name, Integer price, int requiredMana) {
         this.ID = ID;

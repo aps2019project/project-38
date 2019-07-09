@@ -413,7 +413,7 @@ public class Game implements Serializable {
 
         //todo this part updates the ui for the new player. in the networking this should implemented somewhere else.
         ArenaController.ac.setCoolDown(getActivePlayer().getPlayerHero().getPower().coolDownRemaining, getPlayerNumber(getActivePlayer()) + 1);
-        ArenaController.ac.setActivePlayer(getPlayerNumber(getActivePlayer()) + 1);
+        ArenaController.ac.setActivePlayer(getPlayerNumber(getActivePlayer()) + 1); //todo MOEINI
 
 
         HashMap<Integer, Card> handMap = (HashMap<Integer, Card>) getActivePlayer().getHand().entrySet().stream()
@@ -425,7 +425,7 @@ public class Game implements Serializable {
 
         //todo this is an unwanted recurse sol: a "your turn" field in player that ai waits on
         if (getActivePlayer() instanceof AIPlayer) {
-            ((AIPlayer) getActivePlayer()).doSomething();
+            ((AIPlayer) getActivePlayer()).doSomething(); //todo MOEINI
         }
     }
 }

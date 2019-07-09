@@ -2,9 +2,9 @@ package server.net;
 
 public enum Message {
     saveTheGame, quitTheApp, createAccount, showLeaderBoard, login, startTheGame, setAnActiveAccount, accountDeckIsValid,
-    accountDeckIsNotValid, updateMessages, sendMessage, logOut,
+    accountDeckIsNotValid, updateRanking, updateMessages, sendMessage, logOut,
 
-    //////////////game actions
+    //////////////game actions:
     put, cast, setCoolDown, setActivePlayer, buildPlayerHand, useCard, useSpecialPower, useCollectible, attack, comboAttack,
-    move, endTurn, quitTheGame,
+    move, endTurn, quitTheGame, mana, graveYard,
 }

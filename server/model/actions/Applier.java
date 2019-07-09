@@ -49,7 +49,7 @@ public class Applier implements AutoAction {
             Player player = game.getWarriorsPlayer((Warrior) target);
             player.getCollectibleItems().add(cMine.getCollectible());
 
-            ArenaController.ac.showCollectedCollectibleItems(cMine.getCollectible().getName(),game.getPlayerNumber(player)+1);
+            ArenaController.ac.showCollectedCollectibleItems(cMine.getCollectible().getName(),game.getPlayerNumber(player)+1); // todo MOEINI
         }
 
         return didSth;

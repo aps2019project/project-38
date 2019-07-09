@@ -99,7 +99,7 @@ public class Decoder {
             case setCoolDown: {
                 int remainedTurnToCoolDown = (int) readObject();
                 int playerNumber = (int) readObject();
-                ArenaController.ac.setActiveMana(remainedTurnToCoolDown, playerNumber);
+                ArenaController.ac.setHeroSpecialPowerCoolDown(remainedTurnToCoolDown, playerNumber);
                 break;
             }
             case useCollectible: {
@@ -107,6 +107,18 @@ public class Decoder {
                 int playerNumber = (int) readObject();
                 ArenaController.ac.useCollectibleItem(indexOf, playerNumber);
                 break;
+            }
+            case mana: {
+                int manaNumber = (int) readObject();
+                int playerNumber = (int) readObject();
+                ArenaController.ac.setActiveMana(manaNumber, playerNumber);
+                break;
+            }
+            case graveYard: {
+                String name = (String) readObject();
+                String type = (String) readObject();
+                int playerNumber = (int) readObject();
+                ArenaController.ac.transferToGraveYard(name, type, playerNumber);
             }
             //---------------
         }

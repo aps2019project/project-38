@@ -1,4 +1,4 @@
-package view.visualEntities;
+package view.visualentities;
 
 public class SpriteFrame {
     int x, y;

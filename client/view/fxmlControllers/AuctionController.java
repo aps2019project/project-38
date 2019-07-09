@@ -16,6 +16,8 @@ import model.cards.Card;
 import model.cards.Spell;
 import model.cards.Warrior;
 import view.WindowChanger;
+import view.fxmlControllers.cardHolder.SpellCardController;
+import view.fxmlControllers.cardHolder.WarriorCardController;
 import view.fxmls.LoadedScenes;
 
 import java.io.IOException;
@@ -23,8 +25,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import static view.Utility.scaleCard;
 
 public class AuctionController implements Initializable {
     public TextField priceTextField;

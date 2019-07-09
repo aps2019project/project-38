@@ -11,12 +11,15 @@ import model.exceptions.NotEnoughConditions;
 import model.gamestate.GameState;
 import model.gamestate.PutMinionState;
 import model.gamestate.UseSpellState;
+import server.net.Message;
+import server.net.ServerSession;
 
 public class UseCard {
     public static void useCard(int handMapKey, Cell cell) throws NotEnoughConditions {//todo badana
         Game game = cell.getBoard().getGame();
         Card card = game.getActivePlayer().getHand().get(handMapKey);
         GameState gameState;
+
         if (card instanceof Spell) {
             UseSpellState useSpellState = new UseSpellState(cell, (Spell) card);
             game.iterateAllTriggersCheck(useSpellState);
@@ -34,7 +37,7 @@ public class UseCard {
 
             gameState = new PutMinionState(warrior);
         }
-        if (game.getActivePlayer().getMana()>= card.getRequiredMana()) {
+        if (game.getActivePlayer().getMana() >= card.getRequiredMana()) {
             card.apply(cell);
 
             if (gameState instanceof PutMinionState) {
@@ -44,7 +47,14 @@ public class UseCard {
             game.getActivePlayer().getHand().put(handMapKey, null);
             game.getActivePlayer().getUsedCards().add(card);
 
-            ArenaController.ac.transferToGraveYard(card,game.getActivePlayerIndex()+1);
+            ServerSession ss = ServerSession.getSession(game.getPlayers()[game.getActivePlayerIndex()].username);
+            String type;
+            if (card instanceof Warrior) {
+                type = "Warrior";
+            } else {
+                type = "Spell";
+            }
+            ss.encoder.sendPackage(Message.graveYard, card.getName(), type, game.getActivePlayerIndex() + 1);
 
             game.iterateAllTriggersCheck(gameState);
 
@@ -68,7 +78,7 @@ public class UseCard {
             throw new NotEnoughConditions("Something prevented you from using your hero's special power!");
         }
         useSpellState.pending = false;
-        if (game.getActivePlayer().getMana()>= heroPower.getRequiredMana()) {
+        if (game.getActivePlayer().getMana() >= heroPower.getRequiredMana()) {
             heroPower.apply(cell);
             game.getActivePlayer().addMana(-heroPower.getRequiredMana());
             game.iterateAllTriggersCheck(useSpellState);

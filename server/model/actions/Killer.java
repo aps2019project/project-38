@@ -5,13 +5,11 @@ import model.QualityHaver;
 import model.cards.Warrior;
 import model.gamestate.DeathState;
 import model.player.Player;
-import view.fxmlControllers.ArenaController;
 
 public class Killer implements AutoAction {
     @Override
-    public boolean execute(QualityHaver source, QualityHaver target) {
+    public boolean execute(QualityHaver source, QualityHaver target) { // MOEINI معینی، برای اینکه این رو هم وصلش کنیم به کلاینت، نیاز  به سرورسشن داریم. الان من نمیدونم سرورسشنِ این کدومه...
         assert target instanceof Warrior;
-
         kill((Warrior) target);
         return true;//todo: it always gets done right?
     }

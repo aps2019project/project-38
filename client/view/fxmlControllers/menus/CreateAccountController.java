@@ -1,4 +1,4 @@
-package view.fxmlControllers;
+package view.fxmlControllers.menus;
 
 import client.net.Message;
 import client.net.Encoder;

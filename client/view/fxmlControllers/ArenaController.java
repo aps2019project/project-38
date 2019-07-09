@@ -3,7 +3,10 @@ package view.fxmlControllers;
 import client.net.Digikala;
 import client.net.Encoder;
 import client.net.Message;
-import javafx.animation.*;
+import javafx.animation.AnimationTimer;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -28,11 +31,12 @@ import model.cards.Card;
 import model.cards.Spell;
 import model.cards.Warrior;
 import view.WindowChanger;
+import view.fxmlControllers.cardHolder.*;
 import view.fxmls.LoadedScenes;
 import view.images.LoadedImages;
-import view.visualEntities.SpriteType;
-import view.visualEntities.VisualMinion;
-import view.visualEntities.VisualSpell;
+import view.visualentities.VisualSpell;
+import view.visualentities.SpriteType;
+import view.visualentities.VisualMinion;
 
 import java.io.IOException;
 import java.net.URL;
@@ -41,11 +45,10 @@ import java.util.*;
 public class ArenaController implements Initializable {
     public static ArenaController ac;
     //    public Game game;//active player: spell,warrior,his index - board:warrior of a special cell , special cell
-    public SelectionManager sm;
-    public GridPane grid;
     public Pane pane;
-    VisualMinion[][] visualMinions;
-
+    public GridPane grid;
+    public SelectionManager sm;
+    private VisualMinion[][] visualMinions;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -126,13 +129,13 @@ public class ArenaController implements Initializable {
         });
     }
 
-    double getXFromIndexes(int row, int col, int width, int height) {
+    private double getXFromIndexes(int row, int col, int width, int height) {
 //        Bounds bounds = grid.getCellBounds(0, 0);
 //        return bounds.getMinX() + grid.getLayoutX() + bounds.getWidth() * col * (row / 20f + .85) - 13 * row - width / 4 + 60;
-        return grid.getLayoutX() + 63 * col * (row / 20f + .85) - 13 * row - width / 4 + 60;
+        return grid.getLayoutX() + 63 * col * (row / 20f + .85) - 13 * row - width / 4.0 + 60;
     }
 
-    double getYFromIndexes(int row, int col, int width, int height) {
+    private double getYFromIndexes(int row, int col, int width, int height) {
 //        Bounds bounds = grid.getCellBounds(0, 0);
 //        return bounds.getMinY() + grid.getLayoutY() + bounds.getHeight() * Math.pow(row, 1.1) - height / 2.5 - 50;
         return +grid.getLayoutY() + 67 * Math.pow(row, 1.1) - height / 2.5 - 50;
@@ -202,7 +205,7 @@ public class ArenaController implements Initializable {
         }.start();
     }
 
-    public void removeFromBoard(int row, int col) {
+    private void removeFromBoard(int row, int col) {
         Platform.runLater(() -> {
             pane.getChildren().remove(visualMinions[row][col].view);
             visualMinions[row][col] = null;
@@ -242,13 +245,13 @@ public class ArenaController implements Initializable {
         grid.setEffect(perspectiveTransform);
     }
 
-    void cellOnMouseEvent(int row, int col) {
+    private void cellOnMouseEvent(int row, int col) {
         sm.selectCell(row, col);
     }
 
     ArrayList<Node> selectedNodes = new ArrayList<>();
 
-    void setDefaultEffect(Node node) {
+    private void setDefaultEffect(Node node) {
         if (selectedNodes.contains(node)) {
             ColorAdjust colorAdjust = new ColorAdjust();
             colorAdjust.setContrast(.3);
@@ -285,35 +288,37 @@ public class ArenaController implements Initializable {
         selectedNodes.clear();
     }
 
-    //-----------------------:required things:--------------------------
-    private Pane menu;
-    private Pane graveYardPane;
-    private HBox mainGraveYard;
-    private VBox player1_items;
-    private VBox player2_items;
-    private HBox hand;
+    //-----------------------:required things:----------------------
+
+    public Pane menu;
+    public Pane graveYardPane;
+    public HBox mainGraveYard;
+    public VBox player1_items;
+    public VBox player2_items;
+    public HBox hand;
     private FXMLLoader[] fxmlLoaders = new FXMLLoader[6];
     private HandSpriteHolderController[] cardHolders = new HandSpriteHolderController[6];
     private ArrayList<ImageView> player1GraveYard = new ArrayList<>();
     private ArrayList<ImageView> player2GraveYard = new ArrayList<>();
 
     //----------------------:window top section:--------------------
-    //top section items:
-    private ImageView player1_avatar;
-    private ImageView player2_avatar;
-    private Label player1_username;
-    private Label player2_username;
-    private ImageView player1_avatarBorder;
-    private ImageView player2_avatarBorder;
-    private GridPane player1_mana;
-    private GridPane player2_mana;
 
-    //players special power mana:
+    //top section items:
+    public ImageView player1_avatar;
+    public ImageView player2_avatar;
+    public Label player1_username;
+    public Label player2_username;
+    public ImageView player1_avatarBorder;
+    public ImageView player2_avatarBorder;
+    public GridPane player1_mana;
+    public GridPane player2_mana;
+
+    //mana of players special power:
+    public Pane hero1SpecialPower;
+    public Pane hero2SpecialPower;
+    private int[] playersMana = {0, 0};
     private FXMLLoader[] fxmlLoaders1 = new FXMLLoader[2];
     private HeroSpecialPowerSpriteController[] heroSpecialPowerControllers = new HeroSpecialPowerSpriteController[2];
-    private Pane hero1SpecialPower;
-    private Pane hero2SpecialPower;
-    private int[] playersMana = {0, 0};
 
 
     private void beforeStartTheGame() {
@@ -400,7 +405,7 @@ public class ArenaController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    } //todo MOEINI
 
     //call when using a collectible of a player (item with 0 index is at bottom of the VBox)
     public void useCollectibleItem(int i /* 0-base */, int playerNumber /* 1 or 2 */) {
@@ -426,7 +431,7 @@ public class ArenaController implements Initializable {
         border.setEffect(null);
         otherAvatar.setEffect(new SepiaTone());
         otherBorder.setEffect(new SepiaTone());
-    }
+    } //todo MOEINI
 
     //call at the start of turns
     public void buildPlayerHand(HashMap<Integer, Card> cards, int playerNumber /* 1 or 2 */) {
@@ -488,8 +493,7 @@ public class ArenaController implements Initializable {
             }
             break;
         }
-    }
-
+    } //todo MOEINI
 
     //call when using a card from "current" player hand
     public void useCard(int i) {
@@ -504,16 +508,16 @@ public class ArenaController implements Initializable {
     }
 
     //call when you want to add a dead card to it's player grave yard
-    public void transferToGraveYard(Card card, int playerNumber /* 1 or 2 */) {
+    public void transferToGraveYard(String name, String type, int playerNumber /* 1 or 2 */) {
         ArrayList<ImageView> graveYardCards = player2GraveYard;
         if (playerNumber == 1) {
             graveYardCards = player1GraveYard;
         }
 
-        if (card instanceof Warrior) {
-            graveYardCards.add(new VisualMinion(card.name).view);
+        if (type.equals("Warrior")) {
+            graveYardCards.add(new VisualMinion(name).view);
         } else {
-            graveYardCards.add(new VisualSpell(card.name).view);
+            graveYardCards.add(new VisualSpell(name).view);
         }
 
         mainGraveYard.getChildren().clear();
@@ -575,7 +579,7 @@ public class ArenaController implements Initializable {
         }, Constant.GameConstants.delayAfterGameEnd);
     }
 
-    private Pane shownCardInformationHolder_pn;
+    public Pane shownCardInformationHolder_pn;
     private Pane shownSpell_pn;
     private Pane shownWarrior_pn;
 

@@ -5,5 +5,5 @@ import model.QualityHaver;
 import java.io.Serializable;
 
 public interface AutoAction extends Serializable {
-    boolean execute(QualityHaver source, QualityHaver target);
+    boolean execute(QualityHaver source, QualityHaver target);  // todo MOEINI
 }

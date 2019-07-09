@@ -8,4 +8,10 @@ public abstract class Card implements Serializable {
     public String name;
     public int requiredMana;
     public int price;
+
+
+    public static Card getCardByItsName(String cardName) {
+        // todo HASHEM آیا واقعن میخواد؟؟
+        return null;
+    }
 }

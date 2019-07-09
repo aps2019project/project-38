@@ -1,6 +1,5 @@
-package view.fxmlControllers;
+package view.fxmlControllers.cardHolder;
 
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
@@ -13,6 +12,7 @@ import model.Collection;
 import model.Deck;
 import model.cards.Spell;
 import view.Utility;
+import view.fxmlControllers.*;
 import view.fxmls.LoadedScenes;
 import view.visualentities.VisualSpell;
 

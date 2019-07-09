@@ -5,7 +5,7 @@ import model.cards.Spell;
 
 import java.util.ArrayList;
 
-public class Shop {
+public class Shop { //todo MOEINI فک کنم کلاینت دِک و کالکشن و شاپ نمیخواد
     private static Shop shop = new Shop();
     private ArrayList<Integer> cardIDs = new ArrayList<>();
 
