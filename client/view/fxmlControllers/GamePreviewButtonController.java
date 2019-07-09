@@ -28,7 +28,6 @@ public class GamePreviewButtonController {
         if (nextSceneName.equals("Game Window")) {
             Game game;
             if (LoadingGamePreviewScenes.selectedButtonsText.get(0).equals("Single Player")) {
-
                 if (LoadingGamePreviewScenes.selectedButtonsText.get(1).equals("Story")) {
                     System.out.println(LoadingGamePreviewScenes.selectedButtonsText.get(2));
                     Matcher matcher = Pattern.compile("Mode: .+\nHero: .+ Prize: (?<prize>\\d+)")

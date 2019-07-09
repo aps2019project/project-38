@@ -5,4 +5,6 @@ public enum Message {
     accountDeckIsNotValid, updateMessages, sendMessage, IamActiveNow, logOut,
 
     HeroPowerOfPlayer, WarriorOfACell, IndexofAvatar, PlayerUsername, SpecificCell, NextCard, HandCard, ActivePlayerIndex,
+
+    startAuction,
 }

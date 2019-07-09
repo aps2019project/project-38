@@ -1,5 +1,7 @@
 package view.fxmlControllers;
 
+import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -10,12 +12,15 @@ import model.Account;
 import model.Collection;
 import model.Deck;
 import model.cards.Spell;
+import view.Utility;
+import view.fxmls.LoadedScenes;
 import view.visualentities.VisualSpell;
 
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class SpellCardController {
+public class SpellCardController extends CardControllerForAuction {
     public ImageView blueLine;
     public ImageView cardImage;
     public AnchorPane gifPane;
@@ -31,50 +36,60 @@ public class SpellCardController {
     private Deck deck;
 
     public void selectCard(MouseEvent mouseEvent) {
-        if (type.equals("for sell")) {
-            AlertController.setAndShowAndDo(
-                    String.format("Do you want to sell %s? Price: %s (You have %d number of this card) Your Derrick: %d",
-                            nameText.getText(), priceText.getText(),
-                            Account.getActiveAccount().getCollection().getHowManyCard().get(nameText.getText()),
-                            Account.getActiveAccount().derrick), () -> CollectionOfShopController.sell(nameText.getText()));
-        }
-        else if (type.equals("for buy")){
-            if (Account.getActiveAccount().derrick >= Integer.parseInt(priceText.getText())) {
+        switch (type) {
+            case "for auction":
+                enterAuction();
+                break;
+            case "for sell":
                 AlertController.setAndShowAndDo(
-                        String.format("Do you want to buy %s? Price: %s (You have %d number of this card) Your Derrick: %d)",
+                        String.format("Do you want to sell %s? Price: %s (You have %d number of this card) Your Derrick: %d",
                                 nameText.getText(), priceText.getText(),
                                 Account.getActiveAccount().getCollection().getHowManyCard().get(nameText.getText()),
-                                Account.getActiveAccount().derrick), () -> ShopController.buy(nameText.getText()));
+                                Account.getActiveAccount().derrick), () -> {
+                            AlertController.setAndShowAndDoOrNot("Do you want to sell it in auction or selling normally",
+                                    () -> CollectionOfShopController.sell(nameText.getText(), true),
+                                    () -> CollectionOfShopController.sell(nameText.getText(), false));
+                        });
+                break;
+            case "for buy":
+                if (Account.getActiveAccount().derrick >= Integer.parseInt(priceText.getText())) {
+                    AlertController.setAndShowAndDo(
+                            String.format("Do you want to buy %s? Price: %s (You have %d number of this card) Your Derrick: %d)",
+                                    nameText.getText(), priceText.getText(),
+                                    Account.getActiveAccount().getCollection().getHowManyCard().get(nameText.getText()),
+                                    Account.getActiveAccount().derrick), () -> ShopController.buy(nameText.getText()));
+                } else {
+                    AlertController.setAndShow("You have not enough Derrick");
+                }
+                break;
+            case "inside deck": {
+                int numberInside = RemovingDeckCardsController.removingDeckCardsController
+                        .selectedCardsNameToNumberHashMap.get(nameText.getText()) == null ? 0 :
+                        RemovingDeckCardsController.removingDeckCardsController
+                                .selectedCardsNameToNumberHashMap.get(nameText.getText());
+                int numberOutside = Collection.getCollection().getHowManyCard().get(nameText.getText()) - numberInside;
+                AlertController.setAndShowAndDo(String.format
+                        ("Do you want to remove %s from %s? (You have %d of this inside %d of this outside this deck)",
+                                nameText.getText(), deck.getName(), numberInside, numberOutside), () -> {
+                    if (Collection.getCollection().removeCardFromDeck(nameText.getText(), deck.getName()))
+                        RemovingDeckCardsController.removingDeckCardsController.calculateEveryThing(deck);
+                });
+                break;
             }
-            else {
-                AlertController.setAndShow("You have not enough Derrick");
+            default: {
+                int numberOutside = ChoosingDeckCardsController.choosingDeckCardsController
+                        .notSelectedCardsNameToNumberHashMap.get(nameText.getText()) == null ? 0 :
+                        ChoosingDeckCardsController.choosingDeckCardsController
+                                .notSelectedCardsNameToNumberHashMap.get(nameText.getText());
+                int numberInside = Collection.getCollection().getHowManyCard().get(nameText.getText()) - numberOutside;
+                AlertController.setAndShowAndDo(String.format
+                        ("Do you want to add %s to %s? (You have %d of this inside %d of this outside this deck)",
+                                nameText.getText(), deck.getName(), numberInside, numberOutside), () -> {
+                    if (Collection.getCollection().addCardToDeck(nameText.getText(), deck.getName()))
+                        ChoosingDeckCardsController.choosingDeckCardsController.calculateEveryThing(deck);
+                });
+                break;
             }
-        }
-        else if (type.equals("inside deck")) {
-            int numberInside = RemovingDeckCardsController.removingDeckCardsController
-                    .selectedCardsNameToNumberHashMap.get(nameText.getText()) == null ? 0 :
-                    RemovingDeckCardsController.removingDeckCardsController
-                            .selectedCardsNameToNumberHashMap.get(nameText.getText());
-            int numberOutside = Collection.getCollection().getHowManyCard().get(nameText.getText()) - numberInside;
-            AlertController.setAndShowAndDo(String.format
-                    ("Do you want to remove %s from %s? (You have %d of this inside %d of this outside this deck)",
-                            nameText.getText(), deck.getName(), numberInside, numberOutside), () -> {
-                if (Collection.getCollection().removeCardFromDeck(nameText.getText(), deck.getName()))
-                    RemovingDeckCardsController.removingDeckCardsController.calculateEveryThing(deck);
-            });
-        }
-        else {
-            int numberOutside = ChoosingDeckCardsController.choosingDeckCardsController
-                    .notSelectedCardsNameToNumberHashMap.get(nameText.getText()) == null ? 0 :
-                    ChoosingDeckCardsController.choosingDeckCardsController
-                            .notSelectedCardsNameToNumberHashMap.get(nameText.getText());
-            int numberInside = Collection.getCollection().getHowManyCard().get(nameText.getText()) - numberOutside;
-            AlertController.setAndShowAndDo(String.format
-                    ("Do you want to add %s to %s? (You have %d of this inside %d of this outside this deck)",
-                            nameText.getText(), deck.getName(), numberInside, numberOutside), () -> {
-                if (Collection.getCollection().addCardToDeck(nameText.getText(), deck.getName()))
-                    ChoosingDeckCardsController.choosingDeckCardsController.calculateEveryThing(deck);
-            });
         }
     }
 
@@ -113,6 +128,20 @@ public class SpellCardController {
             this.type = matcher.group("type");
             deck = Collection.getCollection().getAllDecks().get(matcher.group("deckName"));
         }
+        else if (type.equals("for auction")) {
+            this.type = type;
+            FXMLLoader fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("Auction.fxml"));
+            try {
+                ((AnchorPane) Utility.scale(fxmlLoader.load()), fxmlLoader.getController());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         else this.type = type;
+    }
+
+    @Override
+    public void setMaxProposedPrice(int proposedPrice, Account accountOfProposedPrice) {
+
     }
 }

@@ -36,7 +36,7 @@
                   <Font size="25.0" />
                </font>
             </Text>
-            <ImageView fitHeight="59.0" fitWidth="59.0">
+            <ImageView fx:id="backButton" fitHeight="59.0" fitWidth="59.0" onMouseClicked="#back" onMouseEntered="#shineBackButton" onMouseExited="#resetBackButton">
                <image>
                   <Image url="@../images/shopAndCollection/backBottom.png" />
                </image>
@@ -46,7 +46,7 @@
                   <Image url="@../images/shopAndCollection/selectedDeckButton.png" />
                </image>
             </ImageView>
-            <Text fill="#08959a" layoutX="600.0" layoutY="510.0" strokeType="OUTSIDE" strokeWidth="0.0" text="99:99" textAlignment="CENTER" wrappingWidth="300.0">
+            <Text fx:id="timerText" fill="#08959a" layoutX="600.0" layoutY="510.0" strokeType="OUTSIDE" strokeWidth="0.0" text="99:99" textAlignment="CENTER" wrappingWidth="300.0">
                <font>
                   <Font size="50.0" />
                </font>

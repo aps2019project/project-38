@@ -2,7 +2,6 @@ package view.fxmls;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import view.fxmlControllers.*;
 
@@ -25,7 +24,7 @@ public class LoadedScenes {
     public static Pane collection;
     public static Pane choosingDeckCards;
     public static Pane removingDeckCards;
-    public static AnchorPane collectionAnchorPane;
+    public static Pane auctions;
     public static Parent customCard;
 
     {
@@ -51,8 +50,10 @@ public class LoadedScenes {
             fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("RemovingDeckCards.fxml"));
             removingDeckCards = scale(fxmlLoader.load());
             RemovingDeckCardsController.removingDeckCardsController = fxmlLoader.getController();
+            fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("Auctions.fxml"));
+            auctions = scale(fxmlLoader.load());
+            AuctionsController.auctionsController = fxmlLoader.getController();
             customCard = tScale(FXMLLoader.load(getClass().getResource("moreCustomCard.fxml")));
-            collectionAnchorPane = FXMLLoader.load(LoadedScenes.class.getResource("Collection.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
