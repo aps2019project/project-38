@@ -1,8 +1,6 @@
 package server.net;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -24,8 +22,8 @@ public class ServerSession {
         this.socket = socket;
         try {
             serverSessions.add(this);
-            dis = new DataInputStream(socket.getInputStream());
-            dos = new DataOutputStream(socket.getOutputStream());
+            dis = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
+            dos = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
             decoder = new Decoder(this);
             encoder = new Encoder(this);
         } catch (IOException e) {

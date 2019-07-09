@@ -1,6 +1,8 @@
 package view.fxmlControllers;
 
 import client.net.Digikala;
+import client.net.Encoder;
+import client.net.Message;
 import javafx.animation.*;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -113,7 +115,7 @@ public class ArenaController implements Initializable {
             vm.isSelected.set(true);
             Warrior warrior = Digikala.getWarriorOfACell(row, col);
             try {
-                showInfoOfACard(warrior.getName(), warrior.description.getDescriptionOfCardSpecialAbility(), "warrior", warrior.getHp(), warrior.getAp());
+                showInfoOfACard(warrior.name, warrior.description.descriptionOfCardSpecialAbility, "warrior", warrior.hp, warrior.ap);
             } catch (NullPointerException e) {
                 //ignore because it's so frequent
             }
@@ -164,7 +166,7 @@ public class ArenaController implements Initializable {
         vm.view.setOnMouseEntered(event -> {
             vm.isSelected.set(true);
             Warrior warrior = Digikala.getWarriorOfACell(tRow, tCol);
-            showInfoOfACard(warrior.getName(), warrior.description.getDescriptionOfCardSpecialAbility(), "warrior", warrior.getHp(), warrior.getAp());
+            showInfoOfACard(warrior.name, warrior.description.descriptionOfCardSpecialAbility, "warrior", warrior.hp, warrior.ap);
         });
     }
 
@@ -242,7 +244,7 @@ public class ArenaController implements Initializable {
     }
 
     void cellOnMouseEvent(int row, int col) {
-        sm.selectCell(Digikala.getSpecificCell(row, col));
+        sm.selectCell(row, col);
     }
 
     ArrayList<Node> selectedNodes = new ArrayList<>();
@@ -269,7 +271,7 @@ public class ArenaController implements Initializable {
             colorAdjust.setHue(.4);
             colorAdjust.setBrightness(0.1);
             colorAdjust.setSaturation(.8);
-            Node node = getGridNodeFromIndexes(cell.getRow(), cell.getColumn());
+            Node node = getGridNodeFromIndexes(cell.row, cell.column);
             node.setEffect(colorAdjust);
 
             selectedNodes.add(node);
@@ -428,71 +430,67 @@ public class ArenaController implements Initializable {
     }
 
     //call at the start of turns
-    public void buildPlayerHand(HashMap<Integer, String> cards, int playerNumber /* 1 or 2 */) {
+    public void buildPlayerHand(HashMap<Integer, Card> cards, int playerNumber /* 1 or 2 */) {
         for (HandSpriteHolderController holder : cardHolders) {
             holder.gif.getChildren().clear();
         }
         for (int i : cards.keySet()) {
-            String name = cards.get(i);
-            for (int cardID : Card.getAllCards().keySet()) {
-                Card card = Card.getAllCards().get(cardID);
-                if (card.getName().equals(name)) {
-                    int requiredMana = card.getRequiredMana();
-                    cardHolders[i].neededMana.setText(String.valueOf(requiredMana));
-                    if (playersMana[playerNumber - 1] < requiredMana || i == 0) {
-                        cardHolders[i].manaBackGround.setEffect(new SepiaTone());
-                    } else {
-                        cardHolders[i].manaBackGround.setEffect(null);
-                    }
-                    ImageView visualEntity;
-                    if (card instanceof Warrior) {
-                        VisualMinion vm = new VisualMinion(name);
-                        visualEntity = vm.view;
-                        cardHolders[i].put(visualEntity, vm.getWidth(), vm.getHeight());
-
-                        visualEntity.setOnMouseEntered(event -> {//amir
-                            vm.isSelected.set(true);
-                            if (i == 0) {
-                                Warrior w = (Warrior) Digikala.getNextCard();
-                                showInfoOfACard(w.getName(), w.description.getDescriptionOfCardSpecialAbility(), "warrior", w.getHp(), w.getAp());
-                            } else {
-                                Warrior w = (Warrior)Digikala.getHandCard(i-1);
-                                showInfoOfACard(w.getName(), w.description.getDescriptionOfCardSpecialAbility(), "warrior", w.getHp(), w.getAp());
-                            }
-                        });
-                        visualEntity.setOnMouseExited(event -> {
-                            vm.isSelected.set(false);
-                            endShowInfoOfACard();
-                        });
-                    } else {
-                        VisualSpell vs = new VisualSpell(name);
-                        visualEntity = vs.view;
-                        cardHolders[i].put(visualEntity, vs.getWidth(), vs.getHeight());
-
-                        visualEntity.setOnMouseEntered(event -> {//amir
-                            vs.idle();
-                            if (i == 0) {
-                                Spell w = (Spell) Digikala.getNextCard();
-                                showInfoOfACard(w.getName(), w.description.getDescriptionOfCardSpecialAbility(), "spell", 0, 0);
-                            } else {
-                                Spell w = (Spell) Digikala.getHandCard(i-1);
-                                showInfoOfACard(w.getName(), w.description.getDescriptionOfCardSpecialAbility(), "spell", 0, 0);
-                            }
-                        });
-                        visualEntity.setOnMouseExited(event -> {
-                            vs.breathing();
-                            endShowInfoOfACard();
-                        });
-                    }
-
-                    if (i > 0) {//amir
-                        visualEntity.setOnMouseClicked(event -> sm.selectCard(i - 1));
-                    }
-                    break;
-                }
+            Card card = cards.get(i);
+            int requiredMana = card.requiredMana;
+            cardHolders[i].neededMana.setText(String.valueOf(requiredMana));
+            if (playersMana[playerNumber - 1] < requiredMana || i == 0) {
+                cardHolders[i].manaBackGround.setEffect(new SepiaTone());
+            } else {
+                cardHolders[i].manaBackGround.setEffect(null);
             }
+            ImageView visualEntity;
+            if (card instanceof Warrior) {
+                VisualMinion vm = new VisualMinion(card.name);
+                visualEntity = vm.view;
+                cardHolders[i].put(visualEntity, vm.getWidth(), vm.getHeight());
+
+                visualEntity.setOnMouseEntered(event -> {//amir
+                    vm.isSelected.set(true);
+                    if (i == 0) {
+                        Warrior w = (Warrior) Digikala.getNextCard();
+                        showInfoOfACard(w.name, w.description.descriptionOfCardSpecialAbility, "warrior", w.hp, w.ap);
+                    } else {
+                        Warrior w = (Warrior) Digikala.getHandCard(i - 1);
+                        showInfoOfACard(w.name, w.description.descriptionOfCardSpecialAbility, "warrior", w.hp, w.ap);
+                    }
+                });
+                visualEntity.setOnMouseExited(event -> {
+                    vm.isSelected.set(false);
+                    endShowInfoOfACard();
+                });
+            } else {
+                VisualSpell vs = new VisualSpell(card.name);
+                visualEntity = vs.view;
+                cardHolders[i].put(visualEntity, vs.getWidth(), vs.getHeight());
+
+                visualEntity.setOnMouseEntered(event -> {//amir
+                    vs.idle();
+                    if (i == 0) {
+                        Spell w = (Spell) Digikala.getNextCard();
+                        showInfoOfACard(w.name, w.description.descriptionOfCardSpecialAbility, "spell", 0, 0);
+                    } else {
+                        Spell w = (Spell) Digikala.getHandCard(i - 1);
+                        showInfoOfACard(w.name, w.description.descriptionOfCardSpecialAbility, "spell", 0, 0);
+                    }
+                });
+                visualEntity.setOnMouseExited(event -> {
+                    vs.breathing();
+                    endShowInfoOfACard();
+                });
+            }
+
+            if (i > 0) {//amir
+                visualEntity.setOnMouseClicked(event -> sm.selectCard(i - 1));
+            }
+            break;
         }
     }
+
 
     //call when using a card from "current" player hand
     public void useCard(int i) {
@@ -507,21 +505,18 @@ public class ArenaController implements Initializable {
     }
 
     //call when you want to add a dead card to it's player grave yard
-    public void transferToGraveYard(String cardName, int playerNumber /* 1 or 2 */) {
+    public void transferToGraveYard(Card card, int playerNumber /* 1 or 2 */) {
         ArrayList<ImageView> graveYardCards = player2GraveYard;
         if (playerNumber == 1) {
             graveYardCards = player1GraveYard;
         }
-        for (int cardID : Card.getAllCards().keySet()) {
-            Card card = Card.getAllCards().get(cardID);
-            if (card.getName().equals(cardName)) {
-                if (card instanceof Warrior) {
-                    graveYardCards.add(new VisualMinion(cardName).view);
-                } else {
-                    graveYardCards.add(new VisualSpell(cardName).view);
-                }
-            }
+
+        if (card instanceof Warrior) {
+            graveYardCards.add(new VisualMinion(card.name).view);
+        } else {
+            graveYardCards.add(new VisualSpell(card.name).view);
         }
+
         mainGraveYard.getChildren().clear();
         for (ImageView cardGif : graveYardCards) {
             mainGraveYard.getChildren().add(cardGif);
@@ -531,7 +526,7 @@ public class ArenaController implements Initializable {
     //arena buttons:
     public void endTurn() {
         sm.deselectAction();
-        game.endTurn();
+        Encoder.sendMessage(Message.endTurn);
     }
 
     //grave yard:
@@ -566,7 +561,7 @@ public class ArenaController implements Initializable {
     }
 
     public void quit() {
-        game.quit();
+        Encoder.sendMessage(Message.quit);
     }
 
     public void endGame(String winnerUsername) {//todo a banner or sth

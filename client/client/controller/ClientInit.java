@@ -1,6 +1,7 @@
 package client.controller;
 
 import client.net.ClientSession;
+import com.google.gson.Gson;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.input.KeyCombination;
@@ -25,12 +26,11 @@ public class ClientInit extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Cell c =new Cell(null,2,2);
-        Warrior w = new Warrior(1,"a",2,2,2,2);
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        ObjectOutputStream oos = new ObjectOutputStream(bos);
-        oos.writeObject(w);
-        System.out.println(bos.size());
+//        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+//        ObjectOutputStream oos = new ObjectOutputStream(bos);
+//        Gson gson = new Gson();
+//        oos.writeUTF(gson.toJson(new Cell()));
+//        System.out.println(bos.size());
 
         mainStage = primaryStage;
         mainStage.setFullScreen(true);

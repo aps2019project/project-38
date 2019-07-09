@@ -1,5 +1,6 @@
 package client.net;
 
+import com.google.gson.Gson;
 import model.Account;
 
 import java.io.IOException;
@@ -37,7 +38,12 @@ public class Encoder {
         }
     }
 
-    public static synchronized void sendPackage(Message m, Object... datas) {
+    public static synchronized void sendObjectJ(Object o){
+        Gson gson = new Gson();
+        sendString(gson.toJson(o));
+    }
+
+    public static synchronized void sendPackage(Message m,Object... datas){
         sendMessage(m);
         for (Object data : datas) {
             sendObject(data);

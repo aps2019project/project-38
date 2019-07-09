@@ -1,8 +1,8 @@
 package model;
 
-import model.cards.Spell;
-import model.exceptions.NotEnoughConditions;
-import view.Utility;
+import client.net.Digikala;
+import client.net.Encoder;
+import client.net.Message;
 import view.fxmlControllers.ArenaController;
 
 import java.io.Serializable;
@@ -13,70 +13,62 @@ public class SelectionManager implements Serializable {
     public Integer cardHandIndex;
     public boolean specialPowerIsSelected;
     public String collectibleItem;
-    Game game;//active player - warriors
-
-    public SelectionManager(Game game) {
-        this.game = game;
-    }
 
     public ArrayList<Cell> getCells() {
         return cells;
     }
 
-    public void selectCell(Cell cell) {
+    public void selectCell(int row, int col) {
         if (cardHandIndex != null) {
-            try {
-                game.useCard(cardHandIndex, cell);
-            } catch (NotEnoughConditions notEnoughConditions) {
-                Utility.showMessage(notEnoughConditions.getMessage());
-            }
+            //                game.useCard(cardHandIndex, cell);
+            Encoder.sendPackage(Message.useCard, cardHandIndex, row, col);
             deselectAll();
         } else if (specialPowerIsSelected) {
-            try {
-                game.useSpecialPower(cell);
-            } catch (NotEnoughConditions notEnoughConditions) {
-                Utility.showMessage(notEnoughConditions.getMessage());
-            }
+            //                game.useSpecialPower(cell);
+            Encoder.sendPackage(Message.useSpecialPower, row, col);
             deselectAll();
         } else if (collectibleItem != null) {
-            try {
-                game.useCollectible(collectibleItem, cell);
-            } catch (NotEnoughConditions notEnoughConditions) {
-                Utility.showMessage(notEnoughConditions.getMessage());
-            }
+            //                game.useCollectible(collectibleItem, cell);
+            Encoder.sendPackage(Message.useCollectible, collectibleItem, row, col);
             deselectAll();
-        } else if (cell.getWarrior() != null) {
-            if (game.getActivePlayer().getWarriors().contains(cell.getWarrior())) {
+        } else if (Digikala.getIsThereWarrior(row, col)) {
+            if (Digikala.getIsMyWarrior(row, col)) {
                 cardHandIndex = null;
                 specialPowerIsSelected = false;
                 collectibleItem = null;
-                if (cells.stream().noneMatch(cell1 -> cell1.equals(cell))) {
-                    cells.add(cell);
+                if (cells.stream().noneMatch(cell -> cell.row == row && cell.column == col)) {
+                    cells.add(new Cell(row, col));
                 }
             } else {
                 if (cells.size() == 1) {
-                    try {
-                        game.attack(cells.get(0), cell);
-                    } catch (NotEnoughConditions notEnoughConditions) {
-                        Utility.showMessage(notEnoughConditions.getMessage());
+                    synchronized (Encoder.class){
+                        Encoder.sendMessage(Message.attack);
+                        Encoder.sendObjectJ(cells.get(0));
+                        Encoder.sendObject(row);
+                        Encoder.sendObject(col);
                     }
+//                        game.attack(cells.get(0), row, col);
                     deselectAll();
                 } else if (cells.size() > 1) {
-                    try {
-                        game.comboAttack(cells, cell);
-                    } catch (NotEnoughConditions notEnoughConditions) {
-                        Utility.showMessage(notEnoughConditions.getMessage());
+                    synchronized (Encoder.class){
+                        Encoder.sendMessage(Message.comboAttack);
+                        Encoder.sendObjectJ(cells);
+                        Encoder.sendObject(row);
+                        Encoder.sendObject(col);
                     }
+//                        game.comboAttack(cells, row, col);
                     deselectAll();
                 }
             }
         } else {
             if (cells.size() == 1) {
-                try {
-                    game.move(cells.get(0), cell);
-                } catch (NotEnoughConditions notEnoughConditions) {
-                    Utility.showMessage(notEnoughConditions.getMessage());
+                synchronized (Encoder.class){
+                    Encoder.sendMessage(Message.move);
+                    Encoder.sendObjectJ(cells.get(0));
+                    Encoder.sendObject(row);
+                    Encoder.sendObject(col);
                 }
+//                    game.move(cells.get(0), row, col);
                 deselectAll();
             }
         }
