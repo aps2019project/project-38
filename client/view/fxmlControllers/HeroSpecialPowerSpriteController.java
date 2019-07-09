@@ -26,9 +26,9 @@ public class HeroSpecialPowerSpriteController extends Holder {
     public void setHeroSpecialPowerFirstInfo(int playerIndex) {
         HeroPower spell = Digikala.getHeroPowerOfPlayer(playerIndex);
         if (spell != null) {
-            VisualSpell vs = new VisualSpell(spell.getName());
+            VisualSpell vs = new VisualSpell(spell.name);
             put(vs.view, vs.getWidth(), vs.getHeight());
-            neededMana.setText(String.valueOf(spell.getRequiredMana()));
+            neededMana.setText(String.valueOf(spell.requiredMana));
             remainedTurn.setText(String.valueOf(spell.coolDownRemaining));
 
             vs.view.setOnMouseClicked(event -> {
@@ -37,7 +37,7 @@ public class HeroSpecialPowerSpriteController extends Holder {
 
             vs.view.setOnMouseEntered(event -> {
                 vs.idle();
-                ArenaController.ac.showInfoOfACard(spell.getName(),spell.description.getDescriptionOfCardSpecialAbility(),"spell",0,0);
+                ArenaController.ac.showInfoOfACard(spell.name,spell.description.descriptionOfCardSpecialAbility,"spell",0,0);
             });
 
             vs.view.setOnMouseExited(event -> {

@@ -44,7 +44,7 @@ public class UseCard {
             game.getActivePlayer().getHand().put(handMapKey, null);
             game.getActivePlayer().getUsedCards().add(card);
 
-            ArenaController.ac.transferToGraveYard(card.getName(),game.getActivePlayerIndex()+1);
+            ArenaController.ac.transferToGraveYard(card,game.getActivePlayerIndex()+1);
 
             game.iterateAllTriggersCheck(gameState);
 

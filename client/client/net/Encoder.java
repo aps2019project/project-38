@@ -1,5 +1,6 @@
 package client.net;
 
+import com.google.gson.Gson;
 import model.Account;
 
 import java.io.IOException;
@@ -35,6 +36,11 @@ public class Encoder {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static synchronized void sendDataJ(Object o){
+        Gson gson = new Gson();
+        sendString(gson.toJson(o));
     }
 
     public static synchronized void sendPackage(Message m,Object... datas){

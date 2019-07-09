@@ -372,6 +372,9 @@ public class Game implements Serializable {
                     break;
                 }
             }
+
+            if(index=)
+
             UseCard.useCollectible(spell, cell);
             ArenaController.ac.useCollectibleItem(index,getActivePlayerIndex()+1);
         } finally {
@@ -401,11 +404,11 @@ public class Game implements Serializable {
         ArenaController.ac.setActivePlayer(getPlayerNumber(getActivePlayer()) + 1);
 
 
-        HashMap<Integer, String> handMap = (HashMap<Integer, String>) getActivePlayer().getHand().entrySet().stream()
+        HashMap<Integer, Card> handMap = (HashMap<Integer, Card>) getActivePlayer().getHand().entrySet().stream()
                 .filter(integerCardEntry -> integerCardEntry.getValue() != null)
                 .collect(Collectors.toMap((Map.Entry<Integer, Card> o) -> o.getKey() + 1
-                        , (Map.Entry<Integer, Card> o) -> o.getValue().getName()));
-        handMap.put(0, getActivePlayer().getNextCard().getName());
+                        , Map.Entry::getValue));
+        handMap.put(0, getActivePlayer().getNextCard());
         ArenaController.ac.buildPlayerHand(handMap, getPlayerNumber(getActivePlayer()) + 1);
 
         //todo this is an unwanted recurse sol: a "your turn" field in player that ai waits on

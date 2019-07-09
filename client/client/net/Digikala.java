@@ -46,21 +46,21 @@ public class Digikala {
     }
 
     public static Box<Cell> specificCell = new Box<>();
-    public static Cell getSpecificCell(int row,int col){
+    public static Cell getSpecificCell(int row, int col){
         Encoder.sendPackage(Message.SpecificCell,row,col);
         wait(specificCell);
         return specificCell.obj;
     }
 
     public static Box<Card> nextCard = new Box<>();
-    public static Card getNextCard(){//of active player
+    public static Card getNextCard(){//of me
         Encoder.sendPackage(Message.NextCard);
         wait(nextCard);
         return nextCard.obj;
     }
 
     public static Box<Card> handCard = new Box<>();
-    public static Card getHandCard(int index){//of active player
+    public static Card getHandCard(int index){//of me
         Encoder.sendPackage(Message.HandCard,index);
         wait(handCard);
         return handCard.obj;
@@ -71,5 +71,19 @@ public class Digikala {
         Encoder.sendPackage(Message.ActivePlayerIndex);
         wait(activePlayerIndex);
         return activePlayerIndex.obj;
+    }
+
+    public static Box<Boolean> isMyWarrior = new Box<>();
+    public static boolean getIsMyWarrior(int row,int col){
+        Encoder.sendPackage(Message.isMyWarrior,row,col);
+        wait(isMyWarrior);
+        return isMyWarrior.obj;
+    }
+
+    public static Box<Boolean> isThereWarrior = new Box<>();
+    public static boolean getIsThereWarrior(int row,int col){
+        Encoder.sendPackage(Message.isThereWarrior,row,col);
+        wait(isThereWarrior);
+        return isThereWarrior.obj;
     }
 }

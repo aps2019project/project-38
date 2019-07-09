@@ -37,4 +37,11 @@ public class Encoder {
             e.printStackTrace();
         }
     }
+
+    public synchronized void sendPackage(Message m,Object... datas){
+        sendMessage(m);
+        for (Object data : datas) {
+            sendObject(data);
+        }
+    }
 }

@@ -1,19 +1,22 @@
 package client.net;
 
+import com.google.gson.Gson;
 import model.Cell;
 import model.cards.HeroPower;
+import model.cards.Spell;
 import model.cards.Warrior;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+
 public class Decoder {
     public static void decode(Message m) {
         switch (m) {
             case HeroPowerOfPlayer:
-                fillBoxAndNotify(Digikala.hp);
+                fillBoxAndNotifyJ(Digikala.hp, HeroPower.class);
                 break;
             case WarriorOfACell:
-                fillBoxAndNotify(Digikala.warriorBox);
+                fillBoxAndNotifyJ(Digikala.warriorBox, Warrior.class);
                 break;
             case IndexofAvatar:
                 fillBoxAndNotify(Digikala.avatarIndex);
@@ -22,24 +25,40 @@ public class Decoder {
                 fillBoxAndNotify(Digikala.playerUsername);
                 break;
             case SpecificCell:
-                fillBoxAndNotify(Digikala.specificCell);
+                fillBoxAndNotifyJ(Digikala.specificCell, Cell.class);
                 break;
             case NextCard:
-                fillBoxAndNotify(Digikala.nextCard);
+                if (readMessage().equals(Message.itsSpell)) {
+                    fillBoxAndNotifyJ(Digikala.nextCard, Spell.class);
+                } else {
+                    fillBoxAndNotifyJ(Digikala.nextCard, Warrior.class);
+                }
                 break;
             case HandCard:
-                fillBoxAndNotify(Digikala.handCard);
+                if(readMessage().equals(Message.itsSpell)){
+                    fillBoxAndNotifyJ(Digikala.handCard, Spell.class);
+                }else {
+                    fillBoxAndNotifyJ(Digikala.handCard, Warrior.class);
+                }
                 break;
             case ActivePlayerIndex:
                 fillBoxAndNotify(Digikala.activePlayerIndex);
                 break;
+            case isMyWarrior:
+                fillBoxAndNotify(Digikala.isMyWarrior);
+                break;
+            case isThereWarrior:
+                fillBoxAndNotify(Digikala.isThereWarrior);
+                break;
         }
     }
 
-    public static <T> void fillBoxAndNotify(Box<T> box){
-        box.obj = (T) readObject();
-        synchronized (box.waitStone) {
-            box.waitStone.notify();
+    public static Message readMessage() {
+        try {
+            return Message.values()[ClientSession.dis.readInt()];
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
@@ -49,6 +68,25 @@ public class Decoder {
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public static <T> void fillBoxAndNotify(Box<T> box) {
+        box.obj = (T) readObject();
+        synchronized (box.waitStone) {
+            box.waitStone.notify();
+        }
+    }
+
+    public static <T> void fillBoxAndNotifyJ(Box<T> box, Class aClass) {
+        Gson gson = new Gson();
+        try {
+            box.obj = (T) gson.fromJson(ClientSession.dis.readUTF(), aClass);
+            synchronized (box.waitStone) {
+                box.waitStone.notify();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
