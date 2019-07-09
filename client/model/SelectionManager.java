@@ -3,11 +3,6 @@ package model;
 import client.net.Digikala;
 import client.net.Encoder;
 import client.net.Message;
-import javafx.util.Pair;
-import model.cards.Spell;
-import model.cards.Warrior;
-import model.exceptions.NotEnoughConditions;
-import view.Utility;
 import view.fxmlControllers.ArenaController;
 
 import java.io.Serializable;
@@ -47,19 +42,19 @@ public class SelectionManager implements Serializable {
             } else {
                 if (cells.size() == 1) {
                     synchronized (Encoder.class){
-                        Encoder.sendCode(Message.attack);
-                        Encoder.sendDataJ(cells.get(0));
-                        Encoder.sendData(row);
-                        Encoder.sendData(col);
+                        Encoder.sendMessage(Message.attack);
+                        Encoder.sendObjectJ(cells.get(0));
+                        Encoder.sendObject(row);
+                        Encoder.sendObject(col);
                     }
 //                        game.attack(cells.get(0), row, col);
                     deselectAll();
                 } else if (cells.size() > 1) {
                     synchronized (Encoder.class){
-                        Encoder.sendCode(Message.comboAttack);
-                        Encoder.sendDataJ(cells);
-                        Encoder.sendData(row);
-                        Encoder.sendData(col);
+                        Encoder.sendMessage(Message.comboAttack);
+                        Encoder.sendObjectJ(cells);
+                        Encoder.sendObject(row);
+                        Encoder.sendObject(col);
                     }
 //                        game.comboAttack(cells, row, col);
                     deselectAll();
@@ -68,10 +63,10 @@ public class SelectionManager implements Serializable {
         } else {
             if (cells.size() == 1) {
                 synchronized (Encoder.class){
-                    Encoder.sendCode(Message.move);
-                    Encoder.sendDataJ(cells.get(0));
-                    Encoder.sendData(row);
-                    Encoder.sendData(col);
+                    Encoder.sendMessage(Message.move);
+                    Encoder.sendObjectJ(cells.get(0));
+                    Encoder.sendObject(row);
+                    Encoder.sendObject(col);
                 }
 //                    game.move(cells.get(0), row, col);
                 deselectAll();

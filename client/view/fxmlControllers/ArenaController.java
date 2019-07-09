@@ -526,7 +526,7 @@ public class ArenaController implements Initializable {
     //arena buttons:
     public void endTurn() {
         sm.deselectAction();
-        Encoder.sendCode(Message.endTurn);
+        Encoder.sendMessage(Message.endTurn);
     }
 
     //grave yard:
@@ -561,7 +561,7 @@ public class ArenaController implements Initializable {
     }
 
     public void quit() {
-        Encoder.sendCode(Message.quit);
+        Encoder.sendMessage(Message.quit);
     }
 
     public void endGame(String winnerUsername) {//todo a banner or sth

@@ -38,13 +38,13 @@ public class Encoder {
         }
     }
 
-    public static synchronized void sendDataJ(Object o){
+    public static synchronized void sendObjectJ(Object o){
         Gson gson = new Gson();
         sendString(gson.toJson(o));
     }
 
     public static synchronized void sendPackage(Message m,Object... datas){
-        sendCode(m);
+        sendMessage(m);
         for (Object data : datas) {
             sendObject(data);
         }
