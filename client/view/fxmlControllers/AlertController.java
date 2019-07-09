@@ -3,7 +3,6 @@ package view.fxmlControllers;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
@@ -23,21 +22,21 @@ public class AlertController {
     private boolean haveAcceptButton;
     private AnchorPane alertAnchorPane;
 
-    public synchronized void close(MouseEvent mouseEvent) {
+    public synchronized void close() {
         resetAlertInPosition();
         result = false;
         notify();
     }
 
-    public void shineCloseButton(MouseEvent mouseEvent) {
+    public void shineCloseButton() {
         Platform.runLater(() -> closeButton.setOpacity(0.4));
     }
 
-    public void resetCloseButton(MouseEvent mouseEvent) {
+    public void resetCloseButton() {
         Platform.runLater(() -> closeButton.setOpacity(0));
     }
 
-    public synchronized void accept(MouseEvent mouseEvent) {
+    public synchronized void accept() {
         if (haveAcceptButton) {
             resetAlertInPosition();
             result = true;
@@ -45,7 +44,7 @@ public class AlertController {
         }
     }
 
-    public void shineAcceptButton(MouseEvent mouseEvent) {
+    public void shineAcceptButton() {
         if (haveAcceptButton) {
             Platform.runLater(() -> {
                 glowButton.setOpacity(1);
@@ -54,7 +53,7 @@ public class AlertController {
         }
     }
 
-    public void resetAcceptButton(MouseEvent mouseEvent) {
+    public void resetAcceptButton() {
         if (haveAcceptButton) {
             Platform.runLater(() -> {
                 button.setOpacity(1);

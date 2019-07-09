@@ -55,6 +55,39 @@ public class Decoder {
             case isThereWarrior:
                 fillBoxAndNotify(Digikala.isThereWarrior);
                 break;
+            //------------------
+            case put:{
+
+                break;
+            }
+            case quitTheGame:{
+
+                break;
+            }
+            case move:{
+
+                break;
+            }
+            case attack:{
+
+                break;
+            }
+            case useCard:{
+
+                break;
+            }
+            case cast:{
+
+                break;
+            }
+            case setCoolDown:{
+
+                break;
+            }
+            case useCollectible:{
+
+                break;
+            }
         }
     }
 

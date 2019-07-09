@@ -1,20 +1,15 @@
 package client.controller;
 
 import client.net.ClientSession;
-import com.google.gson.Gson;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
-import model.Cell;
-import model.cards.Warrior;
 import view.Loader;
 import view.WindowChanger;
 import view.fxmls.LoadedScenes;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 
 public class ClientInit extends Application {
     public static Stage mainStage;

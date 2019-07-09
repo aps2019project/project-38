@@ -1,6 +1,5 @@
 package model.gamemodes;
 
-
 import model.cards.Hero;
 import model.player.Player;
 

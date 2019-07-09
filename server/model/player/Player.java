@@ -16,6 +16,7 @@ import java.util.Random;
 
 
 public abstract class Player implements Serializable {
+    public String username;
     private int mana;
     protected Deck mainDeck;
     protected HashMap<Integer, Card> hand = new HashMap<>();
@@ -25,7 +26,6 @@ public abstract class Player implements Serializable {
     public boolean ableToReplaceCard;
     private Card nextCard;
     public int avatarIndex;
-    public String username;
     private Game game;
 
     public Player(Deck deck, Game game) {

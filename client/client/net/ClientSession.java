@@ -2,13 +2,12 @@ package client.net;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class ClientSession {
     static Socket socket;
     public static DataInputStream dis;
     public static DataOutputStream dos;
-    static boolean useListener = false;//set true at the start of game and set false at the end of the game
+    static boolean useListener = false; //set true at the start of game and set false at the end of the game
 
     public static void connect() {
         try {

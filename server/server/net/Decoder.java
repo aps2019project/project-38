@@ -22,7 +22,7 @@ public class Decoder {
             case saveTheGame:
                 Account.saveAccounts();
                 break;
-            case quitTheGame:
+            case quitTheApp:
                 ss.quit();
                 break;
             case createAccount: {
@@ -92,8 +92,6 @@ public class Decoder {
                 }
                 break;
             }
-            case startAuction:
-
         }
     }
 

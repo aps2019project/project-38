@@ -32,7 +32,7 @@ public class RegisterMenuController {
     }
 
     public void exit() {
-        Encoder.sendMessage(Message.quitTheGame);
+        Encoder.sendMessage(Message.quitTheApp);
         System.exit(0);
     }
 }

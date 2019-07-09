@@ -24,7 +24,7 @@ public class VisualSpell {
         this.name = name;
         fileName = name;
 
-        if (LoadedImages.sprites.get(fileName) == null) {
+        if (Card.getAllCards().values().stream().filter(Objects::nonNull).anyMatch(card -> String.valueOf(card.getID()).startsWith("5") && card.getName().equals(name))) {
             fileName = "cs";
         }
 

@@ -7,8 +7,8 @@ import java.util.ArrayList;
 public class ServerSession {
     public static ArrayList<ServerSession> serverSessions = new ArrayList<>();
     private Socket socket;
-    Decoder decoder;
-    Encoder encoder;
+    public Decoder decoder;
+    public Encoder encoder;
     public DataOutputStream dos;
     public DataInputStream dis;
     String username; // if some serverSession's username is null, it means that this serverSession is not online
