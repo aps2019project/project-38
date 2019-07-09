@@ -5,6 +5,7 @@ import model.Cell;
 import model.cards.HeroPower;
 import model.cards.Spell;
 import model.cards.Warrior;
+import view.fxmlControllers.GlobalChatController;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -44,6 +45,10 @@ public class Decoder {
             case ActivePlayerIndex:
                 fillBoxAndNotify(Digikala.activePlayerIndex);
                 break;
+            case updateMessages: {
+                GlobalChatController.updateMessages();
+                break;
+            }
             case isMyWarrior:
                 fillBoxAndNotify(Digikala.isMyWarrior);
                 break;

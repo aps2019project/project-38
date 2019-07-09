@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 
 public class Encoder {
-    public static synchronized void sendCode(Message m) {
+    public static synchronized void sendMessage(Message m) {
         try {
             ClientSession.dos.writeUTF(Account.activeAccount.authToken);
             ClientSession.dos.writeInt(m.ordinal());
@@ -27,7 +27,7 @@ public class Encoder {
         }
     }
 
-    public static synchronized void sendData(Object o) {
+    public static synchronized void sendObject(Object o) {
         try {
             ClientSession.dos.writeUTF(Account.activeAccount.authToken);
             ObjectOutputStream oos = new ObjectOutputStream(ClientSession.dos);
@@ -46,7 +46,7 @@ public class Encoder {
     public static synchronized void sendPackage(Message m,Object... datas){
         sendCode(m);
         for (Object data : datas) {
-            sendData(data);
+            sendObject(data);
         }
     }
 }

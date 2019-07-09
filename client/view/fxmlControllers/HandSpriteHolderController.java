@@ -8,7 +8,7 @@ public class HandSpriteHolderController extends Holder {
     public Label neededMana;
     public ImageView border;
     public ImageView manaBackGround;
-    boolean isThisCardComingCard;
+    public boolean isThisCardComingCard;
 
     public void changeBackGround_Enter() {
         if (isThisCardComingCard) return;

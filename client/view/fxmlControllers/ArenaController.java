@@ -279,7 +279,7 @@ public class ArenaController implements Initializable {
 
     }
 
-    void rmSelectionEffects() {
+    private void rmSelectionEffects() {
         for (Node node : selectedNodes) {
             node.setEffect(null);
         }
@@ -287,32 +287,33 @@ public class ArenaController implements Initializable {
     }
 
     //-----------------------:required things:--------------------------
-    public Pane menu;
-    public Pane graveYardPane;
-    public HBox mainGraveYard;
-    public VBox player1_items;
-    public VBox player2_items;
-    public HBox hand;
+    private Pane menu;
+    private Pane graveYardPane;
+    private HBox mainGraveYard;
+    private VBox player1_items;
+    private VBox player2_items;
+    private HBox hand;
     private FXMLLoader[] fxmlLoaders = new FXMLLoader[6];
     private HandSpriteHolderController[] cardHolders = new HandSpriteHolderController[6];
     private ArrayList<ImageView> player1GraveYard = new ArrayList<>();
     private ArrayList<ImageView> player2GraveYard = new ArrayList<>();
 
     //----------------------:window top section:--------------------
-    //top window items:
-    public ImageView player1_avatar;
-    public ImageView player2_avatar;
-    public Label player1_username;
-    public Label player2_username;
-    public ImageView player1_avatarBorder;
-    public ImageView player2_avatarBorder;
-    public GridPane player1_mana;
-    public GridPane player2_mana;
+    //top section items:
+    private ImageView player1_avatar;
+    private ImageView player2_avatar;
+    private Label player1_username;
+    private Label player2_username;
+    private ImageView player1_avatarBorder;
+    private ImageView player2_avatarBorder;
+    private GridPane player1_mana;
+    private GridPane player2_mana;
+
     //players special power mana:
     private FXMLLoader[] fxmlLoaders1 = new FXMLLoader[2];
     private HeroSpecialPowerSpriteController[] heroSpecialPowerControllers = new HeroSpecialPowerSpriteController[2];
-    public Pane hero1SpecialPower;
-    public Pane hero2SpecialPower;
+    private Pane hero1SpecialPower;
+    private Pane hero2SpecialPower;
     private int[] playersMana = {0, 0};
 
 
@@ -359,7 +360,7 @@ public class ArenaController implements Initializable {
         }
     }
 
-    public void setCoolDown(int remainingTurn, int playerNumber /* 1 or 2 */) {
+    public void setHeroSpecialPowerCoolDown(int remainingTurn, int playerNumber /* 1 or 2 */) {
         heroSpecialPowerControllers[playerNumber - 1].setRemainedTurn(remainingTurn);
     }
 
@@ -574,11 +575,11 @@ public class ArenaController implements Initializable {
         }, Constant.GameConstants.delayAfterGameEnd);
     }
 
-    public Pane shownCardInformationHolder_pn;
+    private Pane shownCardInformationHolder_pn;
     private Pane shownSpell_pn;
     private Pane shownWarrior_pn;
 
-    public void showInfoOfACard(String name, String description, String type /* spell or warrior */, int HP, int AP /* put anything if the card isn't a warrior */) {
+    public void showInfoOfACard(String name, String description, String type, int HP, int AP /* put anything if the card isn't a warrior */) {
         FXMLLoader spellFXML = new FXMLLoader(LoadedScenes.class.getResource("shownSpellInArena.fxml"));
         FXMLLoader warriorFXML = new FXMLLoader(LoadedScenes.class.getResource("shownWarriorInArena.fxml"));
         try {

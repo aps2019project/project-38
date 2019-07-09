@@ -2,5 +2,5 @@ package server.net;
 
 public enum Message {
     saveTheGame, quitTheGame, createAccount, showLeaderBoard, login, startTheGame, setAnActiveAccount, accountDeckIsValid,
-    accountDeckIsNotValid, showPreviousMessages, sendMessage , IamActiveNow , IamOfflineNow;
+    accountDeckIsNotValid, updateMessages, sendMessage, IamActiveNow, logOut,
 }

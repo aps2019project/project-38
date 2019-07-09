@@ -22,10 +22,30 @@ import java.util.ResourceBundle;
 public class GlobalChatController implements Initializable {
     public TextField message;
     public VBox messagesList;
+    public static VBox staticMessageList;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Encoder.sendCode(Message.showPreviousMessages);
+        staticMessageList = messagesList;
+        Encoder.sendMessage(Message.updateMessages);
+        updateMessages();
+    }
+
+    public void send() {
+        Encoder.sendMessage(Message.sendMessage);
+        Encoder.sendString(Account.activeAccount.username);
+        Encoder.sendString(message.getText());
+        updateMessages();
+    }
+
+    public void back() {
+        message.clear();
+        messagesList.getChildren().clear();
+        WindowChanger.instance.setMainParent(LoadedScenes.mainMenu);
+    }
+
+    public static void updateMessages() {
+        staticMessageList.getChildren().clear();
         Gson gson = new Gson();
         ArrayList<Pair<String, String>> messages = null;
         try {
@@ -43,18 +63,7 @@ public class GlobalChatController implements Initializable {
                 label.setAlignment(Pos.CENTER_LEFT);
             }
             label.resize(330, 70);
-            messagesList.getChildren().add(label);
+            staticMessageList.getChildren().add(label);
         }
-    }
-
-    public void send() {
-        Encoder.sendCode(Message.sendMessage);
-        Encoder.sendString(Account.activeAccount.username);
-        Encoder.sendString(message.getText());
-    }
-
-    public void back() {
-        message.clear();
-        WindowChanger.instance.setMainParent(LoadedScenes.mainMenu);
     }
 }
