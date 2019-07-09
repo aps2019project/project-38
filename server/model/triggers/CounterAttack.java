@@ -2,18 +2,11 @@ package model.triggers;
 
 import model.QualityHaver;
 import model.actions.Attack;
-import model.cards.Warrior;
 import model.conditions.HasBeenAttacked;
-import model.effects.Attacked;
 import model.effects.Dispelablity;
-import model.effects.Effect;
 import model.exceptions.NotEnoughConditions;
 import model.gamestate.AttackState;
 import model.gamestate.GameState;
-import view.fxmlControllers.ArenaController;
-
-import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 //special because it's so common. also the action attack doesn't implement AutoAction.
 //this triggers should be added to all minions, with -1 duration.

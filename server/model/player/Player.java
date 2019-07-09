@@ -1,7 +1,5 @@
 package model.player;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import model.Constant;
 import model.Deck;
 import model.Game;
@@ -9,10 +7,7 @@ import model.cards.Card;
 import model.cards.Hero;
 import model.cards.Spell;
 import model.cards.Warrior;
-import view.fxmlControllers.ArenaController;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,7 +24,7 @@ public abstract class Player implements Serializable {
     private ArrayList<Spell> collectibleItems = new ArrayList<>();
     public boolean ableToReplaceCard;
     private Card nextCard;
-    public Image avatar;
+    public int avatarIndex;
     public String username;
     private Game game;
 

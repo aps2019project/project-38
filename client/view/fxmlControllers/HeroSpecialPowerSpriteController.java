@@ -1,11 +1,9 @@
 package view.fxmlControllers;
 
+import client.net.Digikala;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import model.Game;
 import model.cards.HeroPower;
-import model.cards.Spell;
-import model.player.Player;
 import view.images.LoadedImages;
 import view.visualentities.VisualSpell;
 
@@ -25,16 +23,16 @@ public class HeroSpecialPowerSpriteController extends Holder {
         }
     }
 
-    public void setHeroSpecialPowerFirstInfo(Player player) {
-        if (player.getMainDeck().getHero().getPower() != null) {
-            HeroPower spell = player.getMainDeck().getHero().getPower();
+    public void setHeroSpecialPowerFirstInfo(int playerIndex) {
+        HeroPower spell = Digikala.getHeroPowerOfPlayer(playerIndex);
+        if (spell != null) {
             VisualSpell vs = new VisualSpell(spell.getName());
             put(vs.view, vs.getWidth(), vs.getHeight());
             neededMana.setText(String.valueOf(spell.getRequiredMana()));
             remainedTurn.setText(String.valueOf(spell.coolDownRemaining));
 
             vs.view.setOnMouseClicked(event -> {
-                ArenaController.ac.game.getSelectionManager().selectSpecialPower();
+                ArenaController.ac.sm.selectSpecialPower();
             });
 
             vs.view.setOnMouseEntered(event -> {

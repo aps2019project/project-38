@@ -5,8 +5,8 @@ import javafx.scene.control.Label;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import model.Account;
 import model.Deck;
-import model.Game;
 import model.Level;
 import model.gamemodes.CarryingFlag;
 import model.gamemodes.CollectingFlag;
@@ -24,8 +24,6 @@ public class GamePreviewButtonController {
     private String fatherSceneName, nextSceneName;
 
     public void doClickEvents(MouseEvent mouseEvent) {
-
-
         LoadingGamePreviewScenes.selectedButtonsText.add(buttonText.getText());
         if (nextSceneName.equals("Game Window")) {
             Game game;

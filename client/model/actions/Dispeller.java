@@ -1,18 +1,15 @@
 package model.actions;
 
 import model.Cell;
-import model.Game;
 import model.QualityHaver;
 import model.cards.Spell;
 import model.cards.Warrior;
 import model.effects.Dispelablity;
 import model.effects.Effect;
 import model.gamestate.DispelState;
-import model.player.Player;
 import model.triggers.Trigger;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.UUID;
 import java.util.stream.Collectors;
 

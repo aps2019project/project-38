@@ -1,8 +1,6 @@
 package model.triggers;
 
-import model.Game;
 import model.QualityHaver;
-import model.actions.Move;
 import model.conditions.*;
 import model.effects.Dispelablity;
 import model.effects.Effect;

@@ -2,7 +2,6 @@ package model.gamemodes;
 
 import model.Cell;
 import model.Constant;
-import model.Game;
 import model.cards.Warrior;
 import model.player.Player;
 import model.triggers.Flag;

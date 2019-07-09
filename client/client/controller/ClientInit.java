@@ -5,11 +5,15 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
+import model.Cell;
+import model.cards.Warrior;
 import view.Loader;
 import view.WindowChanger;
 import view.fxmls.LoadedScenes;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 public class ClientInit extends Application {
     public static Stage mainStage;
@@ -21,6 +25,13 @@ public class ClientInit extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
+        Cell c =new Cell(null,2,2);
+        Warrior w = new Warrior(1,"a",2,2,2,2);
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream(bos);
+        oos.writeObject(w);
+        System.out.println(bos.size());
+
         mainStage = primaryStage;
         mainStage.setFullScreen(true);
         mainStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);

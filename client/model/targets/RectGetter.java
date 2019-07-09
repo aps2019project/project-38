@@ -2,13 +2,11 @@ package model.targets;
 
 import model.Cell;
 import model.Constant;
-import model.Game;
 import model.QualityHaver;
 import model.cards.Hero;
 import model.player.Player;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Collectors;
 //in getTarget method i mix cells and warrior it may cause trouble. change cellsToo to cellMod to solve the issue.

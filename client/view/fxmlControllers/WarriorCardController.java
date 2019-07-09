@@ -6,6 +6,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Scale;
+import model.Account;
 import model.Collection;
 import model.Deck;
 import model.cards.Hero;

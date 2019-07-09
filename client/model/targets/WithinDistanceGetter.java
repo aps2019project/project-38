@@ -2,7 +2,6 @@ package model.targets;
 
 import model.Board;
 import model.Cell;
-import model.Game;
 import model.QualityHaver;
 import model.cards.Hero;
 import model.cards.Warrior;

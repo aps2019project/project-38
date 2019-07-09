@@ -1,8 +1,6 @@
 package model.gamemodes;
 
 import model.Constant;
-import model.Game;
-import model.cards.Warrior;
 import model.triggers.Flag;
 
 import java.util.Random;

@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class Spell extends Card {
     private boolean isItem;
-    private HashMap<AutoAction, SpellTarget> actions = new HashMap<>();
+    transient private HashMap<AutoAction, SpellTarget> actions = new HashMap<>();
 
     public Spell(Integer ID, String name, int requiredMana, Integer price, boolean isItem) {
         super(ID, name, price, requiredMana);

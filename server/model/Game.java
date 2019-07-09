@@ -13,7 +13,6 @@ import model.player.HumanPlayer;
 import model.player.Player;
 import model.triggers.CollectibleMine;
 import model.triggers.Trigger;
-import view.fxmlControllers.ArenaController;
 
 import java.io.Serializable;
 import java.util.*;
@@ -25,7 +24,6 @@ public class Game implements Serializable {
     Player[] players = new Player[2];
     private Board board = new Board(this);
     //    public Timer timer = new Timer(Constant.GameConstants.turnTime, ignored -> endTurn());
-    private SelectionManager selectionManager = new SelectionManager(this);
     public int prize;
 
     public Game(GameMode gameMode, Account accountOne, Account accountTwo) {
@@ -142,10 +140,6 @@ public class Game implements Serializable {
 
     public GameMode getGameMode() {
         return gameMode;
-    }
-
-    public SelectionManager getSelectionManager() {
-        return selectionManager;
     }
 
     public void decreaseSpecialPowerCoolDown() {

@@ -1,5 +1,6 @@
 package view.fxmlControllers;
 
+import client.net.Digikala;
 import javafx.animation.*;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -20,12 +21,10 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import model.Cell;
 import model.Constant;
-import model.Game;
 import model.SelectionManager;
 import model.cards.Card;
 import model.cards.Spell;
 import model.cards.Warrior;
-import model.player.Player;
 import view.WindowChanger;
 import view.fxmls.LoadedScenes;
 import view.images.LoadedImages;
@@ -33,15 +32,14 @@ import view.visualentities.SpriteType;
 import view.visualentities.VisualMinion;
 import view.visualentities.VisualSpell;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
 public class ArenaController implements Initializable {
     public static ArenaController ac;
-    public Game game;
+    //    public Game game;//active player: spell,warrior,his index - board:warrior of a special cell , special cell
+    public SelectionManager sm;
     public GridPane grid;
     public Pane pane;
 
@@ -53,24 +51,24 @@ public class ArenaController implements Initializable {
 
     VisualMinion[][] visualMinions;
 
-    public void init(Game game) {
+    public void init(SelectionManager selectionManager) {
         transformGrid();
         fixGridNodesIndexes();
         produceClickBoxes();
         setEscapeAsDeselector();
 
         //initializing essential fields
-        this.game = game;
+        this.sm = selectionManager;
         visualMinions = new VisualMinion[5][9];
 
-        beforeStartTheGame(game.getPlayers()[0], game.getPlayers()[1]);
+        beforeStartTheGame();
     }
 
     private void setEscapeAsDeselector() {
         pane.requestFocus();
         pane.setOnKeyTyped(event -> {
             if (event.getCharacter().getBytes()[0] == 27) {
-                game.getSelectionManager().deselectAction();
+                sm.deselectAction();
             }
         });
     }
@@ -113,10 +111,10 @@ public class ArenaController implements Initializable {
 
         vm.view.setOnMouseEntered(event -> {
             vm.isSelected.set(true);
-            Warrior warrior = game.getBoard().getCell(row, col).getWarrior();
+            Warrior warrior = Digikala.getWarriorOfACell(row, col);
             try {
                 showInfoOfACard(warrior.getName(), warrior.description.getDescriptionOfCardSpecialAbility(), "warrior", warrior.getHp(), warrior.getAp());
-            }catch (NullPointerException e){
+            } catch (NullPointerException e) {
                 //ignore because it's so frequent
             }
         });
@@ -165,7 +163,7 @@ public class ArenaController implements Initializable {
 
         vm.view.setOnMouseEntered(event -> {
             vm.isSelected.set(true);
-            Warrior warrior = game.getBoard().getCell(tRow, tCol).getWarrior();
+            Warrior warrior = Digikala.getWarriorOfACell(tRow, tCol);
             showInfoOfACard(warrior.getName(), warrior.description.getDescriptionOfCardSpecialAbility(), "warrior", warrior.getHp(), warrior.getAp());
         });
     }
@@ -196,7 +194,7 @@ public class ArenaController implements Initializable {
                         public void run() {
                             removeFromBoard(row, col);
                         }
-                    },vm.animation.realDuration);
+                    }, vm.animation.realDuration);
                     stop();
                 }
             }
@@ -244,7 +242,7 @@ public class ArenaController implements Initializable {
     }
 
     void cellOnMouseEvent(int row, int col) {
-        game.getSelectionManager().selectCell(game.getBoard().getCell(row, col));
+        sm.selectCell(Digikala.getSpecificCell(row, col));
     }
 
     ArrayList<Node> selectedNodes = new ArrayList<>();
@@ -279,7 +277,7 @@ public class ArenaController implements Initializable {
 
     }
 
-    void rmSelectionEffects() {
+    private void rmSelectionEffects() {
         for (Node node : selectedNodes) {
             node.setEffect(null);
         }
@@ -287,41 +285,42 @@ public class ArenaController implements Initializable {
     }
 
     //-----------------------:required things:--------------------------
-    public Pane menu;
-    public Pane graveYardPane;
-    public HBox mainGraveYard;
-    public VBox player1_items;
-    public VBox player2_items;
-    public HBox hand;
+    private Pane menu;
+    private Pane graveYardPane;
+    private HBox mainGraveYard;
+    private VBox player1_items;
+    private VBox player2_items;
+    private HBox hand;
     private FXMLLoader[] fxmlLoaders = new FXMLLoader[6];
     private HandSpriteHolderController[] cardHolders = new HandSpriteHolderController[6];
     private ArrayList<ImageView> player1GraveYard = new ArrayList<>();
     private ArrayList<ImageView> player2GraveYard = new ArrayList<>();
 
     //----------------------:window top section:--------------------
-    //top window items:
-    public ImageView player1_avatar;
-    public ImageView player2_avatar;
-    public Label player1_username;
-    public Label player2_username;
-    public ImageView player1_avatarBorder;
-    public ImageView player2_avatarBorder;
-    public GridPane player1_mana;
-    public GridPane player2_mana;
+    //top section items:
+    private ImageView player1_avatar;
+    private ImageView player2_avatar;
+    private Label player1_username;
+    private Label player2_username;
+    private ImageView player1_avatarBorder;
+    private ImageView player2_avatarBorder;
+    private GridPane player1_mana;
+    private GridPane player2_mana;
+
     //players special power mana:
     private FXMLLoader[] fxmlLoaders1 = new FXMLLoader[2];
     private HeroSpecialPowerSpriteController[] heroSpecialPowerControllers = new HeroSpecialPowerSpriteController[2];
-    public Pane hero1SpecialPower;
-    public Pane hero2SpecialPower;
+    private Pane hero1SpecialPower;
+    private Pane hero2SpecialPower;
     private int[] playersMana = {0, 0};
 
 
-    private void beforeStartTheGame(Player player1, Player player2) {
-        player1_avatar.setImage(player1.avatar);
-        player2_avatar.setImage(player2.avatar);
+    private void beforeStartTheGame() {
+        player1_avatar.setImage(LoadedImages.avatars[Digikala.getIndexofAvatar(1)]);
+        player2_avatar.setImage(LoadedImages.avatars[Digikala.getIndexofAvatar(2)]);
 
-        player1_username.setText(player1.username);
-        player2_username.setText(player2.username);
+        player1_username.setText(Digikala.getPlayerUsername(1));
+        player2_username.setText(Digikala.getPlayerUsername(2));
 
         for (int i = 0; i < 2; i++) {
             fxmlLoaders1[i] = new FXMLLoader(LoadedScenes.class.getResource("heroSpecialPower.fxml"));
@@ -334,10 +333,10 @@ public class ArenaController implements Initializable {
             heroSpecialPowerControllers[i] = fxmlLoaders1[i].getController();
             if (i == 0) {
                 hero1SpecialPower.getChildren().add(pane);
-                heroSpecialPowerControllers[i].setHeroSpecialPowerFirstInfo(player1);
+                heroSpecialPowerControllers[i].setHeroSpecialPowerFirstInfo(1);
             } else {
                 hero2SpecialPower.getChildren().add(pane);
-                heroSpecialPowerControllers[i].setHeroSpecialPowerFirstInfo(player2);
+                heroSpecialPowerControllers[i].setHeroSpecialPowerFirstInfo(2);
             }
         }
 
@@ -359,7 +358,7 @@ public class ArenaController implements Initializable {
         }
     }
 
-    public void setCoolDown(int remainingTurn, int playerNumber /* 1 or 2 */) {
+    public void setHeroSpecialPowerCoolDown(int remainingTurn, int playerNumber /* 1 or 2 */) {
         heroSpecialPowerControllers[playerNumber - 1].setRemainedTurn(remainingTurn);
     }
 
@@ -395,7 +394,7 @@ public class ArenaController implements Initializable {
             }
 
             pane.setOnMouseClicked(event -> {
-                game.getSelectionManager().selectCollectibleItem(itemName);
+                sm.selectCollectibleItem(itemName);
             });
         } catch (IOException e) {
             e.printStackTrace();
@@ -454,10 +453,10 @@ public class ArenaController implements Initializable {
                         visualEntity.setOnMouseEntered(event -> {//amir
                             vm.isSelected.set(true);
                             if (i == 0) {
-                                Warrior w = (Warrior) game.getActivePlayer().getNextCard();
+                                Warrior w = (Warrior) Digikala.getNextCard();
                                 showInfoOfACard(w.getName(), w.description.getDescriptionOfCardSpecialAbility(), "warrior", w.getHp(), w.getAp());
                             } else {
-                                Warrior w = (Warrior) game.getActivePlayer().getHand().get(i - 1);
+                                Warrior w = (Warrior)Digikala.getHandCard(i-1);
                                 showInfoOfACard(w.getName(), w.description.getDescriptionOfCardSpecialAbility(), "warrior", w.getHp(), w.getAp());
                             }
                         });
@@ -473,10 +472,10 @@ public class ArenaController implements Initializable {
                         visualEntity.setOnMouseEntered(event -> {//amir
                             vs.idle();
                             if (i == 0) {
-                                Spell w = (Spell) game.getActivePlayer().getNextCard();
+                                Spell w = (Spell) Digikala.getNextCard();
                                 showInfoOfACard(w.getName(), w.description.getDescriptionOfCardSpecialAbility(), "spell", 0, 0);
                             } else {
-                                Spell w = (Spell) game.getActivePlayer().getHand().get(i - 1);
+                                Spell w = (Spell) Digikala.getHandCard(i-1);
                                 showInfoOfACard(w.getName(), w.description.getDescriptionOfCardSpecialAbility(), "spell", 0, 0);
                             }
                         });
@@ -487,7 +486,7 @@ public class ArenaController implements Initializable {
                     }
 
                     if (i > 0) {//amir
-                        visualEntity.setOnMouseClicked(event -> game.getSelectionManager().selectCard(i - 1));
+                        visualEntity.setOnMouseClicked(event -> sm.selectCard(i - 1));
                     }
                     break;
                 }
@@ -501,7 +500,7 @@ public class ArenaController implements Initializable {
         cardHolders[i + 1].neededMana.setText("");
         for (int j = 1; j < 6; j++) {
             if (cardHolders[j].neededMana.getText().equals("")) continue;
-            if (Integer.parseInt(cardHolders[j].neededMana.getText()) > playersMana[game.getActivePlayerIndex()]) {
+            if (Integer.parseInt(cardHolders[j].neededMana.getText()) > playersMana[Digikala.getActivePlayerIndex()]) {
                 cardHolders[j].manaBackGround.setEffect(new SepiaTone());
             }
         }
@@ -531,6 +530,7 @@ public class ArenaController implements Initializable {
 
     //arena buttons:
     public void endTurn() {
+        sm.deselectAction();
         game.endTurn();
     }
 
@@ -541,7 +541,7 @@ public class ArenaController implements Initializable {
 
     public void graveYard() {
         ArrayList<ImageView> template = player2GraveYard;
-        if (game.getActivePlayerIndex() == 0) {
+        if (Digikala.getActivePlayerIndex() == 0) {
             template = player1GraveYard;
         }
         mainGraveYard.getChildren().clear();
@@ -569,23 +569,22 @@ public class ArenaController implements Initializable {
         game.quit();
     }
 
-    public void endGame(Player winner) {//todo a banner or sth
+    public void endGame(String winnerUsername) {//todo a banner or sth
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                game = null;
                 LoadedScenes.cleanArena();
                 WindowChanger.instance.setMainParent(LoadedScenes.mainMenu);
             }
         }, Constant.GameConstants.delayAfterGameEnd);
     }
 
-    public Pane shownCardInformationHolder_pn;
+    private Pane shownCardInformationHolder_pn;
     private Pane shownSpell_pn;
     private Pane shownWarrior_pn;
 
-    public void showInfoOfACard(String name, String description, String type /* spell or warrior */, int HP, int AP /* put anything if the card isn't a warrior */) {
+    public void showInfoOfACard(String name, String description, String type, int HP, int AP /* put anything if the card isn't a warrior */) {
         FXMLLoader spellFXML = new FXMLLoader(LoadedScenes.class.getResource("shownSpellInArena.fxml"));
         FXMLLoader warriorFXML = new FXMLLoader(LoadedScenes.class.getResource("shownWarriorInArena.fxml"));
         try {
