@@ -103,11 +103,11 @@ public class ShopController implements Initializable {
     private synchronized void recalculateMinions(KeyEvent keyEvent) {
         String searchText = minionsSearchTextField.getText();
         minions.entrySet().removeIf(entry -> !allMinions.containsKey(entry.getKey()));
-        minions.entrySet().removeIf(entry -> !entry.getKey().getName().toLowerCase()
+        minions.entrySet().removeIf(entry -> !entry.getKey().name.toLowerCase()
                 .replaceAll("[ \t\\-_]+", "").matches
                         (".*" + searchText.toLowerCase().replaceAll("[ \t\\-_]+", "") + ".*"));
         for (Map.Entry<Warrior, AnchorPane> entry : allMinions.entrySet()) {
-            if (!minions.containsKey(entry.getKey()) && entry.getKey().getName().toLowerCase()
+            if (!minions.containsKey(entry.getKey()) && entry.getKey().name.toLowerCase()
                     .replaceAll("[ \t\\-_]+", "").matches
                             (".*" + searchText.toLowerCase().replaceAll("[ \t\\-_]+", "") + ".*"))
                 minions.put(entry.getKey(), entry.getValue());
@@ -135,13 +135,13 @@ public class ShopController implements Initializable {
     private void initializeAllMinions() {
         for (Iterator<Map.Entry<Warrior, AnchorPane>> iterator = allMinions.entrySet().iterator(); iterator.hasNext();) {
             Warrior minion = iterator.next().getKey();
-            if (!CardFactory.getAllBuiltMinions().contains(minion)) {
+            if (!CardFactory.getAllBuiltMinions().containsKey(minion) || CardFactory.getAllBuiltMinions().get(minion) <= 0) {//todo simpler
                 iterator.remove();
             }
         }
-        for (Warrior minion : CardFactory.getAllBuiltMinions()) {
-            if (!allMinions.containsKey(minion)) {
-                loadMinion(minion);
+        for (Map.Entry<Warrior, Integer> minion : CardFactory.getAllBuiltMinions().entrySet()) {
+            if (!allMinions.containsKey(minion.getKey()) && minion.getValue() > 0) {
+                loadMinion(minion.getKey());
             }
         }
     }
@@ -163,11 +163,11 @@ public class ShopController implements Initializable {
     private synchronized void recalculateHeroes(KeyEvent keyEvent) {
         String searchText = heroesSearchTextField.getText();
         heroes.entrySet().removeIf(entry -> !allHeroes.containsKey(entry.getKey()));
-        heroes.entrySet().removeIf(entry -> !entry.getKey().getName().toLowerCase()
+        heroes.entrySet().removeIf(entry -> !entry.getKey().name.toLowerCase()
                 .replaceAll("[ \t\\-_]+", "").matches
                         (".*" + searchText.toLowerCase().replaceAll("[ \t\\-_]+", "") + ".*"));
         for (Map.Entry<Hero, AnchorPane> entry : allHeroes.entrySet()) {
-            if (!heroes.containsKey(entry.getKey()) && entry.getKey().getName().toLowerCase()
+            if (!heroes.containsKey(entry.getKey()) && entry.getKey().name.toLowerCase()
                     .replaceAll("[ \t\\-_]+", "").matches
                             (".*" + searchText.toLowerCase().replaceAll("[ \t\\-_]+", "") + ".*"))
                 heroes.put(entry.getKey(), entry.getValue());
@@ -195,13 +195,13 @@ public class ShopController implements Initializable {
     private void initializeAllHeroes() {
         for (Iterator<Map.Entry<Hero, AnchorPane>> iterator = allHeroes.entrySet().iterator(); iterator.hasNext();) {
             Hero hero = iterator.next().getKey();
-            if (!CardFactory.getAllBuiltHeroes().contains(hero)) {
+            if (!CardFactory.getAllBuiltHeroes().containsKey(hero) || CardFactory.getAllBuiltHeroes().get(hero) <= 0) {//todo simpler
                 iterator.remove();
             }
         }
-        for (Hero hero : CardFactory.getAllBuiltHeroes()) {
-            if (!allHeroes.containsKey(hero)) {
-                loadHero(hero);
+        for (Map.Entry<Hero, Integer> hero : CardFactory.getAllBuiltHeroes().entrySet()) {
+            if (!allHeroes.containsKey(hero.getKey()) && hero.getValue() > 0) {
+                loadHero(hero.getKey());
             }
         }
     }
@@ -223,11 +223,11 @@ public class ShopController implements Initializable {
     private synchronized void recalculateSpells(KeyEvent keyEvent) {
         String searchText = spellsSearchTextField.getText();
         spells.entrySet().removeIf(entry -> !allSpells.containsKey(entry.getKey()));
-        spells.entrySet().removeIf(entry -> !entry.getKey().getName().toLowerCase()
+        spells.entrySet().removeIf(entry -> !entry.getKey().name.toLowerCase()
                 .replaceAll("[ \t\\-_]+", "").matches
                         (".*" + searchText.toLowerCase().replaceAll("[ \t\\-_]+", "") + ".*"));
         for (Map.Entry<Spell, AnchorPane> entry : allSpells.entrySet()) {
-            if (!spells.containsKey(entry.getKey()) && entry.getKey().getName().toLowerCase()
+            if (!spells.containsKey(entry.getKey()) && entry.getKey().name.toLowerCase()
                     .replaceAll("[ \t\\-_]+", "").matches
                             (".*" + searchText.toLowerCase().replaceAll("[ \t\\-_]+", "") + ".*"))
                 spells.put(entry.getKey(), entry.getValue());
@@ -255,13 +255,13 @@ public class ShopController implements Initializable {
     private void initializeAllSpells() {
         for (Iterator<Map.Entry<Spell, AnchorPane>> iterator = allSpells.entrySet().iterator(); iterator.hasNext();) {
             Spell spell = iterator.next().getKey();
-            if (!CardFactory.getAllBuiltSpells().contains(spell)) {
+            if (!CardFactory.getAllBuiltSpells().containsKey(spell) || CardFactory.getAllBuiltSpells().get(spell) <= 0) {//todo simpler
                 iterator.remove();
             }
         }
-        for (Spell spell : CardFactory.getAllBuiltSpells()) {
-            if (!allSpells.containsKey(spell)) {
-                loadSpell(spell);
+        for (Map.Entry<Spell, Integer> spell : CardFactory.getAllBuiltSpells().entrySet()) {
+            if (!allSpells.containsKey(spell.getKey()) && spell.getValue() > 0) {
+                loadSpell(spell.getKey());
             }
         }
     }
@@ -283,11 +283,11 @@ public class ShopController implements Initializable {
     private synchronized void recalculateItems(KeyEvent keyEvent) {
         String searchText = itemsSearchTextField.getText();
         items.entrySet().removeIf(entry -> !allItems.containsKey(entry.getKey()));
-        items.entrySet().removeIf(entry -> !entry.getKey().getName().toLowerCase()
+        items.entrySet().removeIf(entry -> !entry.getKey().name.toLowerCase()
                 .replaceAll("[ \t\\-_]+", "").matches
                         (".*" + searchText.toLowerCase().replaceAll("[ \t\\-_]+", "") + ".*"));
         for (Map.Entry<Spell, AnchorPane> entry : allItems.entrySet()) {
-            if (!items.containsKey(entry.getKey()) && entry.getKey().getName().toLowerCase()
+            if (!items.containsKey(entry.getKey()) && entry.getKey().name.toLowerCase()
                     .replaceAll("[ \t\\-_]+", "").matches
                             (".*" + searchText.toLowerCase().replaceAll("[ \t\\-_]+", "") + ".*"))
                 items.put(entry.getKey(), entry.getValue());
@@ -315,13 +315,13 @@ public class ShopController implements Initializable {
     private void initializeAllItems() {
         for (Iterator<Map.Entry<Spell, AnchorPane>> iterator = allItems.entrySet().iterator(); iterator.hasNext();) {
             Spell item = iterator.next().getKey();
-            if (!CardFactory.getAllBuiltItems().contains(item)) {
+            if (!CardFactory.getAllBuiltItems().containsKey(item) || CardFactory.getAllBuiltItems().get(item) <= 0) {//todo simpler
                 iterator.remove();
             }
         }
-        for (Spell item : CardFactory.getAllBuiltItems()) {
-            if (!allItems.containsKey(item)) {
-                loadItem(item);
+        for (Map.Entry<Spell, Integer> item : CardFactory.getAllBuiltItems().entrySet()) {
+            if (!allItems.containsKey(item.getKey()) && item.getValue() > 0) {
+                loadItem(item.getKey());
             }
         }
     }
@@ -342,26 +342,29 @@ public class ShopController implements Initializable {
 
     public static void buy(String cardName) {
         Card card = Card.getCardByItsName(cardName);
-        Account account = Account.getActiveAccount();
-        if (Spell.checkIsItem(card)) {
+        Account account = Account.activeAccount;
+        if (Card.checkIsItem(card)) {
             int numberOfItems = 0;
             for (int ID : account.getCollection().getCardIDs()) {
                 Card card1 = Card.getAllCards().get(ID);
-                if (Spell.checkIsItem(card1)) numberOfItems++;
+                if (Card.checkIsItem(card1)) numberOfItems++;
             }
             if (numberOfItems >= 3) {
                 AlertController.setAndShow("You have 3 items. You couldn't buy any other item");
                 return;
             }
         }
-        account.derrick = account.derrick - card.getPrice();
-        account.getCollection().getCardIDs().add(card.getID());
+        account.setDerrick(account.getDerrick() - card.price);
+        account.getCollection().getCardIDs().add(card.ID);
         if (model.Collection.getCollection().getHowManyCard().containsKey(cardName)) {
             int keyValue = model.Collection.getCollection().getHowManyCard().get(cardName);
-            model.Collection.getCollection().getHowManyCard().put(card.getName(), keyValue + 1);
+            model.Collection.getCollection().getHowManyCard().put(card.name, keyValue + 1);
         } else {
-            model.Collection.getCollection().getHowManyCard().put(card.getName(), 1);
+            model.Collection.getCollection().getHowManyCard().put(card.name, 1);
         }
         AlertController.setAndShow("You bought the card successfully");
+        //todo server
     }
 }
+
+//todo if server updated, we should update here too.

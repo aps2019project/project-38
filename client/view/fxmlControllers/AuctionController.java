@@ -24,8 +24,6 @@ import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static view.Utility.scaleCard;
-
 public class AuctionController implements Initializable {
     public TextField priceTextField;
     public ImageView sendProposedPriceButton;
@@ -33,18 +31,19 @@ public class AuctionController implements Initializable {
     public AnchorPane cardPlace;
     public Text timerText;
     public ImageView backButton;
+    public ImageView priceTextFieldImage;
     private Card card;
     private CardControllerForAuction cardControllerForAuction;
     private int maxProposedPrice;
-    private Account accountOfMaxProposedPrice;
+    private String usernameOfAccountOfMaxProposedPrice = null;
 
     public void sendProposedPrice(MouseEvent mouseEvent) {
         String priceString = priceTextField.getText();
         if (!priceString.equals("")) {
             int price = Integer.parseInt(priceString);
             if (price > maxProposedPrice) {
-                if (price <= Account.activeAccount.derrick) {
-                    //sending to server.
+                if (price <= Account.activeAccount.getDerrick()) {
+                    //todo sending to server.
                 }
                 else {
                     AlertController.setAndShow("You have not enough derrick");
@@ -89,10 +88,11 @@ public class AuctionController implements Initializable {
         });
     }
 
-    public void initialize(Card card) {
+    public void initialize(Card card, boolean mine) {
+        this.card = card;
         if (card instanceof Spell) {
             Spell spell = (Spell) card;
-            AnchorPane anchorPane = null;
+            AnchorPane anchorPane;
             SpellCardController spellCardController = null;
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("spellCart.fxml"));
@@ -110,7 +110,7 @@ public class AuctionController implements Initializable {
         }
         else {
             Warrior warrior = (Warrior) card;
-            AnchorPane anchorPane = null;
+            AnchorPane anchorPane;
             WarriorCardController warriorCardController = null;
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("warriorCart.fxml"));
@@ -126,7 +126,18 @@ public class AuctionController implements Initializable {
             }
             warriorCardController.setFields(warrior, "for auction inside");
         }
+        if (mine) {
+            priceTextField.setOpacity(0);
+            priceTextFieldImage.setOpacity(0);
+            sendProposedPriceText.setOpacity(0);
+            sendProposedPriceButton.setOpacity(0);
+            priceTextField.setDisable(true);
+            priceTextFieldImage.setDisable(true);
+            sendProposedPriceText.setDisable(true);
+            sendProposedPriceButton.setDisable(true);
+        }
         start();
+        //todo using in start
     }
 
     private void start() {
@@ -142,6 +153,15 @@ public class AuctionController implements Initializable {
     }
 
     private void finish() {
+        if (AuctionsController.auctionsController.cardInAuctionIsMine(card)) {
+            if (usernameOfAccountOfMaxProposedPrice != null) {
+                AlertController.setAndShow(String.format("Yor card by name %s soled in auction to %s for %d Derrick",
+                        card.name, usernameOfAccountOfMaxProposedPrice, maxProposedPrice));
+            }
+            else {
+                AlertController.setAndShow(String.format("Yor card by name %s didn't sell in auction", card.name));
+            }
+        }
         if (WindowChanger.instance.equalsToMainParent
                 (AuctionsController.auctionsController.getCardControllerByCard(card).getAnchorPaneOfAuction())) {
             AuctionsController.auctionsController.calculateEveryThing();
@@ -150,10 +170,16 @@ public class AuctionController implements Initializable {
         System.gc();
     }
 
-    public void setMaxProposedPrice(int maxProposedPrice, Account accountOfMaxProposedPrice) {
+    private void setMaxProposedPrice(int maxProposedPrice, String usernameOfAccountOfMaxProposedPrice) {
         this.maxProposedPrice = maxProposedPrice;
+        this.usernameOfAccountOfMaxProposedPrice = usernameOfAccountOfMaxProposedPrice;
+    }
+
+    public static void setMaxProposedPrice(Card card, int maxProposedPrice, String usernameOfAccountOfMaxProposedPrice) {
         AuctionsController.auctionsController.getCardControllerByCard(card).getAuctionController()
-                .setMaxProposedPrice(maxProposedPrice, accountOfMaxProposedPrice);
-        cardControllerForAuction.setMaxProposedPrice(maxProposedPrice, accountOfMaxProposedPrice);
+                .setMaxProposedPrice(maxProposedPrice, usernameOfAccountOfMaxProposedPrice);
+        AuctionsController.auctionsController.getCardControllerByCard(card).getAuctionController()
+                .cardControllerForAuction.setMaxProposedPrice(maxProposedPrice, usernameOfAccountOfMaxProposedPrice);
+        //todo using
     }
 }

@@ -1,5 +1,8 @@
 package model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Account {
     public static Account activeAccount = new Account();
 
@@ -8,5 +11,17 @@ public class Account {
 
     private Account() {
 
+    }
+
+    public Collection getCollection() {
+        //todo server
+    }
+
+    public int getDerrick() {
+        //todo server
+    }
+
+    public void setDerrick(int newDerrick) {
+        //todo server
     }
 }

@@ -113,8 +113,8 @@ public class RemovingDeckCardsController implements Initializable {
     }
 
     private void initializeAllMinions() {
-        allMinions.entrySet().removeIf(entry -> !selectedCardsNameToNumberHashMap.containsKey(entry.getKey().getName()) ||
-                selectedCardsNameToNumberHashMap.get(entry.getKey().getName()) <= 0);
+        allMinions.entrySet().removeIf(entry -> !selectedCardsNameToNumberHashMap.containsKey(entry.getKey().name) ||
+                selectedCardsNameToNumberHashMap.get(entry.getKey().name) <= 0);
         for (Map.Entry<String, Integer> entry : selectedCardsNameToNumberHashMap.entrySet()) {
             if (entry.getValue() > 0) {
                 Card card = getCardByItsName(entry.getKey());
@@ -145,11 +145,11 @@ public class RemovingDeckCardsController implements Initializable {
     private synchronized void recalculateMinions(KeyEvent keyEvent) {
         String searchText = minionsSearchTextField.getText();
         minions.entrySet().removeIf(entry -> !allMinions.containsKey(entry.getKey()));
-        minions.entrySet().removeIf(entry -> !entry.getKey().getName().toLowerCase()
+        minions.entrySet().removeIf(entry -> !entry.getKey().name.toLowerCase()
                 .replaceAll("[ \t\\-_]+", "").matches
                         (".*" + searchText.toLowerCase().replaceAll("[ \t\\-_]+", "") + ".*"));
         for (Map.Entry<Warrior, AnchorPane> entry : allMinions.entrySet()) {
-            if (!minions.containsKey(entry.getKey()) && entry.getKey().getName().toLowerCase()
+            if (!minions.containsKey(entry.getKey()) && entry.getKey().name.toLowerCase()
                     .replaceAll("[ \t\\-_]+", "").matches
                             (".*" + searchText.toLowerCase().replaceAll("[ \t\\-_]+", "") + ".*"))
                 minions.put(entry.getKey(), entry.getValue());
@@ -175,8 +175,8 @@ public class RemovingDeckCardsController implements Initializable {
     }
 
     private void initializeAllHeroes() {
-        allHeroes.entrySet().removeIf(entry -> !selectedCardsNameToNumberHashMap.containsKey(entry.getKey().getName()) ||
-                selectedCardsNameToNumberHashMap.get(entry.getKey().getName()) <= 0);
+        allHeroes.entrySet().removeIf(entry -> !selectedCardsNameToNumberHashMap.containsKey(entry.getKey().name) ||
+                selectedCardsNameToNumberHashMap.get(entry.getKey().name) <= 0);
         for (Map.Entry<String, Integer> entry : selectedCardsNameToNumberHashMap.entrySet()) {
             if (entry.getValue() > 0) {
                 Card card = getCardByItsName(entry.getKey());
@@ -207,11 +207,11 @@ public class RemovingDeckCardsController implements Initializable {
     private synchronized void recalculateHeroes(KeyEvent keyEvent) {
         String searchText = heroesSearchTextField.getText();
         heroes.entrySet().removeIf(entry -> !allHeroes.containsKey(entry.getKey()));
-        heroes.entrySet().removeIf(entry -> !entry.getKey().getName().toLowerCase()
+        heroes.entrySet().removeIf(entry -> !entry.getKey().name.toLowerCase()
                 .replaceAll("[ \t\\-_]+", "").matches
                         (".*" + searchText.toLowerCase().replaceAll("[ \t\\-_]+", "") + ".*"));
         for (Map.Entry<Hero, AnchorPane> entry : allHeroes.entrySet()) {
-            if (!heroes.containsKey(entry.getKey()) && entry.getKey().getName().toLowerCase()
+            if (!heroes.containsKey(entry.getKey()) && entry.getKey().name.toLowerCase()
                     .replaceAll("[ \t\\-_]+", "").matches
                             (".*" + searchText.toLowerCase().replaceAll("[ \t\\-_]+", "") + ".*"))
                 heroes.put(entry.getKey(), entry.getValue());
@@ -237,8 +237,8 @@ public class RemovingDeckCardsController implements Initializable {
     }
 
     private void initializeAllSpells() {
-        allSpells.entrySet().removeIf(entry -> !selectedCardsNameToNumberHashMap.containsKey(entry.getKey().getName()) ||
-                selectedCardsNameToNumberHashMap.get(entry.getKey().getName()) <= 0);
+        allSpells.entrySet().removeIf(entry -> !selectedCardsNameToNumberHashMap.containsKey(entry.getKey().name) ||
+                selectedCardsNameToNumberHashMap.get(entry.getKey().name) <= 0);
         for (Map.Entry<String, Integer> entry : selectedCardsNameToNumberHashMap.entrySet()) {
             if (entry.getValue() > 0) {
                 Card card = getCardByItsName(entry.getKey());
@@ -269,11 +269,11 @@ public class RemovingDeckCardsController implements Initializable {
     private synchronized void recalculateSpells(KeyEvent keyEvent) {
         String searchText = spellsSearchTextField.getText();
         spells.entrySet().removeIf(entry -> !allSpells.containsKey(entry.getKey()));
-        spells.entrySet().removeIf(entry -> !entry.getKey().getName().toLowerCase()
+        spells.entrySet().removeIf(entry -> !entry.getKey().name.toLowerCase()
                 .replaceAll("[ \t\\-_]+", "").matches
                         (".*" + searchText.toLowerCase().replaceAll("[ \t\\-_]+", "") + ".*"));
         for (Map.Entry<Spell, AnchorPane> entry : allSpells.entrySet()) {
-            if (!spells.containsKey(entry.getKey()) && entry.getKey().getName().toLowerCase()
+            if (!spells.containsKey(entry.getKey()) && entry.getKey().name.toLowerCase()
                     .replaceAll("[ \t\\-_]+", "").matches
                             (".*" + searchText.toLowerCase().replaceAll("[ \t\\-_]+", "") + ".*"))
                 spells.put(entry.getKey(), entry.getValue());
@@ -299,8 +299,8 @@ public class RemovingDeckCardsController implements Initializable {
     }
 
     private void initializeAllItems() {
-        allItems.entrySet().removeIf(entry -> !selectedCardsNameToNumberHashMap.containsKey(entry.getKey().getName()) ||
-                selectedCardsNameToNumberHashMap.get(entry.getKey().getName()) <= 0);
+        allItems.entrySet().removeIf(entry -> !selectedCardsNameToNumberHashMap.containsKey(entry.getKey().name) ||
+                selectedCardsNameToNumberHashMap.get(entry.getKey().name) <= 0);
         for (Map.Entry<String, Integer> entry : selectedCardsNameToNumberHashMap.entrySet()) {
             if (entry.getValue() > 0) {
                 Card card = getCardByItsName(entry.getKey());
@@ -331,11 +331,11 @@ public class RemovingDeckCardsController implements Initializable {
     private synchronized void recalculateItems(KeyEvent keyEvent) {
         String searchText = itemsSearchTextField.getText();
         items.entrySet().removeIf(entry -> !allItems.containsKey(entry.getKey()));
-        items.entrySet().removeIf(entry -> !entry.getKey().getName().toLowerCase()
+        items.entrySet().removeIf(entry -> !entry.getKey().name.toLowerCase()
                 .replaceAll("[ \t\\-_]+", "").matches
                         (".*" + searchText.toLowerCase().replaceAll("[ \t\\-_]+", "") + ".*"));
         for (Map.Entry<Spell, AnchorPane> entry : allItems.entrySet()) {
-            if (!items.containsKey(entry.getKey()) && entry.getKey().getName().toLowerCase()
+            if (!items.containsKey(entry.getKey()) && entry.getKey().name.toLowerCase()
                     .replaceAll("[ \t\\-_]+", "").matches
                             (".*" + searchText.toLowerCase().replaceAll("[ \t\\-_]+", "") + ".*"))
                 items.put(entry.getKey(), entry.getValue());

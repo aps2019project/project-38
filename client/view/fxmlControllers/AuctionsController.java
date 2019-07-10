@@ -119,4 +119,8 @@ public class AuctionsController {
             return othersCardToCardControllerHashMap.get(card);
         }
     }
+
+    public boolean cardInAuctionIsMine(Card card) {
+        return mineCardToCardControllerHashMap.containsKey(card);
+    }
 }
