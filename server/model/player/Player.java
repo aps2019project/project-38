@@ -7,6 +7,8 @@ import model.cards.Card;
 import model.cards.Hero;
 import model.cards.Spell;
 import model.cards.Warrior;
+import server.net.Message;
+import server.net.ServerSession;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -17,16 +19,16 @@ import java.util.Random;
 
 public abstract class Player implements Serializable {
     public String username;
-    private int mana;
-    protected Deck mainDeck;
-    protected HashMap<Integer, Card> hand = new HashMap<>();
-    protected ArrayList<Warrior> warriors = new ArrayList<>();
-    protected ArrayList<Card> usedCards = new ArrayList<>();
-    private ArrayList<Spell> collectibleItems = new ArrayList<>();
     public boolean ableToReplaceCard;
+    private int mana;
+    private Deck mainDeck;
+    private ArrayList<Card> usedCards = new ArrayList<>();
+    private ArrayList<Spell> collectibleItems = new ArrayList<>();
     private Card nextCard;
-    public int avatarIndex;
     private Game game;
+    HashMap<Integer, Card> hand = new HashMap<>();
+    ArrayList<Warrior> warriors = new ArrayList<>();
+    int avatarIndex;
 
     public Player(Deck deck, Game game) {
         this.mainDeck = deck;
@@ -43,12 +45,12 @@ public abstract class Player implements Serializable {
 
     public void setMana(int amount) {
         mana = amount;
-        ArenaController.ac.setActiveMana(mana,getGame().getPlayerNumber(this)+1);
+        ServerSession.getSession(username).encoder.sendPackage(Message.mana,mana,getGame().getPlayerNumber(this)+1);
     }
 
     public void addMana(int amount) {
         mana += amount;
-        ArenaController.ac.setActiveMana(mana,getGame().getPlayerNumber(this)+1);
+        ServerSession.getSession(username).encoder.sendPackage(Message.mana,mana,getGame().getPlayerNumber(this)+1);
     }
 
     public void initializeNextCard() {

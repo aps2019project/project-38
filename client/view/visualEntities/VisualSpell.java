@@ -1,10 +1,7 @@
-package view.visualEntities;
+package view.visualentities;
 
 import javafx.scene.image.ImageView;
-import model.cards.Card;
 import view.images.LoadedImages;
-
-import java.util.Objects;
 
 public class VisualSpell {
     String name;

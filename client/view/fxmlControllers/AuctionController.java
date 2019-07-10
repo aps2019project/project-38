@@ -16,6 +16,8 @@ import model.cards.Card;
 import model.cards.Spell;
 import model.cards.Warrior;
 import view.WindowChanger;
+import view.fxmlControllers.cardHolder.SpellCardController;
+import view.fxmlControllers.cardHolder.WarriorCardController;
 import view.fxmls.LoadedScenes;
 
 import java.io.IOException;

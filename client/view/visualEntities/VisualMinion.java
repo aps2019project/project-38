@@ -1,13 +1,11 @@
-package view.visualEntities;
+package view.visualentities;
 
 import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.scene.image.ImageView;
-import model.cards.Card;
 import view.images.LoadedImages;
 
-import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ArrayBlockingQueue;

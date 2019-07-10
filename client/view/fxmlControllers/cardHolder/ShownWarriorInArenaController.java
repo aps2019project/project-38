@@ -1,4 +1,4 @@
-package view.fxmlControllers;
+package view.fxmlControllers.cardHolder;
 
 import javafx.scene.text.Text;
 

@@ -12,19 +12,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Spell extends Card {
-    private boolean isItem;
     private HashMap<AutoAction, SpellTarget> actions = new HashMap<>();
+    private boolean isItem;
+
 
     public Spell(Integer ID, String name, int requiredMana, Integer price, boolean isItem) {
         super(ID, name, price, requiredMana);
         this.isItem = isItem;
     }
 
-    public HashMap<AutoAction, SpellTarget> getActions() {
-        return actions;
-    }
-
-    public static boolean checkIsItem(Card card) {
+    public static boolean checkIsItem(Card card) { //todo HASHEM
         if (card instanceof Spell) {
             Spell spell = (Spell) card;
             return spell.isItem;
@@ -41,13 +38,13 @@ public class Spell extends Card {
                 didSth = entry.getKey().execute(this, target);
             }
         }
-        if(!didSth){
+        if (!didSth) {
             throw new NotEnoughConditions("No valid target");
         }
     }
 
     @Override
-    public Spell deepCopy(){
+    public Spell deepCopy() {
         try {
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             ObjectOutputStream oos = new ObjectOutputStream(bos);
@@ -56,11 +53,15 @@ public class Spell extends Card {
             ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
             ObjectInputStream ois = new ObjectInputStream(bis);
             return (Spell) ois.readObject();
-        }catch (IOException | ClassNotFoundException e){
+        } catch (IOException | ClassNotFoundException e) {
             System.err.println("could not deep copy in spell:");
             e.printStackTrace();
         }
         return this;
+    }
+
+    public HashMap<AutoAction, SpellTarget> getActions() {
+        return actions;
     }
 
     public boolean isItem() {

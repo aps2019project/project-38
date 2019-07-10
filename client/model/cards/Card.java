@@ -25,4 +25,8 @@ public abstract class Card implements Serializable {
     public static Integer getIDByName(String key) {
         //todo server
     }
+
+    public String getName() {
+        return name;
+    }
 }

@@ -13,9 +13,9 @@ public class Level {
     private Deck deck;
     private GameMode gameMode;
     private int prize;
-    private boolean available = true; //todo badana
+    private boolean available = true;
 
-    public Level(Deck deck, GameMode gameMode, int prize) {
+    private Level(Deck deck, GameMode gameMode, int prize) {
         this.deck = deck;
         this.gameMode = gameMode;
         this.prize = prize;

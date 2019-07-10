@@ -24,4 +24,8 @@ public class Account {
     public void setDerrick(int newDerrick) {
         //todo server
     }
+
+    public static Account getActiveAccount() {
+        return activeAccount;
+    }
 }
