@@ -15,7 +15,7 @@ import model.cards.Hero;
 import model.cards.Warrior;
 import view.Utility;
 import view.fxmls.LoadedScenes;
-import view.visualentities.VisualMinion;
+import view.visualEntities.VisualMinion;
 
 import java.io.IOException;
 import java.util.regex.Matcher;

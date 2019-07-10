@@ -134,7 +134,7 @@ public abstract class LoadingGamePreviewScenes {
             e.printStackTrace();
         }
         for (Map.Entry<String, Account> entry : Account.getUsernameToAccountMap().entrySet()) {
-            if (!Account.getActiveAccount().equals(entry.getValue()) && entry.getValue().getCollection().getMainDeck() != null) {
+            if (!Account.activeAccount.equals(entry.getValue()) && entry.getValue().getCollection().getMainDeck() != null) {
                 try {
                     FXMLLoader fxmlLoader = new FXMLLoader
                             (LoadedScenes.class.getResource("gamePreviewButton.fxml"));
@@ -174,7 +174,7 @@ public abstract class LoadingGamePreviewScenes {
                 sceneControllers.get("Story").addButton(((AnchorPane)fxmlLoader.load()));
                 ((GamePreviewButtonController)fxmlLoader.getController()).setFields(String.format("Mode: %s\nHero: %s Prize: %d",
                         entry.getValue().getGameMode().getClass().getSimpleName(),
-                        entry.getValue().getDeck().getHero().getName(), entry.getValue().getPrize()), "Story", "Game Window");
+                        entry.getValue().getDeck().getHero().name, entry.getValue().getPrize()), "Story", "Game Window");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -201,13 +201,13 @@ public abstract class LoadingGamePreviewScenes {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        for (Map.Entry<String, Deck> entry : Account.getActiveAccount().getCollection().getAllDecks().entrySet()) {
+        for (Map.Entry<String, Deck> entry : Account.activeAccount.getCollection().getAllDecks().entrySet()) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader
                         (LoadedScenes.class.getResource("gamePreviewButton.fxml"));
                 sceneControllers.get("Custom").addButton(((AnchorPane)fxmlLoader.load()));
                 ((GamePreviewButtonController)fxmlLoader.getController()).setFields(String.format("Deck: %s Hero: %s",
-                        entry.getValue().getName(), entry.getValue().getHero().getName()), "Custom", "Mood");
+                        entry.getValue().getName(), entry.getValue().getHero().name), "Custom", "Mood");
             } catch (IOException e) {
                 e.printStackTrace();
             }

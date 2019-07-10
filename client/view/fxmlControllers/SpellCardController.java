@@ -14,7 +14,7 @@ import model.Deck;
 import model.cards.Spell;
 import view.Utility;
 import view.fxmls.LoadedScenes;
-import view.visualentities.VisualSpell;
+import view.visualEntities.VisualSpell;
 
 import java.io.IOException;
 import java.util.regex.Matcher;
