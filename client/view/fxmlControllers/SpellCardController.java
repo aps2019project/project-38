@@ -37,6 +37,8 @@ public class SpellCardController extends CardControllerForAuction {
 
     public void selectCard(MouseEvent mouseEvent) {
         switch (type) {
+            case "for auction inside":
+                break;
             case "for auction":
                 enterAuction();
                 break;
@@ -44,20 +46,20 @@ public class SpellCardController extends CardControllerForAuction {
                 AlertController.setAndShowAndDo(
                         String.format("Do you want to sell %s? Price: %s (You have %d number of this card) Your Derrick: %d",
                                 nameText.getText(), priceText.getText(),
-                                Account.getActiveAccount().getCollection().getHowManyCard().get(nameText.getText()),
-                                Account.getActiveAccount().derrick), () -> {
+                                Account.activeAccount.getCollection().getHowManyCard().get(nameText.getText()),
+                                Account.activeAccount.getDerrick()), () -> {
                             AlertController.setAndShowAndDoOrNot("Do you want to sell it in auction or selling normally",
                                     () -> CollectionOfShopController.sell(nameText.getText(), true),
                                     () -> CollectionOfShopController.sell(nameText.getText(), false));
                         });
                 break;
             case "for buy":
-                if (Account.getActiveAccount().derrick >= Integer.parseInt(priceText.getText())) {
+                if (Account.activeAccount.getDerrick() >= Integer.parseInt(priceText.getText())) {
                     AlertController.setAndShowAndDo(
                             String.format("Do you want to buy %s? Price: %s (You have %d number of this card) Your Derrick: %d)",
                                     nameText.getText(), priceText.getText(),
-                                    Account.getActiveAccount().getCollection().getHowManyCard().get(nameText.getText()),
-                                    Account.getActiveAccount().derrick), () -> ShopController.buy(nameText.getText()));
+                                    Account.activeAccount.getCollection().getHowManyCard().get(nameText.getText()),
+                                    Account.activeAccount.getDerrick()), () -> ShopController.buy(nameText.getText()));
                 } else {
                     AlertController.setAndShow("You have not enough Derrick");
                 }
@@ -112,17 +114,20 @@ public class SpellCardController extends CardControllerForAuction {
     }
 
     public void setFields(Spell spell, String type) {
-        VisualSpell vs = new VisualSpell(spell.getName());
+        VisualSpell vs = new VisualSpell(spell.name);
         double widthScale = gifPane.getPrefWidth() / vs.animation.width;
         double heightScale = gifPane.getPrefHeight() / vs.animation.height;
         Scale scale = new Scale(widthScale, heightScale, 0, 0);
         vs.view.getTransforms().add(scale);
         gifPane.getChildren().add(vs.view);
-        priceText.setText(String.valueOf(spell.getPrice()));
-        if (!Spell.checkIsItem(spell)) manaText.setText(String.valueOf(spell.getRequiredMana()));
-        nameText.setText(spell.getName());
+        if (type.matches("for auction(| inside)")) {
+            priceText.setText("Base Price: " + spell.price / 2);
+        }
+        else priceText.setText(String.valueOf(spell.price));
+        if (!Spell.checkIsItem(spell)) manaText.setText(String.valueOf(spell.requiredMana));
+        nameText.setText(spell.name);
         typeText.setText(String.format("%s", Spell.checkIsItem(spell) ? "Item" : "Spell"));
-        descriptionText.setText(spell.description.descriptionOfCardSpecialAbility);//todo
+        descriptionText.setText(spell.description.descriptionOfCardSpecialAbility);
         Matcher matcher = Pattern.compile("(?<type>(inside|outside) deck) (?<deckName>.+)").matcher(type);
         if (matcher.matches()) {
             this.type = matcher.group("type");
@@ -132,7 +137,7 @@ public class SpellCardController extends CardControllerForAuction {
             this.type = type;
             FXMLLoader fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("Auction.fxml"));
             try {
-                ((AnchorPane) Utility.scale(fxmlLoader.load()), fxmlLoader.getController());
+                initializeForAuctionType((AnchorPane) Utility.scale(fxmlLoader.load()), fxmlLoader.getController());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -141,7 +146,7 @@ public class SpellCardController extends CardControllerForAuction {
     }
 
     @Override
-    public void setMaxProposedPrice(int proposedPrice, Account accountOfProposedPrice) {
-
+    public void setMaxProposedPrice(int maxProposedPrice, String usernameOfAccountOfMaxProposedPrice) {
+        Platform.runLater(() -> priceText.setText(usernameOfAccountOfMaxProposedPrice + ": " + maxProposedPrice));
     }
 }

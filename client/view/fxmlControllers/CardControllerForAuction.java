@@ -8,7 +8,7 @@ public abstract class CardControllerForAuction {
     private AuctionController auctionController;
     public AnchorPane cardAnchorPane;
 
-    public abstract void setMaxProposedPrice(int proposedPrice, String accountOfProposedPrice);
+    public abstract void setMaxProposedPrice(int maxProposedPrice, String usernameOfAccountOfMaxProposedPrice);
 
     void initializeForAuctionType(AnchorPane anchorPaneOfAuction, AuctionController auctionController) {
         this.anchorPaneOfAuction = anchorPaneOfAuction;

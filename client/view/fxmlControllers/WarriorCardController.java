@@ -40,6 +40,8 @@ public class WarriorCardController extends CardControllerForAuction {
 
     public void selectCard(MouseEvent mouseEvent) {
         switch (type) {
+            case "for auction inside":
+                break;
             case "for auction":
                 enterAuction();
                 break;
@@ -47,20 +49,20 @@ public class WarriorCardController extends CardControllerForAuction {
                 AlertController.setAndShowAndDo(
                         String.format("Do you want to sell %s? Price: %s (You have %d number of this card) Your Derrick: %d",
                                 nameText.getText(), priceText.getText(),
-                                Account.getActiveAccount().getCollection().getHowManyCard().get(nameText.getText()),
-                                Account.getActiveAccount().derrick), () -> {
+                                Account.activeAccount.getCollection().getHowManyCard().get(nameText.getText()),
+                                Account.activeAccount.getDerrick()), () -> {
                             AlertController.setAndShowAndDoOrNot("Do you want to sell it in auction or selling normally",
                                     () -> CollectionOfShopController.sell(nameText.getText(), true),
                                     () -> CollectionOfShopController.sell(nameText.getText(), false));
                         });
                 break;
             case "for buy":
-                if (Account.getActiveAccount().derrick >= Integer.parseInt(priceText.getText())) {
+                if (Account.activeAccount.getDerrick() >= Integer.parseInt(priceText.getText())) {
                     AlertController.setAndShowAndDo(
                             String.format("Do you want to buy %s? Price: %s (You have %d number of this card) Your Derrick: %d)",
                                     nameText.getText(), priceText.getText(),
-                                    Account.getActiveAccount().getCollection().getHowManyCard().get(nameText.getText()),
-                                    Account.getActiveAccount().derrick), () -> ShopController.buy(nameText.getText()));
+                                    Account.activeAccount.getCollection().getHowManyCard().get(nameText.getText()),
+                                    Account.activeAccount.getDerrick()), () -> ShopController.buy(nameText.getText()));
                 } else {
                     AlertController.setAndShow("You have not enough Derrick");
                 }
@@ -115,19 +117,22 @@ public class WarriorCardController extends CardControllerForAuction {
     }
 
     public void setFields(Warrior warrior, String type) {
-        apText.setText(String.valueOf(warrior.getAp()));
-        hpText.setText(String.valueOf(warrior.getHp()));
-        VisualMinion vm = new VisualMinion(warrior.getName());
+        apText.setText(String.valueOf(warrior.ap));
+        hpText.setText(String.valueOf(warrior.hp));
+        VisualMinion vm = new VisualMinion(warrior.name);
         double widthScale = gifPane.getPrefWidth() / vm.animation.width;
         double heightScale = gifPane.getPrefHeight() / vm.animation.height;
         Scale scale = new Scale(widthScale, heightScale, 0, 0);
         vm.view.getTransforms().add(scale);
         gifPane.getChildren().add(vm.view);
-        priceText.setText(String.valueOf(warrior.getPrice()));
-        if (!(warrior instanceof Hero)) manaText.setText(String.valueOf(warrior.getRequiredMana()));
-        nameText.setText(warrior.getName());
+        if (type.matches("for auction(| inside)")) {
+            priceText.setText("Base Price: " + warrior.price / 2);
+        }
+        else priceText.setText(String.valueOf(warrior.price));
+        if (!(warrior instanceof Hero)) manaText.setText(String.valueOf(warrior.requiredMana));
+        nameText.setText(warrior.name);
         typeText.setText(String.format("%s (%s)", warrior instanceof Hero ? "Hero" : "Minion", warrior.getWarriorType()));
-        descriptionText.setText(warrior.description.descriptionOfCardSpecialAbility);//todo
+        descriptionText.setText(warrior.description.descriptionOfCardSpecialAbility);
         Matcher matcher = Pattern.compile("(?<type>(inside|outside) deck) (?<deckName>.+)").matcher(type);
         if (matcher.matches()) {
             this.type = matcher.group("type");
@@ -145,7 +150,7 @@ public class WarriorCardController extends CardControllerForAuction {
     }
 
     @Override
-    public void setMaxProposedPrice(int proposedPrice, Account accountOfProposedPrice) {
-
+    public void setMaxProposedPrice(int maxProposedPrice, String usernameOfAccountOfMaxProposedPrice) {
+        Platform.runLater(() -> priceText.setText(usernameOfAccountOfMaxProposedPrice + ": " + maxProposedPrice));
     }
 }
