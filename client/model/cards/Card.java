@@ -9,9 +9,15 @@ public abstract class Card implements Serializable {
     public int requiredMana;
     public int price;
 
+    public String getName() {
+        return name;
+    }
 
-    public static Card getCardByItsName(String cardName) {
-        // todo HASHEM آیا واقعن میخواد؟؟
-        return null;
+    public static Card getCardByItsName(String name) {
+
+    }
+
+    public static int getIDByName(String cardName) {
+
     }
 }

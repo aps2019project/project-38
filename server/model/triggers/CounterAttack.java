@@ -10,6 +10,7 @@ import model.gamestate.GameState;
 
 //special because it's so common. also the action attack doesn't implement AutoAction.
 //this triggers should be added to all minions, with -1 duration.
+
 public class CounterAttack extends Trigger {
     {
         conditions.add(new HasBeenAttacked());
@@ -23,10 +24,9 @@ public class CounterAttack extends Trigger {
     protected void executeActions(GameState gameState, QualityHaver owner) {
         AttackState attackState = (AttackState) gameState;
         try {
-            Attack.doIt(attackState.getAttacked().getCell(),
-                    attackState.getAttacker().getCell(), true);
+            Attack.doIt(attackState.getAttacked().getCell(), attackState.getAttacker().getCell(), true);
             ArenaController.ac.attack(attackState.getAttacked().getCell().getRow(), attackState.getAttacked().getCell().getColumn(),
-                    attackState.getAttacker().getCell().getRow(),attackState.getAttacker().getCell().getColumn());
+                    attackState.getAttacker().getCell().getRow(), attackState.getAttacker().getCell().getColumn());
         } catch (NotEnoughConditions notEnoughConditions) {
             //no problem
         }

@@ -9,4 +9,8 @@ public class Account {
     private Account() {
 
     }
+
+    public static Account getActiveAccount() {
+        return activeAccount;
+    }
 }

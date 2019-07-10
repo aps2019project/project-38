@@ -12,12 +12,13 @@ import java.util.Objects;
 
 public class Deck implements Serializable {
     private static HashMap<String, Deck> allDecks = new HashMap<>();
-    private ArrayList<Integer> cardIDs = new ArrayList<>();
-    private String name;
+
     public Spell item;
     public Hero hero;
     public ArrayList<Card> minions = new ArrayList<>();
     public ArrayList<Card> spells = new ArrayList<>();
+    private ArrayList<Integer> cardIDs = new ArrayList<>();
+    private String name;
 
     //***
 
