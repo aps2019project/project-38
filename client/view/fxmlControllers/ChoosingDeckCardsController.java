@@ -57,7 +57,7 @@ public class ChoosingDeckCardsController implements Initializable {
     public ImageView goldCircleOfDeckButton;
     public ImageView deckButton;
     public Text deckButtonText;
-    HashMap<String, Integer> notSelectedCardsNameToNumberHashMap;
+    public HashMap<String, Integer> notSelectedCardsNameToNumberHashMap;
     private Deck deck;
 
     public void back(MouseEvent mouseEvent) {

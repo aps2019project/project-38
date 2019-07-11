@@ -7,11 +7,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import model.Account;
 import model.Deck;
-import model.Level;
-import model.gamemodes.CarryingFlag;
-import model.gamemodes.CollectingFlag;
-import model.gamemodes.GameMode;
-import model.gamemodes.KillingEnemyHero;
 import view.WindowChanger;
 import view.fxmls.LoadedScenes;
 

@@ -53,7 +53,7 @@ public class RemovingDeckCardsController implements Initializable {
     public VBox itemsRightVBox;
     public TextField itemsSearchTextField;
     private static HashMap<Spell, AnchorPane> items = new HashMap<>(), allItems = new HashMap<>();
-    HashMap<String, Integer> selectedCardsNameToNumberHashMap = new HashMap<>();
+    public HashMap<String, Integer> selectedCardsNameToNumberHashMap = new HashMap<>();
     public ImageView backButton;
     public ImageView goldCircleOfSetAsMainDeckButton;
     public ImageView setAsMainDeckButton;

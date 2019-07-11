@@ -1,5 +1,6 @@
 package view.fxmlControllers.cardHolder;
 
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
@@ -14,7 +15,7 @@ import model.cards.Spell;
 import view.Utility;
 import view.fxmlControllers.*;
 import view.fxmls.LoadedScenes;
-import view.visualEntities.VisualSpell;
+import view.visualentities.VisualSpell;
 
 import java.io.IOException;
 import java.util.regex.Matcher;
