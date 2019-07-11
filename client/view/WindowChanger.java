@@ -27,12 +27,13 @@ public class WindowChanger {
         ClientInit.mainStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
     }
 
-    public void setMainParent(Parent pane) {
+    public void setMainParent(Parent parent) {
         Platform.runLater(() -> {
-            mainAnchorPane.getChildren().clear();
-            mainAnchorPane.getChildren().add(pane);
-            parents.clear();
-            parents.add(pane);
+            parent.setEffect(parents.get(0).getEffect());
+            mainAnchorPane.getChildren().remove(parents.get(0));
+            mainAnchorPane.getChildren().add(0, parent);
+            parents.remove(0);
+            parents.add(0, parent);
         });
     }
 

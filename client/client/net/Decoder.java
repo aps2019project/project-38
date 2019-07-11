@@ -6,8 +6,7 @@ import model.cards.HeroPower;
 import model.cards.Spell;
 import model.cards.Warrior;
 import view.Utility;
-import view.fxmlControllers.ArenaController;
-import view.fxmlControllers.GlobalChatController;
+import view.fxmlControllers.*;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -150,6 +149,27 @@ public class Decoder {
             }
 //            fillBoxAndNotifyJ(new Box<>(),new TypeToken<ArrayList<Card>>(){}.getType());
             //---------------
+            ///////ali:
+            case AuctionResult:{
+                String result = (String) readObject();
+                AlertController.setAndShow(result);
+                break;
+            }
+            case AuctionProposedPrice:{
+                fillBoxAndNotify(Digikala.auctionProposedPrice);
+            }
+            case AuctionMaxProposedPriceUpdated:{
+                int auctionIndex = (int) readObject();
+                String username = (String) readObject();
+                int newMaxProposedPrice = (int) readObject();
+                AuctionController.setMaxProposedPrice(auctionIndex, newMaxProposedPrice, username);
+            }
+            case StartNewAuction:{
+                String username = (String) readObject();
+                String cardName = (String) readObject();
+                int auctionIndex = (int) readObject();
+                AuctionsController.auctionsController.loadCard();//todo ali
+            }
         }
     }
 

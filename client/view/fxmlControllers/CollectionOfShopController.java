@@ -1,5 +1,7 @@
 package view.fxmlControllers;
 
+import client.net.Encoder;
+import client.net.Message;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -71,6 +73,8 @@ public class CollectionOfShopController implements Initializable {
 
 
     public void goToAuctions(MouseEvent mouseEvent) {
+        AuctionsController.auctionsController.calculateEveryThing();
+        WindowChanger.instance.setMainParent(LoadedScenes.auctions);
     }
 
     public void shineAuctionsBottom(MouseEvent mouseEvent) {
@@ -368,13 +372,13 @@ public class CollectionOfShopController implements Initializable {
                             () -> doAfterSellingJobs(card));
         }
         else {
-            if (auction) doAfterAuctionSellingJobs(card);
+            if (auction) doAuctionSellingJobs(card);
             else doAfterSellingJobs(card);
         }
     }
 
-    public static void doAfterAuctionSellingJobs(Card card) {
-        //todo server and inside function
+    public static void doAuctionSellingJobs(Card card) {
+        Encoder.sendPackage(Message.StartNewAuction, Account.getActiveAccount().username, card.name);
     }
 
     private static void doAfterSellingJobs(Card card) {

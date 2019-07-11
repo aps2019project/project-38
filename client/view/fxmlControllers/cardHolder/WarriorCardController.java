@@ -126,7 +126,7 @@ public class WarriorCardController extends CardControllerForAuction {
         Scale scale = new Scale(widthScale, heightScale, 0, 0);
         vm.view.getTransforms().add(scale);
         gifPane.getChildren().add(vm.view);
-        if (type.matches("for auction(| inside)")) {
+        if (type.matches("for auction (\\d+ (true|false)|inside)")) {
             priceText.setText("Base Price: " + warrior.price / 2);
         }
         else priceText.setText(String.valueOf(warrior.price));
@@ -139,15 +139,20 @@ public class WarriorCardController extends CardControllerForAuction {
             this.type = matcher.group("type");
             deck = Collection.getCollection().getAllDecks().get(matcher.group("deckName"));
         }
-        else if (type.equals("for auction")) {
+        matcher = Pattern.compile("for auction (?<auctionIndex>\\d+) (?<isMine>true|false)").matcher(type);
+        if (matcher.matches()) {
+            this.type = matcher.group("type");
             FXMLLoader fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("Auction.fxml"));
             try {
                 initializeForAuctionType((AnchorPane) Utility.scale(fxmlLoader.load()), fxmlLoader.getController());
+                ((AuctionController) fxmlLoader.getController()).initialize
+                        (Integer.valueOf(matcher.group("auctionIndex")), warrior,
+                                Boolean.valueOf(matcher.group("isMine")));
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        else this.type = type;
+        else if (type.equals("for auction inside")) this.type = type;
     }
 
     @Override

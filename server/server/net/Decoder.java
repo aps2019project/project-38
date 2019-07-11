@@ -232,6 +232,19 @@ public class Decoder {
                     ss.encoder.sendPackage(Message.showPopup, notEnoughConditions.getMessage());
                 }
             }
+            //////ali:
+            case AuctionProposedPrice:{
+                int auctionIndex = (int) readObject();
+                String username = (String) readObject();
+                int proposedPrice = (int) readObject();
+                Auction.receiveNewProposedPrice(auctionIndex, username, proposedPrice);
+            }
+            case StartNewAuction:{
+                String username = (String) readObject();
+                String cardName = (String) readObject();
+                int auctionIndex = Auction.startNewAuctionAndGetIndex(username, cardName);
+                Encoder.sendPackageToAll(Message.StartNewAuction, username, cardName, auctionIndex);
+            }
         }
     }
 
