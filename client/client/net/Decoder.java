@@ -132,6 +132,15 @@ public class Decoder {
                     }
                 }
                 ArenaController.ac.buildPlayerHand(handMap,playerIndex);
+                break;
+            }
+            case showCollectedCollectibleItems:{
+                ArenaController.ac.showCollectedCollectibleItems((String)readObject(),(int)readObject());
+                break;
+            }
+            case kill:{
+                ArenaController.ac.kill((int)readObject(),(int)readObject());
+                break;
             }
             //---------------
         }

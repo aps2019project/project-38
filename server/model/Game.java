@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 public class Game implements Serializable {
     private Player[] players = new Player[2];
-    Cameraman cm = new Cameraman(this);
+    public Cameraman cm = new Cameraman(this);
     private GameMode gameMode;
     public int turn;
     public int prize;
