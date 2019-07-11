@@ -8,6 +8,7 @@ import model.gamestate.EffTriggApplyState;
 import model.player.Player;
 import model.triggers.CollectibleMine;
 import model.triggers.Trigger;
+import server.net.Message;
 
 import static model.QualityHaver.getGameFromQualityHaver;
 
@@ -49,7 +50,7 @@ public class Applier implements AutoAction {
             Player player = game.getWarriorsPlayer((Warrior) target);
             player.getCollectibleItems().add(cMine.getCollectible());
 
-            ArenaController.ac.showCollectedCollectibleItems(cMine.getCollectible().getName(),game.getPlayerNumber(player)+1); // todo MOEINI
+            game.cm.sendToActivePlayer(Message.showCollectedCollectibleItems,cMine.getCollectible().getName(),game.getPlayerNumber(player)+1);
         }
 
         return didSth;
