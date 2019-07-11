@@ -16,6 +16,8 @@ import model.Collection;
 import model.Deck;
 import model.cards.*;
 import view.WindowChanger;
+import view.fxmlControllers.cardHolder.SpellCardController;
+import view.fxmlControllers.cardHolder.WarriorCardController;
 import view.fxmls.LoadedScenes;
 
 import java.io.IOException;
@@ -105,11 +107,11 @@ public class CollectionOfShopController implements Initializable {
     private synchronized void recalculateMinions(KeyEvent keyEvent) {
         String searchText = minionsSearchTextField.getText();
         minions.entrySet().removeIf(entry -> !allMinions.containsKey(entry.getKey()));
-        minions.entrySet().removeIf(entry -> !entry.getKey().getName().toLowerCase()
+        minions.entrySet().removeIf(entry -> !entry.getKey().name.toLowerCase()
                 .replaceAll("[ \t\\-_]+", "").matches
                         (".*" + searchText.toLowerCase().replaceAll("[ \t\\-_]+", "") + ".*"));
         for (Map.Entry<Warrior, AnchorPane> entry : allMinions.entrySet()) {
-            if (!minions.containsKey(entry.getKey()) && entry.getKey().getName().toLowerCase()
+            if (!minions.containsKey(entry.getKey()) && entry.getKey().name.toLowerCase()
                     .replaceAll("[ \t\\-_]+", "").matches
                             (".*" + searchText.toLowerCase().replaceAll("[ \t\\-_]+", "") + ".*"))
                 minions.put(entry.getKey(), entry.getValue());
@@ -135,17 +137,17 @@ public class CollectionOfShopController implements Initializable {
     }
 
     private void initializeAllMinions() {
-        for (Warrior minion : CardFactory.getAllBuiltMinions()) {
-            if (Account.getActiveAccount().getCollection().getHowManyCard().containsKey(minion.getName())&&
-                    Account.getActiveAccount().getCollection().getHowManyCard().get(minion.getName()) > 0 &&
+        for (Warrior minion : CardFactory.getAllBuiltMinionsHashMapForShop().keySet()) {
+            if (Account.activeAccount.getCollection().getHowManyCard().containsKey(minion.name)&&
+                    Account.activeAccount.getCollection().getHowManyCard().get(minion.name) > 0 &&
                     !allMinions.containsKey(minion)) {
                 loadMinion(minion);
             }
         }
         for (Iterator<Map.Entry<Warrior, AnchorPane>> iterator = allMinions.entrySet().iterator(); iterator.hasNext();) {
             Warrior minion = iterator.next().getKey();
-            if (!Account.getActiveAccount().getCollection().getHowManyCard().containsKey(minion.getName()) ||
-                    Account.getActiveAccount().getCollection().getHowManyCard().get(minion.getName()) <= 0) {
+            if (!Account.activeAccount.getCollection().getHowManyCard().containsKey(minion.name) ||
+                    Account.activeAccount.getCollection().getHowManyCard().get(minion.name) <= 0) {
                 iterator.remove();
             }
         }
@@ -168,11 +170,11 @@ public class CollectionOfShopController implements Initializable {
     private synchronized void recalculateHeroes(KeyEvent keyEvent) {
         String searchText = heroesSearchTextField.getText();
         heroes.entrySet().removeIf(entry -> !allHeroes.containsKey(entry.getKey()));
-        heroes.entrySet().removeIf(entry -> !entry.getKey().getName().toLowerCase()
+        heroes.entrySet().removeIf(entry -> !entry.getKey().name.toLowerCase()
                 .replaceAll("[ \t\\-_]+", "").matches
                         (".*" + searchText.toLowerCase().replaceAll("[ \t\\-_]+", "") + ".*"));
         for (Map.Entry<Hero, AnchorPane> entry : allHeroes.entrySet()) {
-            if (!heroes.containsKey(entry.getKey()) && entry.getKey().getName().toLowerCase()
+            if (!heroes.containsKey(entry.getKey()) && entry.getKey().name.toLowerCase()
                     .replaceAll("[ \t\\-_]+", "").matches
                             (".*" + searchText.toLowerCase().replaceAll("[ \t\\-_]+", "") + ".*"))
                 heroes.put(entry.getKey(), entry.getValue());
@@ -198,17 +200,17 @@ public class CollectionOfShopController implements Initializable {
     }
 
     private void initializeAllHeroes() {
-        for (Hero hero : CardFactory.getAllBuiltHeroes()) {
-            if (Account.getActiveAccount().getCollection().getHowManyCard().containsKey(hero.getName())&&
-                    Account.getActiveAccount().getCollection().getHowManyCard().get(hero.getName()) > 0 &&
+        for (Hero hero : CardFactory.getAllBuiltHeroesHashMapForShop().keySet()) {
+            if (Account.activeAccount.getCollection().getHowManyCard().containsKey(hero.name)&&
+                    Account.activeAccount.getCollection().getHowManyCard().get(hero.name) > 0 &&
                     !allHeroes.containsKey(hero)) {
                 loadHero(hero);
             }
         }
         for (Iterator<Map.Entry<Hero, AnchorPane>> iterator = allHeroes.entrySet().iterator(); iterator.hasNext();) {
             Hero hero = iterator.next().getKey();
-            if (!Account.getActiveAccount().getCollection().getHowManyCard().containsKey(hero.getName()) ||
-                    Account.getActiveAccount().getCollection().getHowManyCard().get(hero.getName()) <= 0) {
+            if (!Account.activeAccount.getCollection().getHowManyCard().containsKey(hero.name) ||
+                    Account.activeAccount.getCollection().getHowManyCard().get(hero.name) <= 0) {
                 iterator.remove();
             }
         }
@@ -231,11 +233,11 @@ public class CollectionOfShopController implements Initializable {
     private synchronized void recalculateSpells(KeyEvent keyEvent) {
         String searchText = spellsSearchTextField.getText();
         spells.entrySet().removeIf(entry -> !allSpells.containsKey(entry.getKey()));
-        spells.entrySet().removeIf(entry -> !entry.getKey().getName().toLowerCase()
+        spells.entrySet().removeIf(entry -> !entry.getKey().name.toLowerCase()
                 .replaceAll("[ \t\\-_]+", "").matches
                         (".*" + searchText.toLowerCase().replaceAll("[ \t\\-_]+", "") + ".*"));
         for (Map.Entry<Spell, AnchorPane> entry : allSpells.entrySet()) {
-            if (!spells.containsKey(entry.getKey()) && entry.getKey().getName().toLowerCase()
+            if (!spells.containsKey(entry.getKey()) && entry.getKey().name.toLowerCase()
                     .replaceAll("[ \t\\-_]+", "").matches
                             (".*" + searchText.toLowerCase().replaceAll("[ \t\\-_]+", "") + ".*"))
                 spells.put(entry.getKey(), entry.getValue());
@@ -261,17 +263,17 @@ public class CollectionOfShopController implements Initializable {
     }
 
     private void initializeAllSpells() {
-        for (Spell spell : CardFactory.getAllBuiltSpells()) {
-            if (Account.getActiveAccount().getCollection().getHowManyCard().containsKey(spell.getName())&&
-                    Account.getActiveAccount().getCollection().getHowManyCard().get(spell.getName()) > 0 &&
+        for (Spell spell : CardFactory.getAllBuiltSpellsHashMapForShop().keySet()) {
+            if (Account.activeAccount.getCollection().getHowManyCard().containsKey(spell.name)&&
+                    Account.activeAccount.getCollection().getHowManyCard().get(spell.name) > 0 &&
                     !allSpells.containsKey(spell)) {
                 loadSpell(spell);
             }
         }
         for (Iterator<Map.Entry<Spell, AnchorPane>> iterator = allSpells.entrySet().iterator(); iterator.hasNext();) {
             Spell spell = iterator.next().getKey();
-            if (!Account.getActiveAccount().getCollection().getHowManyCard().containsKey(spell.getName()) ||
-                    Account.getActiveAccount().getCollection().getHowManyCard().get(spell.getName()) <= 0) {
+            if (!Account.activeAccount.getCollection().getHowManyCard().containsKey(spell.name) ||
+                    Account.activeAccount.getCollection().getHowManyCard().get(spell.name) <= 0) {
                 iterator.remove();
             }
         }
@@ -294,11 +296,11 @@ public class CollectionOfShopController implements Initializable {
     private synchronized void recalculateItems(KeyEvent keyEvent) {
         String searchText = itemsSearchTextField.getText();
         items.entrySet().removeIf(entry -> !allItems.containsKey(entry.getKey()));
-        items.entrySet().removeIf(entry -> !entry.getKey().getName().toLowerCase()
+        items.entrySet().removeIf(entry -> !entry.getKey().name.toLowerCase()
                 .replaceAll("[ \t\\-_]+", "").matches
                         (".*" + searchText.toLowerCase().replaceAll("[ \t\\-_]+", "") + ".*"));
         for (Map.Entry<Spell, AnchorPane> entry : allItems.entrySet()) {
-            if (!items.containsKey(entry.getKey()) && entry.getKey().getName().toLowerCase()
+            if (!items.containsKey(entry.getKey()) && entry.getKey().name.toLowerCase()
                     .replaceAll("[ \t\\-_]+", "").matches
                             (".*" + searchText.toLowerCase().replaceAll("[ \t\\-_]+", "") + ".*"))
                 items.put(entry.getKey(), entry.getValue());
@@ -324,17 +326,17 @@ public class CollectionOfShopController implements Initializable {
     }
 
     private void initializeAllItems() {
-        for (Spell item : CardFactory.getAllBuiltItems()) {
-            if (Account.getActiveAccount().getCollection().getHowManyCard().containsKey(item.getName())&&
-                    Account.getActiveAccount().getCollection().getHowManyCard().get(item.getName()) > 0 &&
+        for (Spell item : CardFactory.getAllBuiltItemsHashMapForShop().keySet()) {
+            if (Account.activeAccount.getCollection().getHowManyCard().containsKey(item.name)&&
+                    Account.activeAccount.getCollection().getHowManyCard().get(item.name) > 0 &&
                     !allItems.containsKey(item)) {
                 loadItem(item);
             }
         }
         for (Iterator<Map.Entry<Spell, AnchorPane>> iterator = allItems.entrySet().iterator(); iterator.hasNext();) {
             Spell item = iterator.next().getKey();
-            if (!Account.getActiveAccount().getCollection().getHowManyCard().containsKey(item.getName()) ||
-                    Account.getActiveAccount().getCollection().getHowManyCard().get(item.getName()) <= 0) {
+            if (!Account.activeAccount.getCollection().getHowManyCard().containsKey(item.name) ||
+                    Account.activeAccount.getCollection().getHowManyCard().get(item.name) <= 0) {
                 iterator.remove();
             }
         }
@@ -356,10 +358,10 @@ public class CollectionOfShopController implements Initializable {
 
     public static void sell(String cardName, boolean auction) {
         Card card = Card.getCardByItsName(cardName);
-        Account account = Account.getActiveAccount();
+        Account account = Account.activeAccount;
         if (account.getCollection().getMainDeck() != null &&
                 account.getCollection().getMainDeck().getCardIDs()
-                        .stream().filter(cardID -> cardID.equals(card.getID())).count() ==
+                        .stream().filter(cardID -> cardID.equals(card.ID)).count() ==
                         Collection.getCollection().getHowManyCard().get(cardName)) {
             AlertController.setAndShowAndDo
                     ("If you selling this card, yur main deck will be invalid. Are you sure about selling it?",
@@ -372,27 +374,28 @@ public class CollectionOfShopController implements Initializable {
     }
 
     public static void doAfterAuctionSellingJobs(Card card) {
-
+        //todo server and inside function
     }
 
     private static void doAfterSellingJobs(Card card) {
-        Account account = Account.getActiveAccount();
+        Account account = Account.activeAccount;
         for (String deckName : account.getCollection().getDecks()) {
-            Deck deck = Account.getActiveAccount().getCollection().getAllDecks().get(deckName);
-            if (deck.getCardIDs().stream().filter(cardID -> cardID.equals(card.getID())).count() ==
-                    Collection.getCollection().getHowManyCard().get(card.getName())) {
-                deck.getCardIDs().remove((Integer) card.getID());
+            Deck deck = Account.activeAccount.getCollection().getAllDecks().get(deckName);
+            if (deck.getCardIDs().stream().filter(cardID -> cardID.equals(card.ID)).count() ==
+                    Collection.getCollection().getHowManyCard().get(card.name)) {
+                deck.getCardIDs().remove((Integer) card.ID);
                 deck.setHero(deck.getHero() == card ? null : deck.getHero());
                 deck.setItem(deck.getItem() == card ? null : deck.getItem());
                 deck.minions.remove(card);
                 deck.spells.remove(card);
             }
         }
-        account.derrick = account.derrick + card.getPrice();
-        account.getCollection().getCardIDs().remove((Integer) card.getID());
-        int keyValue = model.Collection.getCollection().getHowManyCard().get(card.getName());
-        Collection.getCollection().getHowManyCard().put(card.getName(), keyValue - 1);
+        account.setDerrick(account.getDerrick() + card.price);
+        account.getCollection().getCardIDs().remove((Integer) card.ID);
+        int keyValue = model.Collection.getCollection().getHowManyCard().get(card.name);
+        Collection.getCollection().getHowManyCard().put(card.name, keyValue - 1);
         AlertController.setAndShow("You sell the card successfully");
         collectionOfShopController.calculateEverything();
+        //todo server
     }
 }

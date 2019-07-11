@@ -15,539 +15,594 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="682.0" prefWidth="1248.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ArenaController">
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      prefHeight="682.0" prefWidth="1248.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="view.fxmlControllers.ArenaController">
     <children>
-      <Pane fx:id="graveYardPane" prefHeight="738.0" prefWidth="1260.0">
-         <children>
-            <Pane opacity="0.79" prefHeight="744.0" prefWidth="1264.0" style="-fx-background-color: gray;" />
-            <ImageView fitHeight="424.0" fitWidth="690.0" layoutX="283.0" layoutY="77.0">
-               <image>
-                  <Image url="@../images/arena/cemetry.jpg" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="180.0" layoutY="31.0" onMouseClicked="#backFromGraveYard">
-               <image>
-                  <Image url="@../images/arena/close.png" />
-               </image>
-            </ImageView>
-            <ScrollPane layoutX="283.0" layoutY="500.0" prefHeight="142.0" prefWidth="690.0">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="123.0" prefWidth="1695.0">
-                     <children>
-                        <HBox fx:id="mainGraveYard" alignment="CENTER_LEFT" layoutY="-5.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="128.0" prefWidth="1834.0" />
-                     </children></AnchorPane>
-              </content>
-            </ScrollPane>
-         </children></Pane>
+        <Pane fx:id="graveYardPane" prefHeight="738.0" prefWidth="1260.0">
+            <children>
+                <Pane opacity="0.79" prefHeight="744.0" prefWidth="1264.0" style="-fx-background-color: gray;"/>
+                <ImageView fitHeight="424.0" fitWidth="690.0" layoutX="283.0" layoutY="77.0">
+                    <image>
+                        <Image url="@../images/arena/cemetry.jpg"/>
+                    </image>
+                </ImageView>
+                <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="180.0" layoutY="31.0"
+                           onMouseClicked="#backFromGraveYard">
+                    <image>
+                        <Image url="@../images/arena/close.png"/>
+                    </image>
+                </ImageView>
+                <ScrollPane layoutX="283.0" layoutY="500.0" prefHeight="142.0" prefWidth="690.0">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="123.0" prefWidth="1695.0">
+                            <children>
+                                <HBox fx:id="mainGraveYard" alignment="CENTER_LEFT" layoutY="-5.0"
+                                      nodeOrientation="LEFT_TO_RIGHT" prefHeight="128.0" prefWidth="1834.0"/>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </ScrollPane>
+            </children>
+        </Pane>
         <Pane fx:id="menu" prefHeight="732.0" prefWidth="1258.0">
             <children>
-                <Pane opacity="0.73" prefHeight="740.0" prefWidth="1264.0" style="-fx-background-color: gray;" />
+                <Pane opacity="0.73" prefHeight="740.0" prefWidth="1264.0" style="-fx-background-color: gray;"/>
                 <ImageView fitHeight="203.0" fitWidth="318.0" layoutX="463.0" layoutY="269.0" rotate="-90.0">
                     <image>
-                        <Image url="@../images/arena/menu.jpg" />
+                        <Image url="@../images/arena/menu.jpg"/>
                     </image>
                 </ImageView>
                 <ImageView fitHeight="55.0" fitWidth="258.0" layoutX="493.0" layoutY="193.0">
                     <image>
-                        <Image url="@../images/arena/panel_trim_plate.png" />
+                        <Image url="@../images/arena/panel_trim_plate.png"/>
                     </image>
                 </ImageView>
-                <Label alignment="CENTER" layoutX="573.0" layoutY="266.0" opacity="0.51" prefHeight="30.0" prefWidth="101.0" style="-fx-background-color: white; -fx-background-radius: 10;" text="Menu" textAlignment="CENTER">
+                <Label alignment="CENTER" layoutX="573.0" layoutY="266.0" opacity="0.51" prefHeight="30.0"
+                       prefWidth="101.0" style="-fx-background-color: white; -fx-background-radius: 10;" text="Menu"
+                       textAlignment="CENTER">
                     <font>
-                        <Font size="20.0" />
+                        <Font size="20.0"/>
                     </font>
                 </Label>
                 <ImageView fitHeight="55.0" fitWidth="146.0" layoutX="549.0" layoutY="327.0">
                     <image>
-                        <Image url="@../images/arena/btn2.png" />
+                        <Image url="@../images/arena/btn2.png"/>
                     </image>
                 </ImageView>
-                <Label alignment="CENTER" layoutX="565.0" layoutY="340.0" onMouseClicked="#resume" prefHeight="30.0" prefWidth="114.0" text="Resume">
+                <Label alignment="CENTER" layoutX="565.0" layoutY="340.0" onMouseClicked="#resume" prefHeight="30.0"
+                       prefWidth="114.0" text="Resume">
                     <font>
-                        <Font size="20.0" />
+                        <Font size="20.0"/>
                     </font>
                 </Label>
                 <ImageView fitHeight="55.0" fitWidth="146.0" layoutX="550.0" layoutY="380.0">
                     <image>
-                        <Image url="@../images/arena/btn2.png" />
+                        <Image url="@../images/arena/btn2.png"/>
                     </image>
                 </ImageView>
-                <Label alignment="CENTER" layoutX="565.0" layoutY="393.0" onMouseClicked="#save" prefHeight="30.0" prefWidth="114.0" text="Save">
+                <Label alignment="CENTER" layoutX="565.0" layoutY="393.0" onMouseClicked="#save" prefHeight="30.0"
+                       prefWidth="114.0" text="Save">
                     <font>
-                        <Font size="20.0" />
+                        <Font size="20.0"/>
                     </font>
                 </Label>
                 <ImageView fitHeight="55.0" fitWidth="146.0" layoutX="550.0" layoutY="435.0">
                     <image>
-                        <Image url="@../images/arena/btn2.png" />
+                        <Image url="@../images/arena/btn2.png"/>
                     </image>
                 </ImageView>
-                <Label alignment="CENTER" layoutX="566.0" layoutY="448.0" onMouseClicked="#quit" prefHeight="30.0" prefWidth="114.0" text="Quit">
+                <Label alignment="CENTER" layoutX="566.0" layoutY="448.0" onMouseClicked="#quit" prefHeight="30.0"
+                       prefWidth="114.0" text="Quit">
                     <font>
-                        <Font size="20.0" />
+                        <Font size="20.0"/>
                     </font>
                 </Label>
             </children>
         </Pane>
         <ImageView fitHeight="732.0" fitWidth="1258.0">
             <image>
-                <Image url="@../images/arena/background@2x.jpg" />
+                <Image url="@../images/arena/background@2x.jpg"/>
             </image>
         </ImageView>
         <ImageView fitHeight="732.0" fitWidth="1258.0">
             <image>
-                <Image url="@../images/arena/midground@2x.png" />
+                <Image url="@../images/arena/midground@2x.png"/>
             </image>
         </ImageView>
-      <ImageView fitHeight="728.0" fitWidth="1272.0" layoutX="-8.0" layoutY="1.0">
-         <image>
-            <Image url="@../images/arena/midground_river@2x.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="732.0" fitWidth="1258.0">
-         <image>
-            <Image url="@../images/arena/midground_cracks_glow@2x.png" />
-         </image>
-      </ImageView>
+        <ImageView fitHeight="728.0" fitWidth="1272.0" layoutX="-8.0" layoutY="1.0">
+            <image>
+                <Image url="@../images/arena/midground_river@2x.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="732.0" fitWidth="1258.0">
+            <image>
+                <Image url="@../images/arena/midground_cracks_glow@2x.png"/>
+            </image>
+        </ImageView>
         <ImageView fitHeight="98.0" fitWidth="234.0" layoutX="986.0" layoutY="541.0">
             <image>
-                <Image url="@../images/arena/btn1.png" />
+                <Image url="@../images/arena/btn1.png"/>
             </image>
         </ImageView>
-        <Label fx:id="turn_btn" alignment="CENTER" layoutX="1018.0" layoutY="566.0" onMouseClicked="#endTurn" prefHeight="49.0" prefWidth="164.0" text="End Turn">
+        <Label fx:id="turn_btn" alignment="CENTER" layoutX="1018.0" layoutY="566.0" onMouseClicked="#endTurn"
+               prefHeight="49.0" prefWidth="164.0" text="End Turn">
             <font>
-                <Font size="25.0" />
+                <Font size="25.0"/>
             </font>
         </Label>
-        <ImageView fx:id="player1_avatar" fitHeight="153.0" fitWidth="164.0" layoutX="30.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="player1_avatar" fitHeight="153.0" fitWidth="164.0" layoutX="30.0" layoutY="15.0"
+                   pickOnBounds="true" preserveRatio="true"/>
         <ImageView fx:id="player1_avatarBorder" fitHeight="208.0" fitWidth="203.0" layoutX="9.0" layoutY="-12.0">
             <image>
-                <Image url="@../images/arena/activePlayer.png" />
+                <Image url="@../images/arena/activePlayer.png"/>
             </image>
         </ImageView>
-        <ImageView fx:id="player2_avatar" fitHeight="153.0" fitWidth="164.0" layoutX="1064.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="player2_avatar" fitHeight="153.0" fitWidth="164.0" layoutX="1064.0" layoutY="15.0"
+                   pickOnBounds="true" preserveRatio="true"/>
         <ImageView fx:id="player2_avatarBorder" fitHeight="208.0" fitWidth="203.0" layoutX="1043.0" layoutY="-11.0">
             <image>
-                <Image url="@../images/arena/activePlayer.png" />
+                <Image url="@../images/arena/activePlayer.png"/>
             </image>
         </ImageView>
-        <Label fx:id="player1_username" layoutX="222.0" layoutY="50.0" opacity="0.7" prefHeight="35.0" prefWidth="185.0" rotate="-5.0" style="-fx-background-color: white; -fx-background-radius: 10;">
+        <Label fx:id="player1_username" layoutX="222.0" layoutY="50.0" opacity="0.7" prefHeight="35.0" prefWidth="185.0"
+               rotate="-5.0" style="-fx-background-color: white; -fx-background-radius: 10;">
             <font>
-                <Font size="20.0" />
+                <Font size="20.0"/>
             </font>
             <padding>
-                <Insets left="10.0" />
+                <Insets left="10.0"/>
             </padding>
         </Label>
-        <Label fx:id="player2_username" alignment="CENTER_RIGHT" layoutX="846.0" layoutY="50.0" opacity="0.7" prefHeight="35.0" prefWidth="185.0" rotate="5.0" style="-fx-background-color: white; -fx-background-radius: 10;">
+        <Label fx:id="player2_username" alignment="CENTER_RIGHT" layoutX="846.0" layoutY="50.0" opacity="0.7"
+               prefHeight="35.0" prefWidth="185.0" rotate="5.0"
+               style="-fx-background-color: white; -fx-background-radius: 10;">
             <font>
-                <Font size="20.0" />
+                <Font size="20.0"/>
             </font>
             <padding>
-                <Insets right="10.0" />
+                <Insets right="10.0"/>
             </padding>
         </Label>
         <GridPane fx:id="player1_mana" layoutX="222.0" layoutY="85.0" prefHeight="37.0" prefWidth="258.0" rotate="-6.0">
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
             </rowConstraints>
             <children>
                 <ImageView fitHeight="30.0" fitWidth="30.0">
                     <image>
-                        <Image url="@../images/arena/icon_mana_inactive@2x.png" />
+                        <Image url="@../images/arena/icon_mana_inactive@2x.png"/>
                     </image>
                 </ImageView>
                 <ImageView fitHeight="30.0" fitWidth="30.0" GridPane.columnIndex="1">
                     <image>
-                        <Image url="@../images/arena/icon_mana_inactive@2x.png" />
+                        <Image url="@../images/arena/icon_mana_inactive@2x.png"/>
                     </image>
                 </ImageView>
                 <ImageView fitHeight="30.0" fitWidth="30.0" GridPane.columnIndex="2">
                     <image>
-                        <Image url="@../images/arena/icon_mana_inactive@2x.png" />
+                        <Image url="@../images/arena/icon_mana_inactive@2x.png"/>
                     </image>
                 </ImageView>
                 <ImageView fitHeight="30.0" fitWidth="30.0" GridPane.columnIndex="3">
                     <image>
-                        <Image url="@../images/arena/icon_mana_inactive@2x.png" />
+                        <Image url="@../images/arena/icon_mana_inactive@2x.png"/>
                     </image>
                 </ImageView>
                 <ImageView fitHeight="30.0" fitWidth="30.0" GridPane.columnIndex="4">
                     <image>
-                        <Image url="@../images/arena/icon_mana_inactive@2x.png" />
+                        <Image url="@../images/arena/icon_mana_inactive@2x.png"/>
                     </image>
                 </ImageView>
                 <ImageView fitHeight="30.0" fitWidth="30.0" GridPane.columnIndex="5">
                     <image>
-                        <Image url="@../images/arena/icon_mana_inactive@2x.png" />
+                        <Image url="@../images/arena/icon_mana_inactive@2x.png"/>
                     </image>
                 </ImageView>
                 <ImageView fitHeight="30.0" fitWidth="30.0" GridPane.columnIndex="6">
                     <image>
-                        <Image url="@../images/arena/icon_mana_inactive@2x.png" />
+                        <Image url="@../images/arena/icon_mana_inactive@2x.png"/>
                     </image>
                 </ImageView>
                 <ImageView fitHeight="30.0" fitWidth="30.0" GridPane.columnIndex="7">
                     <image>
-                        <Image url="@../images/arena/icon_mana_inactive@2x.png" />
+                        <Image url="@../images/arena/icon_mana_inactive@2x.png"/>
                     </image>
                 </ImageView>
                 <ImageView fitHeight="30.0" fitWidth="30.0" GridPane.columnIndex="8">
                     <image>
-                        <Image url="@../images/arena/icon_mana_inactive@2x.png" />
+                        <Image url="@../images/arena/icon_mana_inactive@2x.png"/>
                     </image>
                 </ImageView>
             </children>
         </GridPane>
-        <GridPane fx:id="player2_mana" layoutX="776.0" layoutY="85.0" prefHeight="37.0" prefWidth="258.0" rotate="186.0">
+        <GridPane fx:id="player2_mana" layoutX="776.0" layoutY="85.0" prefHeight="37.0" prefWidth="258.0"
+                  rotate="186.0">
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
             </rowConstraints>
             <children>
                 <ImageView fitHeight="30.0" fitWidth="30.0">
                     <image>
-                        <Image url="@../images/arena/icon_mana_inactive@2x.png" />
+                        <Image url="@../images/arena/icon_mana_inactive@2x.png"/>
                     </image>
                 </ImageView>
                 <ImageView fitHeight="30.0" fitWidth="30.0" GridPane.columnIndex="1">
                     <image>
-                        <Image url="@../images/arena/icon_mana_inactive@2x.png" />
+                        <Image url="@../images/arena/icon_mana_inactive@2x.png"/>
                     </image>
                 </ImageView>
                 <ImageView fitHeight="30.0" fitWidth="30.0" GridPane.columnIndex="2">
                     <image>
-                        <Image url="@../images/arena/icon_mana_inactive@2x.png" />
+                        <Image url="@../images/arena/icon_mana_inactive@2x.png"/>
                     </image>
                 </ImageView>
                 <ImageView fitHeight="30.0" fitWidth="30.0" GridPane.columnIndex="3">
                     <image>
-                        <Image url="@../images/arena/icon_mana_inactive@2x.png" />
+                        <Image url="@../images/arena/icon_mana_inactive@2x.png"/>
                     </image>
                 </ImageView>
                 <ImageView fitHeight="30.0" fitWidth="30.0" GridPane.columnIndex="4">
                     <image>
-                        <Image url="@../images/arena/icon_mana_inactive@2x.png" />
+                        <Image url="@../images/arena/icon_mana_inactive@2x.png"/>
                     </image>
                 </ImageView>
                 <ImageView fitHeight="30.0" fitWidth="30.0" GridPane.columnIndex="5">
                     <image>
-                        <Image url="@../images/arena/icon_mana_inactive@2x.png" />
+                        <Image url="@../images/arena/icon_mana_inactive@2x.png"/>
                     </image>
                 </ImageView>
                 <ImageView fitHeight="30.0" fitWidth="30.0" GridPane.columnIndex="6">
                     <image>
-                        <Image url="@../images/arena/icon_mana_inactive@2x.png" />
+                        <Image url="@../images/arena/icon_mana_inactive@2x.png"/>
                     </image>
                 </ImageView>
                 <ImageView fitHeight="30.0" fitWidth="30.0" GridPane.columnIndex="7">
                     <image>
-                        <Image url="@../images/arena/icon_mana_inactive@2x.png" />
+                        <Image url="@../images/arena/icon_mana_inactive@2x.png"/>
                     </image>
                 </ImageView>
                 <ImageView fitHeight="30.0" fitWidth="30.0" GridPane.columnIndex="8">
                     <image>
-                        <Image url="@../images/arena/icon_mana_inactive@2x.png" />
+                        <Image url="@../images/arena/icon_mana_inactive@2x.png"/>
                     </image>
                 </ImageView>
             </children>
         </GridPane>
-      <ImageView fitHeight="51.0" fitWidth="122.0" layoutX="976.0" layoutY="620.0">
-         <image>
-            <Image url="@../images/arena/leftButton.png" />
-         </image>
-      </ImageView>
-      <Label alignment="CENTER" layoutX="987.0" layoutY="631.0" onMouseClicked="#menu" prefHeight="30.0" prefWidth="107.0" text="Menu">
-         <font>
-            <Font size="17.0" />
-         </font>
-      </Label>
-      <ImageView fitHeight="51.0" fitWidth="122.0" layoutX="1089.0" layoutY="620.0">
-         <image>
-            <Image url="@../images/arena/rightButton.png" />
-         </image>
-      </ImageView>
-      <Label alignment="CENTER" layoutX="1093.0" layoutY="631.0" onMouseClicked="#graveYard" prefHeight="30.0" prefWidth="107.0" text="Grave Yard">
-         <font>
-            <Font size="17.0" />
-         </font>
-      </Label>
-      <VBox fx:id="player1_items" layoutX="15.0" layoutY="190.0" prefHeight="268.0" prefWidth="107.0" />
-      <VBox fx:id="player2_items" layoutX="1124.0" layoutY="190.0" prefHeight="268.0" prefWidth="107.0" />
-        <GridPane fx:id="grid" hgap="3.0" layoutX="323.0" layoutY="216.0" prefHeight="345.0" prefWidth="595.0" vgap="3.0">
+        <ImageView fitHeight="51.0" fitWidth="122.0" layoutX="976.0" layoutY="620.0">
+            <image>
+                <Image url="@../images/arena/leftButton.png"/>
+            </image>
+        </ImageView>
+        <Label alignment="CENTER" layoutX="987.0" layoutY="631.0" onMouseClicked="#menu" prefHeight="30.0"
+               prefWidth="107.0" text="Menu">
+            <font>
+                <Font size="17.0"/>
+            </font>
+        </Label>
+        <ImageView fitHeight="51.0" fitWidth="122.0" layoutX="1089.0" layoutY="620.0">
+            <image>
+                <Image url="@../images/arena/rightButton.png"/>
+            </image>
+        </ImageView>
+        <Label alignment="CENTER" layoutX="1093.0" layoutY="631.0" onMouseClicked="#graveYard" prefHeight="30.0"
+               prefWidth="107.0" text="Grave Yard">
+            <font>
+                <Font size="17.0"/>
+            </font>
+        </Label>
+        <VBox fx:id="player1_items" layoutX="15.0" layoutY="190.0" prefHeight="268.0" prefWidth="107.0"/>
+        <VBox fx:id="player2_items" layoutX="1124.0" layoutY="190.0" prefHeight="268.0" prefWidth="107.0"/>
+        <GridPane fx:id="grid" hgap="3.0" layoutX="323.0" layoutY="216.0" prefHeight="345.0" prefWidth="595.0"
+                  vgap="3.0">
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
             </rowConstraints>
             <children>
                 <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
-                <ImageView fitHeight="67.0" fitWidth="63.0" layoutX="10.0" layoutY="10.0" opacity="0.18" GridPane.columnIndex="1">
+                <ImageView fitHeight="67.0" fitWidth="63.0" layoutX="10.0" layoutY="10.0" opacity="0.18"
+                           GridPane.columnIndex="1">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
                 <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="2">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
                 <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="3">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
                 <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="4">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
                 <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="5">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
                 <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="6">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
                 <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="7">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
                 <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="8">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
                 <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.rowIndex="1">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
-                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="1"
+                           GridPane.rowIndex="1">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
-                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="2"
+                           GridPane.rowIndex="1">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
-                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="3"
+                           GridPane.rowIndex="1">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
-                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="4"
+                           GridPane.rowIndex="1">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
-                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="5" GridPane.rowIndex="1">
+                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="5"
+                           GridPane.rowIndex="1">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
-                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="6" GridPane.rowIndex="1">
+                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="6"
+                           GridPane.rowIndex="1">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
-                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="7" GridPane.rowIndex="1">
+                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="7"
+                           GridPane.rowIndex="1">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
-                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="8" GridPane.rowIndex="1">
+                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="8"
+                           GridPane.rowIndex="1">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
                 <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.rowIndex="2">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
-                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="1"
+                           GridPane.rowIndex="2">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
-                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="2"
+                           GridPane.rowIndex="2">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
-                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="3"
+                           GridPane.rowIndex="2">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
-                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="4"
+                           GridPane.rowIndex="2">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
-                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="5" GridPane.rowIndex="2">
+                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="5"
+                           GridPane.rowIndex="2">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
-                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="6" GridPane.rowIndex="2">
+                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="6"
+                           GridPane.rowIndex="2">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
-                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="7" GridPane.rowIndex="2">
+                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="7"
+                           GridPane.rowIndex="2">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
-                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="8" GridPane.rowIndex="2">
+                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="8"
+                           GridPane.rowIndex="2">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
                 <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.rowIndex="3">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
-                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="1"
+                           GridPane.rowIndex="3">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
-                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="2"
+                           GridPane.rowIndex="3">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
-                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="3"
+                           GridPane.rowIndex="3">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
-                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="4"
+                           GridPane.rowIndex="3">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
-                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="5" GridPane.rowIndex="3">
+                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="5"
+                           GridPane.rowIndex="3">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
-                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="6" GridPane.rowIndex="3">
+                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="6"
+                           GridPane.rowIndex="3">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
-                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="7" GridPane.rowIndex="3">
+                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="7"
+                           GridPane.rowIndex="3">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
-                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="8" GridPane.rowIndex="3">
+                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="8"
+                           GridPane.rowIndex="3">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
                 <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.rowIndex="4">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
-                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="1"
+                           GridPane.rowIndex="4">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
-                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="2"
+                           GridPane.rowIndex="4">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
-                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="3"
+                           GridPane.rowIndex="4">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
-                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="4" GridPane.rowIndex="4">
+                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="4"
+                           GridPane.rowIndex="4">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
-                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="5" GridPane.rowIndex="4">
+                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="5"
+                           GridPane.rowIndex="4">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
-                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="6" GridPane.rowIndex="4">
+                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="6"
+                           GridPane.rowIndex="4">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
-                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="7" GridPane.rowIndex="4">
+                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="7"
+                           GridPane.rowIndex="4">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
-                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="8" GridPane.rowIndex="4">
+                <ImageView fitHeight="67.0" fitWidth="63.0" opacity="0.18" GridPane.columnIndex="8"
+                           GridPane.rowIndex="4">
                     <image>
-                        <Image url="@../images/arena/gradient-bg.png" />
+                        <Image url="@../images/arena/gradient-bg.png"/>
                     </image>
                 </ImageView>
             </children>
             <rotationAxis>
-                <Point3D x="1.0" />
+                <Point3D x="1.0"/>
             </rotationAxis>
         </GridPane>
-      <HBox fx:id="hand" layoutX="211.0" layoutY="532.0" prefHeight="150.0" prefWidth="750.0" />
-      <Pane fx:id="hero1SpecialPower" layoutX="152.0" layoutY="156.0" prefHeight="120.0" prefWidth="100.0" />
-      <Pane fx:id="hero2SpecialPower" layoutX="991.0" layoutY="156.0" prefHeight="120.0" prefWidth="100.0" />
-      <Pane fx:id="shownCardInformationHolder_pn" layoutX="31.0" layoutY="472.0" prefHeight="210.0" prefWidth="160.0" />
+        <HBox fx:id="hand" layoutX="211.0" layoutY="532.0" prefHeight="150.0" prefWidth="750.0"/>
+        <Pane fx:id="hero1SpecialPower" layoutX="152.0" layoutY="156.0" prefHeight="120.0" prefWidth="100.0"/>
+        <Pane fx:id="hero2SpecialPower" layoutX="991.0" layoutY="156.0" prefHeight="120.0" prefWidth="100.0"/>
+        <Pane fx:id="shownCardInformationHolder_pn" layoutX="31.0" layoutY="472.0" prefHeight="210.0"
+              prefWidth="160.0"/>
     </children>
 </Pane>

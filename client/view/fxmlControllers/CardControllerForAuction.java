@@ -1,7 +1,6 @@
 package view.fxmlControllers;
 
 import javafx.scene.layout.AnchorPane;
-import model.Account;
 import view.WindowChanger;
 
 public abstract class CardControllerForAuction {
@@ -9,9 +8,9 @@ public abstract class CardControllerForAuction {
     private AuctionController auctionController;
     public AnchorPane cardAnchorPane;
 
-    public abstract void setMaxProposedPrice(int proposedPrice, Account accountOfProposedPrice);
+    public abstract void setMaxProposedPrice(int maxProposedPrice, String usernameOfAccountOfMaxProposedPrice);
 
-    void initializeForAuctionType(AnchorPane anchorPaneOfAuction, AuctionController auctionController) {
+    public void initializeForAuctionType(AnchorPane anchorPaneOfAuction, AuctionController auctionController) {
         this.anchorPaneOfAuction = anchorPaneOfAuction;
         this.auctionController = auctionController;
     }

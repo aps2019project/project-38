@@ -53,7 +53,7 @@ public class Decoder {
                 ss.username = null;
                 break;
             }
-            case updateMessages: {
+            case updateRanking: {
                 ArrayList<Account> allAccounts = Account.getSortedAccounts();
                 ArrayList<Pair<Pair<String, Boolean>, Integer>> ranking = new ArrayList<>();
                 for (Account account : allAccounts) {

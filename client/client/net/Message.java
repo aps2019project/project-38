@@ -2,11 +2,12 @@ package client.net;
 
 public enum Message {
     saveTheGame, quitTheApp, createAccount, showLeaderBoard, login, startTheGame, setAnActiveAccount, accountDeckIsValid,
-    accountDeckIsNotValid, updateMessages, sendMessage, logOut,
+    accountDeckIsNotValid, updateRanking, updateMessages, sendMessage, logOut,
 
     //////////////game info
     HeroPowerOfPlayer, WarriorOfACell, IndexofAvatar, PlayerUsername, ActivePlayerIndex, isMyWarrior, isThereWarrior, itsWarrior, itsSpell,
     //////////////game actions
     put, cast, setCoolDown, setActivePlayer, buildPlayerHand, useCard, useSpecialPower, useCollectible, attack, comboAttack,
-    move, endTurn, quitTheGame,
+    move, endTurn, quitTheGame, mana, graveYard,
+    //////////////
 }

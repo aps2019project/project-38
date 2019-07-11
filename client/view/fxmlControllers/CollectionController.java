@@ -189,7 +189,6 @@ public class CollectionController implements Initializable {
         for (Map.Entry<Deck, DeckButtonController> entry : deckToDeckButtonControllerHashMap.entrySet()) {
             entry.getValue().setFields(entry.getKey(), deckToTypeHashMap.get(entry.getKey()));
         }
-        System.out.println();
     }
 
     private void loadDeckButton(Deck deck, String type) {
