@@ -5,11 +5,12 @@ import model.effects.AP;
 import model.effects.HP;
 import model.effects.Melee;
 import model.effects.Ranged;
+import server.net.Message;
 
 import java.io.*;
 
 public class Warrior extends Card {
-    private Cell cell;
+    transient private Cell cell;
     private int hp;
     private int ap;
 
@@ -53,7 +54,7 @@ public class Warrior extends Card {
         this.cell=cell;
         cell.getBoard().getGame().getActivePlayer().getWarriors().add(this);
 
-        ArenaController.ac.put(cell.getRow(),cell.getColumn(),this.name);
+        cell.getBoard().getGame().cm.sendToBothPlayers(Message.put,cell.getRow(),cell.getColumn(),this.name);
     }
 
     @Override

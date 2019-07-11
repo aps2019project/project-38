@@ -1,5 +1,6 @@
 package view.fxmlControllers.cardHolder;
 
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
@@ -15,7 +16,7 @@ import model.cards.Warrior;
 import view.Utility;
 import view.fxmlControllers.*;
 import view.fxmls.LoadedScenes;
-import view.visualEntities.VisualMinion;
+import view.visualentities.VisualMinion;
 
 import java.io.IOException;
 import java.util.regex.Matcher;

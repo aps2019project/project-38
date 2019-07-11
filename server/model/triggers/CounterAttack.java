@@ -7,6 +7,7 @@ import model.effects.Dispelablity;
 import model.exceptions.NotEnoughConditions;
 import model.gamestate.AttackState;
 import model.gamestate.GameState;
+import server.net.Message;
 
 //special because it's so common. also the action attack doesn't implement AutoAction.
 //this triggers should be added to all minions, with -1 duration.
@@ -25,7 +26,8 @@ public class CounterAttack extends Trigger {
         AttackState attackState = (AttackState) gameState;
         try {
             Attack.doIt(attackState.getAttacked().getCell(), attackState.getAttacker().getCell(), true);
-            ArenaController.ac.attack(attackState.getAttacked().getCell().getRow(), attackState.getAttacked().getCell().getColumn(),
+            attackState.getAttacker().getCell().getBoard().getGame().cm.sendToBothPlayers(Message.attack,
+                    attackState.getAttacked().getCell().getRow(), attackState.getAttacked().getCell().getColumn(),
                     attackState.getAttacker().getCell().getRow(), attackState.getAttacker().getCell().getColumn());
         } catch (NotEnoughConditions notEnoughConditions) {
             //no problem

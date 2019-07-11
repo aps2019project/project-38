@@ -137,7 +137,7 @@ public class CollectionOfShopController implements Initializable {
     }
 
     private void initializeAllMinions() {
-        for (Warrior minion : CardFactory.getAllBuiltMinions().keySet()) {
+        for (Warrior minion : CardFactory.getAllBuiltMinionsHashMapForShop().keySet()) {
             if (Account.activeAccount.getCollection().getHowManyCard().containsKey(minion.name)&&
                     Account.activeAccount.getCollection().getHowManyCard().get(minion.name) > 0 &&
                     !allMinions.containsKey(minion)) {
@@ -200,7 +200,7 @@ public class CollectionOfShopController implements Initializable {
     }
 
     private void initializeAllHeroes() {
-        for (Hero hero : CardFactory.getAllBuiltHeroes().keySet()) {
+        for (Hero hero : CardFactory.getAllBuiltHeroesHashMapForShop().keySet()) {
             if (Account.activeAccount.getCollection().getHowManyCard().containsKey(hero.name)&&
                     Account.activeAccount.getCollection().getHowManyCard().get(hero.name) > 0 &&
                     !allHeroes.containsKey(hero)) {
@@ -263,7 +263,7 @@ public class CollectionOfShopController implements Initializable {
     }
 
     private void initializeAllSpells() {
-        for (Spell spell : CardFactory.getAllBuiltSpells().keySet()) {
+        for (Spell spell : CardFactory.getAllBuiltSpellsHashMapForShop().keySet()) {
             if (Account.activeAccount.getCollection().getHowManyCard().containsKey(spell.name)&&
                     Account.activeAccount.getCollection().getHowManyCard().get(spell.name) > 0 &&
                     !allSpells.containsKey(spell)) {
@@ -326,7 +326,7 @@ public class CollectionOfShopController implements Initializable {
     }
 
     private void initializeAllItems() {
-        for (Spell item : CardFactory.getAllBuiltItems().keySet()) {
+        for (Spell item : CardFactory.getAllBuiltItemsHashMapForShop().keySet()) {
             if (Account.activeAccount.getCollection().getHowManyCard().containsKey(item.name)&&
                     Account.activeAccount.getCollection().getHowManyCard().get(item.name) > 0 &&
                     !allItems.containsKey(item)) {

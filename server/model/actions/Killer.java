@@ -5,6 +5,7 @@ import model.QualityHaver;
 import model.cards.Warrior;
 import model.gamestate.DeathState;
 import model.player.Player;
+import server.net.Message;
 
 public class Killer implements AutoAction {
     @Override
@@ -22,6 +23,6 @@ public class Killer implements AutoAction {
         warrior.getCell().setWarrior(null);
         player.getWarriors().remove(warrior);
 
-        ArenaController.ac.kill(warrior.getCell().getRow(), warrior.getCell().getColumn());
+        warrior.getCell().getBoard().getGame().cm.sendToBothPlayers(Message.kill,warrior.getCell().getRow(), warrior.getCell().getColumn());
     }
 }

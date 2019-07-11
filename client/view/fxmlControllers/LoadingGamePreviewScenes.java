@@ -23,7 +23,6 @@ public abstract class LoadingGamePreviewScenes {
     public static void load() {
         loadBattleScene();
         loadSinglePlayerScene();
-        loadMultiPlayerScene();
         loadStoryScene();
         loadCustomScene();
         loadMoodScene();
@@ -55,7 +54,8 @@ public abstract class LoadingGamePreviewScenes {
             FXMLLoader fxmlLoader = new FXMLLoader
                     (LoadedScenes.class.getResource("gamePreviewButton.fxml"));
             singlePlayerButton = fxmlLoader.load();
-            ((GamePreviewButtonController)fxmlLoader.getController()).setFields("Single Player", "Battle", "Single Player");
+            ((GamePreviewButtonController)fxmlLoader.getController()).setFields
+                    ("Single Player", "Battle", "Single Player");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -64,7 +64,8 @@ public abstract class LoadingGamePreviewScenes {
             FXMLLoader fxmlLoader = new FXMLLoader
                     (LoadedScenes.class.getResource("gamePreviewButton.fxml"));
             multiPlayerButton = fxmlLoader.load();
-            ((GamePreviewButtonController)fxmlLoader.getController()).setFields("Multi Player", "Battle", "Multi Player");
+            ((GamePreviewButtonController)fxmlLoader.getController()).setFields
+                    ("Multi Player", "Battle", "Mood");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -97,7 +98,8 @@ public abstract class LoadingGamePreviewScenes {
             FXMLLoader fxmlLoader = new FXMLLoader
                     (LoadedScenes.class.getResource("gamePreviewButton.fxml"));
             storyButton = fxmlLoader.load();
-            ((GamePreviewButtonController)fxmlLoader.getController()).setFields("Story", "Single Player", "Story");
+            ((GamePreviewButtonController)fxmlLoader.getController()).setFields
+                    ("Story", "Single Player", "Story");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -106,47 +108,14 @@ public abstract class LoadingGamePreviewScenes {
             FXMLLoader fxmlLoader = new FXMLLoader
                     (LoadedScenes.class.getResource("gamePreviewButton.fxml"));
             customButton = fxmlLoader.load();
-            ((GamePreviewButtonController)fxmlLoader.getController()).setFields("Custom", "Single Player", "Custom");
+            ((GamePreviewButtonController)fxmlLoader.getController()).setFields
+                    ("Custom", "Single Player", "Custom");
         } catch (IOException e) {
             e.printStackTrace();
         }
         starterControllers.get("Single Player").setFields(imagesNumber, "Single Player");
         sceneControllers.get("Single Player").setFields("Single Player", imagesNumber);
         sceneControllers.get("Single Player").addButton(storyButton, customButton);
-    }
-
-    private static void loadMultiPlayerScene() {
-        int imagesNumber = new Random().nextInt(6);
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader
-                    (LoadedScenes.class.getResource("gamePreviewStarter.fxml"));
-            starterScenes.put("Multi Player", (AnchorPane) scale(fxmlLoader.load()));
-            starterControllers.put("Multi Player", fxmlLoader.getController());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader
-                    (LoadedScenes.class.getResource("gamePreview.fxml"));
-            scenesAsAnchorPane.put("Multi Player", fxmlLoader.load());
-            sceneControllers.put("Multi Player", fxmlLoader.getController());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        for (Map.Entry<String, Account> entry : Account.getUsernameToAccountMap().entrySet()) {
-            if (!Account.activeAccount.equals(entry.getValue()) && entry.getValue().getCollection().getMainDeck() != null) {
-                try {
-                    FXMLLoader fxmlLoader = new FXMLLoader
-                            (LoadedScenes.class.getResource("gamePreviewButton.fxml"));
-                    sceneControllers.get("Multi Player").addButton(((AnchorPane)fxmlLoader.load()));
-                    ((GamePreviewButtonController)fxmlLoader.getController()).setFields(String.format("User Name: %s", entry.getKey()), "Multi Player", "Mood");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        starterControllers.get("Multi Player").setFields(imagesNumber, "Multi Player");
-        sceneControllers.get("Multi Player").setFields("Multi Player", imagesNumber);
     }
 
     private static void loadStoryScene() {
@@ -167,14 +136,13 @@ public abstract class LoadingGamePreviewScenes {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        for (Map.Entry<String, Level> entry : Level.getAvailableLevels().entrySet()) {
+        for (String description : Level.getLevelsDescription()) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader
                         (LoadedScenes.class.getResource("gamePreviewButton.fxml"));
                 sceneControllers.get("Story").addButton(((AnchorPane)fxmlLoader.load()));
-                ((GamePreviewButtonController)fxmlLoader.getController()).setFields(String.format("Mode: %s\nHero: %s Prize: %d",
-                        entry.getValue().getGameMode().getClass().getSimpleName(),
-                        entry.getValue().getDeck().getHero().name, entry.getValue().getPrize()), "Story", "Game Window");
+                ((GamePreviewButtonController)fxmlLoader.getController()).setFields(description,
+                        "Story", "Game Window");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -207,7 +175,8 @@ public abstract class LoadingGamePreviewScenes {
                         (LoadedScenes.class.getResource("gamePreviewButton.fxml"));
                 sceneControllers.get("Custom").addButton(((AnchorPane)fxmlLoader.load()));
                 ((GamePreviewButtonController)fxmlLoader.getController()).setFields(String.format("Deck: %s Hero: %s",
-                        entry.getValue().getName(), entry.getValue().getHero().name), "Custom", "Mood");
+                        entry.getValue().getName(), entry.getValue().getHero().name),
+                        "Custom", "Mood");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -239,7 +208,8 @@ public abstract class LoadingGamePreviewScenes {
             FXMLLoader fxmlLoader = new FXMLLoader
                     (LoadedScenes.class.getResource("gamePreviewButton.fxml"));
             killingEnemyHeroButton = fxmlLoader.load();
-            ((GamePreviewButtonController)fxmlLoader.getController()).setFields("Killing Enemy Hero", "Mood", "Game Window");
+            ((GamePreviewButtonController)fxmlLoader.getController()).setFields
+                    ("Killing Enemy Hero", "Mood", "Game Window");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -248,7 +218,8 @@ public abstract class LoadingGamePreviewScenes {
             FXMLLoader fxmlLoader = new FXMLLoader
                     (LoadedScenes.class.getResource("gamePreviewButton.fxml"));
             carryingFlagButton = fxmlLoader.load();
-            ((GamePreviewButtonController)fxmlLoader.getController()).setFields("Carrying Flag", "Mood", "Game Window");
+            ((GamePreviewButtonController)fxmlLoader.getController()).setFields
+                    ("Carrying Flag", "Mood", "Game Window");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -257,7 +228,8 @@ public abstract class LoadingGamePreviewScenes {
             FXMLLoader fxmlLoader = new FXMLLoader
                     (LoadedScenes.class.getResource("gamePreviewButton.fxml"));
             collectingFlagButton = fxmlLoader.load();
-            ((GamePreviewButtonController)fxmlLoader.getController()).setFields("Collecting Flag", "Mood", "Collecting Flag");
+            ((GamePreviewButtonController)fxmlLoader.getController()).setFields
+                    ("Collecting Flag", "Mood", "Collecting Flag");
         } catch (IOException e) {
             e.printStackTrace();
         }
