@@ -34,9 +34,6 @@ import view.WindowChanger;
 import view.fxmlControllers.cardHolder.*;
 import view.fxmls.LoadedScenes;
 import view.images.LoadedImages;
-import view.visualentities.VisualSpell;
-import view.visualentities.SpriteType;
-import view.visualentities.VisualMinion;
 
 import java.io.IOException;
 import java.net.URL;
