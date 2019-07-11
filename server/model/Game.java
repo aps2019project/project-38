@@ -12,20 +12,20 @@ import model.player.HumanPlayer;
 import model.player.Player;
 import model.triggers.CollectibleMine;
 import model.triggers.Trigger;
+import server.net.Cameraman;
 import server.net.Message;
-import server.net.ServerSession;
 
 import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class Game implements Serializable {
+    private Player[] players = new Player[2];
+    Cameraman cm = new Cameraman(this);
     private GameMode gameMode;
     public int turn;
     public int prize;
-    private Player[] players = new Player[2];
     private Board board = new Board(this);
-    private ServerSession[] serverSessions = new ServerSession[2];
     //        public Timer timer = new Timer(Constant.GameConstants.turnTime, ignored -> endTurn());
 
     public Game(GameMode gameMode, Account accountOne, Account accountTwo) {
@@ -33,8 +33,6 @@ public class Game implements Serializable {
         int randomIndex = (new Random()).nextInt(2);
         this.players[randomIndex] = new HumanPlayer(accountOne, accountOne.getCollection().getMainDeck(), this);
         this.players[(randomIndex + 1) % 2] = new HumanPlayer(accountTwo, accountTwo.getCollection().getMainDeck(), this);
-        serverSessions[randomIndex] = ServerSession.getSession(accountOne.getUsername());
-        serverSessions[(randomIndex + 1) % 2] = ServerSession.getSession(accountTwo.getUsername());
     }
 
     public Game(GameMode gameMode, Account account, Deck aIDeck) {
@@ -43,7 +41,6 @@ public class Game implements Serializable {
 
         players[randomIndex] = new HumanPlayer(account, account.getCollection().getMainDeck(), this);
         players[(randomIndex + 1) % 2] = new AIPlayer(aIDeck, this);
-        serverSessions[randomIndex] = ServerSession.getSession(account.getUsername());
     }
 
     public void initialiseGameFields() {
@@ -60,10 +57,8 @@ public class Game implements Serializable {
             putWarriorInCell(board.getCell(Constant.GameConstants.boardRow / 2,
                     Constant.GameConstants.boardColumn - 1), players[1].getWarriors().get(0));
 
-            serverSessions[0].encoder.sendPackage(Message.put, Constant.GameConstants.boardRow / 2, 0, players[0].getWarriors().get(0).getName());
-            serverSessions[1].encoder.sendPackage(Message.put, Constant.GameConstants.boardRow / 2, 0, players[0].getWarriors().get(0).getName());
-            serverSessions[0].encoder.sendPackage(Message.put, Constant.GameConstants.boardRow / 2, Constant.GameConstants.boardColumn - 1, players[1].getWarriors().get(0).getName());
-            serverSessions[1].encoder.sendPackage(Message.put, Constant.GameConstants.boardRow / 2, Constant.GameConstants.boardColumn - 1, players[1].getWarriors().get(0).getName());
+            cm.sendToBothPlayers(Message.put, Constant.GameConstants.boardRow / 2, 0, players[0].getWarriors().get(0).getName());
+            cm.sendToBothPlayers(Message.put, Constant.GameConstants.boardRow / 2, Constant.GameConstants.boardColumn - 1, players[1].getWarriors().get(0).getName());
         }
         {
             initialisePlayerHand(players[0]);
@@ -268,8 +263,7 @@ public class Game implements Serializable {
         }
 
         //and update the graphics
-        serverSessions[0].encoder.sendPackage(Message.quitTheGame, gameMode.winner.username);
-        serverSessions[1].encoder.sendPackage(Message.quitTheGame, gameMode.winner.username);
+        cm.sendToBothPlayers(Message.quitTheGame, gameMode.winner.username);
     }
 
     ///////////////////////////////////////actions
@@ -277,8 +271,7 @@ public class Game implements Serializable {
 //        if (getActivePlayer().getWarriors().contains(originCell.getWarrior()) && targetCell.getWarrior() == null) {
         try {
             Move.doIt(originCell, targetCell);
-            serverSessions[0].encoder.sendPackage(Message.move, originCell.getRow(), originCell.getColumn(), targetCell.getRow(), targetCell.getColumn());
-            serverSessions[1].encoder.sendPackage(Message.move, originCell.getRow(), originCell.getColumn(), targetCell.getRow(), targetCell.getColumn());
+            cm.sendToBothPlayers(Message.move, originCell.getRow(), originCell.getColumn(), targetCell.getRow(), targetCell.getColumn());
         } finally {
             checkGameEndAndThenKillAllDiedWarriors();
         }
@@ -307,8 +300,7 @@ public class Game implements Serializable {
             ComboAttack.doIt(attackersCell, defenderCell);
 
             for (Cell cell : attackersCell) {
-                serverSessions[0].encoder.sendPackage(Message.attack, cell.getRow(), cell.getColumn(), defenderCell.getRow(), defenderCell.getColumn());
-                serverSessions[1].encoder.sendPackage(Message.attack, cell.getRow(), cell.getColumn(), defenderCell.getRow(), defenderCell.getColumn());
+                cm.sendToBothPlayers(Message.attack, cell.getRow(), cell.getColumn(), defenderCell.getRow(), defenderCell.getColumn());
             }
         } finally {
             checkGameEndAndThenKillAllDiedWarriors();
@@ -321,8 +313,7 @@ public class Game implements Serializable {
 //                !activePlayerWarriors.contains(defenderCell.getWarrior())) {
         try {
             Attack.doIt(attackerCell, defenderCell, false);
-            serverSessions[0].encoder.sendPackage(Message.attack, attackerCell.getRow(), attackerCell.getColumn(), defenderCell.getRow(), defenderCell.getColumn());
-            serverSessions[1].encoder.sendPackage(Message.attack, attackerCell.getRow(), attackerCell.getColumn(), defenderCell.getRow(), defenderCell.getColumn());
+            cm.sendToBothPlayers(Message.attack, attackerCell.getRow(), attackerCell.getColumn(), defenderCell.getRow(), defenderCell.getColumn());
         } finally {
             checkGameEndAndThenKillAllDiedWarriors();
         }
@@ -345,7 +336,7 @@ public class Game implements Serializable {
 //        if (getActivePlayer().getHand().get(handMapKey) != null) {
         try {
             UseCard.useCard(handMapKey, cell);
-            serverSessions[getActivePlayerIndex()].encoder.sendPackage(Message.useCard, handMapKey);
+            cm.sendToActivePlayer(Message.useCard, handMapKey);
         } finally {
             checkGameEndAndThenKillAllDiedWarriors();
         }
@@ -359,10 +350,8 @@ public class Game implements Serializable {
 
                 Cell heroCell = getActivePlayer().getPlayerHero().getCell();
 
-                serverSessions[0].encoder.sendPackage(Message.cast, heroCell.getRow(), heroCell.getColumn());
-                serverSessions[0].encoder.sendPackage(Message.setCoolDown, getActivePlayer().getPlayerHero().getPower().coolDownRemaining, getPlayerNumber(getActivePlayer()) + 1);
-                serverSessions[1].encoder.sendPackage(Message.cast, heroCell.getRow(), heroCell.getColumn());
-                serverSessions[1].encoder.sendPackage(Message.setCoolDown, getActivePlayer().getPlayerHero().getPower().coolDownRemaining, getPlayerNumber(getActivePlayer()) + 1);
+                cm.sendToBothPlayers(Message.cast, heroCell.getRow(), heroCell.getColumn());
+                cm.sendToBothPlayers(Message.setCoolDown, getActivePlayer().getPlayerHero().getPower().coolDownRemaining, getPlayerNumber(getActivePlayer()) + 1);
             } finally {
                 checkGameEndAndThenKillAllDiedWarriors();
             }
@@ -387,8 +376,7 @@ public class Game implements Serializable {
             }
 
             UseCard.useCollectible(spell, cell);
-            serverSessions[0].encoder.sendPackage(Message.useCollectible, index, getActivePlayerIndex() + 1);
-            serverSessions[1].encoder.sendPackage(Message.useCollectible, index, getActivePlayerIndex() + 1);
+            cm.sendToBothPlayers(Message.useCollectible, index, getActivePlayerIndex() + 1);
         } finally {
             checkGameEndAndThenKillAllDiedWarriors();
         }
@@ -411,9 +399,8 @@ public class Game implements Serializable {
         StartTurn.doIt(this);
         checkGameEndAndThenKillAllDiedWarriors();
 
-        //todo this part updates the ui for the new player. in the networking this should implemented somewhere else.
-        ArenaController.ac.setCoolDown(getActivePlayer().getPlayerHero().getPower().coolDownRemaining, getPlayerNumber(getActivePlayer()) + 1);
-        ArenaController.ac.setActivePlayer(getPlayerNumber(getActivePlayer()) + 1);
+        cm.sendToBothPlayers(Message.setCoolDown, getActivePlayer().getPlayerHero().getPower().coolDownRemaining, getPlayerNumber(getActivePlayer()) + 1);
+        cm.sendToBothPlayers(Message.setActivePlayer,getPlayerNumber(getActivePlayer()) + 1);
 
 
         HashMap<Integer, Card> handMap = (HashMap<Integer, Card>) getActivePlayer().getHand().entrySet().stream()
@@ -421,7 +408,8 @@ public class Game implements Serializable {
                 .collect(Collectors.toMap((Map.Entry<Integer, Card> o) -> o.getKey() + 1
                         , Map.Entry::getValue));
         handMap.put(0, getActivePlayer().getNextCard());
-        ArenaController.ac.buildPlayerHand(handMap, getPlayerNumber(getActivePlayer()) + 1);
+        cm.sendHandToActivePlayer(handMap);
+//        ArenaController.ac.buildPlayerHand(handMap, getPlayerNumber(getActivePlayer()) + 1);
 
         //todo this is an unwanted recurse sol: a "your turn" field in player that ai waits on
         if (getActivePlayer() instanceof AIPlayer) {

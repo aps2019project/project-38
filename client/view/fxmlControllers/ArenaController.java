@@ -317,8 +317,8 @@ public class ArenaController implements Initializable {
 
 
     private void beforeStartTheGame() {
-        player1_avatar.setImage(LoadedImages.avatars[Digikala.getIndexofAvatar(1)]);
-        player2_avatar.setImage(LoadedImages.avatars[Digikala.getIndexofAvatar(2)]);
+        player1_avatar.setImage(LoadedImages.avatars[Digikala.getIndexOfAvatar(1)]);
+        player2_avatar.setImage(LoadedImages.avatars[Digikala.getIndexOfAvatar(2)]);
 
         player1_username.setText(Digikala.getPlayerUsername(1));
         player2_username.setText(Digikala.getPlayerUsername(2));
@@ -451,10 +451,10 @@ public class ArenaController implements Initializable {
                 visualEntity.setOnMouseEntered(event -> {//amir
                     vm.isSelected.set(true);
                     if (i == 0) {
-                        Warrior w = (Warrior) Digikala.getNextCard();
+                        Warrior w = (Warrior) card;
                         showInfoOfACard(w.name, w.description.descriptionOfCardSpecialAbility, "warrior", w.hp, w.ap);
                     } else {
-                        Warrior w = (Warrior) Digikala.getHandCard(i - 1);
+                        Warrior w = (Warrior) card;
                         showInfoOfACard(w.name, w.description.descriptionOfCardSpecialAbility, "warrior", w.hp, w.ap);
                     }
                 });
@@ -470,10 +470,10 @@ public class ArenaController implements Initializable {
                 visualEntity.setOnMouseEntered(event -> {//amir
                     vs.idle();
                     if (i == 0) {
-                        Spell w = (Spell) Digikala.getNextCard();
+                        Spell w = (Spell) card;
                         showInfoOfACard(w.name, w.description.descriptionOfCardSpecialAbility, "spell", 0, 0);
                     } else {
-                        Spell w = (Spell) Digikala.getHandCard(i - 1);
+                        Spell w = (Spell) card;
                         showInfoOfACard(w.name, w.description.descriptionOfCardSpecialAbility, "spell", 0, 0);
                     }
                 });

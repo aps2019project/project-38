@@ -2,11 +2,12 @@ package server.net;
 
 import com.google.gson.Gson;
 import javafx.util.Pair;
-import model.Account;
-import model.GlobalChat;
-import model.MatchHistory;
+import model.*;
+import model.cards.HeroPower;
+import model.cards.Warrior;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -92,6 +93,45 @@ public class Decoder {
                 }
                 break;
             }
+            case HeroPowerOfPlayer: {
+                Gson gson = new Gson();
+                HeroPower hp = MatchMaker.PGPGetter(ss.username).getKey().getPlayerHero().getPower();
+                ss.encoder.sendPackage(Message.HeroPowerOfPlayer, gson.toJson(hp));
+                break;
+            }
+            case WarriorOfACell: {
+                Gson gson = new Gson();
+                Warrior warrior = MatchMaker.PGPGetter(ss.username).getValue().getBoard().getCell((int) readObject(), (int) readObject()).getWarrior();
+                ss.encoder.sendPackage(Message.WarriorOfACell, gson.toJson(warrior));
+                break;
+            }
+            case IndexofAvatar: {
+                int playerIndex = (int) readObject();
+                ss.encoder.sendPackage(Message.IndexofAvatar, MatchMaker.PGPGetter(ss.username).getValue().getPlayers()[playerIndex - 1]);
+                break;
+            }
+            case PlayerUsername: {
+                ss.encoder.sendPackage(Message.PlayerUsername, ss.username);
+                break;
+            }
+            case ActivePlayerIndex: {
+                ss.encoder.sendPackage(Message.ActivePlayerIndex, MatchMaker.PGPGetter(ss.username).getValue().getActivePlayerIndex());
+                break;
+            }
+            case isMyWarrior: {
+                int row = (int) readObject();
+                int col = (int) readObject();
+                MatchMaker.PGPGetter(ss.username).getKey().getWarriors().stream().anyMatch(warrior -> warrior.getCell().getRow() == row && warrior.getCell().getColumn() == col);
+                break;
+            }
+            case isThereWarrior: {
+                int row = (int) readObject();
+                int col = (int) readObject();
+                Game game = MatchMaker.PGPGetter(ss.username).getValue();
+                Boolean thereIs = game.getBoard().getCell(row, col).getWarrior() != null;
+                ss.encoder.sendPackage(Message.isThereWarrior, thereIs);
+                break;
+            }
         }
     }
 
@@ -103,5 +143,14 @@ public class Decoder {
         randomString = randomString + (char) (random.nextInt(100));
         randomString = randomString + (char) (random.nextInt(100));
         return randomString;
+    }
+
+    public Object readObject() {
+        try (ObjectInputStream ois = new ObjectInputStream(ss.dis)) {
+            return ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

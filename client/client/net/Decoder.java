@@ -1,7 +1,7 @@
 package client.net;
 
 import com.google.gson.Gson;
-import model.Cell;
+import model.cards.Card;
 import model.cards.HeroPower;
 import model.cards.Spell;
 import model.cards.Warrior;
@@ -10,6 +10,7 @@ import view.fxmlControllers.GlobalChatController;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.util.HashMap;
 
 public class Decoder {
     public static void decode(Message m) {
@@ -26,23 +27,13 @@ public class Decoder {
             case PlayerUsername:
                 fillBoxAndNotify(Digikala.playerUsername);
                 break;
-            case SpecificCell:
-                fillBoxAndNotifyJ(Digikala.specificCell, Cell.class);
-                break;
-            case NextCard:
-                if (readMessage().equals(Message.itsSpell)) {
-                    fillBoxAndNotifyJ(Digikala.nextCard, Spell.class);
-                } else {
-                    fillBoxAndNotifyJ(Digikala.nextCard, Warrior.class);
-                }
-                break;
-            case HandCard:
-                if (readMessage().equals(Message.itsSpell)) {
-                    fillBoxAndNotifyJ(Digikala.handCard, Spell.class);
-                } else {
-                    fillBoxAndNotifyJ(Digikala.handCard, Warrior.class);
-                }
-                break;
+//            case NextCard:
+//                if (readMessage().equals(Message.itsSpell)) {
+//                    fillBoxAndNotifyJ(Digikala.nextCard, Spell.class);
+//                } else {
+//                    fillBoxAndNotifyJ(Digikala.nextCard, Warrior.class);
+//                }
+//                break;
             case ActivePlayerIndex:
                 fillBoxAndNotify(Digikala.activePlayerIndex);
                 break;
@@ -108,6 +99,28 @@ public class Decoder {
                 ArenaController.ac.useCollectibleItem(indexOf, playerNumber);
                 break;
             }
+            case setActivePlayer:{
+                int index = (int) readObject();
+                ArenaController.ac.setActivePlayer(index);
+                break;
+            }
+            case buildPlayerHand:{
+                Gson gson = new Gson();
+                int playerIndex = (int) readObject();
+                HashMap<Integer, Card> handMap = new HashMap<>();
+                int mapSize = (int) readObject();
+                for (int i = 0; i < mapSize; i++) {
+                    int index = (int)readObject();
+                    if(readMessage().equals(Message.itsSpell)){
+                        Spell spell = gson.fromJson((String)readObject(),Spell.class);
+                        handMap.put(index,spell);
+                    }else {
+                        Warrior warrior = gson.fromJson((String)readObject(),Warrior.class);
+                        handMap.put(index,warrior);
+                    }
+                }
+                ArenaController.ac.buildPlayerHand(handMap,playerIndex);
+            }
             //---------------
         }
     }
@@ -139,13 +152,9 @@ public class Decoder {
 
     public static <T> void fillBoxAndNotifyJ(Box<T> box, Class aClass) {
         Gson gson = new Gson();
-        try {
-            box.obj = (T) gson.fromJson(ClientSession.dis.readUTF(), aClass);
-            synchronized (box.waitStone) {
-                box.waitStone.notify();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        box.obj = (T) gson.fromJson((String)readObject(), aClass);
+        synchronized (box.waitStone) {
+            box.waitStone.notify();
         }
     }
 }

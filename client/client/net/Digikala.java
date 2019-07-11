@@ -1,7 +1,5 @@
 package client.net;
 
-import model.Cell;
-import model.cards.Card;
 import model.cards.HeroPower;
 import model.cards.Warrior;
 
@@ -32,7 +30,7 @@ public class Digikala {
     }
 
     public static Box<Integer> avatarIndex = new Box<>();
-    public static int getIndexofAvatar(int playerIndex){
+    public static int getIndexOfAvatar(int playerIndex){
         Encoder.sendPackage(Message.IndexofAvatar,playerIndex);
         wait(avatarIndex);
         return avatarIndex.obj;
@@ -43,27 +41,6 @@ public class Digikala {
         Encoder.sendPackage(Message.PlayerUsername,playerIndex);
         wait(playerUsername);
         return playerUsername.obj;
-    }
-
-    public static Box<Cell> specificCell = new Box<>();
-    public static Cell getSpecificCell(int row, int col){
-        Encoder.sendPackage(Message.SpecificCell,row,col);
-        wait(specificCell);
-        return specificCell.obj;
-    }
-
-    public static Box<Card> nextCard = new Box<>();
-    public static Card getNextCard(){//of me
-        Encoder.sendPackage(Message.NextCard);
-        wait(nextCard);
-        return nextCard.obj;
-    }
-
-    public static Box<Card> handCard = new Box<>();
-    public static Card getHandCard(int index){//of me
-        Encoder.sendPackage(Message.HandCard,index);
-        wait(handCard);
-        return handCard.obj;
     }
 
     public static Box<Integer> activePlayerIndex = new Box<>();
