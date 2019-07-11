@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Collection implements Serializable { //todo MOEINI فک کنم کلاینت دِک و کالکشن و شاپ نمیخواد
+public class Collection implements Serializable { //todo ALI فک کنم کلاینت دِک و کالکشن و شاپ نمیخواد
     private ArrayList<Integer> cardIDs = new ArrayList<>();
     private ArrayList<String> decks = new ArrayList<>();
     private HashMap<String, Deck> allDecks = new HashMap<>();

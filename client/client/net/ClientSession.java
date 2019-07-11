@@ -21,11 +21,11 @@ public class ClientSession {
 
     public static void listen() {
         while (useListener) {
-            try {
-                int messageIndex = dis.readInt();
-                Decoder.decode(Message.values()[messageIndex]);
-            } catch (IOException e) {
-                e.printStackTrace();
+                    try {
+                        int messageIndex = dis.readInt();
+                        Decoder.decode(Message.values()[messageIndex]);
+                    } catch (IOException e) {
+                        e.printStackTrace();
             }
         }
     }

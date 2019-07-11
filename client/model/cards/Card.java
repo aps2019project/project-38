@@ -1,5 +1,6 @@
 package model.cards;
 
+import client.net.Digikala;
 import model.Shop;
 
 import java.io.Serializable;
@@ -23,7 +24,7 @@ public abstract class Card implements Serializable {
     }
 
     public static HashMap<Integer, Card> getAllCards() {
-        //todo server
+        return Digikala.getAllCards();
     }
 
     public static boolean checkIsItem(Card card) {

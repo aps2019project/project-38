@@ -3,6 +3,8 @@ package client.net;
 import model.cards.HeroPower;
 import model.cards.Warrior;
 
+import java.util.HashMap;
+
 
 public class Digikala {
     public static void wait(Box box){
@@ -62,5 +64,12 @@ public class Digikala {
         Encoder.sendPackage(Message.isThereWarrior,row,col);
         wait(isThereWarrior);
         return isThereWarrior.obj;
+    }
+
+    public static Box<HashMap<Integer, Card>> idToCardAllCards = new Box<>();
+    public static HashMap<Integer, Card> getAllCards() {
+        Encoder.sendMessage(Message.IDToCardAllCards);
+        wait(idToCardAllCards);
+        return idToCardAllCards.obj;
     }
 }
