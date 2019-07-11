@@ -5,6 +5,7 @@ import model.cards.Card;
 import model.cards.HeroPower;
 import model.cards.Spell;
 import model.cards.Warrior;
+import view.Utility;
 import view.fxmlControllers.ArenaController;
 import view.fxmlControllers.GlobalChatController;
 
@@ -140,6 +141,10 @@ public class Decoder {
             }
             case kill:{
                 ArenaController.ac.kill((int)readObject(),(int)readObject());
+                break;
+            }
+            case showPopup:{
+                Utility.showMessage((String)readObject());
                 break;
             }
             //---------------

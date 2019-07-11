@@ -1,10 +1,13 @@
 package server.net;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import javafx.util.Pair;
 import model.*;
 import model.cards.HeroPower;
 import model.cards.Warrior;
+import model.exceptions.NotEnoughConditions;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -132,9 +135,128 @@ public class Decoder {
                 ss.encoder.sendPackage(Message.isThereWarrior, thereIs);
                 break;
             }
+            case useCard: {
+                int handIndex = (int) readObject();
+                int row = (int) readObject();
+                int col = (int) readObject();
+                Game game = MatchMaker.PGPGetter(ss.username).getValue();
+                try {
+                    checkWhoseTurn();
+                    game.useCard(handIndex, game.getBoard().getCell(row, col));
+                } catch (NotEnoughConditions notEnoughConditions) {
+                    ss.encoder.sendPackage(Message.showPopup, notEnoughConditions.getMessage());
+                }
+                break;
+            }
+            case useSpecialPower: {
+                int row = (int) readObject();
+                int col = (int) readObject();
+                Game game = MatchMaker.PGPGetter(ss.username).getValue();
+                try {
+                    checkWhoseTurn();
+                    game.useSpecialPower(game.getBoard().getCell(row, col));
+                } catch (NotEnoughConditions notEnoughConditions) {
+                    ss.encoder.sendPackage(Message.showPopup, notEnoughConditions.getMessage());
+                }
+                break;
+            }
+            case useCollectible: {
+                String itemName = (String) readObject();
+                int row = (int) readObject();
+                int col = (int) readObject();
+                Game game = MatchMaker.PGPGetter(ss.username).getValue();
+                try {
+                    checkWhoseTurn();
+                    game.useCollectible(itemName, game.getBoard().getCell(row, col));
+                } catch (NotEnoughConditions notEnoughConditions) {
+                    ss.encoder.sendPackage(Message.showPopup, notEnoughConditions.getMessage());
+                }
+                break;
+            }
+            case attack: {
+                Game game = MatchMaker.PGPGetter(ss.username).getValue();
+                Gson gson = new Gson();
+                Cell sCellRaw = gson.fromJson((String) readObject(), Cell.class);
+                Cell sCell = game.getBoard().getCell(sCellRaw.getRow(), sCellRaw.getColumn());
+                Cell tCell = game.getBoard().getCell((int) readObject(), (int) readObject());
+                try {
+                    checkWhoseTurn();
+                    game.attack(sCell, tCell);
+                } catch (NotEnoughConditions notEnoughConditions) {
+                    ss.encoder.sendPackage(Message.showPopup, notEnoughConditions.getMessage());
+                }
+                break;
+            }
+            case comboAttack: {
+                Game game = MatchMaker.PGPGetter(ss.username).getValue();
+                ArrayList<Cell> cells = getJsonCellArrayAsRealArray((String) readObject());
+                Cell tCell = game.getBoard().getCell((int) readObject(), (int) readObject());
+                try {
+                    checkWhoseTurn();
+                    game.comboAttack(cells, tCell);
+                } catch (NotEnoughConditions notEnoughConditions) {
+                    ss.encoder.sendPackage(Message.showPopup, notEnoughConditions.getMessage());
+                }
+                break;
+            }
+            case move:{
+                Game game = MatchMaker.PGPGetter(ss.username).getValue();
+                Gson gson = new Gson();
+                Cell sCellRaw = gson.fromJson((String) readObject(), Cell.class);
+                Cell sCell = game.getBoard().getCell(sCellRaw.getRow(),sCellRaw.getColumn());
+                Cell tCell = game.getBoard().getCell((int)readObject(),(int)readObject());
+                try {
+                    checkWhoseTurn();
+                    game.move(sCell,tCell);
+                } catch (NotEnoughConditions notEnoughConditions) {
+                    ss.encoder.sendPackage(Message.showPopup, notEnoughConditions.getMessage());
+                }
+                break;
+            }
+            case endTurn:{
+                Game game = MatchMaker.PGPGetter(ss.username).getValue();
+                try {
+                    checkWhoseTurn();
+                    game.endTurn();
+                } catch (NotEnoughConditions notEnoughConditions) {
+                    ss.encoder.sendPackage(Message.showPopup, notEnoughConditions.getMessage());
+                }
+                break;
+            }
+            case quitTheGame:{
+                Game game = MatchMaker.PGPGetter(ss.username).getValue();
+                try {
+                    checkWhoseTurn();
+                    game.endGame();
+                } catch (NotEnoughConditions notEnoughConditions) {
+                    ss.encoder.sendPackage(Message.showPopup, notEnoughConditions.getMessage());
+                }
+            }
         }
     }
 
+    private ArrayList<Cell> getJsonCellArrayAsRealArray(String json) {
+        Gson gson = new Gson();
+        Game game = MatchMaker.PGPGetter(ss.username).getValue();
+        ArrayList<Cell> cells = new ArrayList<>();
+
+        JsonParser jp = new JsonParser();
+        JsonElement je = jp.parse(json);
+        for (JsonElement jsonElement : je.getAsJsonArray()) {
+            Cell cellRaw = gson.fromJson(jsonElement,Cell.class);
+            Cell cell = game.getBoard().getCell(cellRaw.getRow(),cellRaw.getColumn());
+            cells.add(cell);
+        }
+
+        return cells;
+    }
+
+    public void checkWhoseTurn() throws NotEnoughConditions {
+        Game game = MatchMaker.PGPGetter(ss.username).getValue();
+        if (!ss.username.equals(game.getActivePlayer().username)) {
+            throw new NotEnoughConditions("Not your turn!");
+        }
+    }
 
     public String randomString() {
         Random random = new Random();
