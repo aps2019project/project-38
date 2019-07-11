@@ -11,6 +11,7 @@ import view.fxmlControllers.GlobalChatController;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.lang.reflect.Type;
 import java.util.HashMap;
 
 public class Decoder {
@@ -147,6 +148,7 @@ public class Decoder {
                 Utility.showMessage((String)readObject());
                 break;
             }
+//            fillBoxAndNotifyJ(new Box<>(),new TypeToken<ArrayList<Card>>(){}.getType());
             //---------------
         }
     }
@@ -179,6 +181,14 @@ public class Decoder {
     public static <T> void fillBoxAndNotifyJ(Box<T> box, Class aClass) {
         Gson gson = new Gson();
         box.obj = (T) gson.fromJson((String)readObject(), aClass);
+        synchronized (box.waitStone) {
+            box.waitStone.notify();
+        }
+    }
+
+    public static <T> void fillBoxAndNotifyJ(Box<T> box, Type aType) {
+        Gson gson = new Gson();
+        box.obj = (T) gson.fromJson((String)readObject(), aType);
         synchronized (box.waitStone) {
             box.waitStone.notify();
         }

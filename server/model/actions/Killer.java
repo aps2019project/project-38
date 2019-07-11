@@ -12,7 +12,7 @@ public class Killer implements AutoAction {
     public boolean execute(QualityHaver source, QualityHaver target) { // MOEINI معینی، برای اینکه این رو هم وصلش کنیم به کلاینت، نیاز  به سرورسشن داریم. الان من نمیدونم سرورسشنِ این کدومه...
         assert target instanceof Warrior;
         kill((Warrior) target);
-        return true;//todo: it always gets done right?
+        return true;
     }
 
     public static void kill(Warrior warrior) {
