@@ -10,4 +10,7 @@ public enum Message {
     put, cast, setCoolDown, setActivePlayer, buildPlayerHand, useCard, useSpecialPower, useCollectible, attack, comboAttack,
     move, endTurn, quitTheGame, mana, graveYard,
     //////////////
+
+    ////////ali:
+    IDToCardAllCards,
 }
