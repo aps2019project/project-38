@@ -115,6 +115,7 @@ public class SpellCardController extends CardControllerForAuction {
     }
 
     public void setFields(Spell spell, String type) {
+        this.type = type;
         VisualSpell vs = new VisualSpell(spell.name);
         double widthScale = gifPane.getPrefWidth() / vs.animation.width;
         double heightScale = gifPane.getPrefHeight() / vs.animation.height;

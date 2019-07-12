@@ -14,7 +14,6 @@ import model.Deck;
 import model.cards.Hero;
 import model.cards.Warrior;
 import view.Utility;
-import view.fxmlControllers.*;
 import view.fxmls.LoadedScenes;
 import view.visualentities.VisualMinion;
 
@@ -118,6 +117,7 @@ public class WarriorCardController extends CardControllerForAuction {
     }
 
     public void setFields(Warrior warrior, String type) {
+        this.type = type;
         apText.setText(String.valueOf(warrior.ap));
         hpText.setText(String.valueOf(warrior.hp));
         VisualMinion vm = new VisualMinion(warrior.name);

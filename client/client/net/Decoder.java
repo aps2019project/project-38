@@ -1,18 +1,15 @@
 package client.net;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import model.Account;
 import model.Collection;
-import model.cards.Card;
-import model.cards.HeroPower;
-import model.cards.Spell;
-import model.cards.Warrior;
 import view.Utility;
-import view.fxmlControllers.*;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Decoder {
@@ -122,6 +119,7 @@ public class Decoder {
             case buildPlayerHand:{
                 Gson gson = new Gson();
                 int playerIndex = (int) readObject();
+
                 HashMap<Integer, Card> handMap = new HashMap<>();
                 int mapSize = (int) readObject();
                 for (int i = 0; i < mapSize; i++) {
@@ -134,6 +132,7 @@ public class Decoder {
                         handMap.put(index,warrior);
                     }
                 }
+
                 ArenaController.ac.buildPlayerHand(handMap,playerIndex);
                 break;
             }
@@ -149,7 +148,52 @@ public class Decoder {
                 Utility.showMessage((String)readObject());
                 break;
             }
-//            fillBoxAndNotifyJ(new Box<>(),new TypeToken<ArrayList<Card>>(){}.getType());
+            ///////////////
+            case getCollection:{
+                fillBoxAndNotifyJ(Digikala.collectionBox, Collection.class);
+                break;
+            }
+            case getDerrick:{
+                fillBoxAndNotify(Digikala.derrick);
+                break;
+            }
+            case getAllBuiltMinions:{
+                fillBoxAndNotifyJ(Digikala.allBuiltMinions,new TypeToken<ArrayList<Warrior>>(){}.getType());
+                break;
+            }
+            case getAllBuiltHeroes:{
+                fillBoxAndNotifyJ(Digikala.allBuiltHeroes,new TypeToken<ArrayList<Hero>>(){}.getType());
+                break;
+            }
+            case getAllBuiltSpells:{
+                fillBoxAndNotifyJ(Digikala.allBuiltSpells,new TypeToken<ArrayList<Spell>>(){}.getType());
+                break;
+            }
+            case getAllBuiltItems:{
+                fillBoxAndNotifyJ(Digikala.allBuiltItems,new TypeToken<ArrayList<Spell>>(){}.getType());
+                break;
+            }
+            case getAllCards:{
+                Gson gson = new Gson();
+                HashMap<Integer,Card> allCards = new HashMap<>();
+
+                int size = (int)readObject();
+                for (int i = 0; i < size; i++) {
+                    int id = (int)readObject();
+                    if(readMessage().equals(Message.itsWarrior)){
+                        Warrior warrior = gson.fromJson((String)readObject(),Warrior.class);
+                        allCards.put(id,warrior);
+                    }else {
+                        Spell spell = gson.fromJson((String)readObject(),Spell.class);
+                        allCards.put(id,spell);
+                    }
+                }
+
+                Digikala.allCards.obj = allCards;
+                synchronized (Digikala.allCards.waitStone) {
+                    Digikala.allCards.waitStone.notify();
+                }
+            }
             //---------------
             ///////ali:
             case AuctionResult:{

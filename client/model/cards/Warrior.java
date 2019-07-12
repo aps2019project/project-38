@@ -1,5 +1,6 @@
 package model.cards;
 
+import client.net.Digikala;
 import model.Cell;
 
 public class Warrior extends Card {
@@ -8,6 +9,6 @@ public class Warrior extends Card {
     public int ap;
 
     public String getWarriorType() {
-        //todo server -> melee ranged hybrid
+        return Digikala.getWarriorType(this.ID);
     }
 }

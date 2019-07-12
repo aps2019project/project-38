@@ -40,7 +40,7 @@ import view.visualentities.VisualSpell;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.ResourceBundle;
 
 public class ArenaController implements Initializable {
     public static ArenaController ac;
@@ -60,6 +60,7 @@ public class ArenaController implements Initializable {
         fixGridNodesIndexes();
         produceClickBoxes();
         setEscapeAsDeselector();
+        setCheat();
 
         //initializing essential fields
         this.sm = selectionManager;
@@ -73,6 +74,17 @@ public class ArenaController implements Initializable {
         pane.setOnKeyTyped(event -> {
             if (event.getCharacter().getBytes()[0] == 27) {
                 sm.deselectAction();
+            }
+        });
+    }
+
+    private void setCheat(){
+        StringBuilder keyLog = new StringBuilder();
+        pane.requestFocus();
+        pane.setOnKeyTyped(event -> {
+            keyLog.append(event.getCharacter().getBytes()[0]);
+            if(keyLog.toString().endsWith("mana")){
+                Encoder.sendMessage(Message.manaCheat);
             }
         });
     }

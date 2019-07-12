@@ -1,10 +1,6 @@
 package model;
 
-import client.net.Encoder;
-import client.net.Message;
-
-import java.util.HashMap;
-import java.util.Map;
+import client.net.Digikala;
 
 public class Account {
     public static Account activeAccount = new Account();
@@ -17,11 +13,11 @@ public class Account {
     }
 
     public Collection getCollection() {
-        //todo server
+        return Digikala.getCollection();
     }
 
     public int getDerrick() {
-        //todo server
+        return Digikala.getDerrick();
     }
 
     public static Account getActiveAccount() {

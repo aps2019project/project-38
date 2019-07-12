@@ -6,13 +6,18 @@ import com.google.gson.JsonParser;
 import javafx.util.Pair;
 import model.*;
 import model.cards.Card;
+import model.cards.CardFactory;
 import model.cards.HeroPower;
 import model.cards.Warrior;
+import model.effects.Melee;
+import model.effects.Ranged;
 import model.exceptions.NotEnoughConditions;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Map;
 import java.util.Random;
 
 public class Decoder {
@@ -232,6 +237,77 @@ public class Decoder {
                 } catch (NotEnoughConditions notEnoughConditions) {
                     ss.encoder.sendPackage(Message.showPopup, notEnoughConditions.getMessage());
                 }
+                break;
+            }
+            case manaCheat:{
+                MatchMaker.PGPGetter(ss.username).getKey().addMana(1);
+                break;
+            }
+            ///////
+            case getCollection:{
+                Collection collection = Account.getUsernameToAccount().get(ss.username).getCollection();
+                ss.encoder.sendPackageJ(Message.getCollection,collection);
+                break;
+            }
+            case getDerrick:{
+                ss.encoder.sendPackage(Message.getDerrick,Account.getUsernameToAccount().get(ss.username).derrick);
+                break;
+            }
+            case getAllBuiltMinions:{
+                ss.encoder.sendPackageJ(Message.getAllBuiltMinions, CardFactory.getAllBuiltMinions());
+                break;
+            }
+            case getAllBuiltHeroes:{
+                ss.encoder.sendPackageJ(Message.getAllBuiltHeroes,CardFactory.getAllBuiltHeroes());
+                break;
+            }
+            case getAllBuiltSpells:{
+                ss.encoder.sendPackageJ(Message.getAllBuiltSpells,CardFactory.getAllBuiltSpells());
+                break;
+            }
+            case getAllBuiltItems:{
+                ss.encoder.sendPackageJ(Message.getAllBuiltItems,CardFactory.getAllBuiltItems());
+                break;
+            }
+            case getWarriorType:{
+                int id = (int) readObject();
+                Card card = Card.getAllCards().get(id);
+                boolean ranged = card.getEffects().stream().anyMatch(effect -> effect instanceof Ranged);
+                boolean melee = card.getEffects().stream().anyMatch(effect -> effect instanceof Melee);
+
+                String type;
+                if(ranged && melee){
+                    type = "Hybrid";
+                }else if(ranged){
+                    type = "Range";
+                }else {
+                    type = "Melee";
+                }
+                ss.encoder.sendPackage(Message.getWarriorType,type);
+                break;
+            }
+            case getIDByName:{
+                String name = (String) readObject();
+                int id = Card.getIDByName(name);
+                ss.encoder.sendPackage(Message.getIDByName,id);
+                break;
+            }
+            case getAllCards:{
+                Gson gson = new Gson();
+
+                Message message = Message.getAllCards;
+                ArrayList<Object> data = new ArrayList<>();
+
+                data.add(Card.getAllCards().size());
+                for (Map.Entry<Integer, Card> entry : Card.getAllCards().entrySet()) {
+                    if(entry.getValue() instanceof Warrior){
+                        data.addAll(Arrays.asList(entry.getKey(),Message.itsWarrior.ordinal(),gson.toJson(entry.getValue())));
+                    }else {
+                        data.addAll(Arrays.asList(entry.getKey(),Message.itsSpell.ordinal(),gson.toJson(entry.getValue())));
+                    }
+                }
+
+                ss.encoder.sendPackage(message,data.toArray());
                 break;
             }
             //////ali:

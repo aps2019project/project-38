@@ -32,7 +32,7 @@ public class Shop {
         destinationAccount.getCollection().getCardIDs().remove((Integer) card.getID());
         int keyValue = destinationAccount.getCollection().getHowManyCard().get(card.getName());
         destinationAccount.getCollection().getHowManyCard().put(card.getName(), keyValue - 1);
-        changeCardOpacityInShop(card, 1);
+        changeNumberOfCardInShop(card, 1);
         if (targetAccount != null) {
             buy(targetAccount, card, price);
         }
@@ -47,22 +47,44 @@ public class Shop {
         } else {
             account.getCollection().getHowManyCard().put(card.getName(), 1);
         }
-        changeCardOpacityInShop(card, -1);
+        changeNumberOfCardInShop(card, -1);
     }
 
-    private void changeCardOpacityInShop(Card card, int extraOpacity) {
+    public void changeNumberOfCardInShop(Card card, int extraNumber) {
         if (card instanceof Hero) {
             Hero hero = (Hero) card;
-            heroesToNumberHashMap.put(hero, heroesToNumberHashMap.get(hero) + extraOpacity);
+            heroesToNumberHashMap.put(hero, heroesToNumberHashMap.get(hero) + extraNumber);
         } else if (card instanceof Warrior) {
             Warrior minion = (Warrior) card;
-            minionToNumberHashMap.put(minion, minionToNumberHashMap.get(minion) + extraOpacity);
+            minionToNumberHashMap.put(minion, minionToNumberHashMap.get(minion) + extraNumber);
         } else if (Spell.checkIsItem(card)) {
             Spell item = (Spell) card;
-            itemToNumberHashMap.put(item, itemToNumberHashMap.get(item) + extraOpacity);
+            itemToNumberHashMap.put(item, itemToNumberHashMap.get(item) + extraNumber);
         } else {
             Spell spell = (Spell) card;
-            spellToNumberHashMap.put(spell, spellToNumberHashMap.get(spell) + extraOpacity);
+            spellToNumberHashMap.put(spell, spellToNumberHashMap.get(spell) + extraNumber);
+        }
+    }
+
+    public int getNumberOfCardAtAll(Card card) {
+        return getNumberOfCardInShop(card) + Account.getUsernameToAccount().values().stream().filter
+                (account -> account.getCollection().getCardIDs().contains(card.getID()))
+                .mapToInt(account -> account.getCollection().getHowManyCard().get(card.getName())).sum();
+    }
+
+    public int getNumberOfCardInShop(Card card) {
+        if (card instanceof Hero) {
+            Hero hero = (Hero) card;
+            return heroesToNumberHashMap.get(hero);
+        } else if (card instanceof Warrior) {
+            Warrior minion = (Warrior) card;
+            return minionToNumberHashMap.get(minion);
+        } else if (Spell.checkIsItem(card)) {
+            Spell item = (Spell) card;
+            return itemToNumberHashMap.get(item);
+        } else {
+            Spell spell = (Spell) card;
+            return spellToNumberHashMap.get(spell);
         }
     }
 

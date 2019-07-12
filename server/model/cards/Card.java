@@ -2,6 +2,7 @@ package model.cards;
 
 import model.Cell;
 import model.QualityHaver;
+import model.Shop;
 import model.effects.Effect;
 import model.exceptions.NotEnoughConditions;
 import model.triggers.Trigger;

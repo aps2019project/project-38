@@ -1,7 +1,9 @@
 package client.net;
 
-import model.cards.HeroPower;
-import model.cards.Warrior;
+import model.Collection;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class Digikala {
@@ -69,5 +71,68 @@ public class Digikala {
         Encoder.sendPackage(Message.AuctionProposedPrice, auctionIndex, proposedPrice);
         wait(isThereWarrior);
         return isThereWarrior.obj;
+    }
+
+    public static Box<Collection> collectionBox = new Box<>();
+    public static Collection getCollection() {
+        Encoder.sendMessage(Message.getCollection);
+        wait(collectionBox);
+        return collectionBox.obj;
+    }
+
+    public static Box<Integer> derrick = new Box<>();
+    public static Integer getDerrick(){
+        Encoder.sendMessage(Message.getDerrick);
+        wait(derrick);
+        return derrick.obj;
+    }
+
+    public static Box<ArrayList<Warrior>> allBuiltMinions = new Box<>();
+    public static ArrayList<Warrior> getAllBuiltMinions(){
+        Encoder.sendMessage(Message.getAllBuiltMinions);
+        wait(allBuiltMinions);
+        return allBuiltMinions.obj;
+    }
+
+    public static Box<ArrayList<Hero>> allBuiltHeroes = new Box<>();
+    public static ArrayList<Hero> getAllBuiltHeroes(){
+        Encoder.sendMessage(Message.getAllBuiltHeroes);
+        wait(allBuiltHeroes);
+        return allBuiltHeroes.obj;
+    }
+
+    public static Box<ArrayList<Spell>> allBuiltSpells = new Box<>();
+    public static ArrayList<Spell> getAllBuiltSpells(){
+        Encoder.sendMessage(Message.getAllBuiltSpells);
+        wait(allBuiltSpells);
+        return allBuiltSpells.obj;
+    }
+
+    public static Box<ArrayList<Spell>> allBuiltItems = new Box<>();
+    public static ArrayList<Spell> getAllBuiltItems(){
+        Encoder.sendMessage(Message.getAllBuiltItems);
+        wait(allBuiltItems);
+        return allBuiltItems.obj;
+    }
+
+    public static Box<String> warriorType = new Box<>();
+    public static String getWarriorType(int id){
+        Encoder.sendPackage(Message.getWarriorType,id);
+        wait(warriorType);
+        return warriorType.obj;
+    }
+
+    public static Box<Integer> IDByName = new Box<>();
+    public static Integer getIDByName(String name){
+        Encoder.sendPackage(Message.getIDByName,name);
+        wait(IDByName);
+        return IDByName.obj;
+    }
+
+    public static Box<HashMap<Integer, Card>> allCards = new Box<>();
+    public static HashMap<Integer,Card> getAllCards(){
+        Encoder.sendPackage(Message.getAllCards);
+        wait(allCards);
+        return allCards.obj;
     }
 }
