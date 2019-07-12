@@ -16,25 +16,36 @@ public class ServerInit extends Application {
 
     public static void main(String[] args) throws IOException {
         Account.loadAccounts();
-
+        //todo : build cards and load them
         ServerSocket sc = new ServerSocket(8000); //todo : get port from config.txt
+        new Thread(() -> {
+            while (true) {
+                Socket socket = null;
+                System.out.println("Ghabl");
+                try {
+                    socket = sc.accept();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("Baad");
+                new ServerSession(socket);
+            }
+        }).start();
         launch(args);
-        while (true) {
-            Socket socket = sc.accept();
-            new ServerSession(socket);
-        }
     }
 
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         mainStage = primaryStage;
         mainStage.setFullScreen(true);
-        mainStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-        mainStage.setOnCloseRequest(event -> {
 
+        mainStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+
+        mainStage.setOnCloseRequest(event -> {
             Platform.exit();
             System.exit(0);
         });
+
     }
 }

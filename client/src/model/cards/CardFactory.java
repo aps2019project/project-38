@@ -27,6 +27,7 @@ public interface CardFactory {
     }
 
     static ArrayList<Hero> getAllBuiltHeroes() {
+        //todo injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
         return Digikala.getAllBuiltHeroes();
     }
 
