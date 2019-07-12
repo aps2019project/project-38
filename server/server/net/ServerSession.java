@@ -12,7 +12,7 @@ public class ServerSession {
     public DataOutputStream dos;
     public DataInputStream dis;
     String username; // if some serverSession's username is null, it means that this serverSession is not online
-    String authToken = "";
+    String authToken;
 
     public static ServerSession getSession(String username) {
         return serverSessions.stream().filter(serverSession -> serverSession.username.equals(username)).findFirst().orElse(null);
@@ -32,11 +32,18 @@ public class ServerSession {
         new Thread(() -> {
             try {
                 while (true) {
-                    String gotAuthToken = dis.readUTF();
+                    System.out.println("ALI");
+                    String gotAuthToken = null;
+                    if (authToken != null) {
+                        gotAuthToken = dis.readUTF();
+                    }
+                    System.out.println("ALIi");
                     int messageIndex = dis.readInt();
-                    if (!gotAuthToken.equals(authToken)) {
+                    System.out.println(Message.values()[messageIndex]);
+                    if (authToken != null && !gotAuthToken.equals(authToken)) {
                         continue;
                     }
+                    System.out.println("ALIii");
                     decoder.decode(Message.values()[messageIndex]);
                 }
             } catch (IOException e) {

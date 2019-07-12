@@ -411,7 +411,7 @@ public class ArenaController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    } //todo MOEINI
+    }
 
     //call when using a collectible of a player (item with 0 index is at bottom of the VBox)
     public void useCollectibleItem(int i /* 0-base */, int playerNumber /* 1 or 2 */) {
@@ -437,7 +437,7 @@ public class ArenaController implements Initializable {
         border.setEffect(null);
         otherAvatar.setEffect(new SepiaTone());
         otherBorder.setEffect(new SepiaTone());
-    } //todo MOEINI
+    }
 
     //call at the start of turns
     public void buildPlayerHand(HashMap<Integer, Card> cards, int playerNumber /* 1 or 2 */) {
@@ -499,7 +499,7 @@ public class ArenaController implements Initializable {
             }
             break;
         }
-    } //todo MOEINI
+    }
 
     //call when using a card from "current" player hand
     public void useCard(int i) {

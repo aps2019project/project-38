@@ -14,18 +14,30 @@ public class ClientSession {
             socket = new Socket("localhost", 8000);
             dis = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             dos = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+            new Thread(() -> {
+                while (true) {
+                    try {
+                        int messageIndex = dis.readInt();
+                        System.out.println(dis+";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;");
+                        System.out.println(Decoder.readObject());
+//                        Decoder.decode(Message.values()[messageIndex]); for debug
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void listen() {
+    public static void listen() { // MOEINI AND HASHEM
         while (useListener) {
-                    try {
-                        int messageIndex = dis.readInt();
-                        Decoder.decode(Message.values()[messageIndex]);
-                    } catch (IOException e) {
-                        e.printStackTrace();
+            try {
+                int messageIndex = dis.readInt();
+                Decoder.decode(Message.values()[messageIndex]);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }

@@ -114,81 +114,85 @@ public class Decoder {
                 int playerNumber = (int) readObject();
                 ArenaController.ac.transferToGraveYard(name, type, playerNumber);
             }
-            case setActivePlayer:{
+            case setActivePlayer: {
                 int index = (int) readObject();
                 ArenaController.ac.setActivePlayer(index);
                 break;
             }
-            case buildPlayerHand:{
+            case buildPlayerHand: {
                 Gson gson = new Gson();
                 int playerIndex = (int) readObject();
 
                 HashMap<Integer, Card> handMap = new HashMap<>();
                 int mapSize = (int) readObject();
                 for (int i = 0; i < mapSize; i++) {
-                    int index = (int)readObject();
-                    if(readMessage().equals(Message.itsSpell)){
-                        Spell spell = gson.fromJson((String)readObject(),Spell.class);
-                        handMap.put(index,spell);
-                    }else {
-                        Warrior warrior = gson.fromJson((String)readObject(),Warrior.class);
-                        handMap.put(index,warrior);
+                    int index = (int) readObject();
+                    if (readMessage().equals(Message.itsSpell)) {
+                        Spell spell = gson.fromJson((String) readObject(), Spell.class);
+                        handMap.put(index, spell);
+                    } else {
+                        Warrior warrior = gson.fromJson((String) readObject(), Warrior.class);
+                        handMap.put(index, warrior);
                     }
                 }
 
-                ArenaController.ac.buildPlayerHand(handMap,playerIndex);
+                ArenaController.ac.buildPlayerHand(handMap, playerIndex);
                 break;
             }
-            case showCollectedCollectibleItems:{
-                ArenaController.ac.showCollectedCollectibleItems((String)readObject(),(int)readObject());
+            case showCollectedCollectibleItems: {
+                ArenaController.ac.showCollectedCollectibleItems((String) readObject(), (int) readObject());
                 break;
             }
-            case kill:{
-                ArenaController.ac.kill((int)readObject(),(int)readObject());
+            case kill: {
+                ArenaController.ac.kill((int) readObject(), (int) readObject());
                 break;
             }
-            case showPopup:{
-                Utility.showMessage((String)readObject());
+            case showPopup: {
+                Utility.showMessage((String) readObject());
                 break;
             }
             ///////////////
-            case getCollection:{
+            case getCollection: {
                 fillBoxAndNotifyJ(Digikala.collectionBox, Collection.class);
                 break;
             }
-            case getDerrick:{
+            case getDerrick: {
                 fillBoxAndNotify(Digikala.derrick);
                 break;
             }
-            case getAllBuiltMinions:{
-                fillBoxAndNotifyJ(Digikala.allBuiltMinions,new TypeToken<ArrayList<Warrior>>(){}.getType());
+            case getAllBuiltMinions: {
+                fillBoxAndNotifyJ(Digikala.allBuiltMinions, new TypeToken<ArrayList<Warrior>>() {
+                }.getType());
                 break;
             }
-            case getAllBuiltHeroes:{
-                fillBoxAndNotifyJ(Digikala.allBuiltHeroes,new TypeToken<ArrayList<Hero>>(){}.getType());
+            case getAllBuiltHeroes: {
+                fillBoxAndNotifyJ(Digikala.allBuiltHeroes, new TypeToken<ArrayList<Hero>>() {
+                }.getType());
                 break;
             }
-            case getAllBuiltSpells:{
-                fillBoxAndNotifyJ(Digikala.allBuiltSpells,new TypeToken<ArrayList<Spell>>(){}.getType());
+            case getAllBuiltSpells: {
+                fillBoxAndNotifyJ(Digikala.allBuiltSpells, new TypeToken<ArrayList<Spell>>() {
+                }.getType());
                 break;
             }
-            case getAllBuiltItems:{
-                fillBoxAndNotifyJ(Digikala.allBuiltItems,new TypeToken<ArrayList<Spell>>(){}.getType());
+            case getAllBuiltItems: {
+                fillBoxAndNotifyJ(Digikala.allBuiltItems, new TypeToken<ArrayList<Spell>>() {
+                }.getType());
                 break;
             }
-            case getAllCards:{
+            case getAllCards: {
                 Gson gson = new Gson();
-                HashMap<Integer,Card> allCards = new HashMap<>();
+                HashMap<Integer, Card> allCards = new HashMap<>();
 
-                int size = (int)readObject();
+                int size = (int) readObject();
                 for (int i = 0; i < size; i++) {
-                    int id = (int)readObject();
-                    if(readMessage().equals(Message.itsWarrior)){
-                        Warrior warrior = gson.fromJson((String)readObject(),Warrior.class);
-                        allCards.put(id,warrior);
-                    }else {
-                        Spell spell = gson.fromJson((String)readObject(),Spell.class);
-                        allCards.put(id,spell);
+                    int id = (int) readObject();
+                    if (readMessage().equals(Message.itsWarrior)) {
+                        Warrior warrior = gson.fromJson((String) readObject(), Warrior.class);
+                        allCards.put(id, warrior);
+                    } else {
+                        Spell spell = gson.fromJson((String) readObject(), Spell.class);
+                        allCards.put(id, spell);
                     }
                 }
 
@@ -198,41 +202,45 @@ public class Decoder {
                 }
                 break;
             }
-            case getAllBuiltMinionsHashMapForShop:{
-                fillHashmapOfCardToInt(Digikala.allBuiltMinionsHashMapForShop,new TypeToken<HashMap<Warrior,Integer>>(){}.getType());
+            case getAllBuiltMinionsHashMapForShop: {
+                fillHashmapOfCardToInt(Digikala.allBuiltMinionsHashMapForShop, new TypeToken<HashMap<Warrior, Integer>>() {
+                }.getType());
                 break;
             }
-            case getAllBuiltHeroesHashMapForShop:{
-                fillHashmapOfCardToInt(Digikala.allBuiltHeroesHashMapForShop,new TypeToken<HashMap<Hero,Integer>>(){}.getType());
+            case getAllBuiltHeroesHashMapForShop: {
+                fillHashmapOfCardToInt(Digikala.allBuiltHeroesHashMapForShop, new TypeToken<HashMap<Hero, Integer>>() {
+                }.getType());
                 break;
             }
-            case getAllBuiltSpellsHashMapForShop:{
-                fillHashmapOfCardToInt(Digikala.allBuiltSpellsHashMapForShop,new TypeToken<HashMap<Spell,Integer>>(){}.getType());
+            case getAllBuiltSpellsHashMapForShop: {
+                fillHashmapOfCardToInt(Digikala.allBuiltSpellsHashMapForShop, new TypeToken<HashMap<Spell, Integer>>() {
+                }.getType());
                 break;
             }
-            case getAllBuiltItemsHashMapForShop:{
-                fillHashmapOfCardToInt(Digikala.allBuiltItemsHashMapForShop,new TypeToken<HashMap<Spell,Integer>>(){}.getType());
+            case getAllBuiltItemsHashMapForShop: {
+                fillHashmapOfCardToInt(Digikala.allBuiltItemsHashMapForShop, new TypeToken<HashMap<Spell, Integer>>() {
+                }.getType());
                 break;
             }
             //---------------
             ///////ali:
-            case AuctionResult:{
+            case AuctionResult: {
                 String result = (String) readObject();
                 AlertController.setAndShow(result);
                 break;
             }
-            case AuctionProposedPrice:{
+            case AuctionProposedPrice: {
                 fillBoxAndNotify(Digikala.auctionProposedPriceIsAccepted);
                 break;
             }
-            case AuctionMaxProposedPriceUpdated:{
+            case AuctionMaxProposedPriceUpdated: {
                 int auctionIndex = (int) readObject();
                 String username = (String) readObject();
                 int newMaxProposedPrice = (int) readObject();
                 AuctionController.setMaxProposedPrice(auctionIndex, newMaxProposedPrice, username);
                 break;
             }
-            case StartNewAuction:{
+            case StartNewAuction: {
                 String username = (String) readObject();
                 String cardName = (String) readObject();
                 int auctionIndex = (int) readObject();
@@ -240,27 +248,27 @@ public class Decoder {
                         Account.getActiveAccount().username.equals(username), auctionIndex);
                 break;
             }
-            case CreateDeck:{
+            case CreateDeck: {
                 fillBoxAndNotify(Collection.createDeckResult);
                 break;
             }
-            case DeleteDeck:{
+            case DeleteDeck: {
                 fillBoxAndNotify(Collection.deleteDeckResult);
                 break;
             }
-            case AddCardToDeck:{
+            case AddCardToDeck: {
                 fillBoxAndNotify(Collection.addCardToDeckResult);
                 break;
             }
-            case RemoveCardFromDeck:{
+            case RemoveCardFromDeck: {
                 fillBoxAndNotify(Collection.removeCardFromDeckResult);
                 break;
             }
-            case SelectMainDeck:{
+            case SelectMainDeck: {
                 fillBoxAndNotify(Collection.selectMainDeckResult);
                 break;
             }
-            case RenameDeck:{
+            case RenameDeck: {
                 fillBoxAndNotify(Collection.renameDeckResult);
                 break;
             }
@@ -277,8 +285,13 @@ public class Decoder {
     }
 
     public static Object readObject() {
-        try (ObjectInputStream ois = new ObjectInputStream(ClientSession.dis)) {
-            return ois.readObject();
+        ObjectInputStream ois = null;
+        System.out.println(ClientSession.dis);
+        try {
+            ois = new ObjectInputStream(ClientSession.dis);
+            Object o = ois.readObject();
+            System.out.println(o);
+            return o;
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
             return null;
@@ -294,24 +307,28 @@ public class Decoder {
 
     private static <T> void fillBoxAndNotifyJ(Box<T> box, Class aClass) {
         Gson gson = new Gson();
-        box.obj = (T) gson.fromJson((String)readObject(), aClass);
+        box.obj = (T) gson.fromJson((String) readObject(), aClass);
         synchronized (box.waitStone) {
             box.waitStone.notify();
         }
     }
 
     private static <T> void fillBoxAndNotifyJ(Box<T> box, Type aType) {
+        System.out.println("sdfghjmbgcdczccccccccccccccccccccccccccccccccccccccccccc");
         Gson gson = new Gson();
-        box.obj = (T) gson.fromJson((String)readObject(), aType);
         synchronized (box.waitStone) {
             box.waitStone.notify();
         }
+        System.out.println("dfswdefrgfdsccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc");
+        String s = (String) readObject();
+        System.out.println(s + "/////////////////");
+        box.obj = (T) gson.fromJson(s, aType);
     }
 
-    private static <T> void fillHashmapOfCardToInt(Box<T> box, Type aType){
+    private static <T> void fillHashmapOfCardToInt(Box<T> box, Type aType) {
         Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
-        box.obj = (T) gson.fromJson((String)readObject(),aType);
-        synchronized (box.waitStone){
+        box.obj = (T) gson.fromJson((String) readObject(), aType);
+        synchronized (box.waitStone) {
             box.waitStone.notify();
         }
     }
