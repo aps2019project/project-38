@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.fxmlControllers.AuctionsController">
+   <children>
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="555.0" prefWidth="960.0">
+         <children>
+            <ImageView fitHeight="555.0" fitWidth="900.0">
+               <image>
+                  <Image url="@../images/shopAndCollection/shopCollection.jpg" />
+               </image>
+            </ImageView>
+            <TabPane prefHeight="555.0" prefWidth="960.0" side="RIGHT" tabClosingPolicy="UNAVAILABLE">
+               <tabs>
+                  <Tab text="My Auctions">
+                     <content>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <ScrollPane hbarPolicy="NEVER" layoutX="63.0" layoutY="70.0" prefHeight="470.0" prefWidth="780.0" stylesheets="@../images/shopAndCollection/style.css" vbarPolicy="NEVER">
+                                 <content>
+                                    <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="780.0">
+                                       <children>
+                                          <VBox fx:id="myAuctionsLeftVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="260.0" />
+                                          <VBox fx:id="myAuctionsMiddleVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="260.0" />
+                                          <VBox fx:id="myAuctionsRightVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="260.0" />
+                                       </children>
+                                    </HBox>
+                                 </content>
+                              </ScrollPane>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab text="Other Auctions">
+                     <content>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <ScrollPane hbarPolicy="NEVER" layoutX="63.0" layoutY="70.0" prefHeight="470.0" prefWidth="780.0" stylesheets="@../images/shopAndCollection/style.css" vbarPolicy="NEVER">
+                                 <content>
+                                    <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="780.0">
+                                       <children>
+                                          <VBox fx:id="otherAuctionsLeftVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="260.0" />
+                                          <VBox fx:id="otherAuctionsMiddleVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="260.0" />
+                                          <VBox fx:id="otherAuctionsRightVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="260.0" />
+                                       </children>
+                                    </HBox>
+                                 </content>
+                              </ScrollPane>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+               </tabs>
+            </TabPane>
+            <ImageView fx:id="backButton" fitHeight="54.0" fitWidth="54.0" onMouseClicked="#back" onMouseEntered="#shineBackBottom" onMouseExited="#resetBackBottom">
+               <image>
+                  <Image url="@../images/shopAndCollection/backBottom.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
