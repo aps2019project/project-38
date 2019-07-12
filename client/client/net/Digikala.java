@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class Digikala {
     public static void wait(Box box){
-        synchronized (box) {
+        synchronized (box.waitStone) {
             try {
                 box.waitStone.wait();
             } catch (InterruptedException e) {
@@ -134,5 +134,33 @@ public class Digikala {
         Encoder.sendPackage(Message.getAllCards);
         wait(allCards);
         return allCards.obj;
+    }
+
+    public static Box<HashMap<Warrior,Integer>> allBuiltMinionsHashMapForShop = new Box<>();
+    public static HashMap<Warrior,Integer> getAllBuiltMinionsHashMapForShop(){
+        Encoder.sendMessage(Message.getAllBuiltMinionsHashMapForShop);
+        wait(allBuiltMinionsHashMapForShop);
+        return allBuiltMinionsHashMapForShop.obj;
+    }
+
+    public static Box<HashMap<Hero,Integer>> allBuiltHeroesHashMapForShop = new Box<>();
+    public static HashMap<Hero,Integer> getAllBuiltHeroesHashMapForShop(){
+        Encoder.sendMessage(Message.getAllBuiltHeroesHashMapForShop);
+        wait(allBuiltHeroesHashMapForShop);
+        return allBuiltHeroesHashMapForShop.obj;
+    }
+
+    public static Box<HashMap<Spell,Integer>> allBuiltSpellsHashMapForShop = new Box<>();
+    public static HashMap<Spell,Integer> getAllBuiltSpellsHashMapForShop(){
+        Encoder.sendMessage(Message.getAllBuiltSpellsHashMapForShop);
+        wait(allBuiltSpellsHashMapForShop);
+        return allBuiltSpellsHashMapForShop.obj;
+    }
+
+    public static Box<HashMap<Spell,Integer>> allBuiltItemsHashMapForShop = new Box<>();
+    public static HashMap<Spell,Integer> getAllBuiltItemsHashMapForShop(){
+        Encoder.sendMessage(Message.getAllBuiltItemsHashMapForShop);
+        wait(allBuiltItemsHashMapForShop);
+        return allBuiltItemsHashMapForShop.obj;
     }
 }

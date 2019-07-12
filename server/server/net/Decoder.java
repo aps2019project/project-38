@@ -1,6 +1,7 @@
 package server.net;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import javafx.util.Pair;
@@ -308,6 +309,26 @@ public class Decoder {
                 }
 
                 ss.encoder.sendPackage(message,data.toArray());
+                break;
+            }
+            case getAllBuiltMinionsHashMapForShop:{
+                Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
+//                ss.encoder.sendPackage(Message.getAllBuiltMinionsHashMapForShop,gson.toJson());//todo amir
+                break;
+            }
+            case getAllBuiltHeroesHashMapForShop:{
+                Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
+//                ss.encoder.sendPackage(Message.getAllBuiltHeroesHashMapForShop,gson.toJson());//todo amir
+                break;
+            }
+            case getAllBuiltSpellsHashMapForShop:{
+                Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
+//                ss.encoder.sendPackage(Message.getAllBuiltSpellsHashMapForShop,gson.toJson());//todo amir
+                break;
+            }
+            case getAllBuiltItemsHashMapForShop:{
+                Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
+//                ss.encoder.sendPackage(Message.getAllBuiltItemsHashMapForShop,gson.toJson());//todo amir
                 break;
             }
             //////ali:

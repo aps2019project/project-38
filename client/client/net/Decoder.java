@@ -1,6 +1,7 @@
 package client.net;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import model.Account;
 import model.Collection;
@@ -193,6 +194,23 @@ public class Decoder {
                 synchronized (Digikala.allCards.waitStone) {
                     Digikala.allCards.waitStone.notify();
                 }
+                break;
+            }
+            case getAllBuiltMinionsHashMapForShop:{
+                fillHashmapOfCardToInt(Digikala.allBuiltMinionsHashMapForShop,new TypeToken<HashMap<Warrior,Integer>>(){}.getType());
+                break;
+            }
+            case getAllBuiltHeroesHashMapForShop:{
+                fillHashmapOfCardToInt(Digikala.allBuiltHeroesHashMapForShop,new TypeToken<HashMap<Hero,Integer>>(){}.getType());
+                break;
+            }
+            case getAllBuiltSpellsHashMapForShop:{
+                fillHashmapOfCardToInt(Digikala.allBuiltSpellsHashMapForShop,new TypeToken<HashMap<Spell,Integer>>(){}.getType());
+                break;
+            }
+            case getAllBuiltItemsHashMapForShop:{
+                fillHashmapOfCardToInt(Digikala.allBuiltItemsHashMapForShop,new TypeToken<HashMap<Spell,Integer>>(){}.getType());
+                break;
             }
             //---------------
             ///////ali:
@@ -265,14 +283,14 @@ public class Decoder {
         }
     }
 
-    public static <T> void fillBoxAndNotify(Box<T> box) {
+    private static <T> void fillBoxAndNotify(Box<T> box) {
         box.obj = (T) readObject();
         synchronized (box.waitStone) {
             box.waitStone.notify();
         }
     }
 
-    public static <T> void fillBoxAndNotifyJ(Box<T> box, Class aClass) {
+    private static <T> void fillBoxAndNotifyJ(Box<T> box, Class aClass) {
         Gson gson = new Gson();
         box.obj = (T) gson.fromJson((String)readObject(), aClass);
         synchronized (box.waitStone) {
@@ -280,10 +298,18 @@ public class Decoder {
         }
     }
 
-    public static <T> void fillBoxAndNotifyJ(Box<T> box, Type aType) {
+    private static <T> void fillBoxAndNotifyJ(Box<T> box, Type aType) {
         Gson gson = new Gson();
         box.obj = (T) gson.fromJson((String)readObject(), aType);
         synchronized (box.waitStone) {
+            box.waitStone.notify();
+        }
+    }
+
+    private static <T> void fillHashmapOfCardToInt(Box<T> box, Type aType){
+        Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
+        box.obj = (T) gson.fromJson((String)readObject(),aType);
+        synchronized (box.waitStone){
             box.waitStone.notify();
         }
     }

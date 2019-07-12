@@ -14,5 +14,6 @@ public enum Message {
     AuctionResult, AuctionMaxProposedPriceUpdated, AuctionProposedPrice, StartNewAuction, DeselectMainDeck, CreateDeck,
     DeleteDeck, AddCardToDeck, RemoveCardFromDeck, SelectMainDeck, RenameDeck, Buy, Sell, StartGame,
     getCollection, getDerrick, getAllBuiltMinions, getAllBuiltHeroes, getAllBuiltSpells, getAllBuiltItems,getWarriorType,
-    getIDByName,getAllCards,
+    getIDByName,getAllCards,getAllBuiltMinionsHashMapForShop,getAllBuiltHeroesHashMapForShop,getAllBuiltSpellsHashMapForShop,
+    getAllBuiltItemsHashMapForShop,
 }
