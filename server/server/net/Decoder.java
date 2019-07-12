@@ -237,6 +237,11 @@ public class Decoder {
                 } catch (NotEnoughConditions notEnoughConditions) {
                     ss.encoder.sendPackage(Message.showPopup, notEnoughConditions.getMessage());
                 }
+                break;
+            }
+            case manaCheat:{
+                MatchMaker.PGPGetter(ss.username).getKey().addMana(1);
+                break;
             }
             ///////
             case getCollection:{

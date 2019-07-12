@@ -8,7 +8,6 @@ import model.cards.Hero;
 import model.cards.Spell;
 import model.cards.Warrior;
 import server.net.Message;
-import server.net.ServerSession;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -45,12 +44,12 @@ public abstract class Player implements Serializable {
 
     public void setMana(int amount) {
         mana = amount;
-        ServerSession.getSession(username).encoder.sendPackage(Message.mana,mana,getGame().getPlayerNumber(this)+1);
+        game.cm.sendToBothPlayers(Message.mana,mana,getGame().getPlayerNumber(this)+1);
     }
 
     public void addMana(int amount) {
         mana += amount;
-        ServerSession.getSession(username).encoder.sendPackage(Message.mana,mana,getGame().getPlayerNumber(this)+1);
+        game.cm.sendToBothPlayers(Message.mana,mana,getGame().getPlayerNumber(this)+1);
     }
 
     public void initializeNextCard() {
