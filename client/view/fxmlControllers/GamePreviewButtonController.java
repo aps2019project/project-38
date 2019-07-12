@@ -36,7 +36,7 @@ public class GamePreviewButtonController {
 //            }
 //
 //            Platform.runLater(() -> {
-//                ArenaController.ac.init(game);
+//                ArenaController.ac.init();
 //                game.initialiseGameFields();
 //            });
             WindowChanger.instance.setMainParent(LoadedScenes.arena);//todo ali amir

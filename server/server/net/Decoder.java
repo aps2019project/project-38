@@ -224,7 +224,7 @@ public class Decoder {
                 Game game = MatchMaker.PGPGetter(ss.username).getValue();
                 try {
                     checkWhoseTurn();
-                    game.endTurn();
+                    game.quit();
                 } catch (NotEnoughConditions notEnoughConditions) {
                     ss.encoder.sendPackage(Message.showPopup, notEnoughConditions.getMessage());
                 }

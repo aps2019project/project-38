@@ -387,7 +387,7 @@ public class Game implements Serializable {
         endGame();
     }
 
-    public void endTurn() {
+    private void endTurn() {
         EndTurn.doIt(this);
         checkGameEndAndThenKillAllDiedWarriors();
 
@@ -409,11 +409,9 @@ public class Game implements Serializable {
                         , Map.Entry::getValue));
         handMap.put(0, getActivePlayer().getNextCard());
         cm.sendHandToActivePlayer(handMap);
-//        ArenaController.ac.buildPlayerHand(handMap, getPlayerNumber(getActivePlayer()) + 1);
 
-        //todo this is an unwanted recurse sol: a "your turn" field in player that ai waits on
         if (getActivePlayer() instanceof AIPlayer) {
-            ((AIPlayer) getActivePlayer()).doSomething(); //todo MOEINI
+            ((AIPlayer) getActivePlayer()).doSomething();
         }
     }
 }
