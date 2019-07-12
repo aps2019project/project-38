@@ -5,6 +5,7 @@ import javafx.application.Platform;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 import model.Account;
+import server.net.MatchMaker;
 import server.net.ServerSession;
 
 import java.io.IOException;
@@ -16,6 +17,7 @@ public class ServerInit extends Application {
 
     public static void main(String[] args) throws IOException {
         Account.loadAccounts();
+        MatchMaker.makeMatchMakingThreads();
 
         ServerSocket sc = new ServerSocket(8000); //todo : get port from config.txt
         launch(args);

@@ -249,7 +249,7 @@ public class Game implements Serializable {
         return didSth;
     }
 
-    public void endGame() {
+    private void endGame() {
         //add game to history
         for (Player player : players) {
             if (player instanceof HumanPlayer) {
@@ -387,7 +387,7 @@ public class Game implements Serializable {
         endGame();
     }
 
-    private void endTurn() {
+    public void endTurn() {
         EndTurn.doIt(this);
         checkGameEndAndThenKillAllDiedWarriors();
 
