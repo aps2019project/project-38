@@ -46,7 +46,7 @@ public class AuctionController implements Initializable {
             int price = Integer.parseInt(priceString);
             if (price > maxProposedPrice) {
                 if (price <= Account.activeAccount.getDerrick()) {
-                    if (Digikala.getIsProposedPriceAccepted(auctionIndex, Account.getActiveAccount().username, price)) {
+                    if (Digikala.getIsProposedPriceAccepted(auctionIndex, price)) {
                         AlertController.setAndShow(String.format
                                 ("Your proposed price (%d) for card with name %s accepted", price, card.getName()));
                     }

@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import javafx.util.Pair;
 import model.*;
+import model.cards.Card;
 import model.cards.HeroPower;
 import model.cards.Warrior;
 import model.exceptions.NotEnoughConditions;
@@ -231,19 +232,78 @@ public class Decoder {
                 } catch (NotEnoughConditions notEnoughConditions) {
                     ss.encoder.sendPackage(Message.showPopup, notEnoughConditions.getMessage());
                 }
+                break;
             }
             //////ali:
             case AuctionProposedPrice:{
                 int auctionIndex = (int) readObject();
-                String username = (String) readObject();
                 int proposedPrice = (int) readObject();
-                Auction.receiveNewProposedPrice(auctionIndex, username, proposedPrice);
+                Auction.receiveNewProposedPrice(auctionIndex, ss.username, proposedPrice);
+                break;
             }
             case StartNewAuction:{
-                String username = (String) readObject();
                 String cardName = (String) readObject();
-                int auctionIndex = Auction.startNewAuctionAndGetIndex(username, cardName);
-                Encoder.sendPackageToAll(Message.StartNewAuction, username, cardName, auctionIndex);
+                int auctionIndex = Auction.startNewAuctionAndGetIndex(ss.username, cardName);
+                Encoder.sendPackageToAll(Message.StartNewAuction, ss.username, cardName, auctionIndex);
+                break;
+            }
+            case CreateDeck:{
+                Account account = Account.getUsernameToAccount().get(ss.username);
+                account.getCollection().createDeck((String) readObject());
+                break;
+            }
+            case DeleteDeck:{
+                Account account = Account.getUsernameToAccount().get(ss.username);
+                account.getCollection().deleteDeck((String) readObject());
+                break;
+            }
+            case AddCardToDeck:{
+                Account account = Account.getUsernameToAccount().get(ss.username);
+                String cardName = (String) readObject();
+                String deckName = (String) readObject();
+                account.getCollection().addCardToDeck(cardName, deckName);
+                break;
+            }
+            case RemoveCardFromDeck:{
+                Account account = Account.getUsernameToAccount().get(ss.username);
+                String cardName = (String) readObject();
+                String deckName = (String) readObject();
+                account.getCollection().removeCardFromDeck(cardName, deckName);
+                break;
+            }
+            case SelectMainDeck:{
+                Account account = Account.getUsernameToAccount().get(ss.username);
+                String deckName = (String) readObject();
+                Deck newMainDeck = account.getCollection().getAllDecks().get(deckName);
+                account.getCollection().setMainDeck(newMainDeck);
+                break;
+            }
+            case RenameDeck:{
+                Account account = Account.getUsernameToAccount().get(ss.username);
+                String deckName = (String) readObject();
+                String newName = (String) readObject();
+                account.getCollection().renameDeck(deckName, newName);
+                break;
+            }
+            case DeselectMainDeck:{
+                Account account = Account.getUsernameToAccount().get(ss.username);
+                account.getCollection().setMainDeck(null);
+            }
+            case Buy:{
+                Account account = Account.getUsernameToAccount().get(ss.username);
+                String cardName = (String) readObject();
+                Card card = Card.getCardByItsName(cardName);
+                int price = (int) readObject();
+                Shop.getShop().buy(account, card, price);
+                ss.encoder.sendObject(0); // just fo notify box
+            }
+            case Sell:{
+                Account account = Account.getUsernameToAccount().get(ss.username);
+                String cardName = (String) readObject();
+                Card card = Card.getCardByItsName(cardName);
+                int price = (int) readObject();
+                Shop.getShop().sell(account, null, card, price);
+                ss.encoder.sendObject(0); // just fo notify box
             }
         }
     }

@@ -1,6 +1,6 @@
 package client.net;
 
 public class Box<T> {
-    T obj;
+    public T obj;
     Object waitStone = new Object();
 }

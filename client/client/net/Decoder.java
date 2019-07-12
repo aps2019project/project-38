@@ -1,6 +1,8 @@
 package client.net;
 
 import com.google.gson.Gson;
+import model.Account;
+import model.Collection;
 import model.cards.Card;
 import model.cards.HeroPower;
 import model.cards.Spell;
@@ -156,19 +158,47 @@ public class Decoder {
                 break;
             }
             case AuctionProposedPrice:{
-                fillBoxAndNotify(Digikala.auctionProposedPrice);
+                fillBoxAndNotify(Digikala.auctionProposedPriceIsAccepted);
+                break;
             }
             case AuctionMaxProposedPriceUpdated:{
                 int auctionIndex = (int) readObject();
                 String username = (String) readObject();
                 int newMaxProposedPrice = (int) readObject();
                 AuctionController.setMaxProposedPrice(auctionIndex, newMaxProposedPrice, username);
+                break;
             }
             case StartNewAuction:{
                 String username = (String) readObject();
                 String cardName = (String) readObject();
                 int auctionIndex = (int) readObject();
-                AuctionsController.auctionsController.loadCard();//todo ali
+                AuctionsController.auctionsController.loadCard(Card.getCardByItsName(cardName),
+                        Account.getActiveAccount().username.equals(username), auctionIndex);
+                break;
+            }
+            case CreateDeck:{
+                fillBoxAndNotify(Collection.createDeckResult);
+                break;
+            }
+            case DeleteDeck:{
+                fillBoxAndNotify(Collection.deleteDeckResult);
+                break;
+            }
+            case AddCardToDeck:{
+                fillBoxAndNotify(Collection.addCardToDeckResult);
+                break;
+            }
+            case RemoveCardFromDeck:{
+                fillBoxAndNotify(Collection.removeCardFromDeckResult);
+                break;
+            }
+            case SelectMainDeck:{
+                fillBoxAndNotify(Collection.selectMainDeckResult);
+                break;
+            }
+            case RenameDeck:{
+                fillBoxAndNotify(Collection.renameDeckResult);
+                break;
             }
         }
     }

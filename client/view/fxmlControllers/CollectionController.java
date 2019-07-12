@@ -95,7 +95,7 @@ public class CollectionController implements Initializable {
                 AlertController.setAndShowAndDo
                         ("This is your main deck and changing it will reset it. Are you sure about changing it?",
                                 () -> {
-                                    Collection.getCollection().setMainDeck(null);
+                                    Collection.deselectMainDeck();
                                     ChoosingDeckCardsController.choosingDeckCardsController.calculateEveryThing(selectedDeck);
                                     WindowChanger.instance.setMainParent(LoadedScenes.choosingDeckCards);
                                 });
@@ -124,7 +124,7 @@ public class CollectionController implements Initializable {
         for (Deck deck : Collection.getCollection().getAllDecks().values()) {
             if (Collection.getCollection().getMainDeck() == deck) {
                 deckToTypeHashMap.put(deck, "ClientInit Deck");
-            } else if (Collection.getCollection().validateDeck(deck.getName(), false)) {
+            } else if (Collection.getCollection().validateDeck(deck.getName())) {
                 deckToTypeHashMap.put(deck, "Ready");
             } else {
                 deckToTypeHashMap.put(deck, "Not Ready");

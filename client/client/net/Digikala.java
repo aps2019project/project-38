@@ -64,9 +64,9 @@ public class Digikala {
         return isThereWarrior.obj;
     }
 
-    public static Box<Boolean> auctionProposedPrice = new Box<>();
-    public static boolean getIsProposedPriceAccepted(int auctionIndex, String username, int proposedPrice){
-        Encoder.sendPackage(Message.AuctionProposedPrice, auctionIndex, username, proposedPrice);
+    public static Box<Boolean> auctionProposedPriceIsAccepted = new Box<>();
+    public static boolean getIsProposedPriceAccepted(int auctionIndex, int proposedPrice){
+        Encoder.sendPackage(Message.AuctionProposedPrice, auctionIndex, proposedPrice);
         wait(isThereWarrior);
         return isThereWarrior.obj;
     }

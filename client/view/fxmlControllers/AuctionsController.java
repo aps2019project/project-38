@@ -105,7 +105,6 @@ public class AuctionsController {
             else othersAuctionIndexToCardControllerHashMap.put(auctionIndex, warriorCardController);
         }
         if (WindowChanger.instance.equalsToMainParent(LoadedScenes.auctions)) calculateEveryThing();
-        //todo using server
     }
 
     public void removeCard(int auctionIndex) {

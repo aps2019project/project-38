@@ -41,7 +41,7 @@ public class ClientInit extends Application {
 
 //        {//arena
 //            Account account = new Account("test", "test");
-//            account.getCollection().setMainDeck(Deck.getAllDecks().get("level1"));
+//            account.getCollection().deselectMainDeck(Deck.getAllDecks().get("level1"));
 //            Game game = Level.getAvailableLevels().get("1").getLevelGame(account);
 //            ArenaController.ac.init(game);
 //            game.initialiseGameFields();//

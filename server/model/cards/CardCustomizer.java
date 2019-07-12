@@ -65,7 +65,7 @@ public class CardCustomizer {
 
         CardFactory.getAllBuiltHeroes().add(hero);
         Card.getAllCards().put(hero.getID(), hero);
-        Shop.getShop().getCardIDs().add(hero.getID());
+        Shop.getShop().addNewCardToShop(hero);
     }
 
     void buildSpell() throws NotEnoughConditions {
@@ -93,7 +93,7 @@ public class CardCustomizer {
 
         CardFactory.getAllBuiltSpells().add(spell);
         Card.getAllCards().put(spell.getID(), spell);
-        Shop.getShop().getCardIDs().add(spell.getID());
+        Shop.getShop().addNewCardToShop(spell);
     }
 
     void buildMinion() throws NotEnoughConditions {
@@ -136,7 +136,7 @@ public class CardCustomizer {
 
         CardFactory.getAllBuiltMinions().add(warrior);
         Card.getAllCards().put(warrior.getID(),warrior);
-        Shop.getShop().getCardIDs().add(warrior.getID());
+        Shop.getShop().addNewCardToShop(warrior);
     }
 
     private SpellTarget getSpellTarget(String input) throws NotEnoughConditions {

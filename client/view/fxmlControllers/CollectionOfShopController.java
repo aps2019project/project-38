@@ -1,5 +1,7 @@
 package view.fxmlControllers;
 
+import client.net.Box;
+import client.net.Digikala;
 import client.net.Encoder;
 import client.net.Message;
 import javafx.application.Platform;
@@ -15,7 +17,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import model.Account;
 import model.Collection;
-import model.Deck;
 import model.cards.*;
 import view.WindowChanger;
 import view.fxmlControllers.cardHolder.SpellCardController;
@@ -141,7 +142,7 @@ public class CollectionOfShopController implements Initializable {
     }
 
     private void initializeAllMinions() {
-        for (Warrior minion : CardFactory.getAllBuiltMinionsHashMapForShop().keySet()) {
+        for (Warrior minion : CardFactory.getMinionToNumberHashMapForShop().keySet()) {
             if (Account.activeAccount.getCollection().getHowManyCard().containsKey(minion.name)&&
                     Account.activeAccount.getCollection().getHowManyCard().get(minion.name) > 0 &&
                     !allMinions.containsKey(minion)) {
@@ -204,7 +205,7 @@ public class CollectionOfShopController implements Initializable {
     }
 
     private void initializeAllHeroes() {
-        for (Hero hero : CardFactory.getAllBuiltHeroesHashMapForShop().keySet()) {
+        for (Hero hero : CardFactory.getHeroesToNumberHashMapForShop().keySet()) {
             if (Account.activeAccount.getCollection().getHowManyCard().containsKey(hero.name)&&
                     Account.activeAccount.getCollection().getHowManyCard().get(hero.name) > 0 &&
                     !allHeroes.containsKey(hero)) {
@@ -267,7 +268,7 @@ public class CollectionOfShopController implements Initializable {
     }
 
     private void initializeAllSpells() {
-        for (Spell spell : CardFactory.getAllBuiltSpellsHashMapForShop().keySet()) {
+        for (Spell spell : CardFactory.getSpellToNumberHashMapForShop().keySet()) {
             if (Account.activeAccount.getCollection().getHowManyCard().containsKey(spell.name)&&
                     Account.activeAccount.getCollection().getHowManyCard().get(spell.name) > 0 &&
                     !allSpells.containsKey(spell)) {
@@ -330,7 +331,7 @@ public class CollectionOfShopController implements Initializable {
     }
 
     private void initializeAllItems() {
-        for (Spell item : CardFactory.getAllBuiltItemsHashMapForShop().keySet()) {
+        for (Spell item : CardFactory.getItemToNumberHashMapForShop().keySet()) {
             if (Account.activeAccount.getCollection().getHowManyCard().containsKey(item.name)&&
                     Account.activeAccount.getCollection().getHowManyCard().get(item.name) > 0 &&
                     !allItems.containsKey(item)) {
@@ -378,28 +379,14 @@ public class CollectionOfShopController implements Initializable {
     }
 
     public static void doAuctionSellingJobs(Card card) {
-        Encoder.sendPackage(Message.StartNewAuction, Account.getActiveAccount().username, card.name);
+        Encoder.sendPackage(Message.StartNewAuction, card.name);
     }
 
+    public static Box<Byte> ignored = new Box<>();
     private static void doAfterSellingJobs(Card card) {
-        Account account = Account.activeAccount;
-        for (String deckName : account.getCollection().getDecks()) {
-            Deck deck = Account.activeAccount.getCollection().getAllDecks().get(deckName);
-            if (deck.getCardIDs().stream().filter(cardID -> cardID.equals(card.ID)).count() ==
-                    Collection.getCollection().getHowManyCard().get(card.name)) {
-                deck.getCardIDs().remove((Integer) card.ID);
-                deck.setHero(deck.getHero() == card ? null : deck.getHero());
-                deck.setItem(deck.getItem() == card ? null : deck.getItem());
-                deck.minions.remove(card);
-                deck.spells.remove(card);
-            }
-        }
-        account.setDerrick(account.getDerrick() + card.price);
-        account.getCollection().getCardIDs().remove((Integer) card.ID);
-        int keyValue = model.Collection.getCollection().getHowManyCard().get(card.name);
-        Collection.getCollection().getHowManyCard().put(card.name, keyValue - 1);
+        Encoder.sendPackage(Message.Sell, card.name, card.price);
+        Digikala.wait(ignored);
         AlertController.setAndShow("You sell the card successfully");
         collectionOfShopController.calculateEverything();
-        //todo server
     }
 }

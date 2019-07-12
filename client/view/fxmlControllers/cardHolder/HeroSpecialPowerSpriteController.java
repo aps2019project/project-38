@@ -6,6 +6,7 @@ import javafx.scene.image.ImageView;
 import model.cards.HeroPower;
 import view.fxmlControllers.ArenaController;
 import view.images.LoadedImages;
+import view.visualentities.VisualSpell;
 
 public class HeroSpecialPowerSpriteController extends Holder {
     public Label neededMana;

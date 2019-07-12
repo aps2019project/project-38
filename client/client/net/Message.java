@@ -11,7 +11,6 @@ public enum Message {
     move, endTurn, quitTheGame, mana, graveYard,showCollectedCollectibleItems,kill,
 
     ////////ali:
-    AuctionProposedPrice, StartNewAuction,
-
-    AuctionResult, AuctionMaxProposedPriceUpdated,
+    AuctionResult, AuctionMaxProposedPriceUpdated, AuctionProposedPrice, StartNewAuction, DeselectMainDeck, CreateDeck,
+    DeleteDeck, AddCardToDeck, RemoveCardFromDeck, SelectMainDeck, RenameDeck, Buy, Sell, StartGame,
 }

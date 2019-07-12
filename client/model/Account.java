@@ -1,5 +1,8 @@
 package model;
 
+import client.net.Encoder;
+import client.net.Message;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,10 +21,6 @@ public class Account {
     }
 
     public int getDerrick() {
-        //todo server
-    }
-
-    public void setDerrick(int newDerrick) {
         //todo server
     }
 

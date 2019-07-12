@@ -1,5 +1,9 @@
 package view.fxmlControllers;
 
+import client.net.Box;
+import client.net.Digikala;
+import client.net.Encoder;
+import client.net.Message;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -66,6 +70,7 @@ public class ShopController implements Initializable {
         WindowChanger.instance.setMainParent(LoadedScenes.collectionOfShop);
     }
 
+    public static Box<Byte> ignored = new Box<>();
     public static void buy(String cardName) {
         Card card = Card.getCardByItsName(cardName);
         Account account = Account.activeAccount;
@@ -80,16 +85,9 @@ public class ShopController implements Initializable {
                 return;
             }
         }
-        account.setDerrick(account.getDerrick() - card.price);
-        account.getCollection().getCardIDs().add(card.ID);
-        if (model.Collection.getCollection().getHowManyCard().containsKey(cardName)) {
-            int keyValue = model.Collection.getCollection().getHowManyCard().get(cardName);
-            model.Collection.getCollection().getHowManyCard().put(card.name, keyValue + 1);
-        } else {
-            model.Collection.getCollection().getHowManyCard().put(card.name, 1);
-        }
+        Encoder.sendPackage(Message.Buy, card.name, card.price);
+        Digikala.wait(ignored);
         AlertController.setAndShow("You bought the card successfully");
-        //todo server
     }
 
     public void back() {
@@ -142,13 +140,14 @@ public class ShopController implements Initializable {
     }
 
     private void initializeAllMinions() {
+        HashMap<Warrior, Integer> minionToNumberHashMap = CardFactory.getMinionToNumberHashMapForShop();
         for (Iterator<Map.Entry<Warrior, AnchorPane>> iterator = allMinions.entrySet().iterator(); iterator.hasNext();) {
             Warrior minion = iterator.next().getKey();
-            if (!CardFactory.getAllBuiltMinionsHashMapForShop().containsKey(minion) || CardFactory.getAllBuiltMinionsHashMapForShop().get(minion) <= 0) {//todo simpler
+            if (!minionToNumberHashMap.containsKey(minion) || minionToNumberHashMap.get(minion) <= 0) {
                 iterator.remove();
             }
         }
-        for (Map.Entry<Warrior, Integer> minion : CardFactory.getAllBuiltMinionsHashMapForShop().entrySet()) {
+        for (Map.Entry<Warrior, Integer> minion : minionToNumberHashMap.entrySet()) {
             if (!allMinions.containsKey(minion.getKey()) && minion.getValue() > 0) {
                 loadMinion(minion.getKey());
             }
@@ -204,13 +203,14 @@ public class ShopController implements Initializable {
     }
 
     private void initializeAllHeroes() {
+        HashMap<Hero, Integer> heroesToNumberHashMap = CardFactory.getHeroesToNumberHashMapForShop();
         for (Iterator<Map.Entry<Hero, AnchorPane>> iterator = allHeroes.entrySet().iterator(); iterator.hasNext();) {
             Hero hero = iterator.next().getKey();
-            if (!CardFactory.getAllBuiltHeroesHashMapForShop().containsKey(hero) || CardFactory.getAllBuiltHeroesHashMapForShop().get(hero) <= 0) {//todo simpler
+            if (!heroesToNumberHashMap.containsKey(hero) || heroesToNumberHashMap.get(hero) <= 0) {
                 iterator.remove();
             }
         }
-        for (Map.Entry<Hero, Integer> hero : CardFactory.getAllBuiltHeroesHashMapForShop().entrySet()) {
+        for (Map.Entry<Hero, Integer> hero : heroesToNumberHashMap.entrySet()) {
             if (!allHeroes.containsKey(hero.getKey()) && hero.getValue() > 0) {
                 loadHero(hero.getKey());
             }
@@ -266,13 +266,14 @@ public class ShopController implements Initializable {
     }
 
     private void initializeAllSpells() {
+        HashMap<Spell, Integer> spellToNumberHashMap = CardFactory.getSpellToNumberHashMapForShop();
         for (Iterator<Map.Entry<Spell, AnchorPane>> iterator = allSpells.entrySet().iterator(); iterator.hasNext();) {
             Spell spell = iterator.next().getKey();
-            if (!CardFactory.getAllBuiltSpellsHashMapForShop().containsKey(spell) || CardFactory.getAllBuiltSpellsHashMapForShop().get(spell) <= 0) {//todo simpler
+            if (!spellToNumberHashMap.containsKey(spell) || spellToNumberHashMap.get(spell) <= 0) {
                 iterator.remove();
             }
         }
-        for (Map.Entry<Spell, Integer> spell : CardFactory.getAllBuiltSpellsHashMapForShop().entrySet()) {
+        for (Map.Entry<Spell, Integer> spell : spellToNumberHashMap.entrySet()) {
             if (!allSpells.containsKey(spell.getKey()) && spell.getValue() > 0) {
                 loadSpell(spell.getKey());
             }
@@ -328,13 +329,14 @@ public class ShopController implements Initializable {
     }
 
     private void initializeAllItems() {
+        HashMap<Spell, Integer> itemToNumberHashMap = CardFactory.getItemToNumberHashMapForShop();
         for (Iterator<Map.Entry<Spell, AnchorPane>> iterator = allItems.entrySet().iterator(); iterator.hasNext();) {
             Spell item = iterator.next().getKey();
-            if (!CardFactory.getAllBuiltItemsHashMapForShop().containsKey(item) || CardFactory.getAllBuiltItemsHashMapForShop().get(item) <= 0) {//todo simpler
+            if (!itemToNumberHashMap.containsKey(item) || itemToNumberHashMap.get(item) <= 0) {
                 iterator.remove();
             }
         }
-        for (Map.Entry<Spell, Integer> item : CardFactory.getAllBuiltItemsHashMapForShop().entrySet()) {
+        for (Map.Entry<Spell, Integer> item : itemToNumberHashMap.entrySet()) {
             if (!allItems.containsKey(item.getKey()) && item.getValue() > 0) {
                 loadItem(item.getKey());
             }
