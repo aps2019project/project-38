@@ -27,7 +27,6 @@ public class Collection implements Serializable { //todo ALI فک کنم کلا�
         getDecks().add(deckName);
         getAllDecks().put(deckName, deck);
         Deck.getAllDecks().put(deckName, deck);
-//        DeckController.putADeckToList(deckName);
         AlertController.setAndShow("Deck created");
         return true;
         //todo server

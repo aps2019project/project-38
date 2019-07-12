@@ -7,7 +7,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -54,30 +53,30 @@ public class ShopController implements Initializable {
     public ImageView collectionButton;
     public Text collectionText;
 
-    public void back(MouseEvent mouseEvent) {
+    public void back() {
         WindowChanger.instance.setMainParent(LoadedScenes.mainMenu);
     }
 
-    public void shineBackBottom(MouseEvent mouseEvent) {
+    public void shineBackBottom() {
         backButton.setEffect(new Glow(0.5));
     }
 
-    public void resetBackBottom(MouseEvent mouseEvent) {
+    public void resetBackBottom() {
         backButton.setEffect(null);
     }
 
-    public void goToCollection(MouseEvent mouseEvent) {
+    public void goToCollection() {
         CollectionOfShopController.collectionOfShopController.calculateEverything();
         WindowChanger.instance.setMainParent(LoadedScenes.collectionOfShop);
     }
 
-    public void shineCollectionBottom(MouseEvent mouseEvent) {
+    public void shineCollectionBottom() {
         collectionButton.setEffect(new Glow(0.5));
         goldCircleOfCollectionButton.setOpacity(1);
         collectionText.setOpacity(1);
     }
 
-    public void resetCollectionBottom(MouseEvent mouseEvent) {
+    public void resetCollectionBottom() {
         collectionButton.setEffect(null);
         goldCircleOfCollectionButton.setOpacity(0.6);
         collectionText.setOpacity(0.6);
