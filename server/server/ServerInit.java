@@ -5,6 +5,8 @@ import javafx.application.Platform;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 import model.Account;
+import model.Deck;
+import model.cards.CardFactory;
 import server.net.MatchMaker;
 import server.net.ServerSession;
 
@@ -16,6 +18,8 @@ public class ServerInit extends Application {
     public static Stage mainStage;
 
     public static void main(String[] args) throws IOException {
+        CardFactory.main();
+        Deck.deckLevelBuilder();
         Account.loadAccounts();
         MatchMaker.makeMatchMakingThreads();
 

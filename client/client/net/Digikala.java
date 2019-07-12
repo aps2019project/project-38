@@ -108,7 +108,6 @@ public class Digikala {
     }
 
     public static Box<ArrayList<Hero>> allBuiltHeroes = new Box<>();
-
     public static ArrayList<Hero> getAllBuiltHeroes() {
         Encoder.sendMessage(Message.getAllBuiltHeroes);
         wait(allBuiltHeroes);
