@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import javafx.util.Pair;
 import model.*;
+import model.cards.CardFactory;
 import model.cards.HeroPower;
 import model.cards.Warrior;
 import model.exceptions.NotEnoughConditions;

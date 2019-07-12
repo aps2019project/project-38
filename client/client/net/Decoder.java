@@ -1,16 +1,16 @@
 package client.net;
 
 import com.google.gson.Gson;
-import model.cards.Card;
-import model.cards.HeroPower;
-import model.cards.Spell;
-import model.cards.Warrior;
+import com.google.gson.reflect.TypeToken;
+import model.Collection;
+import model.cards.*;
 import view.Utility;
 import view.fxmlControllers.*;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Decoder {
@@ -192,7 +192,7 @@ public class Decoder {
                 String username = (String) readObject();
                 String cardName = (String) readObject();
                 int auctionIndex = (int) readObject();
-                AuctionsController.auctionsController.loadCard();//todo ali
+//                AuctionsController.auctionsController.loadCard();//todo ali
             }
         }
     }
