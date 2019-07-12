@@ -8,12 +8,12 @@ public enum Message {
     HeroPowerOfPlayer, WarriorOfACell, IndexofAvatar, PlayerUsername, ActivePlayerIndex, isMyWarrior, isThereWarrior, itsWarrior, itsSpell,
     //////////////game actions
     put, cast, setCoolDown, setActivePlayer, buildPlayerHand, useCard, useSpecialPower, useCollectible, attack, comboAttack,
-    move, endTurn, quitTheGame, mana, graveYard, showCollectedCollectibleItems, kill,manaCheat,
+    move, endTurn, quitTheGame, mana, graveYard, showCollectedCollectibleItems, kill, manaCheat,
 
     ////////ali:
     AuctionResult, AuctionMaxProposedPriceUpdated, AuctionProposedPrice, StartNewAuction, DeselectMainDeck, CreateDeck,
     DeleteDeck, AddCardToDeck, RemoveCardFromDeck, SelectMainDeck, RenameDeck, Buy, Sell, StartGame, CheckIsItem,
-    getCollection, getDerrick, getAllBuiltMinions, getAllBuiltHeroes, getAllBuiltSpells, getAllBuiltItems,getWarriorType,
-    getIDByName,getAllCards,getAllBuiltMinionsHashMapForShop,getAllBuiltHeroesHashMapForShop,getAllBuiltSpellsHashMapForShop,
+    getCollection, getDerrick, getAllBuiltMinions, getAllBuiltHeroes, getAllBuiltSpells, getAllBuiltItems, getWarriorType,
+    getIDByName, getAllCards, getAllBuiltMinionsHashMapForShop, getAllBuiltHeroesHashMapForShop, getAllBuiltSpellsHashMapForShop,
     getAllBuiltItemsHashMapForShop,
 }
