@@ -1,7 +1,6 @@
 package model.cards;
 
 import model.Constant;
-import model.Game;
 import model.QualityHaver;
 import model.Shop;
 import model.actions.Applier;
