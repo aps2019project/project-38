@@ -1,5 +1,10 @@
 package model;
 
+import model.cards.CardFactory;
+import model.cards.Hero;
+import model.cards.Spell;
+import model.cards.Warrior;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;

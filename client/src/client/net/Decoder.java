@@ -5,7 +5,9 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import model.Account;
 import model.Collection;
+import model.cards.*;
 import view.Utility;
+import view.fxmlControllers.*;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

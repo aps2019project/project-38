@@ -12,7 +12,7 @@ public enum Message {
 
     ////////ali:
     AuctionResult, AuctionMaxProposedPriceUpdated, AuctionProposedPrice, StartNewAuction, DeselectMainDeck, CreateDeck,
-    DeleteDeck, AddCardToDeck, RemoveCardFromDeck, SelectMainDeck, RenameDeck, Buy, Sell, StartGame,
+    DeleteDeck, AddCardToDeck, RemoveCardFromDeck, SelectMainDeck, RenameDeck, Buy, Sell, StartGame, CheckIsItem,
     getCollection, getDerrick, getAllBuiltMinions, getAllBuiltHeroes, getAllBuiltSpells, getAllBuiltItems,getWarriorType,
     getIDByName,getAllCards,getAllBuiltMinionsHashMapForShop,getAllBuiltHeroesHashMapForShop,getAllBuiltSpellsHashMapForShop,
     getAllBuiltItemsHashMapForShop,

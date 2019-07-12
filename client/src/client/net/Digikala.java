@@ -1,6 +1,7 @@
 package client.net;
 
 import model.Collection;
+import model.cards.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;

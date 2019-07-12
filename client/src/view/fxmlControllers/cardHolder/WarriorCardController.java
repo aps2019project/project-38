@@ -14,6 +14,7 @@ import model.Deck;
 import model.cards.Hero;
 import model.cards.Warrior;
 import view.Utility;
+import view.fxmlControllers.*;
 import view.fxmls.LoadedScenes;
 import view.visualentities.VisualMinion;
 

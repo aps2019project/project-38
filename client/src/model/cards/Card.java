@@ -21,8 +21,12 @@ public abstract class Card implements Serializable {
     }
 
     public static boolean checkIsItem(Card card) {
-        //todo server
-        return false;
+        if (card instanceof Spell) {
+            return ((Spell) card).isItem;
+        }
+        else {
+            return false;
+        }
     }
 
     public static Integer getIDByName(String key) {
