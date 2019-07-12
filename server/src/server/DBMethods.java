@@ -61,7 +61,7 @@ public class DBMethods {
         response = Unirest.post(baseAddress + path).fields(parameters).asString();
 
         if (response.getStatus() != 200) {
-            System.err.println("Don't worry. There is a problem about: \"" + whatDoWeWantToDo + "\" in DATABASE.");
+            System.err.println("Don't worry. There is a problem about \"" + whatDoWeWantToDo + "\" in DATABASE.");
         }
         return response.getBody();
     }
