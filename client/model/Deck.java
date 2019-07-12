@@ -1,9 +1,6 @@
 package model;
 
-import model.cards.Card;
-import model.cards.CardFactory;
-import model.cards.Hero;
-import model.cards.Spell;
+import model.cards.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,8 +13,8 @@ public class Deck implements Serializable { //todo ALI فک کنم کلاینت 
     private String name;
     public Spell item;
     public Hero hero;
-    public ArrayList<Card> minions = new ArrayList<>();
-    public ArrayList<Card> spells = new ArrayList<>();
+    public ArrayList<Warrior> minions = new ArrayList<>();
+    public ArrayList<Spell> spells = new ArrayList<>();
 
     //***
 

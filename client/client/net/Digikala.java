@@ -1,8 +1,9 @@
 package client.net;
 
-import model.cards.HeroPower;
-import model.cards.Warrior;
+import model.Collection;
+import model.cards.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -71,5 +72,47 @@ public class Digikala {
         Encoder.sendMessage(Message.IDToCardAllCards);
         wait(idToCardAllCards);
         return idToCardAllCards.obj;
+    }
+
+    public static Box<Collection> collectionBox = new Box<>();
+    public static Collection getCollection() {
+        Encoder.sendMessage(Message.getCollection);
+        wait(collectionBox);
+        return collectionBox.obj;
+    }
+
+    public static Box<Integer> derrick = new Box<>();
+    public static Integer getDerrick(){
+        Encoder.sendMessage(Message.getDerrick);
+        wait(derrick);
+        return derrick.obj;
+    }
+
+    public static Box<ArrayList<Warrior>> allBuiltMinions = new Box<>();
+    public static ArrayList<Warrior> getAllBuiltMinions(){
+        Encoder.sendMessage(Message.getAllBuiltMinions);
+        wait(allBuiltMinions);
+        return allBuiltMinions.obj;
+    }
+
+    public static Box<ArrayList<Hero>> allBuiltHeroes = new Box<>();
+    public static ArrayList<Hero> getAllBuiltHeroes(){
+        Encoder.sendMessage(Message.getAllBuiltHeroes);
+        wait(allBuiltHeroes);
+        return allBuiltHeroes.obj;
+    }
+
+    public static Box<ArrayList<Spell>> allBuiltSpells = new Box<>();
+    public static ArrayList<Spell> getAllBuiltSpells(){
+        Encoder.sendMessage(Message.getAllBuiltSpells);
+        wait(allBuiltSpells);
+        return allBuiltSpells.obj;
+    }
+
+    public static Box<ArrayList<Spell>> allBuiltItems = new Box<>();
+    public static ArrayList<Spell> getAllBuiltItems(){
+        Encoder.sendMessage(Message.getAllBuiltItems);
+        wait(allBuiltItems);
+        return allBuiltItems.obj;
     }
 }

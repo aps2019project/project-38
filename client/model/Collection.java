@@ -108,9 +108,9 @@ public class Collection implements Serializable { //todo ALI فک کنم کلا�
         //todo
         deck.getCardIDs().add(cardID);
         if (card instanceof Warrior) {
-            deck.minions.add(card);
+            deck.minions.add((Warrior) card);
         } else {
-            deck.spells.add(card);
+            deck.spells.add((Spell) card);
         }
         AlertController.setAndShow("Card added to deck successfully");
         return true;

@@ -1,5 +1,7 @@
 package model.cards;
 
+import client.net.Digikala;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -21,18 +23,18 @@ public interface CardFactory {
     }
 
     static ArrayList<Warrior> getAllBuiltMinions() {
-        //todo server
+        return Digikala.getAllBuiltMinions();
     }
 
     static ArrayList<Hero> getAllBuiltHeroes() {
-        //todo server
+        return Digikala.getAllBuiltHeroes();
     }
 
     static ArrayList<Spell> getAllBuiltSpells() {
-        //todo server
+        return Digikala.getAllBuiltSpells();
     }
 
     static ArrayList<Spell> getAllBuiltItems() {
-        //todo server
+        return Digikala.getAllBuiltItems();
     }
 }

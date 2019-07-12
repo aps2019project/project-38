@@ -1,10 +1,9 @@
 package client.net;
 
 import com.google.gson.Gson;
-import model.cards.Card;
-import model.cards.HeroPower;
-import model.cards.Spell;
-import model.cards.Warrior;
+import com.google.gson.reflect.TypeToken;
+import model.Collection;
+import model.cards.*;
 import view.Utility;
 import view.fxmlControllers.ArenaController;
 import view.fxmlControllers.GlobalChatController;
@@ -12,6 +11,7 @@ import view.fxmlControllers.GlobalChatController;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Decoder {
@@ -148,8 +148,31 @@ public class Decoder {
                 Utility.showMessage((String)readObject());
                 break;
             }
-//            fillBoxAndNotifyJ(new Box<>(),new TypeToken<ArrayList<Card>>(){}.getType());
-            //---------------
+            ///////////////
+            case getCollection:{
+                fillBoxAndNotifyJ(Digikala.collectionBox, Collection.class);
+                break;
+            }
+            case getDerrick:{
+                fillBoxAndNotify(Digikala.derrick);
+                break;
+            }
+            case getAllBuiltMinions:{
+                fillBoxAndNotifyJ(Digikala.allBuiltMinions,new TypeToken<ArrayList<Warrior>>(){}.getType());
+                break;
+            }
+            case getAllBuiltHeroes:{
+                fillBoxAndNotifyJ(Digikala.allBuiltHeroes,new TypeToken<ArrayList<Hero>>(){}.getType());
+                break;
+            }
+            case getAllBuiltSpells:{
+                fillBoxAndNotifyJ(Digikala.allBuiltSpells,new TypeToken<ArrayList<Spell>>(){}.getType());
+                break;
+            }
+            case getAllBuiltItems:{
+                fillBoxAndNotifyJ(Digikala.allBuiltItems,new TypeToken<ArrayList<Spell>>(){}.getType());
+                break;
+            }
         }
     }
 

@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import javafx.util.Pair;
 import model.*;
+import model.cards.CardFactory;
 import model.cards.HeroPower;
 import model.cards.Warrior;
 import model.exceptions.NotEnoughConditions;
@@ -231,6 +232,31 @@ public class Decoder {
                 } catch (NotEnoughConditions notEnoughConditions) {
                     ss.encoder.sendPackage(Message.showPopup, notEnoughConditions.getMessage());
                 }
+            }
+            case getCollection:{
+                Collection collection = Account.getUsernameToAccount().get(ss.username).getCollection();
+                ss.encoder.sendPackageJ(Message.getCollection,collection);
+                break;
+            }
+            case getDerrick:{
+                ss.encoder.sendPackage(Message.getDerrick,Account.getUsernameToAccount().get(ss.username).derrick);
+                break;
+            }
+            case getAllBuiltMinions:{
+                ss.encoder.sendPackageJ(Message.getAllBuiltMinions, CardFactory.getAllBuiltMinions());
+                break;
+            }
+            case getAllBuiltHeroes:{
+                ss.encoder.sendPackageJ(Message.getAllBuiltHeroes,CardFactory.getAllBuiltHeroes());
+                break;
+            }
+            case getAllBuiltSpells:{
+                ss.encoder.sendPackageJ(Message.getAllBuiltSpells,CardFactory.getAllBuiltSpells());
+                break;
+            }
+            case getAllBuiltItems:{
+                ss.encoder.sendPackageJ(Message.getAllBuiltItems,CardFactory.getAllBuiltItems());
+                break;
             }
         }
     }

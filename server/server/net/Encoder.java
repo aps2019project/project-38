@@ -51,4 +51,11 @@ public class Encoder {
             sendObject(data);
         }
     }
+
+    public synchronized void sendPackageJ(Message m,Object... datas){
+        sendMessage(m);
+        for (Object data : datas) {
+            sendObjectJ(data);
+        }
+    }
 }
