@@ -259,7 +259,6 @@ public class Decoder {
                 break;
             }
             case getAllBuiltHeroes:{
-                System.out.println(CardFactory.getAllBuiltHeroes());
                 ss.encoder.sendPackageJ(Message.getAllBuiltHeroes,CardFactory.getAllBuiltHeroes());
                 break;
             }

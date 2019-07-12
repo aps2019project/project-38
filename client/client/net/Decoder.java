@@ -312,11 +312,11 @@ public class Decoder {
 
     private static <T> void fillBoxAndNotifyJ(Box<T> box, Type aType) {
         Gson gson = new Gson();
+        String s = (String) readObject();
+        box.obj = (T) gson.fromJson(s, aType);
         synchronized (box.waitStone) {
             box.waitStone.notify();
         }
-        String s = (String) readObject();
-        box.obj = (T) gson.fromJson(s, aType);
     }
 
     private static <T> void fillHashmapOfCardToInt(Box<T> box, Type aType) {
