@@ -83,10 +83,14 @@ public class Account implements Comparable<Account>, java.io.Serializable {
     }
 
     public static void loadAccounts() {
-        Gson gson = new Gson();
         String accounts = DBMethods.get("accounts", "accounts");
+        Gson gson = new Gson();
         System.out.println(accounts);
-        Account.usernameToAccount = (HashMap<String, Account>) gson.fromJson(accounts, HashMap.class);
+        try {
+            Account.usernameToAccount = (HashMap<String, Account>) gson.fromJson(accounts, HashMap.class);
+        }catch (Exception e){
+            System.err.println("Account info couldn't load successfully.");
+        }
     }
 
     public void putGameInHistory(String opponentName, boolean didWin) {
