@@ -12,6 +12,7 @@ import view.WindowChanger;
 import java.io.IOException;
 
 public class AlertController {
+
     private static double yLayout = Screen.getPrimary().getVisualBounds().getHeight() * 100 / 540;
     public AnchorPane carrier;
     public Text text;
@@ -118,7 +119,7 @@ public class AlertController {
     private void setAlertInPosition() {
         new Thread(() -> {
             while (carrier.getLayoutY() > yLayout) {
-                double newYLayout = carrier.getLayoutY() - 10 > yLayout ? carrier.getLayoutY() - 10: yLayout;
+                double newYLayout = carrier.getLayoutY() - 10 > yLayout ? carrier.getLayoutY() - 10 : yLayout;
                 Platform.runLater(() -> carrier.setLayoutY(newYLayout));
                 try {
                     Thread.sleep(1);
@@ -134,7 +135,7 @@ public class AlertController {
             synchronized (AlertController.class) {
                 while (carrier.getLayoutY() < Screen.getPrimary().getVisualBounds().getHeight()) {
                     double newYLayout = carrier.getLayoutY() + 10 < Screen.getPrimary().getVisualBounds().getHeight() ?
-                            carrier.getLayoutY() + 10: Screen.getPrimary().getVisualBounds().getHeight();
+                            carrier.getLayoutY() + 10 : Screen.getPrimary().getVisualBounds().getHeight();
                     Platform.runLater(() -> carrier.setLayoutY(newYLayout));
                     try {
                         Thread.sleep(1);

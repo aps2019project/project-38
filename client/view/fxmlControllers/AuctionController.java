@@ -1,5 +1,6 @@
 package view.fxmlControllers;
 
+import client.net.Digikala;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -34,10 +35,10 @@ public class AuctionController implements Initializable {
     public Text timerText;
     public ImageView backButton;
     public ImageView priceTextFieldImage;
+    private int auctionIndex;
     private Card card;
     private CardControllerForAuction cardControllerForAuction;
     private int maxProposedPrice;
-    private String usernameOfAccountOfMaxProposedPrice = null;
 
     public void sendProposedPrice(MouseEvent mouseEvent) {
         String priceString = priceTextField.getText();
@@ -45,7 +46,14 @@ public class AuctionController implements Initializable {
             int price = Integer.parseInt(priceString);
             if (price > maxProposedPrice) {
                 if (price <= Account.activeAccount.getDerrick()) {
-                    //todo sending to server.
+                    if (Digikala.getIsProposedPriceAccepted(auctionIndex, Account.getActiveAccount().username, price)) {
+                        AlertController.setAndShow(String.format
+                                ("Your proposed price (%d) for card with name %s accepted", price, card.getName()));
+                    }
+                    else {
+                        AlertController.setAndShow(String.format
+                                ("Your proposed price (%d) for card with name %s did't accept", price, card.getName()));
+                    }
                 }
                 else {
                     AlertController.setAndShow("You have not enough derrick");
@@ -90,7 +98,8 @@ public class AuctionController implements Initializable {
         });
     }
 
-    public void initialize(Card card, boolean mine) {
+    public void initialize(int auctionIndex, Card card, boolean mine) {
+        this.auctionIndex = auctionIndex;
         this.card = card;
         if (card instanceof Spell) {
             Spell spell = (Spell) card;
@@ -139,7 +148,6 @@ public class AuctionController implements Initializable {
             sendProposedPriceButton.setDisable(true);
         }
         start();
-        //todo using in start
     }
 
     private void start() {
@@ -155,17 +163,10 @@ public class AuctionController implements Initializable {
     }
 
     private void finish() {
-        if (AuctionsController.auctionsController.cardInAuctionIsMine(card)) {
-            if (usernameOfAccountOfMaxProposedPrice != null) {
-                AlertController.setAndShow(String.format("Yor card by name %s soled in auction to %s for %d Derrick",
-                        card.name, usernameOfAccountOfMaxProposedPrice, maxProposedPrice));
-            }
-            else {
-                AlertController.setAndShow(String.format("Yor card by name %s didn't sell in auction", card.name));
-            }
-        }
+        AuctionsController.auctionsController.removeCard(auctionIndex);
         if (WindowChanger.instance.equalsToMainParent
-                (AuctionsController.auctionsController.getCardControllerByCard(card).getAnchorPaneOfAuction())) {
+                (AuctionsController.auctionsController.getCardControllerByAuctionIndex(auctionIndex)
+                        .getAnchorPaneOfAuction())) {
             AuctionsController.auctionsController.calculateEveryThing();
             WindowChanger.instance.setMainParent(LoadedScenes.auctions);
         }
@@ -174,14 +175,14 @@ public class AuctionController implements Initializable {
 
     private void setMaxProposedPrice(int maxProposedPrice, String usernameOfAccountOfMaxProposedPrice) {
         this.maxProposedPrice = maxProposedPrice;
-        this.usernameOfAccountOfMaxProposedPrice = usernameOfAccountOfMaxProposedPrice;
+        cardControllerForAuction.setMaxProposedPrice(maxProposedPrice, usernameOfAccountOfMaxProposedPrice);
+
     }
 
-    public static void setMaxProposedPrice(Card card, int maxProposedPrice, String usernameOfAccountOfMaxProposedPrice) {
-        AuctionsController.auctionsController.getCardControllerByCard(card).getAuctionController()
+    public static void setMaxProposedPrice(int auctionIndex, int maxProposedPrice, String usernameOfAccountOfMaxProposedPrice) {
+        AuctionsController.auctionsController.getCardControllerByAuctionIndex(auctionIndex).getAuctionController()
                 .setMaxProposedPrice(maxProposedPrice, usernameOfAccountOfMaxProposedPrice);
-        AuctionsController.auctionsController.getCardControllerByCard(card).getAuctionController()
-                .cardControllerForAuction.setMaxProposedPrice(maxProposedPrice, usernameOfAccountOfMaxProposedPrice);
-        //todo using
+        AuctionsController.auctionsController.getCardControllerByAuctionIndex(auctionIndex)
+                .setMaxProposedPrice(maxProposedPrice, usernameOfAccountOfMaxProposedPrice);
     }
 }

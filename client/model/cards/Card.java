@@ -24,7 +24,7 @@ public abstract class Card implements Serializable {
     }
 
     public static HashMap<Integer, Card> getAllCards() {
-        return Digikala.getAllCards();
+        //todo server
     }
 
     public static boolean checkIsItem(Card card) {

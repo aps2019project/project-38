@@ -30,8 +30,8 @@ public class AuctionsController {
     public VBox otherAuctionsMiddleVBox;
     public VBox otherAuctionsRightVBox;
     public ImageView backButton;
-    private HashMap<Card, CardControllerForAuction> mineCardToCardControllerHashMap = new HashMap<>();
-    private HashMap<Card, CardControllerForAuction> othersCardToCardControllerHashMap = new HashMap<>();
+    private HashMap<Integer, CardControllerForAuction> mineAuctionIndexToCardControllerHashMap = new HashMap<>();
+    private HashMap<Integer, CardControllerForAuction> othersAuctionIndexToCardControllerHashMap = new HashMap<>();
 
     public void back(MouseEvent mouseEvent) {
         CollectionOfShopController.collectionOfShopController.calculateEverything();
@@ -55,14 +55,14 @@ public class AuctionsController {
             otherAuctionsMiddleVBox.getChildren().clear();
             otherAuctionsRightVBox.getChildren().clear();
             int counter = 0;
-            for (Map.Entry<Card, CardControllerForAuction> entry : mineCardToCardControllerHashMap.entrySet()) {
+            for (Map.Entry<Integer, CardControllerForAuction> entry : mineAuctionIndexToCardControllerHashMap.entrySet()) {
                 if (counter % 3 == 0) myAuctionsLeftVBox.getChildren().add(entry.getValue().cardAnchorPane);
                 else if (counter % 3 == 1) myAuctionsMiddleVBox.getChildren().add(entry.getValue().cardAnchorPane);
                 else myAuctionsRightVBox.getChildren().add(entry.getValue().cardAnchorPane);
                 counter++;
             }
             counter = 0;
-            for (Map.Entry<Card, CardControllerForAuction> entry : othersCardToCardControllerHashMap.entrySet()) {
+            for (Map.Entry<Integer, CardControllerForAuction> entry : othersAuctionIndexToCardControllerHashMap.entrySet()) {
                 if (counter % 3 == 0) otherAuctionsLeftVBox.getChildren().add(entry.getValue().cardAnchorPane);
                 else if (counter % 3 == 1) otherAuctionsMiddleVBox.getChildren().add(entry.getValue().cardAnchorPane);
                 else otherAuctionsRightVBox.getChildren().add(entry.getValue().cardAnchorPane);
@@ -71,7 +71,7 @@ public class AuctionsController {
         });
     }
 
-    public void loadCard(Card card, boolean itsMine) {
+    public void loadCard(Card card, boolean itsMine, int auctionIndex) {
         if (card instanceof Spell) {
             Spell spell = (Spell) card;
             AnchorPane anchorPane = null;
@@ -83,10 +83,10 @@ public class AuctionsController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            spellCardController.setFields(spell, "for auction");
+            spellCardController.setFields(spell, String.format("for auction %d %s", auctionIndex, String.valueOf(itsMine)));
             spellCardController.cardAnchorPane = anchorPane;
-            if (itsMine) mineCardToCardControllerHashMap.put(spell, spellCardController);
-            else othersCardToCardControllerHashMap.put(spell, spellCardController);
+            if (itsMine) mineAuctionIndexToCardControllerHashMap.put(auctionIndex, spellCardController);
+            else othersAuctionIndexToCardControllerHashMap.put(auctionIndex, spellCardController);
         }
         else {
             Warrior warrior = (Warrior) card;
@@ -99,30 +99,27 @@ public class AuctionsController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            warriorCardController.setFields(warrior, "for auction");
+            warriorCardController.setFields(warrior, String.format("for auction %d %s", auctionIndex, String.valueOf(itsMine)));
             warriorCardController.cardAnchorPane = anchorPane;
-            if (itsMine) mineCardToCardControllerHashMap.put(warrior, warriorCardController);
-            else othersCardToCardControllerHashMap.put(warrior, warriorCardController);
+            if (itsMine) mineAuctionIndexToCardControllerHashMap.put(auctionIndex, warriorCardController);
+            else othersAuctionIndexToCardControllerHashMap.put(auctionIndex, warriorCardController);
         }
         if (WindowChanger.instance.equalsToMainParent(LoadedScenes.auctions)) calculateEveryThing();
+        //todo using server
     }
 
-    public void removeCard(Card card) {
-        mineCardToCardControllerHashMap.remove(card);
-        othersCardToCardControllerHashMap.remove(card);
+    public void removeCard(int auctionIndex) {
+        mineAuctionIndexToCardControllerHashMap.remove(auctionIndex);
+        othersAuctionIndexToCardControllerHashMap.remove(auctionIndex);
         if (WindowChanger.instance.equalsToMainParent(LoadedScenes.auctions)) calculateEveryThing();
     }
 
-    public CardControllerForAuction getCardControllerByCard(Card card) {
-        if (mineCardToCardControllerHashMap.containsKey(card)) {
-            return mineCardToCardControllerHashMap.get(card);
+    public CardControllerForAuction getCardControllerByAuctionIndex(int auctionIndex) {
+        if (mineAuctionIndexToCardControllerHashMap.containsKey(auctionIndex)) {
+            return mineAuctionIndexToCardControllerHashMap.get(auctionIndex);
         }
         else {
-            return othersCardToCardControllerHashMap.get(card);
+            return othersAuctionIndexToCardControllerHashMap.get(auctionIndex);
         }
-    }
-
-    public boolean cardInAuctionIsMine(Card card) {
-        return mineCardToCardControllerHashMap.containsKey(card);
     }
 }

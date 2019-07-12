@@ -1,17 +1,16 @@
 package client.net;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import model.Collection;
-import model.cards.*;
+import model.cards.Card;
+import model.cards.HeroPower;
+import model.cards.Spell;
+import model.cards.Warrior;
 import view.Utility;
-import view.fxmlControllers.ArenaController;
-import view.fxmlControllers.GlobalChatController;
+import view.fxmlControllers.*;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Decoder {
@@ -172,6 +171,28 @@ public class Decoder {
             case getAllBuiltItems:{
                 fillBoxAndNotifyJ(Digikala.allBuiltItems,new TypeToken<ArrayList<Spell>>(){}.getType());
                 break;
+            }
+            //---------------
+            ///////ali:
+            case AuctionResult:{
+                String result = (String) readObject();
+                AlertController.setAndShow(result);
+                break;
+            }
+            case AuctionProposedPrice:{
+                fillBoxAndNotify(Digikala.auctionProposedPrice);
+            }
+            case AuctionMaxProposedPriceUpdated:{
+                int auctionIndex = (int) readObject();
+                String username = (String) readObject();
+                int newMaxProposedPrice = (int) readObject();
+                AuctionController.setMaxProposedPrice(auctionIndex, newMaxProposedPrice, username);
+            }
+            case StartNewAuction:{
+                String username = (String) readObject();
+                String cardName = (String) readObject();
+                int auctionIndex = (int) readObject();
+                AuctionsController.auctionsController.loadCard();//todo ali
             }
         }
     }

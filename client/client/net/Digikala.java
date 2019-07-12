@@ -67,11 +67,11 @@ public class Digikala {
         return isThereWarrior.obj;
     }
 
-    public static Box<HashMap<Integer, Card>> idToCardAllCards = new Box<>();
-    public static HashMap<Integer, Card> getAllCards() {
-        Encoder.sendMessage(Message.IDToCardAllCards);
-        wait(idToCardAllCards);
-        return idToCardAllCards.obj;
+    public static Box<Boolean> auctionProposedPrice = new Box<>();
+    public static boolean getIsProposedPriceAccepted(int auctionIndex, String username, int proposedPrice){
+        Encoder.sendPackage(Message.AuctionProposedPrice, auctionIndex, username, proposedPrice);
+        wait(isThereWarrior);
+        return isThereWarrior.obj;
     }
 
     public static Box<Collection> collectionBox = new Box<>();

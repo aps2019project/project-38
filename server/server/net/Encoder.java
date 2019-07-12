@@ -58,4 +58,12 @@ public class Encoder {
             sendObjectJ(data);
         }
     }
+
+    public static void sendPackageToAll(Message m, Object... data) {
+        for (ServerSession serverSession : ServerSession.serverSessions) {
+            if (serverSession.username != null) {
+                serverSession.encoder.sendPackage(m, data);
+            }
+        }
+    }
 }

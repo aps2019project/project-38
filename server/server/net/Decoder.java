@@ -5,7 +5,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import javafx.util.Pair;
 import model.*;
-import model.cards.CardFactory;
 import model.cards.HeroPower;
 import model.cards.Warrior;
 import model.exceptions.NotEnoughConditions;
@@ -233,6 +232,7 @@ public class Decoder {
                     ss.encoder.sendPackage(Message.showPopup, notEnoughConditions.getMessage());
                 }
             }
+            ///////
             case getCollection:{
                 Collection collection = Account.getUsernameToAccount().get(ss.username).getCollection();
                 ss.encoder.sendPackageJ(Message.getCollection,collection);
@@ -257,6 +257,19 @@ public class Decoder {
             case getAllBuiltItems:{
                 ss.encoder.sendPackageJ(Message.getAllBuiltItems,CardFactory.getAllBuiltItems());
                 break;
+            }
+            //////ali:
+            case AuctionProposedPrice:{
+                int auctionIndex = (int) readObject();
+                String username = (String) readObject();
+                int proposedPrice = (int) readObject();
+                Auction.receiveNewProposedPrice(auctionIndex, username, proposedPrice);
+            }
+            case StartNewAuction:{
+                String username = (String) readObject();
+                String cardName = (String) readObject();
+                int auctionIndex = Auction.startNewAuctionAndGetIndex(username, cardName);
+                Encoder.sendPackageToAll(Message.StartNewAuction, username, cardName, auctionIndex);
             }
         }
     }

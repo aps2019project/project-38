@@ -7,7 +7,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -54,41 +53,47 @@ public class ShopController implements Initializable {
     public ImageView collectionButton;
     public Text collectionText;
 
-    public void back(MouseEvent mouseEvent) {
-        WindowChanger.instance.setMainParent(LoadedScenes.mainMenu);
-    }
-
-    public void shineBackBottom(MouseEvent mouseEvent) {
-        backButton.setEffect(new Glow(0.5));
-    }
-
-    public void resetBackBottom(MouseEvent mouseEvent) {
-        backButton.setEffect(null);
-    }
-
-    public void goToCollection(MouseEvent mouseEvent) {
-        CollectionOfShopController.collectionOfShopController.calculateEverything();
-        WindowChanger.instance.setMainParent(LoadedScenes.collectionOfShop);
-    }
-
-    public void shineCollectionBottom(MouseEvent mouseEvent) {
-        collectionButton.setEffect(new Glow(0.5));
-        goldCircleOfCollectionButton.setOpacity(1);
-        collectionText.setOpacity(1);
-    }
-
-    public void resetCollectionBottom(MouseEvent mouseEvent) {
-        collectionButton.setEffect(null);
-        goldCircleOfCollectionButton.setOpacity(0.6);
-        collectionText.setOpacity(0.6);
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         minionsSearchTextField.setOnKeyTyped(this::recalculateMinions);
         heroesSearchTextField.setOnKeyTyped(this::recalculateHeroes);
         spellsSearchTextField.setOnKeyTyped(this::recalculateSpells);
         itemsSearchTextField.setOnKeyTyped(this::recalculateItems);
+    }
+
+    public void goToCollection() {
+        CollectionOfShopController.collectionOfShopController.calculateEverything();
+        WindowChanger.instance.setMainParent(LoadedScenes.collectionOfShop);
+    }
+
+    public static void buy(String cardName) {
+        Card card = Card.getCardByItsName(cardName);
+        Account account = Account.activeAccount;
+        if (Card.checkIsItem(card)) {
+            int numberOfItems = 0;
+            for (int ID : account.getCollection().getCardIDs()) {
+                Card card1 = Card.getAllCards().get(ID);
+                if (Card.checkIsItem(card1)) numberOfItems++;
+            }
+            if (numberOfItems >= 3) {
+                AlertController.setAndShow("You have 3 items. You couldn't buy any other item");
+                return;
+            }
+        }
+        account.setDerrick(account.getDerrick() - card.price);
+        account.getCollection().getCardIDs().add(card.ID);
+        if (model.Collection.getCollection().getHowManyCard().containsKey(cardName)) {
+            int keyValue = model.Collection.getCollection().getHowManyCard().get(cardName);
+            model.Collection.getCollection().getHowManyCard().put(card.name, keyValue + 1);
+        } else {
+            model.Collection.getCollection().getHowManyCard().put(card.name, 1);
+        }
+        AlertController.setAndShow("You bought the card successfully");
+        //todo server
+    }
+
+    public void back() {
+        WindowChanger.instance.setMainParent(LoadedScenes.mainMenu);
     }
 
     public void calculateEverything() {
@@ -101,6 +106,8 @@ public class ShopController implements Initializable {
         initializeAllItems();
         recalculateItems(null);
     }
+
+    //---
 
     private synchronized void recalculateMinions(KeyEvent keyEvent) {
         String searchText = minionsSearchTextField.getText();
@@ -162,6 +169,8 @@ public class ShopController implements Initializable {
         allMinions.put(minion, anchorPane);
     }
 
+    //---
+
     private synchronized void recalculateHeroes(KeyEvent keyEvent) {
         String searchText = heroesSearchTextField.getText();
         heroes.entrySet().removeIf(entry -> !allHeroes.containsKey(entry.getKey()));
@@ -221,6 +230,8 @@ public class ShopController implements Initializable {
         warriorCardController.setFields(hero, "for buy");
         allHeroes.put(hero, anchorPane);
     }
+
+    //---
 
     private synchronized void recalculateSpells(KeyEvent keyEvent) {
         String searchText = spellsSearchTextField.getText();
@@ -282,6 +293,8 @@ public class ShopController implements Initializable {
         allSpells.put(spell, anchorPane);
     }
 
+    //---
+
     private synchronized void recalculateItems(KeyEvent keyEvent) {
         String searchText = itemsSearchTextField.getText();
         items.entrySet().removeIf(entry -> !allItems.containsKey(entry.getKey()));
@@ -342,31 +355,28 @@ public class ShopController implements Initializable {
         allItems.put(item, anchorPane);
     }
 
-    public static void buy(String cardName) {
-        Card card = Card.getCardByItsName(cardName);
-        Account account = Account.activeAccount;
-        if (Card.checkIsItem(card)) {
-            int numberOfItems = 0;
-            for (int ID : account.getCollection().getCardIDs()) {
-                Card card1 = Card.getAllCards().get(ID);
-                if (Card.checkIsItem(card1)) numberOfItems++;
-            }
-            if (numberOfItems >= 3) {
-                AlertController.setAndShow("You have 3 items. You couldn't buy any other item");
-                return;
-            }
-        }
-        account.setDerrick(account.getDerrick() - card.price);
-        account.getCollection().getCardIDs().add(card.ID);
-        if (model.Collection.getCollection().getHowManyCard().containsKey(cardName)) {
-            int keyValue = model.Collection.getCollection().getHowManyCard().get(cardName);
-            model.Collection.getCollection().getHowManyCard().put(card.name, keyValue + 1);
-        } else {
-            model.Collection.getCollection().getHowManyCard().put(card.name, 1);
-        }
-        AlertController.setAndShow("You bought the card successfully");
-        //todo server
+    //----------------------------
+
+    public void shineCollectionBottom() {
+        collectionButton.setEffect(new Glow(0.5));
+        goldCircleOfCollectionButton.setOpacity(1);
+        collectionText.setOpacity(1);
     }
+
+    public void resetCollectionBottom() {
+        collectionButton.setEffect(null);
+        goldCircleOfCollectionButton.setOpacity(0.6);
+        collectionText.setOpacity(0.6);
+    }
+
+    public void shineBackBottom() {
+        backButton.setEffect(new Glow(0.5));
+    }
+
+    public void resetBackBottom() {
+        backButton.setEffect(null);
+    }
+
 }
 
 //todo if server updated, we should update here too.
