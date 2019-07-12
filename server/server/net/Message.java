@@ -11,7 +11,8 @@ public enum Message {
     move, endTurn, quitTheGame, mana, graveYard, showCollectedCollectibleItems, kill,
 
     ////////////ali:
-    getCollection, getDerrick, getAllBuiltMinions, getAllBuiltHeroes, getAllBuiltSpells, getAllBuiltItems,
+    getCollection, getDerrick, getAllBuiltMinions, getAllBuiltHeroes, getAllBuiltSpells, getAllBuiltItems,getWarriorType,
+    getIDByName,getAllCards,
 
     AuctionProposedPrice, StartNewAuction,
 

@@ -115,4 +115,25 @@ public class Digikala {
         wait(allBuiltItems);
         return allBuiltItems.obj;
     }
+
+    public static Box<String> warriorType = new Box<>();
+    public static String getWarriorType(int id){
+        Encoder.sendPackage(Message.getWarriorType,id);
+        wait(warriorType);
+        return warriorType.obj;
+    }
+
+    public static Box<Integer> IDByName = new Box<>();
+    public static Integer getIDByName(String name){
+        Encoder.sendPackage(Message.getIDByName,name);
+        wait(IDByName);
+        return IDByName.obj;
+    }
+
+    public static Box<HashMap<Integer, Card>> allCards = new Box<>();
+    public static HashMap<Integer,Card> getAllCards(){
+        Encoder.sendPackage(Message.getAllCards);
+        wait(allCards);
+        return allCards.obj;
+    }
 }

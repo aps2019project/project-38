@@ -120,6 +120,7 @@ public class Decoder {
             case buildPlayerHand:{
                 Gson gson = new Gson();
                 int playerIndex = (int) readObject();
+
                 HashMap<Integer, Card> handMap = new HashMap<>();
                 int mapSize = (int) readObject();
                 for (int i = 0; i < mapSize; i++) {
@@ -132,6 +133,7 @@ public class Decoder {
                         handMap.put(index,warrior);
                     }
                 }
+
                 ArenaController.ac.buildPlayerHand(handMap,playerIndex);
                 break;
             }
@@ -172,6 +174,27 @@ public class Decoder {
                 fillBoxAndNotifyJ(Digikala.allBuiltItems,new TypeToken<ArrayList<Spell>>(){}.getType());
                 break;
             }
+            case getAllCards:{
+                Gson gson = new Gson();
+                HashMap<Integer,Card> allCards = new HashMap<>();
+
+                int size = (int)readObject();
+                for (int i = 0; i < size; i++) {
+                    int id = (int)readObject();
+                    if(readMessage().equals(Message.itsWarrior)){
+                        Warrior warrior = gson.fromJson((String)readObject(),Warrior.class);
+                        allCards.put(id,warrior);
+                    }else {
+                        Spell spell = gson.fromJson((String)readObject(),Spell.class);
+                        allCards.put(id,spell);
+                    }
+                }
+
+                Digikala.allCards.obj = allCards;
+                synchronized (Digikala.allCards.waitStone) {
+                    Digikala.allCards.waitStone.notify();
+                }
+            }
             //---------------
             ///////ali:
             case AuctionResult:{
@@ -181,18 +204,29 @@ public class Decoder {
             }
             case AuctionProposedPrice:{
                 fillBoxAndNotify(Digikala.auctionProposedPrice);
+                break;
             }
             case AuctionMaxProposedPriceUpdated:{
                 int auctionIndex = (int) readObject();
                 String username = (String) readObject();
                 int newMaxProposedPrice = (int) readObject();
                 AuctionController.setMaxProposedPrice(auctionIndex, newMaxProposedPrice, username);
+                break;
             }
             case StartNewAuction:{
                 String username = (String) readObject();
                 String cardName = (String) readObject();
                 int auctionIndex = (int) readObject();
 //                AuctionsController.auctionsController.loadCard();//todo ali
+                break;
+            }
+            case getWarriorType:{
+                fillBoxAndNotify(Digikala.warriorType);
+                break;
+            }
+            case getIDByName:{
+                fillBoxAndNotify(Digikala.IDByName);
+                break;
             }
         }
     }

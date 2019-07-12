@@ -24,15 +24,16 @@ public abstract class Card implements Serializable {
     }
 
     public static HashMap<Integer, Card> getAllCards() {
-        //todo server
+        return Digikala.getAllCards();
     }
 
     public static boolean checkIsItem(Card card) {
         //todo server
+        return false;
     }
 
     public static Integer getIDByName(String key) {
-        //todo server
+        return Digikala.getIDByName(key);
     }
 
     public String getName() {
