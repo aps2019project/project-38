@@ -110,11 +110,8 @@ public class Digikala {
     public static Box<ArrayList<Hero>> allBuiltHeroes = new Box<>();
 
     public static ArrayList<Hero> getAllBuiltHeroes() {
-        System.out.println(":(");
         Encoder.sendMessage(Message.getAllBuiltHeroes);
-        System.out.println(":(");
         wait(allBuiltHeroes);
-        System.out.println(":(");
         return allBuiltHeroes.obj;
     }
 

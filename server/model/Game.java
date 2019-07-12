@@ -387,7 +387,7 @@ public class Game implements Serializable {
         endGame();
     }
 
-    private void endTurn() {
+    public void endTurn() {
         EndTurn.doIt(this);
         checkGameEndAndThenKillAllDiedWarriors();
 

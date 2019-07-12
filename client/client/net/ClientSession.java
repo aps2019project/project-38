@@ -18,9 +18,7 @@ public class ClientSession {
                 while (true) {
                     try {
                         int messageIndex = dis.readInt();
-                        System.out.println(dis+";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;");
-                        System.out.println(Decoder.readObject());
-//                        Decoder.decode(Message.values()[messageIndex]); for debug
+                        Decoder.decode(Message.values()[messageIndex]);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

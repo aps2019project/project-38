@@ -32,18 +32,15 @@ public class ServerSession {
         new Thread(() -> {
             try {
                 while (true) {
-                    System.out.println("ALI");
                     String gotAuthToken = null;
                     if (authToken != null) {
                         gotAuthToken = dis.readUTF();
                     }
-                    System.out.println("ALIi");
                     int messageIndex = dis.readInt();
-                    System.out.println(Message.values()[messageIndex]);
+                    System.out.println("Payam oomad: +" + Message.values()[messageIndex]);
                     if (authToken != null && !gotAuthToken.equals(authToken)) {
                         continue;
                     }
-                    System.out.println("ALIii");
                     decoder.decode(Message.values()[messageIndex]);
                 }
             } catch (IOException e) {

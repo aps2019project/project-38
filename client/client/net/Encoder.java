@@ -22,7 +22,7 @@ public class Encoder {
     public static synchronized void sendString(String s) {
         try {
             if (Account.activeAccount.authToken != null) {
-                System.out.println("cheraaa" + " " + Account.activeAccount.authToken);
+                ClientSession.dos.writeUTF(Account.activeAccount.authToken);
             }
             ClientSession.dos.writeUTF(s);
             ClientSession.dos.flush();
@@ -34,7 +34,7 @@ public class Encoder {
     public static synchronized void sendObject(Object o) {
         try {
             if (Account.activeAccount.authToken != null) {
-                System.out.println("cheraaa" + " " + Account.activeAccount.authToken);
+                ClientSession.dos.writeUTF(Account.activeAccount.authToken);
             }
             ObjectOutputStream oos = new ObjectOutputStream(ClientSession.dos);
             oos.writeObject(o);
@@ -46,7 +46,7 @@ public class Encoder {
 
     public static synchronized void sendObjectJ(Object o) {
         Gson gson = new Gson();
-        sendString(gson.toJson(o));
+        sendObject(gson.toJson(o));
     }
 
     public static synchronized void sendPackage(Message m, Object... datas) {

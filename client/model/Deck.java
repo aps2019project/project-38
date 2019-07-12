@@ -22,20 +22,11 @@ public class Deck implements Serializable { //todo ALI فک کنم کلاینت 
     //***
 
     public static void deckLevelBuilder() {
-        System.out.println(10);
         {
             Deck deck1 = new Deck();
-            System.out.println(":)");
             deck1.name = "level1";
-            System.out.println(":)");
-            // todo injaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-//            System.out.println();
-            ArrayList<Hero> arr =CardFactory.getAllBuiltHeroes();
-            System.out.println(arr+"qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq");
-            deck1.setHero(arr.get(1));
-            System.out.println(":)");
+            deck1.setHero(CardFactory.getAllBuiltHeroes().get(1));
             deck1.setItem((Spell) CardFactory.getAllBuiltItems().get(13));
-            System.out.println(":)");
 
             //***
             int[] spellIndex = {1, 7, 10, 11, 12, 18, 20};
@@ -48,7 +39,6 @@ public class Deck implements Serializable { //todo ALI فک کنم کلاینت 
             }
             allDecks.put("level1", deck1);
         }
-        System.out.println(11);
         {
             Deck deck2 = new Deck();
             deck2.name = "level2";
@@ -66,7 +56,6 @@ public class Deck implements Serializable { //todo ALI فک کنم کلاینت 
             }
             allDecks.put("level2", deck2);
         }
-        System.out.println(12);
         {
             Deck deck3 = new Deck();
             deck3.name = "level3";
@@ -84,7 +73,6 @@ public class Deck implements Serializable { //todo ALI فک کنم کلاینت 
             }
             allDecks.put("level3", deck3);
         }
-        System.out.println(13);
         {
             Deck allCombo = new Deck();
             allCombo.name = "allCombo";
@@ -97,7 +85,6 @@ public class Deck implements Serializable { //todo ALI فک کنم کلاینت 
             }
             allDecks.put("allCombo", allCombo);
         }
-        System.out.println(14);
     }
 
     public void setItem(Spell item) {

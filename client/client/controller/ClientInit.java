@@ -35,18 +35,9 @@ public class ClientInit extends Application {
             System.exit(0);
         });
 
-        System.out.println(":))))))");
-
-
         Loader.loadAll();
 
-        System.out.println(":))))))");
-
-
         WindowChanger.instance.setMainParent(LoadedScenes.registerMenu);
-
-        System.out.println(":))))))");
-
 
 //        {//arena
 //            Account account = new Account("test", "test");
@@ -57,9 +48,6 @@ public class ClientInit extends Application {
 //            WindowChanger.instance.setMainParent(LoadedScenes.arena);
 //        }
 
-
-
-        System.out.println(":)");
         mainStage.show();
     }
 }

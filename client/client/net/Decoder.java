@@ -285,13 +285,10 @@ public class Decoder {
     }
 
     public static Object readObject() {
-        ObjectInputStream ois = null;
-        System.out.println(ClientSession.dis);
+        ObjectInputStream ois;
         try {
             ois = new ObjectInputStream(ClientSession.dis);
-            Object o = ois.readObject();
-            System.out.println(o);
-            return o;
+            return ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
             return null;
@@ -314,14 +311,11 @@ public class Decoder {
     }
 
     private static <T> void fillBoxAndNotifyJ(Box<T> box, Type aType) {
-        System.out.println("sdfghjmbgcdczccccccccccccccccccccccccccccccccccccccccccc");
         Gson gson = new Gson();
         synchronized (box.waitStone) {
             box.waitStone.notify();
         }
-        System.out.println("dfswdefrgfdsccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc");
         String s = (String) readObject();
-        System.out.println(s + "/////////////////");
         box.obj = (T) gson.fromJson(s, aType);
     }
 

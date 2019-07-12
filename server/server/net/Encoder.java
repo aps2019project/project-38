@@ -40,19 +40,19 @@ public class Encoder {
         }
     }
 
-    public synchronized void sendObjectJ(Object o){
+    public synchronized void sendObjectJ(Object o) {
         Gson gson = new Gson();
-        sendString(gson.toJson(o));
+        sendObject(gson.toJson(o));
     }
 
-    public synchronized void sendPackage(Message m,Object... datas){
+    public synchronized void sendPackage(Message m, Object... datas) {
         sendMessage(m);
         for (Object data : datas) {
             sendObject(data);
         }
     }
 
-    public synchronized void sendPackageJ(Message m,Object... datas){
+    public synchronized void sendPackageJ(Message m, Object... datas) {
         sendMessage(m);
         for (Object data : datas) {
             sendObjectJ(data);

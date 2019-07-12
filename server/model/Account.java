@@ -78,14 +78,12 @@ public class Account implements Comparable<Account>, java.io.Serializable {
     public static void saveAccounts() {
         Gson gson = new Gson();
         String accounts = gson.toJson(usernameToAccount);
-        System.out.println(accounts);
         DBMethods.put("accounts", "accounts", accounts);
     }
 
     public static void loadAccounts() {
         String accounts = DBMethods.get("accounts", "accounts");
         Gson gson = new Gson();
-        System.out.println(accounts);
         try {
             Account.usernameToAccount = (HashMap<String, Account>) gson.fromJson(accounts, HashMap.class);
         }catch (Exception e){
