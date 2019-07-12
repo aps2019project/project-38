@@ -7,23 +7,19 @@ import java.util.HashMap;
 
 public interface CardFactory {
     static HashMap<Warrior, Integer> getAllBuiltMinionsHashMapForShop() {
-        //todo server amir
-        return null;
+        return Digikala.getAllBuiltMinionsHashMapForShop();
     }
 
     static HashMap<Hero, Integer> getAllBuiltHeroesHashMapForShop() {
-        //todo server amir
-        return null;
+        return Digikala.getAllBuiltHeroesHashMapForShop();
     }
 
     static HashMap<Spell, Integer> getAllBuiltSpellsHashMapForShop() {
-        //todo server amir
-        return null;
+        return Digikala.getAllBuiltSpellsHashMapForShop();
     }
 
     static HashMap<Spell, Integer> getAllBuiltItemsHashMapForShop() {
-        //todo server amir
-        return null;
+        return Digikala.getAllBuiltItemsHashMapForShop();
     }
 
     static ArrayList<Warrior> getAllBuiltMinions() {

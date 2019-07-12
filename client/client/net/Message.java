@@ -12,7 +12,8 @@ public enum Message {
 
     ////////ali:
     getCollection, getDerrick, getAllBuiltMinions, getAllBuiltHeroes, getAllBuiltSpells, getAllBuiltItems,getWarriorType,
-    getIDByName,getAllCards,
+    getIDByName,getAllCards,getAllBuiltMinionsHashMapForShop,getAllBuiltHeroesHashMapForShop,getAllBuiltSpellsHashMapForShop,
+    getAllBuiltItemsHashMapForShop,
 
     AuctionProposedPrice, StartNewAuction,
 

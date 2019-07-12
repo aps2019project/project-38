@@ -59,8 +59,7 @@ public class ArenaController implements Initializable {
         transformGrid();
         fixGridNodesIndexes();
         produceClickBoxes();
-        setEscapeAsDeselector();
-        setCheat();
+        setEscapeAsDeselectorAndCheats();
 
         //initializing essential fields
         this.sm = selectionManager;
@@ -69,19 +68,15 @@ public class ArenaController implements Initializable {
         beforeStartTheGame();
     }
 
-    private void setEscapeAsDeselector() {
-        pane.requestFocus();
-        pane.setOnKeyTyped(event -> {
-            if (event.getCharacter().getBytes()[0] == 27) {
-                sm.deselectAction();
-            }
-        });
-    }
-
-    private void setCheat(){
+    private void setEscapeAsDeselectorAndCheats() {
         StringBuilder keyLog = new StringBuilder();
         pane.requestFocus();
         pane.setOnKeyTyped(event -> {
+            //deselect
+            if (event.getCharacter().getBytes()[0] == 27) {
+                sm.deselectAction();
+            }
+            //cheat
             keyLog.append(event.getCharacter().getBytes()[0]);
             if(keyLog.toString().endsWith("mana")){
                 Encoder.sendMessage(Message.manaCheat);

@@ -1,6 +1,7 @@
 package server.net;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import javafx.util.Pair;
@@ -308,6 +309,9 @@ public class Decoder {
                 }
 
                 ss.encoder.sendPackage(message,data.toArray());
+            }
+            case getAllBuiltMinionsHashMapForShop:{
+                Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
             }
             //////ali:
             case AuctionProposedPrice:{
