@@ -9,11 +9,9 @@ import java.io.ObjectOutputStream;
 public class Encoder {
     public static synchronized void sendMessage(Message m) {
         try {
-            System.out.println("before sending message");
             if (Account.activeAccount.authToken != null) {
                 ClientSession.dos.writeUTF(Account.activeAccount.authToken);
             }
-            System.out.println("sending:"+m);
             ClientSession.dos.writeInt(m.ordinal());
             ClientSession.dos.flush();
         } catch (IOException e) {
