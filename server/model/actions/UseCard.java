@@ -15,7 +15,7 @@ import server.net.Message;
 import server.net.ServerSession;
 
 public class UseCard {
-    public static void useCard(int handMapKey, Cell cell) throws NotEnoughConditions {//todo badana
+    public static void useCard(int handMapKey, Cell cell) throws NotEnoughConditions {
         Game game = cell.getBoard().getGame();
         Card card = game.getActivePlayer().getHand().get(handMapKey);
         GameState gameState;

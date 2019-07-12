@@ -94,7 +94,6 @@ public class SelectionManager implements Serializable {
 
     public void selectCollectibleItem(String collectableItem) {
         deselectAll();
-        //todo check if that collectible is ours!
         this.collectibleItem = collectableItem;
 
         ArenaController.ac.setSelectionEffect(this);

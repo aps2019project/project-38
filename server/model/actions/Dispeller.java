@@ -8,11 +8,9 @@ import model.cards.Warrior;
 import model.effects.Dispelablity;
 import model.effects.Effect;
 import model.gamestate.DispelState;
-import model.player.Player;
 import model.triggers.Trigger;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -41,7 +39,7 @@ public class Dispeller implements AutoAction{
             }
         }
 
-        return true;//todo. you MAY want to fix this so when you cast a useless dispel it doesn't get applied.
+        return true;//you MAY want to fix this so when you cast a useless dispel it doesn't get applied.
     }
 
     private static void dispel(QualityHaver qualityHaver, Dispelablity dispelType){
