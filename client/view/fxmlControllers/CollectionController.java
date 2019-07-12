@@ -27,6 +27,7 @@ import java.util.ResourceBundle;
 public class CollectionController implements Initializable {
     public static CollectionController collectionController;
     private static HashMap<Deck, AnchorPane> decks = new HashMap<>(), allDecks = new HashMap<>();
+
     public ImageView renameSelectedDeckButton;
     public ImageView removeSelectedDeckButton;
     public ImageView selectedDeckButton;
