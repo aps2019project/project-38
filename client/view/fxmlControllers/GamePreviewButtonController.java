@@ -10,7 +10,7 @@ public class GamePreviewButtonController {
     public Label buttonText;
     private String fatherSceneName, nextSceneName;
 
-//    public void doClickEvents(MouseEvent mouseEvent) {
+    public void doClickEvents(MouseEvent mouseEvent) {
 //        LoadingGamePreviewScenes.selectedButtonsText.add(buttonText.getText());
 //        if (nextSceneName.equals("Game Window")) {
 //            Game game;
@@ -35,7 +35,7 @@ public class GamePreviewButtonController {
 //            }
 //
 //            Platform.runLater(() -> {
-//                ArenaController.ac.init(game);
+//                ArenaController.ac.init();
 //                game.initialiseGameFields();
 //                WindowChanger.instance.setMainParent(LoadedScenes.arena);
 //            });
@@ -44,8 +44,8 @@ public class GamePreviewButtonController {
 //            WindowChanger.instance.setMainParent(LoadingGamePreviewScenes.starterScenes.get(nextSceneName));
 //            LoadingGamePreviewScenes.starterControllers.get(nextSceneName).run();
 //        }
-//    }
-
+    }
+//
 //    private GameMode getMoodForStartingGame(int index) {
 //        if (LoadingGamePreviewScenes.selectedButtonsText.get(index).equals("Killing Enemy Hero")) {
 //            return new KillingEnemyHero();
@@ -55,7 +55,7 @@ public class GamePreviewButtonController {
 //            return new CollectingFlag(Integer.parseInt(LoadingGamePreviewScenes.selectedButtonsText.get(index)));
 //        }
 //    }
-
+//
     public void shineButton(MouseEvent mouseEvent) {
         buttonImageView.setEffect(new Glow(0.5));
     }

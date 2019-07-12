@@ -44,7 +44,6 @@ import java.util.*;
 
 public class ArenaController implements Initializable {
     public static ArenaController ac;
-    //    public Game game;//active player: spell,warrior,his index - board:warrior of a special cell , special cell
     public Pane pane;
     public GridPane grid;
     public SelectionManager sm;
@@ -55,14 +54,14 @@ public class ArenaController implements Initializable {
         ac = this;
     }
 
-    public void init(SelectionManager selectionManager) {
+    public void init() {
         transformGrid();
         fixGridNodesIndexes();
         produceClickBoxes();
         setEscapeAsDeselectorAndCheats();
 
         //initializing essential fields
-        this.sm = selectionManager;
+        sm = new SelectionManager();
         visualMinions = new VisualMinion[5][9];
 
         beforeStartTheGame();
