@@ -4,12 +4,8 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
-import model.Account;
-import model.Deck;
-import model.Shop;
-import model.cards.CardFactory;
-import server.net.MatchMaker;
 import server.net.ServerSession;
+import view.Loader;
 import view.WindowChanger;
 import view.fxmls.LoadedScenes;
 
@@ -21,13 +17,6 @@ public class ServerInit extends Application {
     public static Stage mainStage;
 
     public static void main(String[] args) throws IOException {
-        CardFactory.main();
-        Shop.getShop().loadShop();
-        Deck.deckLevelBuilder();
-        Account.loadAccounts();
-        MatchMaker.makeMatchMakingThreads();
-        new LoadedScenes();
-
         ServerSocket sc = new ServerSocket(8000); //todo : get port from config.txt
         new Thread(() -> {
             while (true) {
@@ -48,6 +37,8 @@ public class ServerInit extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        Loader.loadAll();
+
         mainStage = primaryStage;
         mainStage.setFullScreen(true);
         mainStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
