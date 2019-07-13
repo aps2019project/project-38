@@ -111,7 +111,6 @@ public class Digikala {
     public static ArrayList<Hero> getAllBuiltHeroes() {
         Encoder.sendMessage(Message.getAllBuiltHeroes);
         wait(allBuiltHeroes);
-        System.out.println(allBuiltHeroes.obj);
         return allBuiltHeroes.obj;
     }
 

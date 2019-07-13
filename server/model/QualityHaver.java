@@ -6,12 +6,11 @@ import model.triggers.Trigger;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.stream.Collectors;
 
 public abstract class QualityHaver implements Serializable {
-    protected ArrayList<Effect> effects = new ArrayList<>();
-    protected ArrayList<Trigger> triggers = new ArrayList<>();
+    transient protected ArrayList<Effect> effects = new ArrayList<>();
+    transient protected ArrayList<Trigger> triggers = new ArrayList<>();
 
     public ArrayList<Effect> getEffects() {
         return effects;
