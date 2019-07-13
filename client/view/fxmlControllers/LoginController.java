@@ -30,10 +30,7 @@ public class LoginController implements Initializable {
     public void login() {
         String stringUsername = username.getText();
         String stringPassword = password.getText();
-
-        Encoder.sendMessage(Message.login);
-        Encoder.sendString(stringUsername);
-        Encoder.sendString(stringPassword);
+        Encoder.sendPackage(Message.login, stringUsername, stringPassword);
     }
 
     public void back() {
@@ -52,7 +49,7 @@ public class LoginController implements Initializable {
         }
     }
 
-    public void handleLogin(String result){
+    public void handleLogin(String result) {
         if (result.equals("There is no account with this name")) {
             alertWindow.toFront();
             alert.setText("There is no account with this name");

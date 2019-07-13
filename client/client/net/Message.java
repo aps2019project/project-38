@@ -2,7 +2,7 @@ package client.net;
 
 public enum Message {
     saveTheGame, quitTheApp, createAccount, showLeaderBoard, login, startTheGame, setAnActiveAccount, accountDeckIsValid,
-    accountDeckIsNotValid, updateRanking, updateMessages, sendMessage, logOut, showPopup,authToken,
+    accountDeckIsNotValid, updateRanking, updateMessages, sendMessage, logOut, showPopup, authToken,
 
     //////////////game info
     HeroPowerOfPlayer, WarriorOfACell, IndexofAvatar, PlayerUsername, ActivePlayerIndex, isMyWarrior, isThereWarrior, itsWarrior, itsSpell,
