@@ -29,11 +29,17 @@ public class WindowChanger {
 
     public void setMainParent(Parent parent) {
         Platform.runLater(() -> {
-            parent.setEffect(parents.get(0).getEffect());
-            mainAnchorPane.getChildren().remove(parents.get(0));
-            mainAnchorPane.getChildren().add(0, parent);
-            parents.remove(0);
-            parents.add(0, parent);
+            if (parents.size() > 0) {
+                parent.setEffect(parents.get(0).getEffect());
+                mainAnchorPane.getChildren().remove(parents.get(0));
+                mainAnchorPane.getChildren().add(0, parent);
+                parents.remove(0);
+                parents.add(0, parent);
+            }
+            else {
+                mainAnchorPane.getChildren().add(parent);
+                parents.add(parent);
+            }
         });
     }
 
