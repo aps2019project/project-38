@@ -28,7 +28,7 @@ public class ServerInit extends Application {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                new ServerSession(socket);
+                new ServerSession(socket);  
             }
         }).start();
         launch(args);
