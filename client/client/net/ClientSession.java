@@ -7,7 +7,7 @@ public class ClientSession {
     static Socket socket;
     public static DataInputStream dis;
     public static DataOutputStream dos;
-    static boolean useListener = false; //set true at the start of game and set false at the end of the game
+//    static boolean useListener = false; //set true at the start of game and set false at the end of the game
 
     public static void connect() {
         try {
@@ -30,14 +30,14 @@ public class ClientSession {
         }
     }
 
-    public static void listen() { //todo MOEINI AND HASHEM
-        while (useListener) {
-            try {
-                int messageIndex = dis.readInt();
-                Decoder.decode(Message.values()[messageIndex]);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+//    public static void listen() { //todo MOEINI AND HASHEM
+//        while (useListener) {
+//            try {
+//                int messageIndex = dis.readInt();
+//                Decoder.decode(Message.values()[messageIndex]);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 }
