@@ -8,6 +8,7 @@ import model.Shop;
 import server.net.ServerSession;
 import view.Loader;
 import view.WindowChanger;
+import view.fxmlControllers.ShopController;
 import view.fxmls.LoadedScenes;
 
 import java.io.IOException;
@@ -47,7 +48,9 @@ public class ServerInit extends Application {
             System.exit(0);
         });
 
+        ShopController.shopController.calculateEverything();
         WindowChanger.instance.setMainParent(LoadedScenes.shop);
+
 
         mainStage.show();
     }
