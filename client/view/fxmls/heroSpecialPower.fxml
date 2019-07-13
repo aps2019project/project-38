@@ -6,22 +6,22 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="125.0" prefWidth="100.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.fxmlControllers.cardHolder.HeroSpecialPowerSpriteController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="125.0" prefWidth="100.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.fxmlControllers.HeroSpecialPowerSpriteController">
    <children>
       <ImageView fx:id="backGround" fitHeight="78.0" fitWidth="77.0" layoutX="12.0" layoutY="22.0">
          <image>
-            <Image url="@../../images/heroSpecialPower/grayCircle.png" />
+            <Image url="@../images/heroSpecialPower/grayCircle.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="85.0" fitWidth="85.0" layoutX="8.0" layoutY="18.0">
          <image>
-            <Image url="@../../images/heroSpecialPower/inactivePlayer.png" />
+            <Image url="@../images/heroSpecialPower/inactivePlayer.png" />
          </image>
       </ImageView>
       <Label alignment="CENTER" layoutX="35.0" layoutY="87.0" prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: gray; -fx-background-radius: 20;" />
       <ImageView fx:id="manaBackGround" fitHeight="43.0" fitWidth="45.0" layoutX="29.0" layoutY="83.0">
          <image>
-            <Image url="@../../images/heroSpecialPower/grayMana.png" />
+            <Image url="@../images/heroSpecialPower/grayMana.png" />
          </image>
       </ImageView>
       <Label fx:id="neededMana" alignment="CENTER" layoutX="36.0" layoutY="87.0" prefHeight="32.0" prefWidth="32.0">
@@ -31,7 +31,7 @@
       </Label>
       <ImageView fitHeight="43.0" fitWidth="64.0" layoutX="19.0" layoutY="-3.0">
          <image>
-            <Image url="@../../images/heroSpecialPower/remainingTurn.png" />
+            <Image url="@../images/heroSpecialPower/remainingTurn.png" />
          </image>
       </ImageView>
       <Label fx:id="remainedTurn" alignment="CENTER" layoutX="32.0" layoutY="1.0" prefHeight="34.0" prefWidth="37.0">

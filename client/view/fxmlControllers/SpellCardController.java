@@ -1,4 +1,4 @@
-package view.fxmlControllers.cardHolder;
+package view.fxmlControllers;
 
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -11,31 +11,28 @@ import javafx.scene.transform.Scale;
 import model.Account;
 import model.Collection;
 import model.Deck;
-import model.cards.Hero;
-import model.cards.Warrior;
+import model.cards.Spell;
 import view.Utility;
 import view.fxmlControllers.*;
 import view.fxmls.LoadedScenes;
-import view.visualentities.VisualMinion;
+import view.visualentities.VisualSpell;
 
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class WarriorCardController extends CardControllerForAuction {
+public class SpellCardController extends CardControllerForAuction {
     public ImageView blueLine;
     public ImageView cardImage;
-    public Text apText;
-    public Text hpText;
     public AnchorPane gifPane;
-    public ImageView pricePlace;
-    public Text priceText;
-    public ImageView blueDot;
-    public ImageView blueDiamond;
-    public Text manaText;
     public Text nameText;
     public Text typeText;
+    public ImageView purpleDot;
+    public ImageView pricePlace;
+    public Text priceText;
     public Text descriptionText;
+    public ImageView blueDiamond;
+    public Text manaText;
     private String type;
     private Deck deck;
 
@@ -103,7 +100,7 @@ public class WarriorCardController extends CardControllerForAuction {
         blueLine.setOpacity(1);
         cardImage.setEffect(new Glow(0.3));
         blueDiamond.setEffect(new Glow(0.3));
-        blueDot.setEffect(new Glow(0.3));
+        purpleDot.setEffect(new Glow(0.3));
         pricePlace.setEffect(new Glow(0.3));
         gifPane.setEffect(new Glow(0.3));
     }
@@ -112,42 +109,40 @@ public class WarriorCardController extends CardControllerForAuction {
         blueLine.setOpacity(0);
         cardImage.setEffect(null);
         blueDiamond.setEffect(null);
-        blueDot.setEffect(null);
+        purpleDot.setEffect(null);
         pricePlace.setEffect(null);
         gifPane.setEffect(null);
     }
 
-    public void setFields(Warrior warrior, String type) {
+    public void setFields(Spell spell, String type) {
         this.type = type;
-        apText.setText(String.valueOf(warrior.ap));
-        hpText.setText(String.valueOf(warrior.hp));
-        VisualMinion vm = new VisualMinion(warrior.name);
-        double widthScale = gifPane.getPrefWidth() / vm.animation.width;
-        double heightScale = gifPane.getPrefHeight() / vm.animation.height;
+        VisualSpell vs = new VisualSpell(spell.name);
+        double widthScale = gifPane.getPrefWidth() / vs.animation.width;
+        double heightScale = gifPane.getPrefHeight() / vs.animation.height;
         Scale scale = new Scale(widthScale, heightScale, 0, 0);
-        vm.view.getTransforms().add(scale);
-        gifPane.getChildren().add(vm.view);
+        vs.view.getTransforms().add(scale);
+        gifPane.getChildren().add(vs.view);
         if (type.matches("for auction (\\d+ (true|false)|inside)")) {
-            priceText.setText("Base Price: " + warrior.price / 2);
+            priceText.setText("Base Price: " + spell.price / 2);
         }
-        else priceText.setText(String.valueOf(warrior.price));
-        if (!(warrior instanceof Hero)) manaText.setText(String.valueOf(warrior.requiredMana));
-        nameText.setText(warrior.name);
-        typeText.setText(String.format("%s (%s)", warrior instanceof Hero ? "Hero" : "Minion", warrior.getWarriorType()));
-        descriptionText.setText(warrior.description.descriptionOfCardSpecialAbility);
+        else priceText.setText(String.valueOf(spell.price));
+        if (!Spell.checkIsItem(spell)) manaText.setText(String.valueOf(spell.requiredMana));
+        nameText.setText(spell.name);
+        typeText.setText(String.format("%s", Spell.checkIsItem(spell) ? "Item" : "Spell"));
+        descriptionText.setText(spell.description.descriptionOfCardSpecialAbility);
         Matcher matcher = Pattern.compile("(?<type>(inside|outside) deck) (?<deckName>.+)").matcher(type);
         if (matcher.matches()) {
             this.type = matcher.group("type");
             deck = Collection.getCollection().getAllDecks().get(matcher.group("deckName"));
         }
-        matcher = Pattern.compile("for auction (?<auctionIndex>\\d+) (?<isMine>true|false)").matcher(type);
+        matcher = Pattern.compile("(?<type>for auction) (?<auctionIndex>\\d+) (?<isMine>true|false)").matcher(type);
         if (matcher.matches()) {
             this.type = matcher.group("type");
             FXMLLoader fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("Auction.fxml"));
             try {
                 initializeForAuctionType((AnchorPane) Utility.scale(fxmlLoader.load()), fxmlLoader.getController());
                 ((AuctionController) fxmlLoader.getController()).initialize
-                        (Integer.valueOf(matcher.group("auctionIndex")), warrior,
+                        (Integer.valueOf(matcher.group("auctionIndex")), spell,
                                 Boolean.valueOf(matcher.group("isMine")));
             } catch (IOException e) {
                 e.printStackTrace();

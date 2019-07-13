@@ -27,10 +27,10 @@ public class LoadedScenes {
 
     {
         try {
-            registerMenu = scale(FXMLLoader.load(getClass().getResource("menus/registerMenu.fxml")));
-            createAccount = scale(FXMLLoader.load(getClass().getResource("menus/createAccount.fxml")));
-            login = scale(FXMLLoader.load(getClass().getResource("menus/login.fxml")));
-            mainMenu = scale(FXMLLoader.load(getClass().getResource("menus/mainMenu.fxml")));
+            registerMenu = scale(FXMLLoader.load(getClass().getResource("registerMenu.fxml")));
+            createAccount = scale(FXMLLoader.load(getClass().getResource("createAccount.fxml")));
+            login = scale(FXMLLoader.load(getClass().getResource("login.fxml")));
+            mainMenu = scale(FXMLLoader.load(getClass().getResource("mainMenu.fxml")));
             chooseBattleKind = scale(FXMLLoader.load(getClass().getResource("chooseBattleKind.fxml")));
             arena = scale(FXMLLoader.load(getClass().getResource("arena.fxml")));
             fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("shop.fxml"));
