@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import model.Account;
 import model.Collection;
+import model.Level;
 import model.cards.*;
 import view.Utility;
 import view.fxmlControllers.*;
@@ -270,6 +271,10 @@ public class Decoder {
             }
             case RenameDeck: {
                 fillBoxAndNotify(Collection.renameDeckResult);
+                break;
+            }
+            case LevelsDescription:{
+                fillBoxAndNotifyJ(Level.levelsDescription, new TypeToken<ArrayList<String>>(){}.getType());
                 break;
             }
         }

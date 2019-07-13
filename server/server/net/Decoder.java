@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 import javafx.util.Pair;
 import model.*;
 import model.cards.Card;
@@ -401,6 +402,21 @@ public class Decoder {
                 int price = (int) readObject();
                 Shop.getShop().sell(account, null, card, price);
                 ss.encoder.sendObject(0); // just fo notify box
+            }
+            case LevelsDescription:{
+                ArrayList<String> levelsDescription = new ArrayList<>();
+                for (Map.Entry<String, Level> entry : Level.getAvailableLevels().entrySet()) {
+                    levelsDescription.add(String.format("Mode: %s\nHero: %s Prize: %d",
+                            entry.getValue().getGameMode().getClass().getSimpleName(),
+                            entry.getValue().getDeck().getHero().getName(), entry.getValue().getPrize()));
+                    ss.encoder.sendPackageJ(Message.LevelsDescription, levelsDescription);
+                }
+            }
+            case StartGame:{
+                Gson gson = new Gson();
+                ArrayList<String> gameParameters = gson.fromJson
+                        ((String)readObject(), new TypeToken<ArrayList<String>>(){}.getType());
+                MatchMaker.createGameByGameParameters(Account.getUsernameToAccount().get(ss.username), gameParameters);
             }
         }
     }
