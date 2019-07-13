@@ -37,7 +37,7 @@ public class ServerSession {
                         gotAuthToken = dis.readUTF();
                     }
                     int messageIndex = dis.readInt();
-                    System.out.println("Payam oomad: +" + Message.values()[messageIndex]);
+                    System.out.println("Payam oomad: " + Message.values()[messageIndex]);
                     if (authToken != null && !gotAuthToken.equals(authToken)) {
                         continue;
                     }

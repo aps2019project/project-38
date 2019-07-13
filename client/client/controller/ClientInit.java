@@ -35,7 +35,11 @@ public class ClientInit extends Application {
             System.exit(0);
         });
 
+        System.out.println(":))))))xcdvfdefrghbf");
+
         Loader.loadAll();
+
+        System.out.println(":))))))");
 
         WindowChanger.instance.setMainParent(LoadedScenes.registerMenu);
 

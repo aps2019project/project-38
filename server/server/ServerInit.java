@@ -28,7 +28,6 @@ public class ServerInit extends Application {
         MatchMaker.makeMatchMakingThreads();
         new LoadedScenes();
 
-        //todo : build cards and load them
         ServerSocket sc = new ServerSocket(8000); //todo : get port from config.txt
         new Thread(() -> {
             while (true) {
