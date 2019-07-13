@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
+import model.Shop;
 import server.net.ServerSession;
 import view.Loader;
 import view.WindowChanger;
