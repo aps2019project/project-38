@@ -11,6 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import model.Shop;
 import model.cards.CardFactory;
 import model.cards.Hero;
 import model.cards.Spell;
@@ -35,9 +36,6 @@ public class CollectionOfShopController implements Initializable {
     public VBox minionsMiddleVBox;
     public VBox minionsRightVBox;
     public TextField minionsSearchTextField;
-    public ImageView goldCircleOfAuctionsButton;
-    public ImageView auctionsButton;
-    public Text auctionsText;
     private HashMap<Warrior, AnchorPane> minions = new HashMap<>(), allMinions = new HashMap<>();
     public VBox heroesLeftVBox;
     public VBox heroesMiddleVBox;
@@ -55,6 +53,9 @@ public class CollectionOfShopController implements Initializable {
     public TextField itemsSearchTextField;
     private HashMap<Spell, AnchorPane> items = new HashMap<>(), allItems = new HashMap<>();
     public ImageView backButton;
+    public ImageView goldCircleOfAuctionsButton;
+    public ImageView auctionsButton;
+    public Text auctionsText;
 
     public void back(MouseEvent mouseEvent) {
         ShopController.shopController.calculateEverything();
@@ -67,6 +68,24 @@ public class CollectionOfShopController implements Initializable {
 
     public void resetBackBottom(MouseEvent mouseEvent) {
         backButton.setEffect(null);
+    }
+
+    public void goToAuctions(MouseEvent mouseEvent) {
+        Shop.getShop().saveShop();
+        Platform.exit();
+        System.exit(0);
+    }
+
+    public void shineAuctionsBottom(MouseEvent mouseEvent) {
+        auctionsButton.setEffect(new Glow(0.5));
+        goldCircleOfAuctionsButton.setOpacity(1);
+        auctionsText.setOpacity(1);
+    }
+
+    public void resetAuctionsBottom(MouseEvent mouseEvent) {
+        auctionsButton.setEffect(null);
+        goldCircleOfAuctionsButton.setOpacity(0.6);
+        auctionsText.setOpacity(0.6);
     }
 
     @Override
