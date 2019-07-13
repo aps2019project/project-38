@@ -22,13 +22,11 @@ public class ServerInit extends Application {
         new Thread(() -> {
             while (true) {
                 Socket socket = null;
-                System.out.println("Ghabl");
                 try {
                     socket = sc.accept();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                System.out.println("Baad");
                 new ServerSession(socket);
             }
         }).start();
