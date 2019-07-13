@@ -311,6 +311,10 @@ public class Decoder {
                 GameStartWaitingRoomController.gameStartWaitingRoomController.exitToArena();
                 break;
             }
+            case ShowMessage:{
+                String message = (String) readObject();
+                AlertController.setAndShow(message);
+            }
         }
     }
 

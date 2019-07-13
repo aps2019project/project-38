@@ -18,8 +18,6 @@ public class Collection implements Serializable {
     public boolean createDeck(String deckName) {
         Encoder.sendPackage(Message.CreateDeck, deckName);
         Digikala.wait(createDeckResult);
-        String message = (String) Decoder.readObject();
-        AlertController.setAndShow(message);
         return createDeckResult.obj;
     }
 
@@ -27,8 +25,6 @@ public class Collection implements Serializable {
     public boolean deleteDeck(String deckName) {
         Encoder.sendPackage(Message.DeleteDeck, deckName);
         Digikala.wait(deleteDeckResult);
-        String message = (String) Decoder.readObject();
-        AlertController.setAndShow(message);
         return deleteDeckResult.obj;
     }
 
@@ -36,8 +32,6 @@ public class Collection implements Serializable {
     public boolean addCardToDeck(String cardName, String deckName) {
         Encoder.sendPackage(Message.AddCardToDeck, cardName, deckName);
         Digikala.wait(addCardToDeckResult);
-        String message = (String) Decoder.readObject();
-        AlertController.setAndShow(message);
         return addCardToDeckResult.obj;
     }
 
@@ -45,8 +39,6 @@ public class Collection implements Serializable {
     public boolean removeCardFromDeck(String cardName, String deckName) {
         Encoder.sendPackage(Message.RemoveCardFromDeck, cardName, deckName);
         Digikala.wait(removeCardFromDeckResult);
-        String message = (String) Decoder.readObject();
-        AlertController.setAndShow(message);
         return removeCardFromDeckResult.obj;
     }
 
@@ -59,8 +51,6 @@ public class Collection implements Serializable {
     public boolean selectMainDeck(String deckName) {
         Encoder.sendPackage(Message.SelectMainDeck, deckName);
         Digikala.wait(selectMainDeckResult);
-        String message = (String) Decoder.readObject();
-        AlertController.setAndShow(message);
         return selectMainDeckResult.obj;
     }
 
@@ -68,8 +58,6 @@ public class Collection implements Serializable {
     public boolean renameDeck(String deckName, String newName) {
         Encoder.sendPackage(Message.RenameDeck, deckName, newName);
         Digikala.wait(renameDeckResult);
-        String message = (String) Decoder.readObject();
-        AlertController.setAndShow(message);
         return renameDeckResult.obj;
     }
 

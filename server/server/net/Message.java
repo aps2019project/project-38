@@ -16,4 +16,5 @@ public enum Message {
     getCollection, getDerrick, getAllBuiltMinions, getAllBuiltHeroes, getAllBuiltSpells, getAllBuiltItems, getWarriorType,
     getIDByName, getAllCards, getAllBuiltMinionsHashMapForShop, getAllBuiltHeroesHashMapForShop, getAllBuiltSpellsHashMapForShop,
     getAllBuiltItemsHashMapForShop,
+    ShowMessage,
 }

@@ -21,7 +21,8 @@ public class Collection implements Serializable {
     public void createDeck(String deckName) {
         ServerSession serverSession = getServerSession();
         if (decks.contains(deckName)) {
-            serverSession.encoder.sendPackage(Message.CreateDeck, false, "There is already a deck with this name");
+            serverSession.encoder.sendPackage(Message.CreateDeck, false);
+            serverSession.encoder.sendPackageJ(Message.ShowMessage, "There is already a deck with this name");
             return;
         }
         Deck deck = new Deck();
@@ -29,7 +30,8 @@ public class Collection implements Serializable {
         getDecks().add(deckName);
         getAllDecks().put(deckName, deck);
         Deck.getAllDecks().put(deckName, deck);
-        serverSession.encoder.sendPackage(Message.CreateDeck, true, "Deck created");
+        serverSession.encoder.sendPackage(Message.CreateDeck, true);
+        serverSession.encoder.sendPackageJ(Message.ShowMessage, "Deck created");
     }
 
     public void deleteDeck(String deckName) {
@@ -41,7 +43,8 @@ public class Collection implements Serializable {
         getDecks().remove(deckName);
         getAllDecks().remove(deckName);
         Deck.getAllDecks().remove(deckName);
-        serverSession.encoder.sendPackage(Message.DeleteDeck, true, "Deck deleted");
+        serverSession.encoder.sendPackage(Message.DeleteDeck, true);
+        serverSession.encoder.sendPackageJ(Message.ShowMessage, "Deck deleted");
     }
 
     public void addCardToDeck(String cardName, String deckName) {
@@ -52,29 +55,34 @@ public class Collection implements Serializable {
         if (card instanceof Hero) {
             if (deck.getHero() != null) {
                 serverSession.encoder.sendPackage(Message.AddCardToDeck,
-                        false, "There is already a hero in this deck. You can't add any other");
+                        false);
+                serverSession.encoder.sendPackageJ(Message.ShowMessage, "There is already a hero in this deck. You can't add any other");
                 return;
             } else {
                 deck.setHero((Hero) card);
                 deck.getCardIDs().add(cardID);
-                serverSession.encoder.sendPackage(Message.AddCardToDeck, true, "Card added to deck successfully");
+                serverSession.encoder.sendPackage(Message.AddCardToDeck, true);
+                serverSession.encoder.sendPackageJ(Message.ShowMessage, "Card added to deck successfully");
                 return;
             }
         }
         if (Spell.checkIsItem(card)) {
             if (deck.getItem() != null) {
-                serverSession.encoder.sendPackage(Message.AddCardToDeck, false, "There is an item in this deck");
+                serverSession.encoder.sendPackage(Message.AddCardToDeck, false);
+                serverSession.encoder.sendPackageJ(Message.ShowMessage, "There is an item in this deck");
                 return;
             } else {
                 deck.setItem((Spell) card);
                 deck.getCardIDs().add(cardID);
-                serverSession.encoder.sendPackage(Message.AddCardToDeck, true, "Card added to deck successfully");
+                serverSession.encoder.sendPackage(Message.AddCardToDeck, true);
+                serverSession.encoder.sendPackageJ(Message.ShowMessage, "Card added to deck successfully");
                 return;
             }
         }
         if (deck.getCardIDs().size() == 20) {
             serverSession.encoder.sendPackage(Message.AddCardToDeck,
-                    false, "You have 20 cards in your deck. You couldn't put any other card");
+                    false);
+            serverSession.encoder.sendPackageJ(Message.ShowMessage, "You have 20 cards in your deck. You couldn't put any other card");
             return;
         }
         deck.getCardIDs().add(cardID);
@@ -83,7 +91,8 @@ public class Collection implements Serializable {
         } else {
             deck.spells.add(card);
         }
-        serverSession.encoder.sendPackage(Message.AddCardToDeck, true, "Card added to deck successfully");
+        serverSession.encoder.sendPackage(Message.AddCardToDeck, true);
+        serverSession.encoder.sendPackageJ(Message.ShowMessage, "Card added to deck successfully");
     }
 
     public void removeCardFromDeck(String cardName, String deckName) {
@@ -95,11 +104,13 @@ public class Collection implements Serializable {
             if (deck.getHero().equals((Hero) card)) {
                 deck.setHero(null);
                 serverSession.encoder.sendPackage(Message.RemoveCardFromDeck,
-                        true, "Card removed from deck successfully");
+                        true);
+                serverSession.encoder.sendPackageJ(Message.ShowMessage, "Card removed from deck successfully");
                 return;
             } else {
                 serverSession.encoder.sendPackage(Message.RemoveCardFromDeck,
-                        false, "There is no card with this name in this deck");
+                        false);
+                serverSession.encoder.sendPackageJ(Message.ShowMessage, "There is no card with this name in this deck");
                 return;
             }
         }
@@ -107,11 +118,13 @@ public class Collection implements Serializable {
             if (deck.getItem().equals((Spell) card)) {
                 deck.setItem(null);
                 serverSession.encoder.sendPackage(Message.RemoveCardFromDeck,
-                        true, "Card removed from deck successfully");
+                        true);
+                serverSession.encoder.sendPackageJ(Message.ShowMessage, "Card removed from deck successfully");
                 return;
             } else {
                 serverSession.encoder.sendPackage(Message.RemoveCardFromDeck,
-                        false, "There is no card with this name in this deck");
+                        false);
+                serverSession.encoder.sendPackageJ(Message.ShowMessage, "There is no card with this name in this deck");
                 return;
             }
         }
@@ -123,10 +136,12 @@ public class Collection implements Serializable {
                 deck.spells.remove(card);
             }
             serverSession.encoder.sendPackage(Message.RemoveCardFromDeck,
-                    true, "Card removed from deck successfully");
+                    true);
+            serverSession.encoder.sendPackageJ(Message.ShowMessage, "Card removed from deck successfully");
         } else {
             serverSession.encoder.sendPackage(Message.RemoveCardFromDeck,
-                    false, "There is no card with this name in this deck");
+                    false);
+            serverSession.encoder.sendPackageJ(Message.ShowMessage, "There is no card with this name in this deck");
         }
     }
 
@@ -143,10 +158,12 @@ public class Collection implements Serializable {
         if (validateDeck(deckName)) {
             setMainDeck(getAccount().getCollection().getAllDecks().get(deckName));
             serverSession.encoder.sendPackage(Message.SelectMainDeck,
-                    true, "This deck selected as main successfully");
+                    true);
+            serverSession.encoder.sendPackageJ(Message.ShowMessage, "This deck selected as main successfully");
         } else {
             serverSession.encoder.sendPackage(Message.SelectMainDeck,
-                    false, "This deck is not valid");
+                    false);
+            serverSession.encoder.sendPackageJ(Message.ShowMessage, "This deck is not valid");
         }
     }
 
@@ -154,7 +171,8 @@ public class Collection implements Serializable {
         ServerSession serverSession = getServerSession();
         if (getAccount().getCollection().getAllDecks().containsKey(newName)) {
             serverSession.encoder.sendPackage(Message.RenameDeck,
-                    false, "You have an another deck with this name");
+                    false);
+            serverSession.encoder.sendPackageJ(Message.ShowMessage, "You have an another deck with this name");
             return;
         }
         Deck deck = getAccount().getCollection().getAllDecks().get(deckName);
@@ -163,7 +181,8 @@ public class Collection implements Serializable {
         decks.remove(deckName);
         allDecks.put(newName, deck);
         decks.add(newName);
-        serverSession.encoder.sendPackage(Message.RenameDeck, true, "Deck renamed successfully");
+        serverSession.encoder.sendPackage(Message.RenameDeck, true);
+        serverSession.encoder.sendPackageJ(Message.ShowMessage, "Deck renamed successfully");
     }
 
     public void setMainDeck(Deck mainDeck) {

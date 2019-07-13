@@ -25,6 +25,7 @@ public class WindowChanger {
         });
         ClientInit.mainStage.setScene(new Scene(mainAnchorPane));
         ClientInit.mainStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+        ClientInit.mainStage.setFullScreen(true);
     }
 
     public void setMainParent(Parent parent) {
