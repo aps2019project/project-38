@@ -12,12 +12,12 @@ import view.images.LoadedImages;
 public interface Loader {
 
     static void loadAll() {
-        Deck.deckLevelBuilder();
-        new LoadedImages();
-        new LoadedScenes();
-        Account.loadAccounts();
-        MatchMaker.makeMatchMakingThreads();
         CardFactory.main();
+        Account.loadAccounts();
+        Deck.deckLevelBuilder();
+        new LoadedScenes();
+        new LoadedImages();
         Shop.getShop().loadShop();
+        MatchMaker.makeMatchMakingThreads();
     }
 }
