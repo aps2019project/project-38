@@ -20,7 +20,7 @@ public class Spell extends Card {
         this.isItem = isItem;
     }
 
-    public static boolean checkIsItem(Card card) { //todo HASHEM
+    public static boolean checkIsItem(Card card) {
         if (card instanceof Spell) {
             Spell spell = (Spell) card;
             return spell.isItem;
