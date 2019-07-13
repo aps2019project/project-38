@@ -277,6 +277,10 @@ public class Decoder {
                 fillBoxAndNotifyJ(Level.levelsDescription, new TypeToken<ArrayList<String>>(){}.getType());
                 break;
             }
+            case StartGame:{
+                GameStartWaitingRoomController.gameStartWaitingRoomController.exitToArena();
+                break;
+            }
         }
     }
 

@@ -24,9 +24,10 @@ public class GameStartWaitingRoomController {
         } while (finished && progressBar.getProgress() == 1);
     }
 
-    public void exit() {
+    public void exitToArena() {
         finished = true;
         //todo amir
+        ArenaController.ac.init();
         WindowChanger.instance.setMainParent(LoadedScenes.arena);
     }
 }

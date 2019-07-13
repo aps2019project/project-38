@@ -19,7 +19,7 @@ public class GamePreviewButtonController {
             Encoder.sendMessage(Message.StartGame);
             Encoder.sendObjectJ(LoadingGamePreviewScenes.selectedButtonsText);
             GameStartWaitingRoomController.gameStartWaitingRoomController.enter();
-            //todo amir use exit for finishing GameStartWaitingRoomController
+            //todo amir use exitToArena for finishing GameStartWaitingRoomController
         } else {
             LoadingGamePreviewScenes.sceneControllers.get(nextSceneName).setPreviewSceneName(fatherSceneName);
             WindowChanger.instance.setMainParent(LoadingGamePreviewScenes.starterScenes.get(nextSceneName));

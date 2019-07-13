@@ -87,14 +87,14 @@ public class MatchMaker {
                 Deck deck = account.getCollection().getAllDecks().get(matcher.group("deckName"));
                 game = new Game(getMoodForStartingGame(2, gameParameters), account, deck);
             }
-            //todo notify client
+            //todo notify client by StartGame Message
         } else {
             GameMode gameMode = getMoodForStartingGame(1, gameParameters);//todo moini
         }
 
 //        ArenaController.ac.init(game);//todo moini and rest of it
 //        game.initialiseGameFields();
-        //todo notify client
+        //todo notify client by StartGame Message
     }
 
     private static GameMode getMoodForStartingGame(int index, ArrayList<String> gameParameters) {
