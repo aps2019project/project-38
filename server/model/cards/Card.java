@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public abstract class Card extends QualityHaver implements Serializable {
-    transient public static HashMap<Integer, Card> allCards = new HashMap<>();
+    public static HashMap<Integer, Card> allCards = new HashMap<>();
     public Description description = new Description();
     protected String name;
     protected int requiredMana;
