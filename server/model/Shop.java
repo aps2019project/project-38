@@ -164,6 +164,7 @@ public class Shop {
                 DBMethods.delete("Shop", item.getName());
             }
         } catch (Exception e) {
+            System.err.println("couldn't read shop from file");
             minionToNumberHashMap = new HashMap<>();
             for (Warrior minion : CardFactory.getAllBuiltMinions()) {
                 minionToNumberHashMap.put(minion, baseNumberOfACardInShop);
