@@ -164,6 +164,7 @@ public class Shop {
                 DBMethods.delete("Shop", item.getName());
             }
         } catch (Exception e) {
+            e.printStackTrace();
             System.err.println("couldn't read shop from file");
             minionToNumberHashMap = new HashMap<>();
             for (Warrior minion : CardFactory.getAllBuiltMinions()) {

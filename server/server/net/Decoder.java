@@ -457,7 +457,13 @@ public class Decoder {
     }
 
     public Object readObject() {
-        try (ObjectInputStream ois = new ObjectInputStream(ss.dis)) {
+        ObjectInputStream ois = null;
+        try {
+            ois = new ObjectInputStream(ss.dis);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try{
             return ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();

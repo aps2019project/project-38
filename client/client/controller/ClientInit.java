@@ -16,12 +16,13 @@ public class ClientInit extends Application {
 
     public static void main(String[] args) {
         ClientSession.connect();
-        Loader.loadAll();
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) throws IOException {
+        Loader.loadAll();
+
         mainStage = primaryStage;
         mainStage.setFullScreen(true);
         mainStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
