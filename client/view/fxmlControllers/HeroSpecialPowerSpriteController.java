@@ -1,10 +1,9 @@
-package view.fxmlControllers.cardHolder;
+package view.fxmlControllers;
 
 import client.net.Digikala;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import model.cards.HeroPower;
-import view.fxmlControllers.ArenaController;
 import view.images.LoadedImages;
 import view.visualentities.VisualSpell;
 

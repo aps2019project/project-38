@@ -42,25 +42,25 @@ public class Decoder {
                 String password = ss.dis.readUTF();
                 String againPassword = ss.dis.readUTF();
                 String result = Account.createAccount(username, password, againPassword);
-                ss.encoder.sendString(result);
+                ss.encoder.sendPackage(Message.createAccount, result);
                 break;
             }
             case login: {
                 String username = ss.dis.readUTF();
                 String password = ss.dis.readUTF();
                 String result = Account.login(username, password);
-                ss.encoder.sendString(result);
+                ss.encoder.sendPackage(Message.login, result);
                 if (result.equals("You logged in successfully")) {
                     ss.username = username;
                     ss.authToken = randomString();
-                    ss.encoder.sendString(ss.authToken);
+                    ss.encoder.sendPackage(Message.authToken, ss.username, ss.authToken);
                 }
                 break;
             }
             case logOut: {
                 String username = ss.dis.readUTF();
                 Account.getUsernameToAccount().get(username).isActiveNow = false;
-                ss.authToken = "";
+                ss.authToken = null;
                 ss.username = null;
                 break;
             }
@@ -207,21 +207,21 @@ public class Decoder {
                 }
                 break;
             }
-            case move:{
+            case move: {
                 Game game = MatchMaker.PGPGetter(ss.username).getValue();
                 Gson gson = new Gson();
                 Cell sCellRaw = gson.fromJson((String) readObject(), Cell.class);
-                Cell sCell = game.getBoard().getCell(sCellRaw.getRow(),sCellRaw.getColumn());
-                Cell tCell = game.getBoard().getCell((int)readObject(),(int)readObject());
+                Cell sCell = game.getBoard().getCell(sCellRaw.getRow(), sCellRaw.getColumn());
+                Cell tCell = game.getBoard().getCell((int) readObject(), (int) readObject());
                 try {
                     checkWhoseTurn();
-                    game.move(sCell,tCell);
+                    game.move(sCell, tCell);
                 } catch (NotEnoughConditions notEnoughConditions) {
                     ss.encoder.sendPackage(Message.showPopup, notEnoughConditions.getMessage());
                 }
                 break;
             }
-            case endTurn:{
+            case endTurn: {
                 Game game = MatchMaker.PGPGetter(ss.username).getValue();
                 try {
                     checkWhoseTurn();
@@ -231,7 +231,7 @@ public class Decoder {
                 }
                 break;
             }
-            case quitTheGame:{
+            case quitTheGame: {
                 Game game = MatchMaker.PGPGetter(ss.username).getValue();
                 try {
                     checkWhoseTurn();
@@ -241,60 +241,60 @@ public class Decoder {
                 }
                 break;
             }
-            case manaCheat:{
+            case manaCheat: {
                 MatchMaker.PGPGetter(ss.username).getKey().addMana(1);
                 break;
             }
             ///////
-            case getCollection:{
+            case getCollection: {
                 Collection collection = Account.getUsernameToAccount().get(ss.username).getCollection();
-                ss.encoder.sendPackageJ(Message.getCollection,collection);
+                ss.encoder.sendPackageJ(Message.getCollection, collection);
                 break;
             }
-            case getDerrick:{
-                ss.encoder.sendPackage(Message.getDerrick,Account.getUsernameToAccount().get(ss.username).derrick);
+            case getDerrick: {
+                ss.encoder.sendPackage(Message.getDerrick, Account.getUsernameToAccount().get(ss.username).derrick);
                 break;
             }
-            case getAllBuiltMinions:{
+            case getAllBuiltMinions: {
                 ss.encoder.sendPackageJ(Message.getAllBuiltMinions, CardFactory.getAllBuiltMinions());
                 break;
             }
-            case getAllBuiltHeroes:{
-                ss.encoder.sendPackageJ(Message.getAllBuiltHeroes,CardFactory.getAllBuiltHeroes());
+            case getAllBuiltHeroes: {
+                ss.encoder.sendPackageJ(Message.getAllBuiltHeroes, CardFactory.getAllBuiltHeroes());
                 break;
             }
-            case getAllBuiltSpells:{
-                ss.encoder.sendPackageJ(Message.getAllBuiltSpells,CardFactory.getAllBuiltSpells());
+            case getAllBuiltSpells: {
+                ss.encoder.sendPackageJ(Message.getAllBuiltSpells, CardFactory.getAllBuiltSpells());
                 break;
             }
-            case getAllBuiltItems:{
-                ss.encoder.sendPackageJ(Message.getAllBuiltItems,CardFactory.getAllBuiltItems());
+            case getAllBuiltItems: {
+                ss.encoder.sendPackageJ(Message.getAllBuiltItems, CardFactory.getAllBuiltItems());
                 break;
             }
-            case getWarriorType:{
+            case getWarriorType: {
                 int id = (int) readObject();
                 Card card = Card.getAllCards().get(id);
                 boolean ranged = card.getEffects().stream().anyMatch(effect -> effect instanceof Ranged);
                 boolean melee = card.getEffects().stream().anyMatch(effect -> effect instanceof Melee);
 
                 String type;
-                if(ranged && melee){
+                if (ranged && melee) {
                     type = "Hybrid";
-                }else if(ranged){
+                } else if (ranged) {
                     type = "Range";
-                }else {
+                } else {
                     type = "Melee";
                 }
-                ss.encoder.sendPackage(Message.getWarriorType,type);
+                ss.encoder.sendPackage(Message.getWarriorType, type);
                 break;
             }
-            case getIDByName:{
+            case getIDByName: {
                 String name = (String) readObject();
                 int id = Card.getIDByName(name);
-                ss.encoder.sendPackage(Message.getIDByName,id);
+                ss.encoder.sendPackage(Message.getIDByName, id);
                 break;
             }
-            case getAllCards:{
+            case getAllCards: {
                 Gson gson = new Gson();
 
                 Message message = Message.getAllCards;
@@ -302,92 +302,92 @@ public class Decoder {
 
                 data.add(Card.getAllCards().size());
                 for (Map.Entry<Integer, Card> entry : Card.getAllCards().entrySet()) {
-                    if(entry.getValue() instanceof Warrior){
-                        data.addAll(Arrays.asList(entry.getKey(),Message.itsWarrior.ordinal(),gson.toJson(entry.getValue())));
-                    }else {
-                        data.addAll(Arrays.asList(entry.getKey(),Message.itsSpell.ordinal(),gson.toJson(entry.getValue())));
+                    if (entry.getValue() instanceof Warrior) {
+                        data.addAll(Arrays.asList(entry.getKey(), Message.itsWarrior.ordinal(), gson.toJson(entry.getValue())));
+                    } else {
+                        data.addAll(Arrays.asList(entry.getKey(), Message.itsSpell.ordinal(), gson.toJson(entry.getValue())));
                     }
                 }
 
-                ss.encoder.sendPackage(message,data.toArray());
+                ss.encoder.sendPackage(message, data.toArray());
                 break;
             }
-            case getAllBuiltMinionsHashMapForShop:{
+            case getAllBuiltMinionsHashMapForShop: {
                 Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
-                ss.encoder.sendPackage(Message.getAllBuiltMinionsHashMapForShop,gson.toJson(Shop.getShop().getMinionToNumberHashMapForShop()));
+                ss.encoder.sendPackage(Message.getAllBuiltMinionsHashMapForShop, gson.toJson(Shop.getShop().getMinionToNumberHashMapForShop()));
                 break;
             }
-            case getAllBuiltHeroesHashMapForShop:{
+            case getAllBuiltHeroesHashMapForShop: {
                 Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
-                ss.encoder.sendPackage(Message.getAllBuiltHeroesHashMapForShop,gson.toJson(Shop.getShop().getHeroesToNumberHashMapForShop()));
+                ss.encoder.sendPackage(Message.getAllBuiltHeroesHashMapForShop, gson.toJson(Shop.getShop().getHeroesToNumberHashMapForShop()));
                 break;
             }
-            case getAllBuiltSpellsHashMapForShop:{
+            case getAllBuiltSpellsHashMapForShop: {
                 Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
-                ss.encoder.sendPackage(Message.getAllBuiltSpellsHashMapForShop,gson.toJson(Shop.getShop().getSpellToNumberHashMapForShop()));
+                ss.encoder.sendPackage(Message.getAllBuiltSpellsHashMapForShop, gson.toJson(Shop.getShop().getSpellToNumberHashMapForShop()));
                 break;
             }
-            case getAllBuiltItemsHashMapForShop:{
+            case getAllBuiltItemsHashMapForShop: {
                 Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
-                ss.encoder.sendPackage(Message.getAllBuiltItemsHashMapForShop,gson.toJson(Shop.getShop().getItemToNumberHashMapForShop()));
+                ss.encoder.sendPackage(Message.getAllBuiltItemsHashMapForShop, gson.toJson(Shop.getShop().getItemToNumberHashMapForShop()));
                 break;
             }
             //////ali:
-            case AuctionProposedPrice:{
+            case AuctionProposedPrice: {
                 int auctionIndex = (int) readObject();
                 int proposedPrice = (int) readObject();
                 Auction.receiveNewProposedPrice(auctionIndex, ss.username, proposedPrice);
                 break;
             }
-            case StartNewAuction:{
+            case StartNewAuction: {
                 String cardName = (String) readObject();
                 int auctionIndex = Auction.startNewAuctionAndGetIndex(ss.username, cardName);
                 Encoder.sendPackageToAll(Message.StartNewAuction, ss.username, cardName, auctionIndex);
                 break;
             }
-            case CreateDeck:{
+            case CreateDeck: {
                 Account account = Account.getUsernameToAccount().get(ss.username);
                 account.getCollection().createDeck((String) readObject());
                 break;
             }
-            case DeleteDeck:{
+            case DeleteDeck: {
                 Account account = Account.getUsernameToAccount().get(ss.username);
                 account.getCollection().deleteDeck((String) readObject());
                 break;
             }
-            case AddCardToDeck:{
+            case AddCardToDeck: {
                 Account account = Account.getUsernameToAccount().get(ss.username);
                 String cardName = (String) readObject();
                 String deckName = (String) readObject();
                 account.getCollection().addCardToDeck(cardName, deckName);
                 break;
             }
-            case RemoveCardFromDeck:{
+            case RemoveCardFromDeck: {
                 Account account = Account.getUsernameToAccount().get(ss.username);
                 String cardName = (String) readObject();
                 String deckName = (String) readObject();
                 account.getCollection().removeCardFromDeck(cardName, deckName);
                 break;
             }
-            case SelectMainDeck:{
+            case SelectMainDeck: {
                 Account account = Account.getUsernameToAccount().get(ss.username);
                 String deckName = (String) readObject();
                 Deck newMainDeck = account.getCollection().getAllDecks().get(deckName);
                 account.getCollection().setMainDeck(newMainDeck);
                 break;
             }
-            case RenameDeck:{
+            case RenameDeck: {
                 Account account = Account.getUsernameToAccount().get(ss.username);
                 String deckName = (String) readObject();
                 String newName = (String) readObject();
                 account.getCollection().renameDeck(deckName, newName);
                 break;
             }
-            case DeselectMainDeck:{
+            case DeselectMainDeck: {
                 Account account = Account.getUsernameToAccount().get(ss.username);
                 account.getCollection().setMainDeck(null);
             }
-            case Buy:{
+            case Buy: {
                 Account account = Account.getUsernameToAccount().get(ss.username);
                 String cardName = (String) readObject();
                 Card card = Card.getCardByItsName(cardName);
@@ -395,7 +395,7 @@ public class Decoder {
                 Shop.getShop().buy(account, card, price);
                 ss.encoder.sendObject(0); // just fo notify box
             }
-            case Sell:{
+            case Sell: {
                 Account account = Account.getUsernameToAccount().get(ss.username);
                 String cardName = (String) readObject();
                 Card card = Card.getCardByItsName(cardName);
@@ -403,7 +403,7 @@ public class Decoder {
                 Shop.getShop().sell(account, null, card, price);
                 ss.encoder.sendObject(0); // just fo notify box
             }
-            case LevelsDescription:{
+            case LevelsDescription: {
                 ArrayList<String> levelsDescription = new ArrayList<>();
                 for (Map.Entry<String, Level> entry : Level.getAvailableLevels().entrySet()) {
                     levelsDescription.add(String.format("Mode: %s\nHero: %s Prize: %d",
@@ -412,10 +412,11 @@ public class Decoder {
                     ss.encoder.sendPackageJ(Message.LevelsDescription, levelsDescription);
                 }
             }
-            case StartGame:{
+            case StartGame: {
                 Gson gson = new Gson();
                 ArrayList<String> gameParameters = gson.fromJson
-                        ((String)readObject(), new TypeToken<ArrayList<String>>(){}.getType());
+                        ((String) readObject(), new TypeToken<ArrayList<String>>() {
+                        }.getType());
                 MatchMaker.createGameByGameParameters(Account.getUsernameToAccount().get(ss.username), gameParameters);
             }
         }
@@ -429,8 +430,8 @@ public class Decoder {
         JsonParser jp = new JsonParser();
         JsonElement je = jp.parse(json);
         for (JsonElement jsonElement : je.getAsJsonArray()) {
-            Cell cellRaw = gson.fromJson(jsonElement,Cell.class);
-            Cell cell = game.getBoard().getCell(cellRaw.getRow(),cellRaw.getColumn());
+            Cell cellRaw = gson.fromJson(jsonElement, Cell.class);
+            Cell cell = game.getBoard().getCell(cellRaw.getRow(), cellRaw.getColumn());
             cells.add(cell);
         }
 

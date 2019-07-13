@@ -3,6 +3,7 @@ package client.net;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import javafx.application.Platform;
 import model.Account;
 import model.Collection;
 import model.Level;
@@ -152,6 +153,21 @@ public class Decoder {
                 Utility.showMessage((String) readObject());
                 break;
             }
+            case createAccount: {
+                String result = (String) readObject();
+                Platform.runLater(() -> CreateAccountController.cac.handleRegistering(result));
+                break;
+            }
+            case login: {
+                String result = (String) readObject();
+                Platform.runLater(() -> LoginController.lc.handleLogin(result));
+                break;
+            }
+            case authToken: {
+                String username = (String) readObject();
+                String authToken = (String) readObject();
+                Account.handleAssignInfoToClient(username, authToken);
+            }
             ///////////////
             case getCollection: {
                 fillBoxAndNotifyJ(Digikala.collectionBox, Collection.class);
@@ -273,11 +289,12 @@ public class Decoder {
                 fillBoxAndNotify(Collection.renameDeckResult);
                 break;
             }
-            case LevelsDescription:{
-                fillBoxAndNotifyJ(Level.levelsDescription, new TypeToken<ArrayList<String>>(){}.getType());
+            case LevelsDescription: {
+                fillBoxAndNotifyJ(Level.levelsDescription, new TypeToken<ArrayList<String>>() {
+                }.getType());
                 break;
             }
-            case StartGame:{
+            case StartGame: {
                 GameStartWaitingRoomController.gameStartWaitingRoomController.exitToArena();
                 break;
             }
