@@ -36,9 +36,6 @@ public class CollectionOfShopController implements Initializable {
     public VBox minionsMiddleVBox;
     public VBox minionsRightVBox;
     public TextField minionsSearchTextField;
-    public ImageView goldCircleOfAuctionsButton;
-    public ImageView auctionsButton;
-    public Text auctionsText;
     private HashMap<Warrior, AnchorPane> minions = new HashMap<>(), allMinions = new HashMap<>();
     public VBox heroesLeftVBox;
     public VBox heroesMiddleVBox;
@@ -56,6 +53,9 @@ public class CollectionOfShopController implements Initializable {
     public TextField itemsSearchTextField;
     private HashMap<Spell, AnchorPane> items = new HashMap<>(), allItems = new HashMap<>();
     public ImageView backButton;
+    public ImageView goldCircleOfAuctionsButton;
+    public ImageView auctionsButton;
+    public Text auctionsText;
 
     public void back(MouseEvent mouseEvent) {
         ShopController.shopController.calculateEverything();

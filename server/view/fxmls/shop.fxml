@@ -127,7 +127,7 @@
                   <Image url="@../images/shopAndCollection/silverCircleBottom.png" />
                </image>
             </ImageView>
-            <Text fx:id="collectionText" layoutX="893.0" layoutY="511.0" onMouseClicked="#goToCollection" onMouseEntered="#shineCollectionBottom" opacity="0.6" strokeType="OUTSIDE" strokeWidth="0.0" text="Collection" textAlignment="CENTER" wrappingWidth="74.0">
+            <Text fx:id="collectionText" layoutX="893.0" layoutY="511.0" onMouseClicked="#goToCollection" onMouseEntered="#shineCollectionBottom" opacity="0.6" strokeType="OUTSIDE" strokeWidth="0.0" text="Decrease" textAlignment="CENTER" wrappingWidth="74.0">
                <font>
                   <Font size="8.0" />
                </font>

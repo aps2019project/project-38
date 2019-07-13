@@ -43,7 +43,6 @@ public class ServerInit extends Application {
         mainStage.setFullScreen(true);
         mainStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         mainStage.setOnCloseRequest(event -> {
-            Shop.getShop().saveShop();
             Platform.exit();
             System.exit(0);
         });
