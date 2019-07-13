@@ -26,6 +26,7 @@ public class LoadedScenes {
     public static Pane removingDeckCards;
     public static Pane auctions;
     public static Parent customCard;
+    public static Pane gameStartWaitingRoom;
 
     {
         try {
@@ -35,6 +36,7 @@ public class LoadedScenes {
             mainMenu = scale(FXMLLoader.load(getClass().getResource("menus/mainMenu.fxml")));
             chooseBattleKind = scale(FXMLLoader.load(getClass().getResource("chooseBattleKind.fxml")));
             arena = scale(FXMLLoader.load(getClass().getResource("arena.fxml")));
+            customCard = tScale(FXMLLoader.load(getClass().getResource("moreCustomCard.fxml")));
             fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("shop.fxml"));
             shop = scale(fxmlLoader.load());
             ShopController.shopController = fxmlLoader.getController();
@@ -53,7 +55,9 @@ public class LoadedScenes {
             fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("Auctions.fxml"));
             auctions = scale(fxmlLoader.load());
             AuctionsController.auctionsController = fxmlLoader.getController();
-            customCard = tScale(FXMLLoader.load(getClass().getResource("moreCustomCard.fxml")));
+            fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("GameStartWaitingRoom.fxml"));
+            gameStartWaitingRoom = scale(fxmlLoader.load());
+            GameStartWaitingRoomController.gameStartWaitingRoomController = fxmlLoader.getController();
         } catch (IOException e) {
             e.printStackTrace();
         }
