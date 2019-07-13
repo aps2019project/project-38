@@ -26,14 +26,14 @@ public class LoadedImages {
     {
         try {
             //for arena:
-            blueMana = new Image(new FileInputStream("src/view/images/arena/blueMana.png"));
-            grayMana = new Image(new FileInputStream("src/view/images/arena/grayMana.png"));
-            blueCircle = new Image(new FileInputStream("src/view/images/arena/blueCircle.png"));
-            grayCircle = new Image(new FileInputStream("src/view/images/arena/grayCircle.png"));
+            blueMana = new Image(new FileInputStream("view/images/arena/blueMana.png"));
+            grayMana = new Image(new FileInputStream("view/images/arena/grayMana.png"));
+            blueCircle = new Image(new FileInputStream("view/images/arena/blueCircle.png"));
+            grayCircle = new Image(new FileInputStream("view/images/arena/grayCircle.png"));
             for (int i = 0; i < 15; i++) {
-                avatars[i] = new Image(new FileInputStream("src/view/images/accounts/circular/" + i + ".png"));
+                avatars[i] = new Image(new FileInputStream("view/images/accounts/circular/" + i + ".png"));
             }
-            for (Path path : Files.newDirectoryStream(Paths.get("src/view/images/sprites"))) {
+            for (Path path : Files.newDirectoryStream(Paths.get("view/images/sprites"))) {
                 if(path.toString().endsWith(".plist")){
                     plists.put(path.getFileName().toString().replace(".plist",""),path);
                 }else {
@@ -52,7 +52,7 @@ public class LoadedImages {
         for (int i = 0; i < 6; i++) {
             for (Map.Entry<String, ArrayList<Image>> entry : notStaticBeforeGameImages.entrySet()) {
                 try {
-                    entry.getValue().add(new Image(new FileInputStream("src/view/images/gamepreview/notstatics/" + entry.getKey() + i + ".png")));
+                    entry.getValue().add(new Image(new FileInputStream("view/images/gamepreview/notstatics/" + entry.getKey() + i + ".png")));
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
