@@ -165,8 +165,12 @@ public class Decoder {
             }
             case authToken: {
                 String username = (String) readObject();
-                String authToken = (String) readObject();
-                Account.handleAssignInfoToClient(username, authToken);
+                Account.handleAssignInfoToClient(username);
+            }
+            case updateRanking: {
+                String result = (String) readObject();
+                LeaderBoardController.lbc.handleUpdateRanking(result);
+                break;
             }
             ///////////////
             case getCollection: {

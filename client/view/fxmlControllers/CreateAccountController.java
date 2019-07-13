@@ -37,11 +37,7 @@ public class CreateAccountController implements Initializable {
             alert.setText("Please fill up your fields");
             return;
         }
-
-        Encoder.sendMessage(Message.createAccount);
-        Encoder.sendString(userNameString);
-        Encoder.sendString(passwordString);
-        Encoder.sendString(againPasswordString);
+        Encoder.sendPackage(Message.createAccount,userNameString,passwordString,againPasswordString);
     }
 
     public void back() {

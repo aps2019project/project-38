@@ -1,8 +1,7 @@
 package view.fxmlControllers;
 
-import client.net.Message;
 import client.net.Encoder;
-import client.net.ClientSession;
+import client.net.Message;
 import com.google.gson.Gson;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -14,12 +13,12 @@ import javafx.util.Pair;
 import view.WindowChanger;
 import view.fxmls.LoadedScenes;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class LeaderBoardController implements Initializable {
+    public static LeaderBoardController lbc;
     public AnchorPane mainPane;
     public VBox rate;
     public Label index;
@@ -32,6 +31,7 @@ public class LeaderBoardController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        lbc = this;
         Encoder.sendMessage(Message.updateRanking);
 
         for (int i = 1; i < rate.getChildren().size(); i++) {
@@ -40,14 +40,18 @@ public class LeaderBoardController implements Initializable {
             numOfWin.getChildren().remove(numOfWin.getChildren().get(i));
         }
 
+
+    }
+
+
+    public void back() {
+        WindowChanger.instance.setMainParent(LoadedScenes.registerMenu);
+    }
+
+
+    public void handleUpdateRanking(String result) {
         ArrayList<Pair<Pair<String, Boolean>, Integer>> ranking;
         Gson gson = new Gson();
-        String result = null;
-        try {
-            result = ClientSession.dis.readUTF();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         ranking = (ArrayList<Pair<Pair<String, Boolean>, Integer>>) gson.fromJson(result, ArrayList.class);
 
         int i = 1;
@@ -66,10 +70,5 @@ public class LeaderBoardController implements Initializable {
             }
             i++;
         }
-    }
-
-
-    public void back() {
-        WindowChanger.instance.setMainParent(LoadedScenes.registerMenu);
     }
 }

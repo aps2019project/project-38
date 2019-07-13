@@ -9,10 +9,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import model.Account;
 import view.WindowChanger;
-import view.fxmlControllers.AlertController;
-import view.fxmlControllers.CollectionController;
-import view.fxmlControllers.LoadingGamePreviewScenes;
-import view.fxmlControllers.ShopController;
 import view.fxmls.LoadedScenes;
 
 import java.io.IOException;
@@ -48,7 +44,6 @@ public class MainMenuController implements Initializable {
     public void logout() {
         Encoder.sendMessage(Message.logOut);
         Encoder.sendString(Account.activeAccount.username);
-        Account.activeAccount.authToken = "";
         Account.activeAccount.username = null;
         WindowChanger.instance.setMainParent(LoadedScenes.registerMenu);
     }

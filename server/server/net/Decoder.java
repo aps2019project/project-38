@@ -38,29 +38,31 @@ public class Decoder {
                 ss.quit();
                 break;
             case createAccount: {
-                String username = ss.dis.readUTF();
-                String password = ss.dis.readUTF();
-                String againPassword = ss.dis.readUTF();
+                String username = (String) readObject();
+                System.out.println(username+"  ooooooooooooooooooooooooooo");
+                String password = (String) readObject();
+                String againPassword = (String) readObject();
                 String result = Account.createAccount(username, password, againPassword);
+                System.out.println(username + " " + password + " :::::::::::::::: " + result);
+                System.out.println();
                 ss.encoder.sendPackage(Message.createAccount, result);
                 break;
             }
             case login: {
-                String username = ss.dis.readUTF();
-                String password = ss.dis.readUTF();
+                String username = (String) ss.decoder.readObject();
+                String password = (String) ss.decoder.readObject();
                 String result = Account.login(username, password);
+                System.out.println(username + " " + password + " " + result + "    ;;;;");
                 ss.encoder.sendPackage(Message.login, result);
                 if (result.equals("You logged in successfully")) {
                     ss.username = username;
-                    ss.authToken = randomString();
-                    ss.encoder.sendPackage(Message.authToken, ss.username, ss.authToken);
+                    ss.encoder.sendPackage(Message.authToken, ss.username);
                 }
                 break;
             }
             case logOut: {
                 String username = ss.dis.readUTF();
                 Account.getUsernameToAccount().get(username).isActiveNow = false;
-                ss.authToken = null;
                 ss.username = null;
                 break;
             }
@@ -77,7 +79,7 @@ public class Decoder {
                 }
                 Gson gson = new Gson();
                 String result = gson.toJson(ranking);
-                ss.dos.writeUTF(result);
+                ss.encoder.sendPackage(Message.updateRanking, result);
                 break;
             }
             case sendMessage: {

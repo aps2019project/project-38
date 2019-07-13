@@ -1,7 +1,6 @@
 package client.net;
 
 import com.google.gson.Gson;
-import model.Account;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -9,9 +8,6 @@ import java.io.ObjectOutputStream;
 public class Encoder {
     public static synchronized void sendMessage(Message m) {
         try {
-            if (Account.activeAccount.authToken != null) {
-                ClientSession.dos.writeUTF(Account.activeAccount.authToken);
-            }
             ClientSession.dos.writeInt(m.ordinal());
             ClientSession.dos.flush();
         } catch (IOException e) {
@@ -21,9 +17,6 @@ public class Encoder {
 
     public static synchronized void sendString(String s) {
         try {
-            if (Account.activeAccount.authToken != null) {
-                ClientSession.dos.writeUTF(Account.activeAccount.authToken);
-            }
             ClientSession.dos.writeUTF(s);
             ClientSession.dos.flush();
         } catch (IOException e) {
@@ -33,9 +26,6 @@ public class Encoder {
 
     public static synchronized void sendObject(Object o) {
         try {
-            if (Account.activeAccount.authToken != null) {
-                ClientSession.dos.writeUTF(Account.activeAccount.authToken);
-            }
             ObjectOutputStream oos = new ObjectOutputStream(ClientSession.dos);
             oos.writeObject(o);
             oos.flush();

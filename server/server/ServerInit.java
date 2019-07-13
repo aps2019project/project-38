@@ -8,7 +8,6 @@ import model.Shop;
 import server.net.ServerSession;
 import view.Loader;
 import view.WindowChanger;
-import view.fxmlControllers.ShopController;
 import view.fxmls.LoadedScenes;
 
 import java.io.IOException;
@@ -43,11 +42,11 @@ public class ServerInit extends Application {
         mainStage.setFullScreen(true);
         mainStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         mainStage.setOnCloseRequest(event -> {
+            Shop.getShop().saveShop();
             Platform.exit();
             System.exit(0);
         });
 
-        ShopController.shopController.calculateEverything();
         WindowChanger.instance.setMainParent(LoadedScenes.shop);
 
         mainStage.show();

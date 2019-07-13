@@ -30,7 +30,7 @@ public class ClientSession {
         }
     }
 
-    public static void listen() { //todo MOEINI AND HASHEM
+    public static void listen() {
         while (useListener) {
             try {
                 int messageIndex = dis.readInt();
