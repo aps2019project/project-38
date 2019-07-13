@@ -314,22 +314,22 @@ public class Decoder {
             }
             case getAllBuiltMinionsHashMapForShop:{
                 Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
-//                ss.encoder.sendPackage(Message.getAllBuiltMinionsHashMapForShop,gson.toJson());//todo amir
+                ss.encoder.sendPackage(Message.getAllBuiltMinionsHashMapForShop,gson.toJson(Shop.getShop().getMinionToNumberHashMapForShop()));
                 break;
             }
             case getAllBuiltHeroesHashMapForShop:{
                 Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
-//                ss.encoder.sendPackage(Message.getAllBuiltHeroesHashMapForShop,gson.toJson());//todo amir
+                ss.encoder.sendPackage(Message.getAllBuiltHeroesHashMapForShop,gson.toJson(Shop.getShop().getHeroesToNumberHashMapForShop()));
                 break;
             }
             case getAllBuiltSpellsHashMapForShop:{
                 Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
-//                ss.encoder.sendPackage(Message.getAllBuiltSpellsHashMapForShop,gson.toJson());//todo amir
+                ss.encoder.sendPackage(Message.getAllBuiltSpellsHashMapForShop,gson.toJson(Shop.getShop().getSpellToNumberHashMapForShop()));
                 break;
             }
             case getAllBuiltItemsHashMapForShop:{
                 Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
-//                ss.encoder.sendPackage(Message.getAllBuiltItemsHashMapForShop,gson.toJson());//todo amir
+                ss.encoder.sendPackage(Message.getAllBuiltItemsHashMapForShop,gson.toJson(Shop.getShop().getItemToNumberHashMapForShop()));
                 break;
             }
             //////ali:

@@ -14,7 +14,7 @@ public class LoadedImages {
 
     {
         try {
-            for (Path path : Files.newDirectoryStream(Paths.get("view/images/sprites"))) {
+            for (Path path : Files.newDirectoryStream(Paths.get("server/view/images/sprites"))) {
                 if(path.toString().endsWith(".plist")){
                     plists.put(path.getFileName().toString().replace(".plist",""),path);
                 }else {

@@ -26,7 +26,6 @@ public class GameStartWaitingRoomController {
 
     public void exitToArena() {
         finished = true;
-        //todo amir
         ArenaController.ac.init();
         WindowChanger.instance.setMainParent(LoadedScenes.arena);
     }

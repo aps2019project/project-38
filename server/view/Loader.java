@@ -1,22 +1,23 @@
 package view;
 
 
+import model.Account;
 import model.Deck;
 import model.Shop;
 import model.cards.CardFactory;
+import server.net.MatchMaker;
 import view.fxmls.LoadedScenes;
 import view.images.LoadedImages;
 
 public interface Loader {
 
     static void loadAll() {
-        //todo after making files
-        Deck.deckLevelBuilder();
-        new LoadedImages();
-        new LoadedScenes();
-
-        //todo amir or hashem were should I load below things?
         CardFactory.main();
+        Account.loadAccounts();
+        Deck.deckLevelBuilder();
+        new LoadedScenes();
+        new LoadedImages();
         Shop.getShop().loadShop();
+        MatchMaker.makeMatchMakingThreads();
     }
 }
