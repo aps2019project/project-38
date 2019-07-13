@@ -35,9 +35,6 @@ public class CollectionOfShopController implements Initializable {
     public VBox minionsMiddleVBox;
     public VBox minionsRightVBox;
     public TextField minionsSearchTextField;
-    public ImageView goldCircleOfAuctionsButton;
-    public ImageView auctionsButton;
-    public Text auctionsText;
     private HashMap<Warrior, AnchorPane> minions = new HashMap<>(), allMinions = new HashMap<>();
     public VBox heroesLeftVBox;
     public VBox heroesMiddleVBox;
