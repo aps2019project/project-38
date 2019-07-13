@@ -21,12 +21,6 @@ public class ClientInit extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-//        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-//        ObjectOutputStream oos = new ObjectOutputStream(bos);
-//        Gson gson = new Gson();
-//        oos.writeUTF(gson.toJson(new Cell()));
-//        System.out.println(bos.size());
-
         mainStage = primaryStage;
         mainStage.setFullScreen(true);
         mainStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);

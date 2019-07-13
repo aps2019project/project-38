@@ -30,7 +30,8 @@ public class MatchMaker {
                 Account account2 = killingQueue.take();
                 Game game = new Game(new KillingEnemyHero(),account1,account2);
                 onGoingGames.add(game);
-                //todo notify client
+                ServerSession.getSession(account1.getUsername()).encoder.sendMessage(Message.StartGame);
+                ServerSession.getSession(account2.getUsername()).encoder.sendMessage(Message.StartGame);
                 game.initialiseGameFields();
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -42,7 +43,8 @@ public class MatchMaker {
                 Account account2 = carryFlagQueue.take();
                 Game game = new Game(new CarryingFlag(),account1,account2);
                 onGoingGames.add(game);
-                //todo notify client
+                ServerSession.getSession(account1.getUsername()).encoder.sendMessage(Message.StartGame);
+                ServerSession.getSession(account2.getUsername()).encoder.sendMessage(Message.StartGame);
                 game.initialiseGameFields();
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -54,7 +56,8 @@ public class MatchMaker {
                 Account account2 = collectFlagQueue.take();
                 Game game = new Game(new CollectingFlag(10),account1,account2);
                 onGoingGames.add(game);
-                //todo notify client
+                ServerSession.getSession(account1.getUsername()).encoder.sendMessage(Message.StartGame);
+                ServerSession.getSession(account2.getUsername()).encoder.sendMessage(Message.StartGame);
                 game.initialiseGameFields();
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -94,7 +97,7 @@ public class MatchMaker {
                 game = new Game(getMoodForStartingGame(2, gameParameters), account, deck);
             }
             onGoingGames.add(game);
-            //todo notify client
+            ServerSession.getSession(account.getUsername()).encoder.sendMessage(Message.StartGame);
             game.initialiseGameFields();
         } else {
             GameMode gameMode = getMoodForStartingGame(1, gameParameters);//todo support collecting flag param
