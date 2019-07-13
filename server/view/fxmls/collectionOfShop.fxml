@@ -9,6 +9,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.fxmlControllers.CollectionOfShopController">
    <children>
@@ -113,6 +117,36 @@
                   <Image url="@../images/shopAndCollection/backBottom.png" />
                </image>
             </ImageView>
+            <ImageView fx:id="goldCircleOfAuctionsButton" fitHeight="57.0" fitWidth="57.0" layoutX="902.0" layoutY="479.0" onMouseClicked="#goToAuctions" onMouseEntered="#shineAuctionsBottom" onMouseExited="#resetAuctionsBottom" opacity="0.6">
+               <image>
+                  <Image url="@../images/shopAndCollection/goldenCircle.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="auctionsButton" fitHeight="47.0" fitWidth="47.0" layoutX="907.0" layoutY="484.0" onMouseClicked="#goToAuctions" onMouseEntered="#shineAuctionsBottom" onMouseExited="#resetAuctionsBottom">
+               <image>
+                  <Image url="@../images/shopAndCollection/silverCircleBottom.png" />
+               </image>
+            </ImageView>
+            <Text fx:id="auctionsText" layoutX="893.0" layoutY="511.0" onMouseClicked="#goToAuctions" onMouseEntered="#shineAuctionsBottom" opacity="0.6" strokeType="OUTSIDE" strokeWidth="0.0" text="Exit" textAlignment="CENTER" wrappingWidth="74.0">
+               <fill>
+                  <LinearGradient endX="0.6538461538461539" endY="0.360576923076923" startX="0.10576923076923084" startY="0.6586538461538463">
+                     <stops>
+                        <Stop color="BLACK" />
+                        <Stop color="BLACK" offset="0.24333333333333335" />
+                        <Stop color="BLACK" offset="0.3466666666666668" />
+                        <Stop color="BLACK" offset="0.43666666666666665" />
+                        <Stop color="BLACK" offset="0.5466666666666666" />
+                        <Stop color="BLACK" offset="0.64" />
+                        <Stop color="#4b5417" offset="0.6933333333333336" />
+                        <Stop color="#2b2b1f" offset="0.7851851851851852" />
+                        <Stop color="#4a0a00" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </fill>
+               <font>
+                  <Font size="8.0" />
+               </font>
+            </Text>
          </children>
       </AnchorPane>
    </children>
