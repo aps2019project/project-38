@@ -31,7 +31,6 @@ import model.cards.Card;
 import model.cards.Spell;
 import model.cards.Warrior;
 import view.WindowChanger;
-import view.fxmlControllers.cardHolder.*;
 import view.fxmls.LoadedScenes;
 import view.images.LoadedImages;
 import view.visualentities.SpriteType;

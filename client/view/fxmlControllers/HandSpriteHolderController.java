@@ -1,9 +1,8 @@
-package view.fxmlControllers.cardHolder;
+package view.fxmlControllers;
 
 import javafx.scene.control.Label;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.ImageView;
-import view.fxmlControllers.cardHolder.Holder;
 
 public class HandSpriteHolderController extends Holder {
     public Label neededMana;

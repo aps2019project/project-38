@@ -1,8 +1,7 @@
-package view.fxmlControllers.menus;
+package view.fxmlControllers;
 
-import client.net.Message;
 import client.net.Encoder;
-import client.net.ClientSession;
+import client.net.Message;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -11,12 +10,11 @@ import javafx.scene.layout.Pane;
 import view.WindowChanger;
 import view.fxmls.LoadedScenes;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class CreateAccountController implements Initializable {
-
+    public static CreateAccountController cac;
     public AnchorPane mainPane;
     public TextField username;
     public TextField password;
@@ -27,6 +25,7 @@ public class CreateAccountController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        cac = this;
     }
 
     public void register() {
@@ -43,27 +42,6 @@ public class CreateAccountController implements Initializable {
         Encoder.sendString(userNameString);
         Encoder.sendString(passwordString);
         Encoder.sendString(againPasswordString);
-
-        String result = null;
-        try {
-            result = ClientSession.dis.readUTF();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        if (result.equals("There's an account with this name")) {
-            alertWindow.toFront();
-            alert.setText("There's an account with this name");
-        }
-        if (result.equals("Your passwords aren't same")) {
-            alertWindow.toFront();
-            alert.setText("Your passwords aren't same");
-        }
-        if (result.equals("Account created successfully")) {
-            alertWindow.toFront();
-            alert.setText("Account created successfully");
-            shouldClose = true;
-        }
     }
 
     public void back() {
@@ -81,6 +59,22 @@ public class CreateAccountController implements Initializable {
             username.clear();
             password.clear();
             again.clear();
+        }
+    }
+
+    public void handleRegistering(String result) {
+        if (result.equals("There's an account with this name")) {
+            alertWindow.toFront();
+            alert.setText("There's an account with this name");
+        }
+        if (result.equals("Your passwords aren't same")) {
+            alertWindow.toFront();
+            alert.setText("Your passwords aren't same");
+        }
+        if (result.equals("Account created successfully")) {
+            alertWindow.toFront();
+            alert.setText("Account created successfully");
+            shouldClose = true;
         }
     }
 }

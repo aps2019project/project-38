@@ -17,8 +17,6 @@ import javafx.scene.text.Text;
 import model.Account;
 import model.cards.*;
 import view.WindowChanger;
-import view.fxmlControllers.cardHolder.SpellCardController;
-import view.fxmlControllers.cardHolder.WarriorCardController;
 import view.fxmls.LoadedScenes;
 
 import java.io.IOException;

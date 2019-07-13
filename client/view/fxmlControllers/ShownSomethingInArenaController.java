@@ -1,8 +1,7 @@
-package view.fxmlControllers.cardHolder;
+package view.fxmlControllers;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
-import view.fxmlControllers.cardHolder.Holder;
 
 public class ShownSomethingInArenaController extends Holder {
     public ImageView cardImage;
