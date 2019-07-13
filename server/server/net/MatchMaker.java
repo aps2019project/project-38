@@ -21,15 +21,17 @@ public class MatchMaker {
 
     public static ArrayBlockingQueue<Account> killingQueue = new ArrayBlockingQueue<>(100);
     public static ArrayBlockingQueue<Account> carryFlagQueue = new ArrayBlockingQueue<>(100);
-    public static ArrayBlockingQueue<Account> holdFlagQueue = new ArrayBlockingQueue<>(100);
+    public static ArrayBlockingQueue<Account> collectFlagQueue = new ArrayBlockingQueue<>(100);
 
     public static void makeMatchMakingThreads(){
         new Thread(() -> {
             try {
                 Account account1 = killingQueue.take();
                 Account account2 = killingQueue.take();
-
-
+                Game game = new Game(new KillingEnemyHero(),account1,account2);
+                onGoingGames.add(game);
+                //todo notify client
+                game.initialiseGameFields();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -38,18 +40,22 @@ public class MatchMaker {
             try {
                 Account account1 = carryFlagQueue.take();
                 Account account2 = carryFlagQueue.take();
-
-
+                Game game = new Game(new CarryingFlag(),account1,account2);
+                onGoingGames.add(game);
+                //todo notify client
+                game.initialiseGameFields();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }).start();
         new Thread(() -> {
             try {
-                Account account1 = holdFlagQueue.take();
-                Account account2 = holdFlagQueue.take();
-
-
+                Account account1 = collectFlagQueue.take();
+                Account account2 = collectFlagQueue.take();
+                Game game = new Game(new CollectingFlag(10),account1,account2);
+                onGoingGames.add(game);
+                //todo notify client
+                game.initialiseGameFields();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -71,8 +77,8 @@ public class MatchMaker {
     }
 
     public static void createGameByGameParameters(Account account, ArrayList<String> gameParameters) {
+        Game game;
         if (gameParameters.get(0).equals("Single Player")) {
-            Game game;
             if (gameParameters.get(1).equals("Story")) {
                 System.out.println(gameParameters.get(2));
                 Matcher matcher = Pattern.compile("Mode: .+\nHero: .+ Prize: (?<prize>\\d+)")
@@ -87,14 +93,19 @@ public class MatchMaker {
                 Deck deck = account.getCollection().getAllDecks().get(matcher.group("deckName"));
                 game = new Game(getMoodForStartingGame(2, gameParameters), account, deck);
             }
-            //todo notify client by StartGame Message
+            onGoingGames.add(game);
+            //todo notify client
+            game.initialiseGameFields();
         } else {
-            GameMode gameMode = getMoodForStartingGame(1, gameParameters);//todo moini
+            GameMode gameMode = getMoodForStartingGame(1, gameParameters);//todo support collecting flag param
+            if(gameMode instanceof KillingEnemyHero){
+                killingQueue.offer(account);
+            }else if(gameMode instanceof CarryingFlag){
+                carryFlagQueue.offer(account);
+            }else {
+                collectFlagQueue.offer(account);
+            }
         }
-
-//        ArenaController.ac.init(game);//todo moini and rest of it
-//        game.initialiseGameFields();
-        //todo notify client by StartGame Message
     }
 
     private static GameMode getMoodForStartingGame(int index, ArrayList<String> gameParameters) {

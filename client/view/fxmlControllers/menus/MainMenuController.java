@@ -64,7 +64,7 @@ public class MainMenuController implements Initializable {
     }
 
     public void customCard_btn() {
-        WindowChanger.instance.setMainParent(LoadedScenes.customCard);
+//        WindowChanger.instance.setMainParent(LoadedScenes.customCard);
     }
 
 
