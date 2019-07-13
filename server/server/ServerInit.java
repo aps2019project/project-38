@@ -9,6 +9,8 @@ import model.Deck;
 import model.cards.CardFactory;
 import server.net.MatchMaker;
 import server.net.ServerSession;
+import view.WindowChanger;
+import view.fxmls.LoadedScenes;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -46,13 +48,12 @@ public class ServerInit extends Application {
     public void start(Stage primaryStage) {
         mainStage = primaryStage;
         mainStage.setFullScreen(true);
-
         mainStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-
         mainStage.setOnCloseRequest(event -> {
             Platform.exit();
             System.exit(0);
         });
 
+        WindowChanger.instance.setMainParent(LoadedScenes.shop);
     }
 }
