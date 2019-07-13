@@ -145,19 +145,23 @@ public class Shop {
         }
     }
 
-    public void loadShop() {
+    public void loadShop() {//todo ali ask hashem about these functions
         try {
             for (Warrior minion : CardFactory.getAllBuiltMinions()) {
                 minionToNumberHashMap.put(minion, Integer.parseInt(DBMethods.get("Shop", minion.getName())));
+                DBMethods.delete("Shop", minion.getName());
             }
             for (Hero hero : CardFactory.getAllBuiltHeroes()) {
                 heroesToNumberHashMap.put(hero, Integer.parseInt(DBMethods.get("Shop", hero.getName())));
+                DBMethods.delete("Shop", hero.getName());
             }
             for (Spell spell : CardFactory.getAllBuiltSpells()) {
                 spellToNumberHashMap.put(spell, Integer.parseInt(DBMethods.get("Shop", spell.getName())));
+                DBMethods.delete("Shop", spell.getName());
             }
             for (Spell item : CardFactory.getAllBuiltItems()) {
                 itemToNumberHashMap.put(item, Integer.parseInt(DBMethods.get("Shop", item.getName())));
+                DBMethods.delete("Shop", item.getName());
             }
         } catch (Exception e) {
             minionToNumberHashMap = new HashMap<>();

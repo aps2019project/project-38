@@ -12,7 +12,7 @@ public class LoadedImages {
     public static HashMap<String,Image> sprites = new HashMap<>();
     public static HashMap<String,Path> plists = new HashMap<>();
 
-    static { //todo amir (static)
+    {
         try {
             for (Path path : Files.newDirectoryStream(Paths.get("view/images/sprites"))) {
                 if(path.toString().endsWith(".plist")){
