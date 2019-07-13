@@ -16,6 +16,7 @@ public class ClientInit extends Application {
 
     public static void main(String[] args) {
         ClientSession.connect();
+        Loader.loadAll();
         launch(args);
     }
 
@@ -29,8 +30,6 @@ public class ClientInit extends Application {
             System.exit(0);
         });
         mainStage.show();
-
-        Loader.loadAll();
 
         WindowChanger.instance.setMainParent(LoadedScenes.registerMenu);
 
