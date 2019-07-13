@@ -1,14 +1,12 @@
 package view.fxmls;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
 import view.fxmlControllers.*;
 
 import java.io.IOException;
 
 import static view.Utility.scale;
-import static view.Utility.tScale;
 
 public class LoadedScenes {
     private static FXMLLoader fxmlLoader;
@@ -25,7 +23,6 @@ public class LoadedScenes {
     public static Pane choosingDeckCards;
     public static Pane removingDeckCards;
     public static Pane auctions;
-    public static Parent customCard;
     public static Pane gameStartWaitingRoom;
 
     {
@@ -36,7 +33,6 @@ public class LoadedScenes {
             mainMenu = scale(FXMLLoader.load(getClass().getResource("menus/mainMenu.fxml")));
             chooseBattleKind = scale(FXMLLoader.load(getClass().getResource("chooseBattleKind.fxml")));
             arena = scale(FXMLLoader.load(getClass().getResource("arena.fxml")));
-            customCard = tScale(FXMLLoader.load(getClass().getResource("moreCustomCard.fxml")));
             fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("shop.fxml"));
             shop = scale(fxmlLoader.load());
             ShopController.shopController = fxmlLoader.getController();
