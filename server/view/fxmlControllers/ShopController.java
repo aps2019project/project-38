@@ -153,7 +153,7 @@ public class ShopController implements Initializable {
         AnchorPane anchorPane = null;
         WarriorCardController warriorCardController = null;
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("warriorCart.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(LoadedScenes.class.getResource("cardholder.warriorCart.fxml"));
             anchorPane = scaleCard(fxmlLoader.load());
             warriorCardController = fxmlLoader.getController();
         } catch (IOException e) {
