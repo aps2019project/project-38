@@ -18,7 +18,6 @@ public class ClientInit extends Application {
         ClientSession.connect();
         launch(args);
     }
-
     @Override
     public void start(Stage primaryStage) throws IOException {
         Loader.loadAll();

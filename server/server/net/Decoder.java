@@ -39,11 +39,9 @@ public class Decoder {
                 break;
             case createAccount: {
                 String username = (String) readObject();
-                System.out.println(username+"  ooooooooooooooooooooooooooo");
                 String password = (String) readObject();
                 String againPassword = (String) readObject();
                 String result = Account.createAccount(username, password, againPassword);
-                System.out.println(username + " " + password + " :::::::::::::::: " + result);
                 System.out.println();
                 ss.encoder.sendPackage(Message.createAccount, result);
                 break;
@@ -52,7 +50,6 @@ public class Decoder {
                 String username = (String) ss.decoder.readObject();
                 String password = (String) ss.decoder.readObject();
                 String result = Account.login(username, password);
-                System.out.println(username + " " + password + " " + result + "    ;;;;");
                 ss.encoder.sendPackage(Message.login, result);
                 if (result.equals("You logged in successfully")) {
                     ss.username = username;
@@ -98,7 +95,7 @@ public class Decoder {
                 break;
             }
             case startTheGame: {
-                String username = ss.dis.readUTF();
+                String username = (String)readObject();
                 if (Account.getUsernameToAccount().get(username).getCollection().getMainDeck() != null) {
                     ss.encoder.sendMessage(Message.accountDeckIsValid);
                 } else {

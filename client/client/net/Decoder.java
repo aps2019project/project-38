@@ -153,6 +153,14 @@ public class Decoder {
                 Utility.showMessage((String) readObject());
                 break;
             }
+            case accountDeckIsValid: {
+                LoadingGamePreviewScenes.load();
+                break;
+            }
+            case accountDeckIsNotValid: {
+                AlertController.setAndShow("You have not a main deck");
+                break;
+            }
             case createAccount: {
                 String result = (String) readObject();
                 Platform.runLater(() -> CreateAccountController.cac.handleRegistering(result));
@@ -166,6 +174,7 @@ public class Decoder {
             case authToken: {
                 String username = (String) readObject();
                 Account.handleAssignInfoToClient(username);
+                break;
             }
             case updateRanking: {
                 String result = (String) readObject();

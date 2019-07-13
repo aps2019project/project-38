@@ -1,6 +1,5 @@
 package view.fxmlControllers;
 
-import client.net.ClientSession;
 import client.net.Encoder;
 import client.net.Message;
 import javafx.fxml.FXMLLoader;
@@ -23,22 +22,7 @@ public class MainMenuController implements Initializable {
     }
 
     public void startGame() {
-        Encoder.sendMessage(Message.startTheGame);
-        Encoder.sendString(Account.activeAccount.username);
-
-        int messageIndex = 0;
-
-        try {
-            messageIndex = ClientSession.dis.readInt();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        if (Message.accountDeckIsValid.equals(Message.values()[messageIndex])) {
-            LoadingGamePreviewScenes.load();
-        } else {
-            AlertController.setAndShow("You have not a main deck");
-        }
+        Encoder.sendPackage(Message.startTheGame,Account.activeAccount.username);
     }
 
     public void logout() {
