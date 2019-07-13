@@ -102,31 +102,40 @@ public class Digikala {
     public static Box<ArrayList<Warrior>> allBuiltMinions = new Box<>();
 
     public static ArrayList<Warrior> getAllBuiltMinions() {
-        Encoder.sendMessage(Message.getAllBuiltMinions);
-        wait(allBuiltMinions);
+        if (allBuiltMinions.obj == null) {
+            Encoder.sendMessage(Message.getAllBuiltMinions);
+            wait(allBuiltMinions);
+        }
         return allBuiltMinions.obj;
     }
 
     public static Box<ArrayList<Hero>> allBuiltHeroes = new Box<>();
+
     public static ArrayList<Hero> getAllBuiltHeroes() {
-        Encoder.sendMessage(Message.getAllBuiltHeroes);
-        wait(allBuiltHeroes);
+        if (allBuiltHeroes.obj == null) {
+            Encoder.sendMessage(Message.getAllBuiltHeroes);
+            wait(allBuiltHeroes);
+        }
         return allBuiltHeroes.obj;
     }
 
     public static Box<ArrayList<Spell>> allBuiltSpells = new Box<>();
 
     public static ArrayList<Spell> getAllBuiltSpells() {
-        Encoder.sendMessage(Message.getAllBuiltSpells);
-        wait(allBuiltSpells);
+        if (allBuiltSpells.obj == null) {
+            Encoder.sendMessage(Message.getAllBuiltSpells);
+            wait(allBuiltSpells);
+        }
         return allBuiltSpells.obj;
     }
 
     public static Box<ArrayList<Spell>> allBuiltItems = new Box<>();
 
     public static ArrayList<Spell> getAllBuiltItems() {
-        Encoder.sendMessage(Message.getAllBuiltItems);
-        wait(allBuiltItems);
+        if (allBuiltItems.obj == null) {
+            Encoder.sendMessage(Message.getAllBuiltItems);
+            wait(allBuiltItems);
+        }
         return allBuiltItems.obj;
     }
 
@@ -149,40 +158,50 @@ public class Digikala {
     public static Box<HashMap<Integer, Card>> allCards = new Box<>();
 
     public static HashMap<Integer, Card> getAllCards() {
-        Encoder.sendPackage(Message.getAllCards);
-        wait(allCards);
+        if (allCards.obj == null) {
+            Encoder.sendPackage(Message.getAllCards);
+            wait(allCards);
+        }
         return allCards.obj;
     }
 
     public static Box<HashMap<Warrior, Integer>> allBuiltMinionsHashMapForShop = new Box<>();
 
     public static HashMap<Warrior, Integer> getAllBuiltMinionsHashMapForShop() {
-        Encoder.sendMessage(Message.getAllBuiltMinionsHashMapForShop);
-        wait(allBuiltMinionsHashMapForShop);
+        if (allBuiltMinionsHashMapForShop.obj == null) {
+            Encoder.sendMessage(Message.getAllBuiltMinionsHashMapForShop);
+            wait(allBuiltMinionsHashMapForShop);
+        }
         return allBuiltMinionsHashMapForShop.obj;
     }
 
     public static Box<HashMap<Hero, Integer>> allBuiltHeroesHashMapForShop = new Box<>();
 
     public static HashMap<Hero, Integer> getAllBuiltHeroesHashMapForShop() {
-        Encoder.sendMessage(Message.getAllBuiltHeroesHashMapForShop);
-        wait(allBuiltHeroesHashMapForShop);
+        if (allBuiltHeroesHashMapForShop.obj == null) {
+            Encoder.sendMessage(Message.getAllBuiltHeroesHashMapForShop);
+            wait(allBuiltHeroesHashMapForShop);
+        }
         return allBuiltHeroesHashMapForShop.obj;
     }
 
     public static Box<HashMap<Spell, Integer>> allBuiltSpellsHashMapForShop = new Box<>();
 
     public static HashMap<Spell, Integer> getAllBuiltSpellsHashMapForShop() {
-        Encoder.sendMessage(Message.getAllBuiltSpellsHashMapForShop);
-        wait(allBuiltSpellsHashMapForShop);
+        if (allBuiltSpellsHashMapForShop.obj == null) {
+            Encoder.sendMessage(Message.getAllBuiltSpellsHashMapForShop);
+            wait(allBuiltSpellsHashMapForShop);
+        }
         return allBuiltSpellsHashMapForShop.obj;
     }
 
     public static Box<HashMap<Spell, Integer>> allBuiltItemsHashMapForShop = new Box<>();
 
     public static HashMap<Spell, Integer> getAllBuiltItemsHashMapForShop() {
-        Encoder.sendMessage(Message.getAllBuiltItemsHashMapForShop);
-        wait(allBuiltItemsHashMapForShop);
+        if (allBuiltItemsHashMapForShop.obj == null) {
+            Encoder.sendMessage(Message.getAllBuiltItemsHashMapForShop);
+            wait(allBuiltItemsHashMapForShop);
+        }
         return allBuiltItemsHashMapForShop.obj;
     }
 }

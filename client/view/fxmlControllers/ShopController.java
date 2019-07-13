@@ -381,4 +381,4 @@ public class ShopController implements Initializable {
 
 }
 
-//todo if server updated, we should update here too.
+//todo(for feature) if server updated, we should update here too.

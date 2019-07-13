@@ -22,6 +22,8 @@ public class Deck implements Serializable {
     //***
 
     public static void deckLevelBuilder() {
+        System.out.println("Baad");
+
         {
             Deck deck1 = new Deck();
             deck1.name = "level1";
@@ -39,6 +41,7 @@ public class Deck implements Serializable {
             }
             allDecks.put("level1", deck1);
         }
+        System.out.println("Baad");
         {
             Deck deck2 = new Deck();
             deck2.name = "level2";
