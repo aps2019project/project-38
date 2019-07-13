@@ -1,6 +1,7 @@
 package view;
 
 import javafx.application.Platform;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.effect.BoxBlur;
@@ -37,6 +38,7 @@ public class WindowChanger {
                 parents.add(0, parent);
             }
             else {
+                mainAnchorPane.getChildren().clear();
                 mainAnchorPane.getChildren().add(parent);
                 parents.add(parent);
             }

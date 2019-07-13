@@ -6,6 +6,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 import model.Account;
 import model.Deck;
+import model.Shop;
 import model.cards.CardFactory;
 import server.net.MatchMaker;
 import server.net.ServerSession;
@@ -21,9 +22,11 @@ public class ServerInit extends Application {
 
     public static void main(String[] args) throws IOException {
         CardFactory.main();
+        Shop.getShop().loadShop();
         Deck.deckLevelBuilder();
         Account.loadAccounts();
         MatchMaker.makeMatchMakingThreads();
+        new LoadedScenes();
 
         //todo : build cards and load them
         ServerSocket sc = new ServerSocket(8000); //todo : get port from config.txt
