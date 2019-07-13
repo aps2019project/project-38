@@ -33,22 +33,12 @@ public class WarriorCardController {
         Card card = Card.getCardByItsName(nameText.getText());
         switch (type) {
             case "for sell":{
-                AlertController.setAndShowAndDo(
-                        String.format
-                                ("Do you want to increase number of %s in shop?" +
-                                                " (You have %d number of it in shop and %d at all)",
-                                card.getName(), Shop.getShop().getNumberOfCardInShop(card),
-                                Shop.getShop().getNumberOfCardAtAll(card)),
-                        () -> Shop.getShop().changeNumberOfCardInShop(card, 1));
-                break;
-            }
-            case "for buy":{
                 if (Shop.getShop().getNumberOfCardInShop(card) > 0) {
                     AlertController.setAndShowAndDo(
                             String.format
                                     ("Do you want to decrease number of %s in shop?" +
                                                     " (You have %d number of it in shop and %d at all)",
-                                    card.getName(), Shop.getShop().getNumberOfCardInShop(card),
+                                            card.getName(), Shop.getShop().getNumberOfCardInShop(card),
                                             Shop.getShop().getNumberOfCardAtAll(card)),
                             () -> Shop.getShop().changeNumberOfCardInShop(card, -1));
                 } else {
@@ -56,6 +46,16 @@ public class WarriorCardController {
                                     " (You have %d number of it at all)",
                             card.getName(), Shop.getShop().getNumberOfCardAtAll(card)));
                 }
+                break;
+            }
+            case "for buy":{
+                AlertController.setAndShowAndDo(
+                        String.format
+                                ("Do you want to increase number of %s in shop?" +
+                                                " (You have %d number of it in shop and %d at all)",
+                                        card.getName(), Shop.getShop().getNumberOfCardInShop(card),
+                                        Shop.getShop().getNumberOfCardAtAll(card)),
+                        () -> Shop.getShop().changeNumberOfCardInShop(card, 1));
                 break;
             }
         }
