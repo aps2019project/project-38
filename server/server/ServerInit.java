@@ -50,5 +50,7 @@ public class ServerInit extends Application {
         });
 
         WindowChanger.instance.setMainParent(LoadedScenes.shop);
+
+        mainStage.show();
     }
 }
