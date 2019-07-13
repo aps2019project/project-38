@@ -141,7 +141,7 @@ public class ChoosingDeckCardsController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        warriorCardController.setFields(minion, "outside deck " + deck.getName());//todo
+        warriorCardController.setFields(minion, "outside deck " + deck.getName());
         allMinions.put(minion, anchorPane);
     }
 
